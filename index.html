@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Tähepusle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- Menu: pick a picture and the number of pieces -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <h1><span class="logo">✨</span> <span data-t="title"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <section>
+        <h2><span class="step">1</span> <span data-t="choosePicture"></span></h2>
+        <div id="pictures" class="pictures"></div>
+      </section>
+
+      <section>
+        <h2><span class="step">2</span> <span data-t="choosePieces"></span></h2>
+        <div id="counts" class="counts"></div>
+      </section>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+
+      <footer class="credit">
+        <a href="https://app.astrobin.com/u/Astronoomiaklubi" target="_blank" rel="noopener" data-t="credit"></a>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Game -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" aria-label="Menu">🏠</button>
+      <div class="progress">
+        <div class="track"><div id="progressFill" class="fill"></div></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <button id="ghostBtn" class="icon toggle" aria-label="Hint">👁️</button>
+      <button id="soundBtn" class="icon toggle" aria-label="Sound">🔊</button>
+    </div>
+    <div id="area" class="area">
+      <canvas id="board"></canvas>
+    </div>
+  </div>
+
+  <!-- Win overlay -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div class="win-pic"><img id="winImg" alt=""></div>
+    <div class="win-card">
+      <h2><span data-t="wellDone"></span> 🎉</h2>
+      <p id="winName" class="win-name"></p>
+      <p id="winFact" class="win-fact"></p>
+      <a id="winCredit" class="win-credit" target="_blank" rel="noopener"></a>
+      <div class="win-buttons">
+        <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
+        <button id="menuBtn" class="btn alt">🖼️ <span data-t="other"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
