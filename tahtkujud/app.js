@@ -304,21 +304,26 @@
       emoji: '👬',
       name: { et: 'Kaksikud', en: 'Gemini, the Twins' },
       fact: {
-        et: 'Kaksikud on kaks venda, Kastor ja Polluks. Tähed 1 ja 6 on nende pead. Kaksikuid näeb hästi talveõhtutel.',
-        en: 'The Twins are two brothers, Castor and Pollux. Stars 1 and 6 are their heads. You can see the Twins well on winter evenings.'
+        et: 'Kaksikud on kaks venda, Kastor ja Polluks, kes hoiavad käest kinni. Tähed 1 ja 9 on nende pead. Kaksikuid näeb hästi talveõhtutel.',
+        en: 'The Twins are two brothers, Castor and Pollux, holding hands. Stars 1 and 9 are their heads. You can see the Twins well on winter evenings.'
       },
-      mention: { 0: { et: 'Kastor', en: 'Castor' }, 5: { et: 'Polluks', en: 'Pollux' } },
+      mention: { 0: { et: 'Kastor', en: 'Castor' }, 8: { et: 'Polluks', en: 'Pollux' } },
+      // two stick figures holding hands: Castor's twin, the hands, Pollux's twin
       stars: [
         ['Castor', 113.65, 31.89, 1.6],
         ['τ Gem', 107.78, 30.25, 4.4],
         ['Mebsuta', 100.98, 25.13, 3.0],
         ['Tejat', 95.74, 22.51, 2.9],
         ['Propus', 93.72, 22.51, 3.3],
-        ['Pollux', 116.33, 28.03, 1.1, null],
+        ['ν Gem', 97.24, 20.21, 4.1, 2],
+        ['ι Gem', 111.43, 27.80, 3.8, 1],
         ['υ Gem', 113.98, 26.90, 4.1],
-        ['Wasat', 110.03, 21.98, 3.5],
+        ['Pollux', 116.33, 28.03, 1.1],
+        ['Wasat', 110.03, 21.98, 3.5, 7],
         ['Mekbuda', 106.03, 20.57, 3.9],
-        ['Alhena', 99.43, 16.40, 1.9]
+        ['Alhena', 99.43, 16.40, 1.9],
+        ['λ Gem', 109.52, 16.54, 3.6, 9],
+        ['ξ Gem', 101.32, 12.90, 3.4]
       ]
     }
 

@@ -37,7 +37,7 @@ To add a picture, put a **square** image (about 1200×1200 px) in `pusle/images/
 
 ## Tähtkujud
 
-- Pick one of 15 constellations, listed from the fewest stars (5) to the most (10), with three or four for each season:
+- Pick one of 15 constellations, listed from the fewest stars (5) to the most (14), with three or four for each season:
   - all year: Suur Vanker (Big Dipper), Väike Vanker (Little Dipper), Kassiopeia
   - winter: Orion, Kaksikud (Gemini), Sõnn (Taurus), Perseus
   - spring: Lõvi (Leo), Karjane (Boötes)
