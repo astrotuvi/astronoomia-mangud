@@ -37,6 +37,34 @@
     }
     .game-card b { font-size: 1.6rem; color: var(--accent); padding: 0 6px; }
     .game-card span { font-size: 1.05rem; font-weight: 600; color: var(--muted); padding: 0 6px; }
+    /* Mälumäng: a found pair and two cards face down */
+    .memo {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 18px;
+      background: #0b1238;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10%;
+      padding: 12%;
+    }
+    .memo i, .memo img {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 14%;
+      display: block;
+      object-fit: cover;
+    }
+    .memo img { border: 3px solid var(--accent); box-shadow: 0 0 14px rgba(255, 211, 77, 0.6); }
+    .memo i {
+      display: grid;
+      place-items: center;
+      font-style: normal;
+      font-size: 2.2rem;
+      color: var(--accent);
+      background: radial-gradient(circle at 50% 40%, #3550b8, #1a2366 70%);
+      border: 3px solid rgba(255, 211, 77, 0.75);
+    }
   </style>
 </head>
 <body>
@@ -78,6 +106,14 @@
           <b data-t="stars"></b>
           <span data-t="starsText"></span>
         </a>
+        <a class="game-card" href="malumang/index.html">
+          <div class="memo" aria-hidden="true">
+            <img src="pusle/images/saturn.jpg" alt=""><i>✦</i>
+            <i>✦</i><img src="pusle/images/saturn.jpg" alt="">
+          </div>
+          <b data-t="memory"></b>
+          <span data-t="memoryText"></span>
+        </a>
       </div>
 
       <footer class="credit" data-t="credit"></footer>
@@ -93,6 +129,8 @@
         puzzleText: 'Pane kokku pilt Kuust, planeetidest, udukogudest ja galaktikatest.',
         stars: 'Tähtkujud',
         starsText: 'Ühenda tähed numbrite järjekorras ja leia tähtkuju.',
+        memory: 'Mälumäng',
+        memoryText: 'Pööra kaarte ja leia paarid: planeedid, udukogud ja galaktikad.',
         credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.'
       },
       en: {
@@ -101,6 +139,8 @@
         puzzleText: 'Put together a picture of the Moon, planets, nebulae and galaxies.',
         stars: 'Constellations',
         starsText: 'Join the stars in order and find the constellation.',
+        memory: 'Memory',
+        memoryText: 'Turn the cards over and find the pairs: planets, nebulae and galaxies.',
         credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.'
       }
     });

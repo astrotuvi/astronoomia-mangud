@@ -1,36 +1,4 @@
-/* Tähepusle: piece count buttons, board and pieces. The rest is in shared/common.css. */
-
-.counts { display: flex; flex-wrap: wrap; gap: 12px; }
-.count {
-  width: 100px;
-  height: 108px;
-  border-radius: 22px;
-  background: var(--card);
-  border: 5px solid transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: transform 0.15s, background 0.15s;
-}
-.count:hover { background: var(--card-hover); }
-.count b { font-size: 1.7rem; line-height: 1; }
-.mini {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  grid-template-columns: repeat(var(--k), 1fr);
-  gap: 2px;
-}
-.mini i { background: var(--sky); border-radius: 2px; }
-.count.selected {
-  background: var(--accent);
-  color: var(--ink);
-  transform: scale(1.06);
-  box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
-}
-.count.selected .mini i { background: var(--ink); }
+/* Tähepusle: board and pieces. The rest is in shared/common.css. */
 
 #board {
   position: absolute;

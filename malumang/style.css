@@ -1,0 +1,116 @@
+/* Mälumäng: the cards. The rest is in shared/common.css. */
+
+.intro {
+  margin: 10px 0 0;
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  color: var(--muted);
+}
+
+.area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  /* columns, card size and gap are set from app.js to fit the screen */
+}
+
+.card {
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  perspective: 900px;
+  touch-action: manipulation;
+}
+.card .inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease-out;
+}
+.card.open .inner,
+.card.matched .inner { transform: rotateY(180deg); }
+
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--size) * 0.1);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* back: a little night sky with a star */
+.back {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.9) 0 1px, transparent 2px),
+    radial-gradient(circle at 75% 70%, rgba(255, 255, 255, 0.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 50% 40%, #3550b8, #1a2366 70%);
+  border: calc(var(--size) * 0.03) solid rgba(255, 211, 77, 0.75);
+  color: var(--accent);
+  font-size: calc(var(--size) * 0.38);
+  text-shadow: 0 0 calc(var(--size) * 0.08) rgba(255, 211, 77, 0.8);
+  transition: filter 0.15s;
+}
+.card:hover .back { filter: brightness(1.15); }
+
+.front {
+  transform: rotateY(180deg);
+  background: #000;
+  border: calc(var(--size) * 0.03) solid rgba(255, 255, 255, 0.5);
+}
+.front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.front .name {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: calc(var(--size) * 0.04) 4px;
+  background: rgba(5, 8, 30, 0.75);
+  font-size: clamp(0.7rem, calc(var(--size) * 0.085), 1.2rem);
+  line-height: 1.15;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s 0.3s;
+}
+.card.matched .front {
+  border-color: var(--accent);
+  box-shadow: 0 0 calc(var(--size) * 0.12) rgba(255, 211, 77, 0.7);
+}
+.card.matched .name { opacity: 1; }
+.card.matched { animation: found 0.5s ease-out 0.35s; }
+@keyframes found { 50% { transform: scale(1.08); } }
+
+/* win screen: all the pairs found */
+.win-grid {
+  display: grid;
+  /* columns are set from app.js by the number of pairs */
+  align-content: center;
+  gap: 10px;
+  overflow: auto;
+}
+.win-grid figure { margin: 0; min-width: 0; text-align: center; font-size: 0.85rem; line-height: 1.2; }
+.win-grid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  filter: none;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid var(--accent);
+  display: block;
+  margin-bottom: 4px;
+}
