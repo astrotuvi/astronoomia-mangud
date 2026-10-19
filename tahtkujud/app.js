@@ -58,10 +58,10 @@
       emoji: '🌌',
       name: { et: 'Andromeeda', en: 'Andromeda' },
       fact: {
-        et: 'Vanas loos oli Andromeeda printsess, Kassiopeia tütar. Tähe 6 lähedal paistab udune laik – Andromeeda galaktika. Sellest saad teha ka pusle!',
-        en: 'In the old story, Andromeda was a princess, Cassiopeia’s daughter. Near star 6 there is a misty patch – the Andromeda Galaxy. You can make a puzzle of it too!'
+        et: 'Vanas loos oli Andromeeda printsess, Kassiopeia tütar. Tähed 3, 5 ja 6 näitavad teed udusele laigule – Andromeeda galaktikale. Sellest saad teha ka pusle!',
+        en: 'In the old story, Andromeda was a princess, Cassiopeia’s daughter. Stars 3, 5 and 6 point the way to a misty patch – the Andromeda Galaxy. You can make a puzzle of it too!'
       },
-      mention: { 5: '' },
+      mention: { 2: '', 4: '', 5: '' },
       deco: [{ ra: 10.68, dec: 41.27, kind: 'galaxy', angle: 35, name: { et: 'Andromeeda galaktika', en: 'Andromeda Galaxy' } }],
       stars: [
         ['Alpheratz', 2.10, 29.09, 2.1],
@@ -152,47 +152,6 @@
       extra: [[5, 0]]
     },
     {
-      id: 'taurus',
-      emoji: '🐂',
-      name: { et: 'Sõnn', en: 'Taurus, the Bull' },
-      fact: {
-        et: 'Sõnni silm on punakas täht Aldebaran, number 4. Täht 7 ei ole üks täht, vaid täheparv Sõel – sellest saad teha ka pusle!',
-        en: 'The bull’s eye is the reddish star Aldebaran, number 4. Star 7 is not one star but a star cluster, the Pleiades – you can make a puzzle of it too!'
-      },
-      mention: { 3: 'Aldebaran', 6: { et: 'Sõel', en: 'Pleiades' } },
-      stars: [
-        ['Elnath', 81.57, 28.61, 1.7],
-        ['Ain', 67.15, 19.18, 3.5],
-        ['γ Tau', 64.95, 15.63, 3.7],
-        ['Aldebaran', 68.98, 16.51, 0.9],
-        ['ζ Tau', 84.41, 21.14, 3.0],
-        ['λ Tau', 60.17, 12.49, 3.4, 2],
-        ['Pleiades', 56.87, 24.11, 2.9, null]
-      ]
-    },
-    {
-      id: 'orion',
-      emoji: '🏹',
-      name: { et: 'Orion', en: 'Orion' },
-      fact: {
-        et: 'Orion on taevane kütt. Tähed 4, 5 ja 6 on tema vöö. Vöö all on Orioni udu – sellest saad teha ka pusle!',
-        en: 'Orion is a hunter in the sky. Stars 4, 5 and 6 are his belt. Below the belt is the Orion Nebula – you can make a puzzle of it too!'
-      },
-      mention: { 3: '', 4: '', 5: '' },
-      deco: [{ ra: 83.82, dec: -5.39, kind: 'nebula', name: { et: 'Orioni udu', en: 'Orion Nebula' } }],
-      stars: [
-        ['Betelgeuse', 88.79, 7.41, 0.5],
-        ['Meissa', 83.78, 9.93, 3.4],
-        ['Bellatrix', 81.28, 6.35, 1.6],
-        ['Mintaka', 83.00, -0.30, 2.2],
-        ['Alnilam', 84.05, -1.20, 1.7],
-        ['Alnitak', 85.19, -1.94, 1.8],
-        ['Saiph', 86.94, -9.67, 2.1],
-        ['Rigel', 78.63, -8.20, 0.1, 3]
-      ],
-      extra: [[5, 0]]
-    },
-    {
       id: 'aquila',
       emoji: '🦅',
       name: { et: 'Kotkas', en: 'Aquila, the Eagle' },
@@ -256,6 +215,49 @@
       extra: [[8, 0]]
     },
     {
+      id: 'taurus',
+      emoji: '🐂',
+      name: { et: 'Sõnn', en: 'Taurus, the Bull' },
+      fact: {
+        et: 'Sõnni silm on punakas täht Aldebaran, number 2. Täht 9 ei ole üks täht, vaid täheparv Sõel – sellest saad teha ka pusle!',
+        en: 'The bull’s eye is the reddish star Aldebaran, number 2. Star 9 is not one star but a star cluster, the Pleiades – you can make a puzzle of it too!'
+      },
+      mention: { 1: 'Aldebaran', 8: { et: 'Sõel', en: 'Pleiades' } },
+      stars: [
+        ['ζ Tau', 84.41, 21.14, 3.0],
+        ['Aldebaran', 68.98, 16.51, 0.9],
+        ['γ Tau', 64.95, 15.63, 3.7],
+        ['Ain', 67.15, 19.18, 3.5],
+        ['Elnath', 81.57, 28.61, 1.7],
+        ['λ Tau', 60.17, 12.49, 3.4, 2],
+        ['ο Tau', 51.20, 9.03, 3.6],
+        ['μ Tau', 63.88, 8.89, 4.3, 5],
+        ['Pleiades', 56.87, 24.11, 2.9, null]
+      ]
+    },
+    {
+      id: 'perseus',
+      emoji: '🛡️',
+      name: { et: 'Perseus', en: 'Perseus' },
+      fact: {
+        et: 'Perseus on vanade lugude kangelane, kes hoiab käes koletise Medusa pead. Täht 9, Algol, on Medusa silm. See muutub iga kolme päeva tagant korraks tuhmimaks. Augustis lendab Perseuse poolt palju langevaid tähti.',
+        en: 'Perseus is a hero from old stories who holds the head of the monster Medusa. Star 9, Algol, is Medusa’s eye. It dims for a while every three days. In August many shooting stars fly out of Perseus.'
+      },
+      mention: { 8: 'Algol' },
+      stars: [
+        ['η Per', 42.67, 55.90, 3.8],
+        ['γ Per', 46.20, 53.51, 2.9],
+        ['Mirfak', 51.08, 49.86, 1.8],
+        ['δ Per', 55.73, 47.79, 3.0],
+        ['ε Per', 59.46, 40.01, 2.9],
+        ['ξ Per', 59.74, 35.79, 4.0],
+        ['ζ Per', 58.53, 31.88, 2.9],
+        ['κ Per', 47.37, 44.86, 3.8, 2],
+        ['Algol', 47.04, 40.96, 2.1],
+        ['ρ Per', 46.29, 38.84, 3.4]
+      ]
+    },
+    {
       id: 'pegasus',
       emoji: '🐎',
       name: { et: 'Pegasus', en: 'Pegasus' },
@@ -273,31 +275,39 @@
         ['Biham', 332.55, 6.20, 3.5],
         ['Enif', 326.05, 9.88, 2.4],
         ['Matar', 340.75, 30.22, 2.9, 1],
-        ['π Peg', 332.50, 33.18, 4.3]
+        ['π Peg', 332.50, 33.18, 4.3],
+        ['μ Peg', 342.50, 24.60, 3.5, 1],
+        ['ι Peg', 331.75, 25.35, 3.8],
+        ['κ Peg', 326.16, 25.65, 4.1]
       ],
       extra: [[3, 0]]
     },
     {
-      id: 'perseus',
-      emoji: '🛡️',
-      name: { et: 'Perseus', en: 'Perseus' },
+      id: 'orion',
+      emoji: '🏹',
+      name: { et: 'Orion', en: 'Orion' },
       fact: {
-        et: 'Perseus on vanade lugude kangelane. Täht 9, Algol, muutub iga kolme päeva tagant korraks tuhmimaks. Augustis lendab Perseuse poolt palju langevaid tähti.',
-        en: 'Perseus is a hero from old stories. Star 9, Algol, dims for a while every three days. In August many shooting stars fly out of Perseus.'
+        et: 'Orion on taevane kütt, kes hoiab ühes käes nuia ja teises kilpi. Tähed 4, 5 ja 6 on tema vöö. Vöö all on Orioni udu – sellest saad teha ka pusle!',
+        en: 'Orion is a hunter in the sky, with a club in one hand and a shield in the other. Stars 4, 5 and 6 are his belt. Below the belt is the Orion Nebula – you can make a puzzle of it too!'
       },
-      mention: { 8: 'Algol' },
+      mention: { 3: '', 4: '', 5: '' },
+      deco: [{ ra: 83.82, dec: -5.39, kind: 'nebula', name: { et: 'Orioni udu', en: 'Orion Nebula' } }],
       stars: [
-        ['η Per', 42.67, 55.90, 3.8],
-        ['γ Per', 46.20, 53.51, 2.9],
-        ['Mirfak', 51.08, 49.86, 1.8],
-        ['δ Per', 55.73, 47.79, 3.0],
-        ['ν Per', 56.30, 42.58, 3.8],
-        ['ε Per', 59.46, 40.01, 2.9],
-        ['ζ Per', 58.53, 31.88, 2.9],
-        ['κ Per', 47.37, 44.86, 3.8, 2],
-        ['Algol', 47.04, 40.96, 2.1],
-        ['ρ Per', 46.29, 38.84, 3.4]
-      ]
+        ['Betelgeuse', 88.79, 7.41, 0.5],
+        ['Meissa', 83.78, 9.93, 3.4],
+        ['Bellatrix', 81.28, 6.35, 1.6],
+        ['Mintaka', 83.00, -0.30, 2.2],
+        ['Alnilam', 84.05, -1.20, 1.7],
+        ['Alnitak', 85.19, -1.94, 1.8],
+        ['Saiph', 86.94, -9.67, 2.1],
+        ['Rigel', 78.63, -8.20, 0.1, 3],
+        ['μ Ori', 90.60, 9.65, 4.1, 0],
+        ['ξ Ori', 92.99, 14.21, 4.5],
+        ['π3 Ori', 72.46, 6.96, 3.2, 2],
+        ['π1 Ori', 73.72, 10.15, 4.6],
+        ['π5 Ori', 73.56, 2.44, 3.7, 10]
+      ],
+      extra: [[5, 0]]
     },
     {
       id: 'gemini',
@@ -326,7 +336,6 @@
         ['ξ Gem', 101.32, 12.90, 3.4]
       ]
     }
-
   ];
 
   const TEXT = {
