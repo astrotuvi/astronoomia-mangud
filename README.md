@@ -1,12 +1,14 @@
-# Tähepusle / Star Puzzle
+# Astronoomiamängud / Astronomy games
 
-A simple jigsaw puzzle game with astronomy images, made for children aged 5–6.
+Simple astronomy games for children aged 5–6, in Estonian (default) or English.
+They work with mouse and touch screens (tablets), in landscape and portrait.
 
-- Pick a picture and the number of pieces (4, 9, 16, 25, 36 or 49).
-- Drag pieces onto the board. A piece snaps into place when it is close to its spot.
-- 👁️ turns the faint hint picture on the board on or off. 🔊 turns sounds on or off.
-- Works with mouse and touch screens (tablets), in landscape and portrait.
-- Language: Estonian (default) or English.
+| Game | Folder | What to do |
+|---|---|---|
+| Tähepusle / Star Puzzle | [`pusle/`](pusle/) | Put together a jigsaw puzzle of an astronomy photo |
+| Tähtkujud / Constellations | [`tahtkujud/`](tahtkujud/) | Join the stars of a constellation in order 1, 2, 3 … |
+
+The language and sound settings are shared by all games.
 
 ## Running
 
@@ -16,16 +18,43 @@ No build step and no server needed. Open `index.html` in a browser, or serve the
 python3 -m http.server
 ```
 
-## Adding images
+## Layout
 
-Put a **square** image (about 1200×1200 px) in `images/` and add an entry to the `IMAGES` list at the top of `app.js`.
+- `index.html`: the start page with links to the games
+- `shared/`: the theme, menu, top bar and win screen (`common.css`), and settings, language, sounds and star confetti (`common.js`)
+- one folder per game, each with its own `index.html`, `app.js` and `style.css`
+
+To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`.
+
+## Tähepusle
+
+- Pick a picture and the number of pieces (4, 9, 16, 25, 36 or 49).
+- Drag pieces onto the board. A piece snaps into place when it is close to its spot.
+- 👁️ turns the faint hint picture on the board on or off. 🔊 turns sounds on or off.
+
+To add a picture, put a **square** image (about 1200×1200 px) in `pusle/images/` and add an entry to the `IMAGES` list at the top of `pusle/app.js`.
+
+## Tähtkujud
+
+- Pick one of 15 constellations, listed from the fewest stars (5) to the most (10), with three or four for each season:
+  - all year: Suur Vanker (Big Dipper), Väike Vanker (Little Dipper), Kassiopeia
+  - winter: Orion, Kaksikud (Gemini), Sõnn (Taurus), Perseus
+  - spring: Lõvi (Leo), Karjane (Boötes)
+  - summer: Luik (Cygnus), Lüüra (Lyra), Kotkas (Aquila), Põhjakroon (Corona Borealis)
+  - autumn: Pegasus, Andromeeda (Andromeda)
+- Tap the numbered stars in order, or slide a finger from star to star. Each star plays the next note of a tune, and a golden line joins it to the figure.
+- A star tapped out of turn only wiggles. If nothing happens for a few seconds, the next star starts to pulse.
+- 👁️ shows the whole figure as faint dashed lines. Finished constellations get a 🌟 in the menu.
+- The win screen tells a short fact. The stars it mentions are ringed and labelled in the picture, e.g. "1 Deeneb". The Orion Nebula and the Andromeda Galaxy are drawn where they are in the sky.
+
+Star positions are J2000 coordinates, drawn as on a sky chart with north up and east to the left. To add a constellation, add an entry to the `CONSTELLATIONS` list at the top of `tahtkujud/app.js`. The comment there explains how the stars are joined.
 
 ## Credits
 
 All photos are by **Tõrva Astronoomiaklubi** and come from their AstroBin gallery,
 <https://app.astrobin.com/u/Astronoomiaklubi>. They are licensed
 [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/) (Attribution–NonCommercial–ShareAlike).
-The files in `images/` are square crops, scaled to 1200×1200 px, and are shared under the same licence.
+The files in `pusle/images/` are square crops, scaled to 1200×1200 px, and are shared under the same licence.
 
 | File | Object | AstroBin |
 |---|---|---|

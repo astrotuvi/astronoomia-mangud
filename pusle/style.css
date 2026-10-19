@@ -1,0 +1,66 @@
+/* Tähepusle: piece count buttons, board and pieces. The rest is in shared/common.css. */
+
+.counts { display: flex; flex-wrap: wrap; gap: 12px; }
+.count {
+  width: 100px;
+  height: 108px;
+  border-radius: 22px;
+  background: var(--card);
+  border: 5px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.15s, background 0.15s;
+}
+.count:hover { background: var(--card-hover); }
+.count b { font-size: 1.7rem; line-height: 1; }
+.mini {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  grid-template-columns: repeat(var(--k), 1fr);
+  gap: 2px;
+}
+.mini i { background: var(--sky); border-radius: 2px; }
+.count.selected {
+  background: var(--accent);
+  color: var(--ink);
+  transform: scale(1.06);
+  box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
+}
+.count.selected .mini i { background: var(--ink); }
+
+#board {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 6px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.22), 0 0 40px rgba(95, 212, 255, 0.18);
+  transition: box-shadow 0.6s;
+}
+.area.complete #board {
+  box-shadow: 0 0 0 4px var(--accent), 0 0 60px rgba(255, 211, 77, 0.6);
+}
+
+.piece {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.75));
+}
+.piece.dragging {
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.6)) brightness(1.12);
+}
+.piece.snap { transition: transform 0.16s ease-out; }
+.piece.placed { filter: none; }
+.piece.flash { animation: flash 0.5s ease-out; }
+@keyframes flash {
+  0% { filter: brightness(1.9) drop-shadow(0 0 10px rgba(255, 211, 77, 0.9)); }
+  100% { filter: none; }
+}
+.area.complete .piece { opacity: 0; transition: opacity 0.9s; }

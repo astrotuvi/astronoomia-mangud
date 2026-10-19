@@ -2,79 +2,108 @@
 <html lang="et">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Tähepusle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astronoomiamängud</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="shared/common.css">
+  <style>
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .game-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px 12px 16px;
+      border-radius: 26px;
+      background: var(--card);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .game-card:hover { background: var(--card-hover); transform: scale(1.03); }
+    .game-card img, .game-card svg {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 18px;
+      display: block;
+      background: #0b1238;
+    }
+    .game-card b { font-size: 1.6rem; color: var(--accent); padding: 0 6px; }
+    .game-card span { font-size: 1.05rem; font-weight: 600; color: var(--muted); padding: 0 6px; }
+  </style>
 </head>
 <body>
   <div class="sky" aria-hidden="true"></div>
 
-  <!-- Menu: pick a picture and the number of pieces -->
-  <main id="menu" class="screen menu">
+  <main class="screen menu">
     <div class="menu-inner">
       <header class="menu-head">
-        <h1><span class="logo">✨</span> <span data-t="title"></span></h1>
+        <h1><span class="logo">🔭</span> <span data-t="title"></span></h1>
         <div class="lang">
           <button data-lang="et">EST</button>
           <button data-lang="en">ENG</button>
         </div>
       </header>
 
-      <section>
-        <h2><span class="step">1</span> <span data-t="choosePicture"></span></h2>
-        <div id="pictures" class="pictures"></div>
-      </section>
-
-      <section>
-        <h2><span class="step">2</span> <span data-t="choosePieces"></span></h2>
-        <div id="counts" class="counts"></div>
-      </section>
-
-      <div class="play-row">
-        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      <div class="games">
+        <a class="game-card" href="pusle/index.html">
+          <img src="pusle/images/pleiades.jpg" alt="">
+          <b data-t="puzzle"></b>
+          <span data-t="puzzleText"></span>
+        </a>
+        <a class="game-card" href="tahtkujud/index.html">
+          <!-- the Big Dipper, from the same star positions as in the game -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <g fill="none" stroke="#ffd34d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="84,31 90,47 68,61 58,51 40,53 26,54 10,69" />
+              <line x1="58" y1="51" x2="84" y2="31" />
+            </g>
+            <g fill="#fff">
+              <circle cx="84" cy="31" r="2.9" /><circle cx="90" cy="47" r="2.6" />
+              <circle cx="68" cy="61" r="2.6" /><circle cx="58" cy="51" r="2.1" />
+              <circle cx="40" cy="53" r="2.9" /><circle cx="26" cy="54" r="2.7" />
+              <circle cx="10" cy="69" r="2.8" />
+              <circle cx="20" cy="18" r="0.6" opacity="0.6" /><circle cx="70" cy="82" r="0.7" opacity="0.5" />
+              <circle cx="40" cy="80" r="0.5" opacity="0.6" /><circle cx="90" cy="88" r="0.6" opacity="0.5" />
+              <circle cx="48" cy="12" r="0.7" opacity="0.5" /><circle cx="8" cy="40" r="0.5" opacity="0.6" />
+            </g>
+          </svg>
+          <b data-t="stars"></b>
+          <span data-t="starsText"></span>
+        </a>
       </div>
 
-      <footer class="credit">
-        <a href="https://app.astrobin.com/u/Astronoomiaklubi" target="_blank" rel="noopener" data-t="credit"></a>
-      </footer>
+      <footer class="credit" data-t="credit"></footer>
     </div>
   </main>
 
-  <!-- Game -->
-  <div id="game" class="screen game hidden">
-    <div class="bar">
-      <button id="homeBtn" class="icon" aria-label="Menu">🏠</button>
-      <div class="progress">
-        <div class="track"><div id="progressFill" class="fill"></div></div>
-        <div id="progressText" class="progress-text"></div>
-      </div>
-      <button id="ghostBtn" class="icon toggle" aria-label="Hint">👁️</button>
-      <button id="soundBtn" class="icon toggle" aria-label="Sound">🔊</button>
-    </div>
-    <div id="area" class="area">
-      <canvas id="board"></canvas>
-    </div>
-  </div>
-
-  <!-- Win overlay -->
-  <div id="win" class="overlay hidden">
-    <canvas id="confetti"></canvas>
-    <div class="win-pic"><img id="winImg" alt=""></div>
-    <div class="win-card">
-      <h2><span data-t="wellDone"></span> 🎉</h2>
-      <p id="winName" class="win-name"></p>
-      <p id="winFact" class="win-fact"></p>
-      <a id="winCredit" class="win-credit" target="_blank" rel="noopener"></a>
-      <div class="win-buttons">
-        <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
-        <button id="menuBtn" class="btn alt">🖼️ <span data-t="other"></span></button>
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+  <script src="shared/common.js"></script>
+  <script>
+    Astro.setupLanguage({
+      et: {
+        title: 'Astronoomiamängud',
+        puzzle: 'Tähepusle',
+        puzzleText: 'Pane kokku pilt Kuust, planeetidest, udukogudest ja galaktikatest.',
+        stars: 'Tähtkujud',
+        starsText: 'Ühenda tähed numbrite järjekorras ja leia tähtkuju.',
+        credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.'
+      },
+      en: {
+        title: 'Astronomy games',
+        puzzle: 'Star Puzzle',
+        puzzleText: 'Put together a picture of the Moon, planets, nebulae and galaxies.',
+        stars: 'Constellations',
+        starsText: 'Join the stars in order and find the constellation.',
+        credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.'
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+/* Theme, menu, top bar and win screen shared by all games. */
+
 :root {
   --bg1: #0a0f30;
   --bg2: #1b2766;
@@ -80,10 +82,10 @@ button {
 .menu-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
 }
+.menu-head h1 { flex: 1; }
 h1 {
   margin: 8px 0;
   font-size: clamp(2rem, 6vw, 3.2rem);
@@ -118,12 +120,14 @@ h2 {
   flex: none;
 }
 
+/* picture cards to choose from */
 .pictures {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 14px;
 }
 .pic {
+  position: relative;
   background: var(--card);
   border: 5px solid transparent;
   border-radius: 22px;
@@ -135,7 +139,7 @@ h2 {
   transition: transform 0.15s, border-color 0.15s, background 0.15s;
 }
 .pic:hover { background: var(--card-hover); }
-.pic img {
+.pic img, .pic canvas {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
@@ -149,38 +153,6 @@ h2 {
   transform: scale(1.04);
   box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
 }
-
-.counts { display: flex; flex-wrap: wrap; gap: 12px; }
-.count {
-  width: 100px;
-  height: 108px;
-  border-radius: 22px;
-  background: var(--card);
-  border: 5px solid transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: transform 0.15s, background 0.15s;
-}
-.count:hover { background: var(--card-hover); }
-.count b { font-size: 1.7rem; line-height: 1; }
-.mini {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  grid-template-columns: repeat(var(--k), 1fr);
-  gap: 2px;
-}
-.mini i { background: var(--sky); border-radius: 2px; }
-.count.selected {
-  background: var(--accent);
-  color: var(--ink);
-  transform: scale(1.06);
-  box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
-}
-.count.selected .mini i { background: var(--ink); }
 
 .play-row { display: flex; justify-content: center; margin: 30px 0 10px; }
 .play {
@@ -206,7 +178,7 @@ h2 {
   line-height: 1.5;
 }
 
-/* ---------- Game ---------- */
+/* ---------- Top bar in a game ---------- */
 
 .bar {
   height: 68px;
@@ -225,6 +197,7 @@ h2 {
   font-size: 1.6rem;
   display: grid;
   place-items: center;
+  text-decoration: none;
   transition: background 0.15s, opacity 0.15s;
 }
 .icon:hover { background: var(--card-hover); }
@@ -261,39 +234,6 @@ h2 {
   overflow: hidden;
   touch-action: none;
 }
-
-#board {
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 6px;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.22), 0 0 40px rgba(95, 212, 255, 0.18);
-  transition: box-shadow 0.6s;
-}
-.area.complete #board {
-  box-shadow: 0 0 0 4px var(--accent), 0 0 60px rgba(255, 211, 77, 0.6);
-}
-
-.piece {
-  position: absolute;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  transform-origin: center;
-  will-change: transform;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.75));
-}
-.piece.dragging {
-  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.6)) brightness(1.12);
-}
-.piece.snap { transition: transform 0.16s ease-out; }
-.piece.placed { filter: none; }
-.piece.flash { animation: flash 0.5s ease-out; }
-@keyframes flash {
-  0% { filter: brightness(1.9) drop-shadow(0 0 10px rgba(255, 211, 77, 0.9)); }
-  100% { filter: none; }
-}
-.area.complete .piece { opacity: 0; transition: opacity 0.9s; }
 
 /* ---------- Win overlay ---------- */
 

@@ -113,7 +113,8 @@
       again: 'Uuesti',
       other: 'Teine pilt',
       credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.',
-      photo: 'Foto: Tõrva Astronoomiaklubi'
+      photo: 'Foto: Tõrva Astronoomiaklubi',
+      allGames: 'Kõik mängud'
     },
     en: {
       title: 'Star Puzzle',
@@ -124,7 +125,8 @@
       again: 'Again',
       other: 'New picture',
       credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.',
-      photo: 'Photo: Tõrva Astronoomiaklubi'
+      photo: 'Photo: Tõrva Astronoomiaklubi',
+      allGames: 'All games'
     }
   };
 
@@ -146,28 +148,13 @@
   // State & helpers
   // ---------------------------------------------------------------------------
 
-  const $ = (id) => document.getElementById(id);
-
-  const store = {
-    get(key, fallback) {
-      try {
-        const v = localStorage.getItem('tahepusle.' + key);
-        return v === null ? fallback : JSON.parse(v);
-      } catch (e) {
-        return fallback;
-      }
-    },
-    set(key, value) {
-      try { localStorage.setItem('tahepusle.' + key, JSON.stringify(value)); } catch (e) { /* ignore */ }
-    }
-  };
+  const { $, rand, clamp, shuffle, sfx } = Astro;
+  const store = Astro.makeStore('tahepusle.');
 
   const state = {
-    lang: store.get('lang', 'et'),
     imgIdx: store.get('img', 0),
     side: store.get('side', 3),
     ghost: store.get('ghost', true),
-    sound: store.get('sound', true),
     img: null,
     pieces: [],
     L: null,
@@ -175,68 +162,14 @@
     drag: null,
     done: false
   };
-  if (!TEXT[state.lang]) state.lang = 'et';
   if (!(state.imgIdx >= 0 && state.imgIdx < IMAGES.length)) state.imgIdx = 0;
   if (!SIDES.includes(state.side)) state.side = 3;
 
-  const t = (key) => TEXT[state.lang][key];
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const shuffle = (arr) => {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  };
+  const t = (key) => TEXT[Astro.lang][key];
 
   const area = $('area');
   const board = $('board');
   const hitCtx = document.createElement('canvas').getContext('2d');
-
-  // ---------------------------------------------------------------------------
-  // Sounds (generated, no files needed)
-  // ---------------------------------------------------------------------------
-
-  const sfx = (() => {
-    let ac = null;
-    function audio() {
-      if (!ac) {
-        try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; }
-      }
-      if (ac.state === 'suspended') ac.resume();
-      return ac;
-    }
-    function tone(freq, delay, dur, type, vol, freqEnd) {
-      if (!state.sound) return;
-      const a = audio();
-      if (!a) return;
-      const o = a.createOscillator();
-      const g = a.createGain();
-      const t0 = a.currentTime + delay;
-      o.type = type;
-      o.frequency.setValueAtTime(freq, t0);
-      if (freqEnd) o.frequency.exponentialRampToValueAtTime(freqEnd, t0 + dur);
-      g.gain.setValueAtTime(0.0001, t0);
-      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
-      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-      o.connect(g).connect(a.destination);
-      o.start(t0);
-      o.stop(t0 + dur + 0.05);
-    }
-    return {
-      pick() { tone(480, 0, 0.09, 'sine', 0.08, 720); },
-      snap() {
-        tone(660, 0, 0.14, 'triangle', 0.22, 990);
-        tone(1320, 0.07, 0.18, 'sine', 0.08);
-      },
-      win() {
-        [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.13, 0.4, 'triangle', 0.2));
-        tone(1568, 0.55, 0.7, 'sine', 0.12);
-        tone(2093, 0.7, 0.8, 'sine', 0.06);
-      }
-    };
-  })();
 
   // ---------------------------------------------------------------------------
   // Menu
@@ -270,34 +203,18 @@
       });
       counts.appendChild(b);
     });
-
-    document.querySelectorAll('.lang button').forEach((b) => {
-      b.addEventListener('click', () => {
-        state.lang = b.dataset.lang;
-        store.set('lang', state.lang);
-        applyLanguage();
-      });
-    });
   }
 
   function updateMenu() {
     [...$('pictures').children].forEach((b, i) => {
       b.classList.toggle('selected', i === state.imgIdx);
-      b.querySelector('span').textContent = IMAGES[i].name[state.lang];
+      b.querySelector('span').textContent = IMAGES[i].name[Astro.lang];
     });
     [...$('counts').children].forEach((b, i) => b.classList.toggle('selected', SIDES[i] === state.side));
   }
 
-  function applyLanguage() {
-    document.documentElement.lang = state.lang;
-    document.title = t('title');
-    document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = t(el.dataset.t); });
-    document.querySelectorAll('.lang button').forEach((b) => b.classList.toggle('active', b.dataset.lang === state.lang));
-    updateMenu();
-  }
-
   function showMenu() {
-    stopConfetti();
+    Astro.stopConfetti($('confetti'));
     $('win').classList.add('hidden');
     $('game').classList.add('hidden');
     $('menu').classList.remove('hidden');
@@ -310,7 +227,7 @@
 
   function startGame() {
     const info = IMAGES[state.imgIdx];
-    stopConfetti();
+    Astro.stopConfetti($('confetti'));
     $('win').classList.add('hidden');
     $('menu').classList.add('hidden');
     $('game').classList.remove('hidden');
@@ -563,8 +480,8 @@
 
   function updateToggles() {
     $('ghostBtn').classList.toggle('off', !state.ghost);
-    $('soundBtn').textContent = state.sound ? '🔊' : '🔇';
-    $('soundBtn').classList.toggle('off', !state.sound);
+    $('soundBtn').textContent = sfx.on ? '🔊' : '🔇';
+    $('soundBtn').classList.toggle('off', !sfx.on);
   }
 
   // ---------------------------------------------------------------------------
@@ -672,72 +589,13 @@
     setTimeout(() => {
       const info = IMAGES[state.imgIdx];
       $('winImg').src = info.file;
-      $('winName').textContent = info.name[state.lang];
-      $('winFact').textContent = info.fact[state.lang];
+      $('winName').textContent = info.name[Astro.lang];
+      $('winFact').textContent = info.fact[Astro.lang];
       $('winCredit').textContent = '📷 ' + t('photo');
       $('winCredit').href = 'https://www.astrobin.com/' + info.astrobin + '/';
       $('win').classList.remove('hidden');
-      startConfetti();
+      Astro.startConfetti($('confetti'));
     }, 900);
-  }
-
-  let confettiRaf = 0;
-  function startConfetti() {
-    const cv = $('confetti');
-    const dpr = window.devicePixelRatio || 1;
-    const W = window.innerWidth;
-    const H = window.innerHeight;
-    cv.width = W * dpr;
-    cv.height = H * dpr;
-    const ctx = cv.getContext('2d');
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const colors = ['#ffd34d', '#5fd4ff', '#ff7eb6', '#9dff8a', '#ffffff', '#c59bff'];
-    const parts = Array.from({ length: 120 }, () => ({
-      x: rand(0, W),
-      y: rand(-H, -10),
-      r: rand(6, 14),
-      vy: rand(1.5, 4),
-      vx: rand(-1, 1),
-      a: rand(0, Math.PI * 2),
-      va: rand(-0.08, 0.08),
-      color: colors[Math.floor(Math.random() * colors.length)]
-    }));
-    const t0 = performance.now();
-
-    function star(x, y, r, a) {
-      ctx.beginPath();
-      for (let i = 0; i < 10; i++) {
-        const rr = i % 2 ? r * 0.45 : r;
-        const ang = a + (i * Math.PI) / 5;
-        ctx.lineTo(x + rr * Math.sin(ang), y - rr * Math.cos(ang));
-      }
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    cancelAnimationFrame(confettiRaf);
-    (function frame(now) {
-      const elapsed = now - t0;
-      ctx.clearRect(0, 0, W, H);
-      let alive = false;
-      for (const q of parts) {
-        q.x += q.vx;
-        q.y += q.vy;
-        q.a += q.va;
-        // keep raining for a few seconds, then let the last stars fall away
-        if (q.y > H + 20 && elapsed < 3500) q.y = -20;
-        if (q.y < H + 20) alive = true;
-        ctx.fillStyle = q.color;
-        star(q.x, q.y, q.r, q.a);
-      }
-      if (alive) confettiRaf = requestAnimationFrame(frame);
-    })(t0);
-  }
-
-  function stopConfetti() {
-    cancelAnimationFrame(confettiRaf);
-    const cv = $('confetti');
-    cv.getContext('2d').clearRect(0, 0, cv.width, cv.height);
   }
 
   // ---------------------------------------------------------------------------
@@ -790,12 +648,11 @@
   });
 
   $('soundBtn').addEventListener('click', () => {
-    state.sound = !state.sound;
-    store.set('sound', state.sound);
+    sfx.on = !sfx.on;
     updateToggles();
     sfx.pick();
   });
 
   buildMenu();
-  applyLanguage();
+  Astro.setupLanguage(TEXT, updateMenu);
 })();
