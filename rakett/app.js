@@ -87,6 +87,8 @@
       photo: 'Foto: Tõrva Astronoomiaklubi (AstroBin)',
       orbiting: 'Tiirleme ümber Maa 🌍',
       off: (to) => `Lendame ${to}!`,
+      sunTrip: 'Lendame ümber Päikese ☀️',
+      cross: (of) => `Lendame üle ${of} orbiidi`,
       arrived: (who, to) => `${who} jõudis ${to}!`
     },
     en: {
@@ -109,6 +111,8 @@
       photo: 'Photo: Tõrva Astronoomiaklubi (AstroBin)',
       orbiting: 'Going round the Earth 🌍',
       off: (to) => `Off to ${to}!`,
+      sunTrip: 'Flying round the Sun ☀️',
+      cross: (of) => `Crossing the orbit of ${of}`,
       arrived: (who, to) => `${who} made it to ${to}!`
     }
   };
@@ -119,7 +123,24 @@
   const ZOOM = 1.6;       // the view zooms out until the whole Earth is seen
   const ORBIT = 3.4;      // one lap around the Earth
   const BURN = 2.0;       // burning one fuel tank on the way to the goal
-  const CRUISE = 2.6;     // from the last burn to landing
+  const CRUISE = 2.6;     // to the Moon: from the last burn to landing
+  const LEAVE = 1.8;      // to a planet: the view zooms out to the Sun
+  const ARRIVE = 2.6;     // to a planet: the view zooms in to the planet
+
+  // The planets seen from above, for the trip to a planet. r is the size of
+  // the orbit (not to scale, but in the right order), a0 where the planet is
+  // when the trip starts, dot its size on the screen, and fill how much of
+  // the photo the planet fills.
+  const PLANETS = [
+    { id: 'mercury', r: 1, a0: 2.0, dot: 0.008, color: '#b9b2a8' },
+    { id: 'venus', r: 1.5, a0: 4.2, dot: 0.012, color: '#f3d9a0' },
+    { id: 'earth', r: 2.1, dot: 0.016 },
+    { id: 'mars', r: 2.8, a0: 1.0, dot: 0.012, color: '#d0602f', fill: 0.8, of: { et: 'Marsi', en: 'Mars' } },
+    { id: 'jupiter', r: 4.7, a0: 5.0, dot: 0.026, color: '#d9b48a', fill: 0.8, of: { et: 'Jupiteri', en: 'Jupiter' } },
+    { id: 'saturn', r: 6, a0: 3.0, dot: 0.022, color: '#e6cf98', fill: 0.4 }
+  ];
+  const BELT = [3.5, 4.0];  // the asteroid belt between Mars and Jupiter
+  const planet = (id) => PLANETS.find((p) => p.id === id);
 
   // ---------------------------------------------------------------------------
   // Rocket parts
@@ -289,14 +310,14 @@
 
   scene.innerHTML =
     '<rect width="100%" height="100%" fill="url(#skyGrad)"/>' +
-    `<g id="starsL"></g><g id="earthL" style="display: none">${EARTH}</g>` +
+    `<g id="starsL"></g><g id="solarL" style="display: none"></g><g id="earthL" style="display: none">${EARTH}</g>` +
     '<image id="destImg" mask="url(#soft)" style="mix-blend-mode: screen"/>' +
     '<g fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 10" stroke-linecap="round">' +
     '<circle id="orbitRing" opacity="0"/><path id="tripPath" opacity="0"/></g>' +
     '<g id="worldL"></g><g id="slotsL"></g><g id="trayL"></g><g id="flameL"></g><g id="partsL"></g>';
   const L$ = (id) => scene.querySelector('#' + id);
-  const [starsL, earthL, destImg, orbitRing, tripPath, worldL, slotsL, trayL, flameL, partsL] =
-    ['starsL', 'earthL', 'destImg', 'orbitRing', 'tripPath', 'worldL', 'slotsL', 'trayL', 'flameL', 'partsL'].map(L$);
+  const [starsL, solarL, earthL, destImg, orbitRing, tripPath, worldL, slotsL, trayL, flameL, partsL] =
+    ['starsL', 'solarL', 'earthL', 'destImg', 'orbitRing', 'tripPath', 'worldL', 'slotsL', 'trayL', 'flameL', 'partsL'].map(L$);
 
   function svgEl(tag, attrs = {}, parent) {
     const el = document.createElementNS(SVGNS, tag);
@@ -388,6 +409,9 @@
     destImg.setAttribute('href', state.dest.file);
     destImg.setAttribute('opacity', 0);
     earthL.style.display = 'none';
+    earthL.setAttribute('opacity', 1);
+    solarL.style.display = 'none';
+    solarL.innerHTML = '';
     orbitRing.setAttribute('opacity', 0);
     tripPath.setAttribute('opacity', 0);
     worldL.style.transform = '';
@@ -728,7 +752,8 @@
 
   // The flight, as on a real trip: up into space, the view zooms out to show
   // the whole Earth, one lap around the Earth with the engine off, then the
-  // engine fires again and the rocket leaves for its goal.
+  // engine fires again and the rocket leaves for its goal. To a planet it
+  // flies half way round the Sun, on an orbit that meets the planet's.
 
   const ease = (x) => x * x * (3 - 2 * x);
   const lerp = (a, b, x) => a + (b - a) * x;
@@ -748,20 +773,38 @@
     document.getElementById('skyBottom').setAttribute('stop-color', mix('#bfe6ff', '#0d1440', x));
   }
 
-  // When each part of the trip starts. Getting into orbit takes the first
-  // tank (half of it if there is only one), leaving takes the rest.
-  function timeline(n) {
+  // When each part of the trip starts, and when the engine burns how much
+  // fuel. Getting into orbit takes the first tank (half of it if there is
+  // only one), leaving takes the rest; at a planet the last half tank is
+  // kept for braking on arrival.
+  function timeline(dest) {
+    const n = dest.tanks;
     const A = Math.min(1, n / 2);
     const z0 = ASCENT + 0.2;
     const z1 = z0 + ZOOM;
     const dep = z1 + ORBIT;
-    const burn = (n - A) * BURN;
-    return { A, z0, z1, dep, burn, end: dep + burn + CRUISE };
+    const burns = [{ t0: 0.3, dur: ASCENT - 0.3, fuel: A }];
+    if (dest.id === 'moon') {
+      burns.push({ t0: dep, dur: (n - A) * BURN, fuel: n - A });
+      return { z0, z1, dep, burns, end: dep + (n - A) * BURN + CRUISE };
+    }
+    const away = n - A - 0.5;
+    const trip0 = dep + LEAVE;
+    const trip = 2.5 + 1.5 * (n - 1);
+    const arrive = trip0 + trip;
+    burns.push({ t0: dep, dur: away * BURN, fuel: away }, { t0: arrive, dur: 0.5 * BURN, fuel: 0.5 });
+    return { z0, z1, dep, trip0, trip, arrive, burns, end: arrive + ARRIVE };
   }
-  const fuelUsed = (T, n, t) =>
-    T.A * clamp((t - 0.3) / (ASCENT - 0.3), 0, 1) + (n - T.A) * clamp((t - T.dep) / T.burn, 0, 1);
+  const fuelUsed = (T, t) => T.burns.reduce((sum, b) => sum + b.fuel * clamp((t - b.t0) / b.dur, 0, 1), 0);
   // when tank i is empty and drops off
-  const dropTime = (T, i) => (i + 1 <= T.A ? 0.3 + ((ASCENT - 0.3) * (i + 1)) / T.A : T.dep + (i + 1 - T.A) * BURN);
+  function dropTime(T, i) {
+    let used = 0;
+    for (const b of T.burns) {
+      if (used + b.fuel >= i + 1 - 1e-9) return b.t0 + (b.dur * (i + 1 - used)) / b.fuel;
+      used += b.fuel;
+    }
+    return Infinity;
+  }
   // the rocket turns towards the right while climbing (degrees)
   const pitchAt = (T, t) => 50 * ease(clamp((t - 2) / (T.z0 - 2), 0, 1));
 
@@ -777,6 +820,112 @@
       y: w[0] * a.y + w[1] * b.y + w[2] * c.y + w[3] * d.y,
       rot: (Math.atan2(tx, -ty) * 180) / Math.PI
     };
+  }
+
+  // The Sun and the planets. Angles go clockwise from the top. The Earth is
+  // at the top when the trip starts; the planet is met at the bottom, half
+  // way round the Sun, after moving along its own orbit. Planets nearer the
+  // Sun go round faster (Kepler's third law).
+  function solar(time) {
+    const { W, H } = state.L;
+    const T = state.fl.T;
+    const m = Math.min(W, H);
+    const rE = planet('earth').r;
+    const rD = planet(state.dest.id).r;
+    const u = (0.44 * m) / rD;       // pixels per orbit unit
+    const S = { x: W / 2, y: H / 2 };
+    const a = (rE + rD) / 2;          // the rocket's orbit: half an ellipse
+    const e = (rD - rE) / (rD + rE);
+    const w = (r) => (Math.PI / T.trip) * Math.pow(a / r, 1.5);
+    const at = (r, ang) => ({ x: S.x + r * u * Math.sin(ang), y: S.y - r * u * Math.cos(ang) });
+    const angle = (p) => (p.id === 'earth' ? w(rE) * (time - T.trip0)
+      : p.id === state.dest.id ? Math.PI - w(rD) * (T.arrive - time)
+      : p.a0 + w(p.r) * (time - T.trip0));
+    return { m, u, S, a, e, rE, rD, w, at, angle };
+  }
+
+  // Where the rocket is on its way round the Sun (Kepler's equation, so it
+  // goes faster near the Sun and slower far from it); tau is 0 to 1.
+  function transfer(sv, tau) {
+    const M = Math.PI * clamp(tau, 0, 1);
+    let E = M;
+    for (let i = 0; i < 8; i++) E -= (E - sv.e * Math.sin(E) - M) / (1 - sv.e * Math.cos(E));
+    const nu = 2 * Math.atan(Math.sqrt((1 + sv.e) / (1 - sv.e)) * Math.tan(E / 2));
+    return sv.at(sv.a * (1 - sv.e * Math.cos(E)), nu);
+  }
+
+  // When the rocket crosses the orbits of the planets on the way.
+  function crossings(T) {
+    const rE = planet('earth').r;
+    const rD = planet(state.dest.id).r;
+    const a = (rE + rD) / 2;
+    const e = (rD - rE) / (rD + rE);
+    const when = (r) => {
+      const E = Math.acos((1 - r / a) / e);
+      return T.trip0 + (T.trip * (E - e * Math.sin(E))) / Math.PI;
+    };
+    return PLANETS.filter((p) => p.r > rE && p.r < rD).map((p) => ({ t: when(p.r), p }));
+  }
+
+  // The camera for a trip to a planet: zooming out from the Earth to the
+  // Sun, still while going round the Sun, zooming in to the planet. A point
+  // p of the Sun's view is seen at C + (p - A) * Z.
+  function solarView(time, sv) {
+    const { W, H } = state.L;
+    const T = state.fl.T;
+    const Z0 = 0.2 / planet('earth').dot;     // the whole Earth, as in orbit
+    if (time < T.trip0) {
+      const Ep = sv.at(sv.rE, sv.angle(planet('earth')));
+      const u = ease(clamp((time - T.dep) / LEAVE, 0, 1));
+      return { u, z: 0, Z0, A: Ep, C: { x: lerp(W / 2, Ep.x, u), y: lerp(H / 2, Ep.y, u) }, Z: Math.pow(Z0, 1 - u), sys: clamp((u - 0.15) / 0.5, 0, 1) };
+    }
+    if (time < T.arrive) return { u: 1, z: 0, Z0, A: sv.S, C: sv.S, Z: 1, sys: 1 };
+    const P = planet(state.dest.id);
+    const Dp = sv.at(sv.rD, sv.angle(P));
+    const z = ease(clamp((time - T.arrive) / ARRIVE, 0, 1));
+    const Zend = (0.62 * P.fill) / (2 * P.dot);
+    return { u: 1, z, Z0, A: Dp, C: { x: lerp(Dp.x, W / 2, z), y: lerp(Dp.y, H * 0.42, z) }, Z: Math.pow(Zend, z), sys: 1 - clamp(z * 1.6, 0, 1) };
+  }
+
+  // Draw the Sun, the orbits, the asteroid belt and the planets (in orbit
+  // units times 100, the Sun at 0 0).
+  function buildSolar() {
+    const sv = solar(0);
+    const px = 100 / sv.u;           // units per pixel
+    const sun = Math.min(0.05 * sv.m, 0.6 * sv.u) * px;
+    let s = `<circle r="${sun * 1.9}" fill="url(#sunGlow)"/><circle r="${sun}" fill="url(#sunGrad)"/>`;
+    for (const p of PLANETS) if (p.r <= sv.rD) s += `<circle class="orbit" data-id="${p.id}" r="${p.r * 100}" vector-effect="non-scaling-stroke"/>`;
+    if (sv.rD > BELT[1]) {
+      s += '<g class="belt">';
+      for (let i = 0; i < 160; i++) {
+        const r = rand(BELT[0], BELT[1]) * 100;
+        const ang = rand(0, Math.PI * 2);
+        s += `<circle cx="${r * Math.sin(ang)}" cy="${-r * Math.cos(ang)}" r="${0.0035 * sv.m * px}" opacity="${rand(0.4, 0.9)}"/>`;
+      }
+      s += '</g>';
+    }
+    const b = Math.sqrt(sv.rE * sv.rD) * 100;
+    s += `<path class="transfer" d="M0 ${-sv.rE * 100}A${b} ${sv.a * 100} 0 0 1 0 ${sv.rD * 100}" vector-effect="non-scaling-stroke"/>`;
+    for (const p of PLANETS) {
+      if (p.r < sv.rD && p.id !== 'earth') s += `<circle class="planet" data-id="${p.id}" r="${p.dot * sv.m * px}" fill="${p.color}"/>`;
+    }
+    solarL.innerHTML = s;
+  }
+
+  function updateSolar(time, sc) {
+    const { sv, V } = sc;
+    solarL.style.display = '';
+    solarL.setAttribute('opacity', V.sys);
+    solarL.setAttribute('transform',
+      `translate(${V.C.x} ${V.C.y}) scale(${V.Z}) translate(${sv.S.x - V.A.x} ${sv.S.y - V.A.y}) scale(${sv.u / 100})`);
+    solarL.querySelectorAll('.planet').forEach((el) => {
+      const p = planet(el.dataset.id);
+      const ang = sv.angle(p);
+      el.setAttribute('cx', 100 * p.r * Math.sin(ang));
+      el.setAttribute('cy', -100 * p.r * Math.cos(ang));
+    });
+    const belt = solarL.querySelector('.belt');
+    if (belt) belt.setAttribute('transform', `rotate(${(sv.w((BELT[0] + BELT[1]) / 2) * (time - state.fl.T.trip0) * 180) / Math.PI})`);
   }
 
   // Where the Earth, the goal and the rocket are at a flight time. The rocket
@@ -830,6 +979,38 @@
       };
     }
 
+    if (T.trip) {
+      // to a planet: out to the Sun's view, half way round the Sun, in to the planet
+      const sv = solar(time);
+      const V = solarView(time, sv);
+      const map = (p) => ({ x: V.C.x + (p.x - V.A.x) * V.Z, y: V.C.y + (p.y - V.A.y) * V.Z });
+      const P = planet(state.dest.id);
+      const ssol = (m * 0.08) / Hr;   // the rocket's scale in the Sun's view
+      const out = {
+        sv,
+        V,
+        earth: { ...map(sv.at(sv.rE, sv.angle(planet('earth')))), r: planet('earth').dot * m * V.Z, op: 1 - clamp(V.z * 2, 0, 1) },
+        dest: { ...map(sv.at(sv.rD, sv.angle(P))), size: ((2 * P.dot * m) / P.fill) * V.Z, op: time < T.trip0 ? V.sys : 1 }
+      };
+      if (time < T.trip0) {
+        // leaving the Earth: speeding up along the orbit while the Earth shrinks
+        const dt = time - T.dep;
+        const f = (V.Z / V.Z0) * (1 - V.u);
+        const lx = ((2 * Math.PI * ro) / ORBIT) * dt * (1 + dt);
+        out.ring = { x: V.C.x, y: V.C.y, r: (ro * V.Z) / V.Z0, op: 0.5 * (1 - V.u) };
+        out.rocket = { x: V.C.x + lx * f, y: V.C.y - ro * f, rot: 90, sc: so * Math.pow(ssol / so, V.u) };
+      } else if (time < T.arrive) {
+        const tau = (time - T.trip0) / T.trip;
+        const q = transfer(sv, tau);
+        const a = transfer(sv, tau - 0.002);
+        const b = transfer(sv, tau + 0.002);
+        out.rocket = { x: q.x, y: q.y, rot: (Math.atan2(b.x - a.x, a.y - b.y) * 180) / Math.PI, sc: ssol };
+      } else {
+        out.rocket = { x: V.C.x, y: V.C.y, rot: lerp(-90, -20, V.z), sc: ssol * Math.pow((so * 0.45) / ssol, V.z) };
+      }
+      return out;
+    }
+
     // off to the goal: the Earth falls behind, the goal comes closer
     const tau = clamp((time - T.dep) / (T.end - T.dep), 0, 1);
     const cam = ease(clamp(tau / 0.7, 0, 1));
@@ -854,7 +1035,7 @@
   function fly() {
     state.phase = 'fly';
     const n = state.dest.tanks;
-    const T = timeline(n);
+    const T = timeline(state.dest);
     state.parts.forEach((p) => {
       p.el.classList.remove('move', 'snap', 'pop');
       p.spin = rand(-1, 1) < 0 ? -1 : 1;
@@ -867,7 +1048,8 @@
       last: 0,              // flight time of the previous frame
       alt: 0,               // how far the world has moved down and left
       side: 0,
-      relit: false,
+      lit: 1,               // the next burn to start (for its sound)
+      cross: T.trip ? crossings(T) : [],
       cap: '',
       clouds: Array.from({ length: 6 }, (_, i) => ({ x: rand(0.05, 0.95), y: 0.6 + i * 0.28 + rand(0, 0.1), r: rand(0.09, 0.16) })),
       stars: Array.from({ length: 80 }, () => ({ x: Math.random(), y: Math.random(), z: rand(0.3, 1) })),
@@ -875,6 +1057,15 @@
       raf: 0
     };
     state.fl = fl;
+    // captions: the one started last is shown
+    const off = () => TEXT[Astro.lang].off(state.dest.to[Astro.lang]);
+    fl.caps = [{ t0: T.z1, t1: T.dep, text: () => t('orbiting') }];
+    if (!T.trip) fl.caps.push({ t0: T.dep, t1: T.dep + 3, text: off });
+    else {
+      fl.caps.push({ t0: T.dep, t1: T.trip0, text: off }, { t0: T.trip0, t1: T.trip0 + 3, text: () => t('sunTrip') });
+      fl.cross.forEach((c) => fl.caps.push({ t0: c.t, t1: c.t + 2.2, text: () => TEXT[Astro.lang].cross(c.p.of[Astro.lang]) }));
+      buildSolar();
+    }
     drawWorld();
     starsL.innerHTML = fl.stars.map(() => '<line stroke="#fff" stroke-linecap="round"/>').join('');
     fl.flame = svgEl('g', {}, flameL);
@@ -935,7 +1126,12 @@
 
     const sc = scenery(time);
     earthL.style.display = sc.earth ? '' : 'none';
-    if (sc.earth) earthL.setAttribute('transform', `translate(${sc.earth.x} ${sc.earth.y}) scale(${sc.earth.r / 100})`);
+    if (sc.earth) {
+      earthL.setAttribute('transform', `translate(${sc.earth.x} ${sc.earth.y}) scale(${sc.earth.r / 100})`);
+      earthL.setAttribute('opacity', sc.earth.op ?? 1);
+    }
+    if (sc.sv) updateSolar(time, sc);
+    else solarL.style.display = 'none';
     orbitRing.setAttribute('opacity', sc.ring ? sc.ring.op : 0);
     if (sc.ring) {
       orbitRing.setAttribute('cx', sc.ring.x);
@@ -947,7 +1143,7 @@
       const [a, b, c, d] = sc.path;
       tripPath.setAttribute('d', `M${a.x} ${a.y}C${b.x} ${b.y} ${c.x} ${c.y} ${d.x} ${d.y}`);
     }
-    destImg.setAttribute('opacity', sc.dest ? 1 : 0);
+    destImg.setAttribute('opacity', sc.dest ? sc.dest.op ?? 1 : 0);
     if (sc.dest) {
       const D = sc.dest;
       destImg.setAttribute('x', D.x - D.size / 2);
@@ -962,15 +1158,23 @@
     // a point of the rocket, in units from its centre, on the screen
     const toScreen = (ux, uy) => ({ x: R.x + (ux * cos - uy * sin) * R.sc, y: R.y + (ux * sin + uy * cos) * R.sc });
 
-    if (!fl.relit && time >= T.dep) {
-      fl.relit = true;
-      sfx.rumble(T.burn + 0.6);
+    // the engine starts again; an orbit flashes when the rocket crosses it
+    while (fl.lit < T.burns.length && time >= T.burns[fl.lit].t0) {
+      sfx.rumble(T.burns[fl.lit].dur + 0.6);
+      fl.lit++;
+    }
+    for (const c of fl.cross) {
+      if (c.done || time < c.t) continue;
+      c.done = true;
+      const el = solarL.querySelector(`.orbit[data-id="${c.p.id}"]`);
+      if (el) restart(el, 'flash');
+      sfx.note(7);
     }
 
     // empty tanks drop off; the engine and fins move up to the next tank
     let lift = 0;
     for (let i = 0; i < n; i++) lift += 80 * ease(clamp((time - fl.drops[i]) / 0.35, 0, 1));
-    const used = fuelUsed(T, n, time);
+    const used = fuelUsed(T, time);
 
     for (const p of state.parts) {
       const s = p.slot;
@@ -1005,13 +1209,13 @@
 
     // flame below the engine, flickering, only while the engine burns
     const ramp = (a, b) => clamp((time - a) / 0.25, 0, 1) * clamp((b - time) / 0.25, 0, 1);
-    const fire = Math.max(ramp(0, ASCENT + 0.2), ramp(T.dep, T.dep + T.burn + 0.1)) * rand(0.85, 1.15);
+    const fire = Math.max(...T.burns.map((b, i) => ramp(i ? b.t0 : 0, b.t0 + b.dur + 0.15))) * rand(0.85, 1.15);
     const base = toScreen(0, Hr / 2 - lift);
     fl.flame.style.transform = `translate(${base.x}px, ${base.y}px) rotate(${R.rot}deg) scale(${R.sc}, ${R.sc * fire})`;
 
     // a line of text for the grown-ups reading along
-    const cap = time >= T.z1 && time < T.dep ? t('orbiting')
-      : time >= T.dep && time < T.dep + 3 ? TEXT[Astro.lang].off(state.dest.to[Astro.lang]) : '';
+    const shown = fl.caps.filter((c) => time >= c.t0 && time < c.t1).sort((x, y) => y.t0 - x.t0)[0];
+    const cap = shown ? shown.text() : '';
     if (cap !== fl.cap) {
       fl.cap = cap;
       if (cap) $('caption').textContent = cap;

@@ -67,11 +67,13 @@ The game uses the photos in `pusle/images/`. The list of photos is at the top of
 - When the rocket is complete, press **Start!** for a countdown and the flight, which goes as on a real trip:
   - The rocket lifts off and turns as it climbs, and the sky turns from blue to black.
   - The view zooms out to show the whole Earth, and the rocket goes once round the Earth with its engine off.
-  - The engine fires again and the rocket leaves along a curved path. The Earth falls behind and the goal grows until the rocket lands.
-  - Getting into orbit takes the first tank, or half of it when there is only one. The other tanks are used to leave orbit. Each tank drops off when it is empty.
+  - To the Moon: the engine fires again and the rocket leaves along a curved path. The Earth falls behind and the Moon grows until the rocket lands.
+  - To a planet: the engine fires again and the view zooms out to the Sun and the orbits of the planets, with the asteroid belt between Mars and Jupiter. The rocket flies half way round the Sun on an orbit that touches the Earth's orbit at one end and the planet's at the other, as real spacecraft do. It goes faster near the Sun and slower far from it, and the planets nearer the Sun go round faster (Kepler's laws). When the rocket crosses another planet's orbit, the orbit flashes. The planet moves along its own orbit and arrives at the meeting point together with the rocket, which brakes and lands as the view zooms in. The orbits are not to scale.
+  - Getting into orbit takes the first tank, or half of it when there is only one. The other tanks are used to leave orbit, except that on a trip to a planet the last half tank is kept for braking. Each tank drops off when it is empty.
+  - A caption at the top says what is happening, e.g. "Tiirleme ümber Maa 🌍" or "Lendame üle Marsi orbiidi".
 - The win screen shows the photo with the rocket and a short fact. Places visited get a 🌟 in the menu.
 
-The destinations are in the `DESTS` list at the top of `rakett/app.js`. Mars has no photo, so the game draws it, and the Earth seen from space is drawn too.
+The destinations are in the `DESTS` list at the top of `rakett/app.js`, and the planets of the Sun's view in the `PLANETS` list. Mars has no photo, so the game draws it, and the Earth seen from space is drawn too.
 
 ## Credits
 

@@ -102,6 +102,13 @@
   to { transform: scale(0.9); opacity: 0.9; }
 }
 
+/* the Sun's view on the way to a planet */
+#solarL .orbit { fill: none; stroke: rgba(255, 255, 255, 0.28); stroke-width: 1.5; }
+#solarL .orbit.flash { animation: orbit-flash 1.6s ease-out; }
+@keyframes orbit-flash { 15% { stroke: #ffd34d; stroke-width: 6; } }
+#solarL .belt { fill: #b9a88f; }
+#solarL .transfer { fill: none; stroke: rgba(255, 255, 255, 0.55); stroke-width: 2.5; stroke-dasharray: 6 10; stroke-linecap: round; }
+
 /* what is happening during the flight, at the top */
 .caption {
   position: absolute;
