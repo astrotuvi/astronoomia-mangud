@@ -1063,8 +1063,8 @@
     }
     return Infinity;
   }
-  // the rocket turns towards the right while climbing (degrees)
-  const pitchAt = (T, t) => 50 * ease(clamp((t - 2) / (T.z0 - 2), 0, 1));
+  // the rocket turns towards the left (east) while climbing (degrees)
+  const pitchAt = (T, t) => -50 * ease(clamp((t - 2) / (T.z0 - 2), 0, 1));
 
   // a point on a curve, and the way the curve goes there (degrees, 0 = up)
   function bezier([a, b, c, d], s) {
@@ -1080,7 +1080,8 @@
     };
   }
 
-  // The Sun and the planets. Angles go clockwise from the top. The Earth is
+  // The Sun and the planets, seen from the north, so that they go round
+  // anticlockwise. Angles go anticlockwise from the top. The Earth is
   // at the top when the trip starts; the planet is met at the bottom, half
   // way round the Sun, after moving along its own orbit. Planets nearer the
   // Sun go round faster (Kepler's third law).
@@ -1095,7 +1096,7 @@
     const a = (rE + rD) / 2;          // the rocket's orbit: half an ellipse
     const e = (rD - rE) / (rD + rE);
     const w = (r) => (Math.PI / T.trip) * Math.pow(a / r, 1.5);
-    const at = (r, ang) => ({ x: S.x + r * u * Math.sin(ang), y: S.y - r * u * Math.cos(ang) });
+    const at = (r, ang) => ({ x: S.x - r * u * Math.sin(ang), y: S.y - r * u * Math.cos(ang) });
     const angle = (p) => (p.id === 'earth' ? w(rE) * (time - T.trip0)
       : p.id === state.dest.id ? Math.PI - w(rD) * (T.arrive - time)
       : p.a0 + w(p.r) * (time - T.trip0));
@@ -1163,7 +1164,7 @@
       s += '</g>';
     }
     const b = Math.sqrt(sv.rE * sv.rD) * 100;
-    s += `<path class="transfer" d="M0 ${-sv.rE * 100}A${b} ${sv.a * 100} 0 0 1 0 ${sv.rD * 100}" vector-effect="non-scaling-stroke"/>`;
+    s += `<path class="transfer" d="M0 ${-sv.rE * 100}A${b} ${sv.a * 100} 0 0 0 0 ${sv.rD * 100}" vector-effect="non-scaling-stroke"/>`;
     for (const p of PLANETS) {
       if (p.r < sv.rD && p.id !== 'earth') s += `<circle class="planet" data-id="${p.id}" r="${p.dot * sv.m * px}" fill="${p.color}"/>`;
     }
@@ -1179,11 +1180,11 @@
     solarL.querySelectorAll('.planet').forEach((el) => {
       const p = planet(el.dataset.id);
       const ang = sv.angle(p);
-      el.setAttribute('cx', 100 * p.r * Math.sin(ang));
+      el.setAttribute('cx', -100 * p.r * Math.sin(ang));
       el.setAttribute('cy', -100 * p.r * Math.cos(ang));
     });
     const belt = solarL.querySelector('.belt');
-    if (belt) belt.setAttribute('transform', `rotate(${(sv.w((BELT[0] + BELT[1]) / 2) * (time - state.fl.T.trip0) * 180) / Math.PI})`);
+    if (belt) belt.setAttribute('transform', `rotate(${(-sv.w((BELT[0] + BELT[1]) / 2) * (time - state.fl.T.trip0) * 180) / Math.PI})`);
   }
 
   // Where the Earth, the goal and the rocket are at a flight time. The rocket
@@ -1205,7 +1206,7 @@
     const shake = time < 0.7 ? Math.sin(time * 80) * 2.5 * (1 - time / 0.7) : 0;
     // while turning it gets a little smaller if needed, to fit a narrow screen
     const rot = pitchAt(T, time);
-    const fit = Math.min(k, (W * 0.85) / (Hr * Math.sin((rot * Math.PI) / 180) + 200));
+    const fit = Math.min(k, (W * 0.85) / (Hr * Math.abs(Math.sin((rot * Math.PI) / 180)) + 200));
     const up = { x: gx + shake, y: bottom - h / 2, rot, sc: fit };
     if (time < T.z0) return { rocket: up };
 
@@ -1221,19 +1222,20 @@
         rocket: {
           x: lerp(up.x, mid.x, z),
           y: lerp(up.y, mid.y - ro, z),
-          rot: lerp(up.rot, 90, z),
+          rot: lerp(up.rot, -90, z),
           sc: up.sc * Math.pow(so / up.sc, z)
         }
       };
     }
 
-    // one lap around the Earth, clockwise from the top
+    // one lap around the Earth, anticlockwise from the top as seen from
+    // above the North Pole, as rockets and planets go
     if (time < T.dep) {
-      const phi = -Math.PI / 2 + (2 * Math.PI * (time - T.z1)) / ORBIT;
+      const phi = -Math.PI / 2 - (2 * Math.PI * (time - T.z1)) / ORBIT;
       return {
         earth: { ...mid, r: re },
         ring: { ...mid, r: ro, op: 0.5 },
-        rocket: { x: mid.x + ro * Math.cos(phi), y: mid.y + ro * Math.sin(phi), rot: (phi * 180) / Math.PI + 180, sc: so }
+        rocket: { x: mid.x + ro * Math.cos(phi), y: mid.y + ro * Math.sin(phi), rot: (phi * 180) / Math.PI, sc: so }
       };
     }
 
@@ -1254,9 +1256,9 @@
         // leaving the Earth: speeding up along the orbit while the Earth shrinks
         const dt = time - T.dep;
         const f = (V.Z / V.Z0) * (1 - V.u);
-        const lx = ((2 * Math.PI * ro) / ORBIT) * dt * (1 + dt);
+        const lx = -((2 * Math.PI * ro) / ORBIT) * dt * (1 + dt);
         out.ring = { x: V.C.x, y: V.C.y, r: (ro * V.Z) / V.Z0, op: 0.5 * (1 - V.u) };
-        out.rocket = { x: V.C.x + lx * f, y: V.C.y - ro * f, rot: 90, sc: so * Math.pow(ssol / so, V.u) };
+        out.rocket = { x: V.C.x + lx * f, y: V.C.y - ro * f, rot: -90, sc: so * Math.pow(ssol / so, V.u) };
       } else if (time < T.arrive) {
         const tau = (time - T.trip0) / T.trip;
         const q = transfer(sv, tau);
@@ -1264,7 +1266,7 @@
         const b = transfer(sv, tau + 0.002);
         out.rocket = { x: q.x, y: q.y, rot: (Math.atan2(b.x - a.x, a.y - b.y) * 180) / Math.PI, sc: ssol };
       } else {
-        out.rocket = { x: V.C.x, y: V.C.y, rot: lerp(-90, -20, V.z), sc: ssol * Math.pow((so * 0.45) / ssol, V.z) };
+        out.rocket = { x: V.C.x, y: V.C.y, rot: lerp(90, 20, V.z), sc: ssol * Math.pow((so * 0.45) / ssol, V.z) };
       }
       return out;
     }
@@ -1273,12 +1275,12 @@
     const tau = clamp((time - T.dep) / (T.end - T.dep), 0, 1);
     const cam = ease(clamp(tau / 0.7, 0, 1));
     const f = lerp(1, 0.4, cam);
-    const E = { x: lerp(mid.x, W * 0.12, cam), y: lerp(mid.y, H * 0.86, cam), r: re * f };
+    const E = { x: lerp(mid.x, W * 0.88, cam), y: lerp(mid.y, H * 0.86, cam), r: re * f };
     const g = ease(tau);
     const size = m * 0.05 * Math.pow(0.62 / 0.05, g);
-    const D = { x: lerp(W * 0.9, W * 0.6, g), y: lerp(H * 0.14, H * 0.4, g), size };
+    const D = { x: lerp(W * 0.1, W * 0.4, g), y: lerp(H * 0.14, H * 0.4, g), size };
     const p0 = { x: E.x, y: E.y - ro * f };
-    const path = [p0, { x: p0.x + W * 0.2, y: p0.y }, { x: D.x - size * 0.35, y: D.y + size * 0.55 }, D];
+    const path = [p0, { x: p0.x - W * 0.2, y: p0.y }, { x: D.x + size * 0.35, y: D.y + size * 0.55 }, D];
     const q = bezier(path, 1 - Math.pow(1 - tau, 1.6));
     return {
       earth: E,
