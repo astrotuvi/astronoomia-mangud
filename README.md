@@ -1,4 +1,4 @@
-# Astronoomiamängud / Astronomy games
+# Astronoomia mängud / Astronomy games
 
 Simple astronomy games for children aged 5–6, and Kuu faasid for ages 8–10 (marked 8+ on the start page), in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.

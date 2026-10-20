@@ -669,6 +669,8 @@
   // ---------------------------------------------------------------------------
 
   function buildMenu() {
+    // the title's Moon: a waxing crescent, the rest faintly lit by the Earth
+    moonView($('logoMoon'), false)(75);
     // the tasks card: four phases in a 2 × 2 grid
     [45, 90, 180, 300].forEach((a, i) => {
       const s = el('svg', {
