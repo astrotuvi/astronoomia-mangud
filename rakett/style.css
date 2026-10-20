@@ -1,0 +1,116 @@
+/* Kosmoserakett: the building scene, flight and menu. The rest is in shared/common.css. */
+
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.intro {
+  margin: 10px 0 0;
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  color: var(--muted);
+}
+
+/* destinations, with one little fuel tank for each tank needed */
+.pictures { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.fuel-row { display: flex; gap: 5px; justify-content: center; min-height: 24px; }
+.fuel-row i {
+  width: 16px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid var(--ink);
+  background: linear-gradient(transparent 32%, #ffb21c 32% 68%, transparent 68%), #4fa3ff;
+}
+.pic .done-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 6px rgba(255, 211, 77, 0.8));
+}
+
+.who-btn b { font-size: 2.8rem; line-height: 1; }
+
+.reset-row { display: flex; justify-content: center; margin-top: 10px; }
+.reset {
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.reset:hover { background: var(--card-hover); }
+
+/* ---------- Scene ---------- */
+
+#scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.tray { fill: rgba(255, 255, 255, 0.3); stroke: rgba(255, 255, 255, 0.7); stroke-width: 3; }
+
+/* empty spots: dashed outlines of the parts */
+.ghost * {
+  fill: rgba(255, 255, 255, 0.35);
+  stroke: rgba(26, 20, 64, 0.5);
+  stroke-dasharray: 9 7;
+}
+.ghost .shine, .ghost .who, .ghost .fuel { display: none; }
+.slot.hint { animation: glow 0.8s ease-in-out infinite alternate; }
+.slot.hint .ghost * { stroke: #ffb21c; stroke-width: 7; stroke-dasharray: none; }
+@keyframes glow { from { opacity: 0.5; } to { opacity: 1; } }
+
+.part { cursor: grab; }
+.part.dragging { cursor: grabbing; filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.35)); }
+.part.snap { transition: transform 0.16s ease-out; }
+.part.move { transition: transform 0.6s ease-in-out; }
+.part .mid { transform-box: fill-box; transform-origin: center; }
+.part.pop .mid { animation: pop-part 0.35s ease-out; }
+.part.wiggle .mid { animation: wiggle-part 0.6s ease-in-out 2; }
+@keyframes pop-part { 50% { transform: scale(1.15); } }
+@keyframes wiggle-part { 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+
+.launch {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.launch:active { transform: translate(-50%, 5px); }
+
+.countdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18%;
+  text-align: center;
+  font-size: clamp(5rem, 22vmin, 11rem);
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 6px 0 rgba(26, 20, 64, 0.5), 0 0 40px rgba(255, 211, 77, 0.8);
+  pointer-events: none;
+  z-index: 2;
+}
+.countdown.go { color: var(--accent); font-size: clamp(3.5rem, 15vmin, 8rem); }
+.countdown.tick { animation: tick 0.9s ease-out; }
+@keyframes tick {
+  from { transform: scale(2.2); opacity: 0; }
+  30% { transform: scale(1); opacity: 1; }
+  to { transform: scale(0.9); opacity: 0.9; }
+}
+
+/* ---------- Win screen: the photo with the rocket in front ---------- */
+
+.win-pic { position: relative; }
+.win-pic img { border-radius: 24px; }
+#winRocket {
+  position: absolute;
+  left: 2%;
+  bottom: 2%;
+  height: 50%;
+  transform: rotate(-18deg);
+  filter: drop-shadow(0 0 12px rgba(255, 211, 77, 0.6));
+}

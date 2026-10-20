@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Kosmoserakett</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/common.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- gradients used by the rocket pictures (kept out of display:none parts) -->
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="shine" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stop-color="#000" stop-opacity="0.18" />
+        <stop offset="0.28" stop-color="#fff" stop-opacity="0.45" />
+        <stop offset="0.55" stop-color="#fff" stop-opacity="0" />
+        <stop offset="1" stop-color="#000" stop-opacity="0.25" />
+      </linearGradient>
+      <linearGradient id="metal" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" stop-color="#4a5063" />
+        <stop offset="0.35" stop-color="#d3d8e3" />
+        <stop offset="1" stop-color="#3e4456" />
+      </linearGradient>
+      <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff7c2" />
+        <stop offset="0.35" stop-color="#ffd34d" />
+        <stop offset="0.7" stop-color="#ff7a1a" />
+        <stop offset="1" stop-color="#ff3d1a" stop-opacity="0" />
+      </linearGradient>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop id="skyTop" offset="0" stop-color="#3d9cf0" />
+        <stop id="skyBottom" offset="1" stop-color="#bfe6ff" />
+      </linearGradient>
+      <radialGradient id="softGrad" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0.86" stop-color="#fff" />
+        <stop offset="1" stop-color="#000" />
+      </radialGradient>
+      <mask id="soft" maskContentUnits="objectBoundingBox">
+        <rect width="1" height="1" fill="url(#softGrad)" />
+      </mask>
+    </defs>
+  </svg>
+
+  <!-- Menu: pick where to fly and who flies -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">⬅️</a>
+        <h1><span class="logo">🚀</span> <span data-t="title"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="intro"></p>
+
+      <section>
+        <h2><span class="step">1</span> <span data-t="chooseDest"></span></h2>
+        <div id="dests" class="pictures"></div>
+      </section>
+
+      <section>
+        <h2><span class="step">2</span> <span data-t="chooseWho"></span></h2>
+        <div id="whos" class="counts"></div>
+      </section>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">🔧 <span data-t="play"></span></button>
+      </div>
+
+      <div class="reset-row">
+        <button id="resetBtn" class="reset hidden" data-t="reset"></button>
+      </div>
+
+      <footer class="credit">
+        <a href="https://app.astrobin.com/u/Astronoomiaklubi" target="_blank" rel="noopener" data-t="credit"></a>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Game: build the rocket, then fly -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">🏠</button>
+      <div class="progress">
+        <div class="track"><div id="progressFill" class="fill"></div></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+    </div>
+    <div id="area" class="area">
+      <svg id="scene" xmlns="http://www.w3.org/2000/svg"></svg>
+      <button id="launchBtn" class="play launch hidden">🚀 <span data-t="launch"></span></button>
+      <div id="countdown" class="countdown hidden"></div>
+    </div>
+  </div>
+
+  <!-- Win overlay -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div class="win-pic"><img id="winImg" alt=""><svg id="winRocket" aria-hidden="true"></svg></div>
+    <div class="win-card">
+      <h2><span data-t="wellDone"></span> 🎉</h2>
+      <p id="winName" class="win-name"></p>
+      <p id="winFact" class="win-fact"></p>
+      <a id="winCredit" class="win-credit" target="_blank" rel="noopener"></a>
+      <div class="win-buttons">
+        <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
+        <button id="menuBtn" class="btn alt">🪐 <span data-t="other"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/common.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -8,6 +8,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Tähepusle / Star Puzzle | [`pusle/`](pusle/) | Put together a jigsaw puzzle of an astronomy photo |
 | Tähtkujud / Constellations | [`tahtkujud/`](tahtkujud/) | Join the stars of a constellation in order 1, 2, 3 … |
 | Mälumäng / Memory | [`malumang/`](malumang/) | Turn cards over and find the pairs of astronomy photos |
+| Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
 
 The language and sound settings are shared by all games.
 
@@ -57,6 +58,15 @@ Star positions are J2000 coordinates, drawn as on a sky chart with north up and 
 - 👁️ shows all cards for a moment. The win screen shows all the pairs found and the number of tries.
 
 The game uses the photos in `pusle/images/`. The list of photos is at the top of `malumang/app.js`.
+
+## Kosmoserakett
+
+- Pick where to fly and who flies (a cat, dog, bear, rabbit or astronaut). The farther away, the more fuel tanks the rocket needs: 1 for the Moon, 2 for Mars, 3 for Jupiter and 4 for Saturn.
+- Drag the parts from the tray onto the dashed outlines: engine, fuel tanks, body with a window, nose and two fins. A part snaps into the nearest free spot of its kind.
+- Tapping a part in the tray makes its spot glow. If nothing happens for a few seconds, the next empty spot glows and its part wiggles. Tapping a part on the rocket changes its colour.
+- When the rocket is complete, press **Start!** for a countdown and the flight. The sky turns from blue to black, each tank empties and drops off, and the rocket flies to its goal. The win screen shows the photo with the rocket and a short fact. Places visited get a 🌟 in the menu.
+
+The destinations are in the `DESTS` list at the top of `rakett/app.js`. Mars has no photo, so the game draws it.
 
 ## Credits
 
