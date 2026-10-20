@@ -1,6 +1,6 @@
 # Astronoomiamängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, and Kuu faasid for ages 8–10 (marked 8+ on the start page), in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -9,6 +9,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Tähtkujud / Constellations | [`tahtkujud/`](tahtkujud/) | Join the stars of a constellation in order 1, 2, 3 … |
 | Mälumäng / Memory | [`malumang/`](malumang/) | Turn cards over and find the pairs of astronomy photos |
 | Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
+| Kuu faasid / Moon Phases (8+) | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 
 The language and sound settings are shared by all games.
 
@@ -75,6 +76,18 @@ The game uses the photos in `pusle/images/`. The list of photos is at the top of
 - The win screen shows the photo with the rocket and a short fact. Places visited get a 🌟 in the menu.
 
 The destinations are in the `DESTS` list at the top of `rakett/app.js`, and the planets of the Sun's view in the `PLANETS` list. Mars has no photo, so the game draws it, and the Earth seen from space is drawn too.
+
+## Kuu faasid
+
+- Two views side by side (or one above the other on a tall screen):
+  - **from space**, above the North Pole: the Sun's light comes from the right, and the Moon goes round the Earth anticlockwise. The Moon is always half lit, and a blue arc marks the half that faces the Earth. The shadows of the Earth and the Moon are drawn too. The Moon's path is tilted by about 5 degrees: on its bright half the Moon is a little higher than the Earth's path round the Sun, on its faint dashed half a little lower, and the two yellow dots (the nodes) are where the halves meet.
+  - **from the Earth**: the Moon photo, lit to match, with its name below. The dark part glows faintly with light reflected from the Earth, except near new moon.
+- Drag the Moon anywhere along its path. Each new phase plays a note.
+- **Uuri / Explore**: the Moon can be moved freely, and the view from the Earth also says how many days have passed since new moon and when the Moon is highest in the sky. ▶️ plays a whole month in 20 seconds. As the Moon goes round, the nodes turn about 31 degrees a month relative to the Sun (as the Earth goes round the Sun), so they point towards the Sun about every six months. Then "Varjutuste aeg / Eclipse season" is shown.
+- **Ülesanded / Tasks**: 11 tasks, e.g. make a full moon, make the Moon in a picture, say what the Moon looks like a week after full moon, put the Moon exactly between the Earth and the Sun (and find that there is no eclipse), and make a solar and a lunar eclipse in eclipse season. The view from the Earth is hidden while the Moon is dragged, and shown when it is let go, so the child has to think first. A wrong answer names the phase that was made. Each solved task shows a short fact. 👁️ shows for a moment where the Moon should go.
+- Near new moon the Sun appears behind the Moon. Usually the Moon passes above or below it, but in eclipse season it covers the Sun partly or completely. Near full moon the Earth's shadow likewise passes above or below the Moon, or in eclipse season crosses it and turns it copper red.
+
+The phases and their names are in the `PHASES` list at the top of `kuufaasid/app.js`, and the tasks in the `TASKS` list. The sizes and distances are not to scale.
 
 ## Credits
 

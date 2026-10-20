@@ -35,6 +35,18 @@
       display: block;
       background: #0b1238;
     }
+    .game-card { position: relative; }
+    .game-card .age {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--ink);
+      font-size: 1rem;
+      font-style: normal;
+    }
     .game-card b { font-size: 1.6rem; color: var(--accent); padding: 0 6px; }
     .game-card span { font-size: 1.05rem; font-weight: 600; color: var(--muted); padding: 0 6px; }
     /* Mälumäng: a found pair and two cards face down */
@@ -142,6 +154,29 @@
           <b data-t="rocket"></b>
           <span data-t="rocketText"></span>
         </a>
+        <a class="game-card" href="kuufaasid/index.html">
+          <!-- a waxing crescent from the Moon photo, the rest faintly lit by the Earth -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <clipPath id="moonDisc"><circle cx="50" cy="50" r="36" /></clipPath>
+              <filter id="moonGrey"><feColorMatrix type="saturate" values="0.45" /></filter>
+              <filter id="moonEdge" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="0.7" /></filter>
+              <mask id="moonLit"><path d="M50 14A36 36 0 0 1 50 86A18 36 0 0 0 50 14Z" fill="#fff" filter="url(#moonEdge)" /></mask>
+            </defs>
+            <g clip-path="url(#moonDisc)" filter="url(#moonGrey)">
+              <image href="pusle/images/moon.jpg" x="9.6" y="9.6" width="80.8" height="80.8" opacity="0.14" />
+              <image href="pusle/images/moon.jpg" x="9.6" y="9.6" width="80.8" height="80.8" mask="url(#moonLit)" />
+            </g>
+            <g fill="#fff">
+              <circle cx="12" cy="18" r="0.7" opacity="0.7" /><circle cx="88" cy="12" r="0.6" opacity="0.5" />
+              <circle cx="90" cy="80" r="0.7" opacity="0.6" /><circle cx="10" cy="88" r="0.6" opacity="0.6" />
+              <circle cx="30" cy="94" r="0.5" opacity="0.6" />
+            </g>
+          </svg>
+          <em class="age">8+</em>
+          <b data-t="phases"></b>
+          <span data-t="phasesText"></span>
+        </a>
       </div>
 
       <footer class="credit" data-t="credit"></footer>
@@ -161,6 +196,8 @@
         memoryText: 'Pööra kaarte ja leia paarid: planeedid, udukogud ja galaktikad.',
         rocket: 'Kosmoserakett',
         rocketText: 'Ehita rakett ja lenda Kuule, Marsile, Jupiterile või Saturnile.',
+        phases: 'Kuu faasid',
+        phasesText: 'Liiguta Kuud ümber Maa ja vaata, miks Kuu kuju muutub. Leia ka varjutused.',
         credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.'
       },
       en: {
@@ -173,6 +210,8 @@
         memoryText: 'Turn the cards over and find the pairs: planets, nebulae and galaxies.',
         rocket: 'Space Rocket',
         rocketText: 'Build a rocket and fly to the Moon, Mars, Jupiter or Saturn.',
+        phases: 'Moon Phases',
+        phasesText: 'Move the Moon round the Earth and see why its shape changes. Find the eclipses too.',
         credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.'
       }
     });

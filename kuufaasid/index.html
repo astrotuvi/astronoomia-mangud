@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Kuu faasid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/common.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- Menu: explore freely or solve the tasks -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">⬅️</a>
+        <h1><span class="logo">🌙</span> <span data-t="title"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="intro"></p>
+
+      <section>
+        <h2 data-t="chooseMode"></h2>
+        <div id="modes" class="pictures">
+          <button class="pic" data-mode="explore">
+            <img src="../pusle/images/moon.jpg" alt="">
+            <span data-t="explore"></span>
+            <small data-t="exploreText"></small>
+          </button>
+          <button class="pic" data-mode="tasks">
+            <svg id="modePhases" class="phase-grid" viewBox="0 0 200 200" aria-hidden="true"></svg>
+            <span data-t="tasks"></span>
+            <small data-t="tasksText"></small>
+          </button>
+        </div>
+      </section>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+
+      <footer class="credit">
+        <a href="https://app.astrobin.com/u/Astronoomiaklubi" target="_blank" rel="noopener" data-t="credit"></a>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Game: the view from space and the view from the Earth -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">🏠</button>
+      <div class="progress">
+        <div id="track" class="track"><div id="progressFill" class="fill"></div></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <button id="runBtn" class="icon" data-t-label="run" aria-label="Käivita">▶️</button>
+      <button id="hintBtn" class="icon" data-t-label="hint" aria-label="Vihje">👁️</button>
+      <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+    </div>
+    <div id="area" class="area">
+      <div id="task" class="task">
+        <svg id="target" class="target" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
+        <div>
+          <div id="ask" class="ask"></div>
+          <div id="feedback" class="feedback"></div>
+        </div>
+      </div>
+      <div class="panels">
+        <div class="panel space">
+          <svg id="space" viewBox="-110 -110 220 220"></svg>
+          <div class="panel-title" data-t="fromSpace"></div>
+          <div id="season" class="season hidden" data-t="season"></div>
+          <div class="legend">
+            <div><i class="up"></i> <span data-t="higher"></span></div>
+            <div><i class="down"></i> <span data-t="lower"></span></div>
+            <div><i></i> <span data-t="weSee"></span></div>
+          </div>
+          <div class="sun-label" data-t="sun"></div>
+          <div id="fact" class="fact hidden">
+            <div class="fact-body">
+              <figure id="factPic" class="hidden">
+                <img src="../pusle/images/eclipse.jpg" alt="">
+                <a href="https://www.astrobin.com/ytu8fs/" target="_blank" rel="noopener" data-t="eclipseCredit"></a>
+              </figure>
+              <p id="factText"></p>
+            </div>
+            <button id="nextBtn" class="btn">▶ <span data-t="next"></span></button>
+          </div>
+        </div>
+        <div class="panel view">
+          <div class="panel-title" data-t="fromEarth"></div>
+          <svg id="view" viewBox="-120 -120 240 240"></svg>
+          <div class="phase-name" id="phaseName"></div>
+          <div class="phase-info" id="phaseInfo"></div>
+          <div id="cover" class="cover hidden"><b>❓</b><span data-t="cover"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Win overlay -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div class="win-pic"><img src="../pusle/images/moon.jpg" alt=""></div>
+    <div class="win-card">
+      <h2><span data-t="wellDone"></span> 🎉</h2>
+      <p class="win-name" data-t="allSolved"></p>
+      <p class="win-fact" data-t="winFact"></p>
+      <a class="win-credit" href="https://www.astrobin.com/oy5di6/" target="_blank" rel="noopener" data-t="moonCredit"></a>
+      <div class="win-buttons">
+        <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
+        <button id="menuBtn" class="btn alt">🏠 <span data-t="menu"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/common.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
