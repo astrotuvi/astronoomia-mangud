@@ -85,6 +85,8 @@
       resetAsk: 'Kas eemaldada 🌟 kõigilt külastatud kohtadelt?',
       credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.',
       photo: 'Foto: Tõrva Astronoomiaklubi (AstroBin)',
+      orbiting: 'Tiirleme ümber Maa 🌍',
+      off: (to) => `Lendame ${to}!`,
       arrived: (who, to) => `${who} jõudis ${to}!`
     },
     en: {
@@ -105,13 +107,19 @@
       resetAsk: 'Remove the 🌟 from all the places you have visited?',
       credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.',
       photo: 'Photo: Tõrva Astronoomiaklubi (AstroBin)',
+      orbiting: 'Going round the Earth 🌍',
+      off: (to) => `Off to ${to}!`,
       arrived: (who, to) => `${who} made it to ${to}!`
     }
   };
 
   const HINT_MS = 5000;   // idle time before the next empty spot starts to glow
-  const BURN = 2.6;       // seconds of flight per fuel tank
-  const ARRIVE = 2.4;     // seconds from the last tank to landing
+  // the flight, in seconds
+  const ASCENT = 3.8;     // from liftoff up into space
+  const ZOOM = 1.6;       // the view zooms out until the whole Earth is seen
+  const ORBIT = 3.4;      // one lap around the Earth
+  const BURN = 2.0;       // burning one fuel tank on the way to the goal
+  const CRUISE = 2.6;     // from the last burn to landing
 
   // ---------------------------------------------------------------------------
   // Rocket parts
@@ -266,13 +274,29 @@
   const scene = $('scene');
   const t = (key) => TEXT[Astro.lang][key];
 
+  // The Earth seen from space, drawn with a radius of 100.
+  const EARTH = '<circle r="116" fill="url(#earthGlow)"/><circle r="100" fill="url(#earthGrad)"/>' +
+    '<g clip-path="url(#earthClip)"><g fill="#4cb963">' +
+    '<path d="M-12-62C8-74 38-58 34-36C52-24 48 4 30 20C26 44 12 66-2 64C-12 46-16 28-28 14C-42 4-38-20-24-28C-28-44-24-56-12-62Z"/>' +
+    '<path d="M-82-30C-66-34-56-18-58-2C-56 20-66 40-76 52C-88 36-96 6-94-10C-92-22-88-28-82-30Z"/>' +
+    '<path d="M52-70C72-74 92-52 86-30C80-36 66-38 56-50C50-56 48-64 52-70Z"/>' +
+    '<path d="M48 40C62 34 78 42 74 56C66 64 52 62 46 52Z"/></g>' +
+    '<g fill="#fff"><ellipse cy="100" rx="50" ry="14"/>' +
+    '<g opacity="0.7"><ellipse cx="-40" cy="-40" rx="26" ry="6" transform="rotate(-12 -40 -40)"/>' +
+    '<ellipse cx="10" cy="34" rx="34" ry="6" transform="rotate(8 10 34)"/><ellipse cx="60" cy="-6" rx="20" ry="5"/>' +
+    '<ellipse cx="-60" cy="62" rx="22" ry="5"/></g></g>' +
+    '<circle r="100" fill="url(#earthShade)"/></g>';
+
   scene.innerHTML =
     '<rect width="100%" height="100%" fill="url(#skyGrad)"/>' +
-    '<g id="starsL"></g><image id="destImg" mask="url(#soft)" style="mix-blend-mode: screen"/>' +
+    `<g id="starsL"></g><g id="earthL" style="display: none">${EARTH}</g>` +
+    '<image id="destImg" mask="url(#soft)" style="mix-blend-mode: screen"/>' +
+    '<g fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 10" stroke-linecap="round">' +
+    '<circle id="orbitRing" opacity="0"/><path id="tripPath" opacity="0"/></g>' +
     '<g id="worldL"></g><g id="slotsL"></g><g id="trayL"></g><g id="flameL"></g><g id="partsL"></g>';
   const L$ = (id) => scene.querySelector('#' + id);
-  const [starsL, destImg, worldL, slotsL, trayL, flameL, partsL] =
-    ['starsL', 'destImg', 'worldL', 'slotsL', 'trayL', 'flameL', 'partsL'].map(L$);
+  const [starsL, earthL, destImg, orbitRing, tripPath, worldL, slotsL, trayL, flameL, partsL] =
+    ['starsL', 'earthL', 'destImg', 'orbitRing', 'tripPath', 'worldL', 'slotsL', 'trayL', 'flameL', 'partsL'].map(L$);
 
   function svgEl(tag, attrs = {}, parent) {
     const el = document.createElementNS(SVGNS, tag);
@@ -363,6 +387,12 @@
     starsL.innerHTML = '';
     destImg.setAttribute('href', state.dest.file);
     destImg.setAttribute('opacity', 0);
+    earthL.style.display = 'none';
+    orbitRing.setAttribute('opacity', 0);
+    tripPath.setAttribute('opacity', 0);
+    worldL.style.transform = '';
+    worldL.style.display = '';
+    $('caption').classList.remove('show');
     setSky(0);
     slotsL.style.display = '';
     trayL.style.display = '';
@@ -696,8 +726,13 @@
   // Flight
   // ---------------------------------------------------------------------------
 
+  // The flight, as on a real trip: up into space, the view zooms out to show
+  // the whole Earth, one lap around the Earth with the engine off, then the
+  // engine fires again and the rocket leaves for its goal.
+
   const ease = (x) => x * x * (3 - 2 * x);
   const lerp = (a, b, x) => a + (b - a) * x;
+  const mod = (a, b) => ((a % b) + b) % b;
 
   function mix(c1, c2, x) {
     const a = parseInt(c1.slice(1), 16);
@@ -713,20 +748,127 @@
     document.getElementById('skyBottom').setAttribute('stop-color', mix('#bfe6ff', '#0d1440', x));
   }
 
+  // When each part of the trip starts. Getting into orbit takes the first
+  // tank (half of it if there is only one), leaving takes the rest.
+  function timeline(n) {
+    const A = Math.min(1, n / 2);
+    const z0 = ASCENT + 0.2;
+    const z1 = z0 + ZOOM;
+    const dep = z1 + ORBIT;
+    const burn = (n - A) * BURN;
+    return { A, z0, z1, dep, burn, end: dep + burn + CRUISE };
+  }
+  const fuelUsed = (T, n, t) =>
+    T.A * clamp((t - 0.3) / (ASCENT - 0.3), 0, 1) + (n - T.A) * clamp((t - T.dep) / T.burn, 0, 1);
+  // when tank i is empty and drops off
+  const dropTime = (T, i) => (i + 1 <= T.A ? 0.3 + ((ASCENT - 0.3) * (i + 1)) / T.A : T.dep + (i + 1 - T.A) * BURN);
+  // the rocket turns towards the right while climbing (degrees)
+  const pitchAt = (T, t) => 50 * ease(clamp((t - 2) / (T.z0 - 2), 0, 1));
+
+  // a point on a curve, and the way the curve goes there (degrees, 0 = up)
+  function bezier([a, b, c, d], s) {
+    const u = 1 - s;
+    const w = [u * u * u, 3 * u * u * s, 3 * u * s * s, s * s * s];
+    const v = [u * u, 2 * u * s, s * s];
+    const tx = v[0] * (b.x - a.x) + v[1] * (c.x - b.x) + v[2] * (d.x - c.x);
+    const ty = v[0] * (b.y - a.y) + v[1] * (c.y - b.y) + v[2] * (d.y - c.y);
+    return {
+      x: w[0] * a.x + w[1] * b.x + w[2] * c.x + w[3] * d.x,
+      y: w[0] * a.y + w[1] * b.y + w[2] * c.y + w[3] * d.y,
+      rot: (Math.atan2(tx, -ty) * 180) / Math.PI
+    };
+  }
+
+  // Where the Earth, the goal and the rocket are at a flight time. The rocket
+  // is given by its centre, turn (degrees, 0 = nose up) and scale.
+  function scenery(time) {
+    const { W, H, k, gx, gy } = state.L;
+    const T = state.fl.T;
+    const m = Math.min(W, H);
+    const Hr = rocketHeight(state.dest.tanks);
+    const re = m * 0.2;            // the whole Earth
+    const ro = m * 0.3;            // the orbit around it
+    const so = (m * 0.16) / Hr;    // the rocket's scale in space
+    const mid = { x: W / 2, y: H / 2 };
+
+    // climbing: the rocket rises to the middle, the world moves past
+    const h = Hr * k;
+    const rise = ease(clamp((time - 0.3) / 2.2, 0, 1));
+    const bottom = gy - Math.max(0, gy - h / 2 - H * 0.58) * rise;
+    const shake = time < 0.7 ? Math.sin(time * 80) * 2.5 * (1 - time / 0.7) : 0;
+    // while turning it gets a little smaller if needed, to fit a narrow screen
+    const rot = pitchAt(T, time);
+    const fit = Math.min(k, (W * 0.85) / (Hr * Math.sin((rot * Math.PI) / 180) + 200));
+    const up = { x: gx + shake, y: bottom - h / 2, rot, sc: fit };
+    if (time < T.z0) return { rocket: up };
+
+    // zooming out: the Earth comes up from below and shrinks into a ball
+    if (time < T.z1) {
+      const z = ease((time - T.z0) / ZOOM);
+      const r0 = Math.max(W, H) * 1.6;
+      const r = r0 * Math.pow(re / r0, z);
+      const top = lerp(H, H / 2 - re, z);
+      return {
+        earth: { x: W / 2, y: top + r, r },
+        ring: { ...mid, r: ro, op: 0.5 * clamp((z - 0.6) / 0.4, 0, 1) },
+        rocket: {
+          x: lerp(up.x, mid.x, z),
+          y: lerp(up.y, mid.y - ro, z),
+          rot: lerp(up.rot, 90, z),
+          sc: up.sc * Math.pow(so / up.sc, z)
+        }
+      };
+    }
+
+    // one lap around the Earth, clockwise from the top
+    if (time < T.dep) {
+      const phi = -Math.PI / 2 + (2 * Math.PI * (time - T.z1)) / ORBIT;
+      return {
+        earth: { ...mid, r: re },
+        ring: { ...mid, r: ro, op: 0.5 },
+        rocket: { x: mid.x + ro * Math.cos(phi), y: mid.y + ro * Math.sin(phi), rot: (phi * 180) / Math.PI + 180, sc: so }
+      };
+    }
+
+    // off to the goal: the Earth falls behind, the goal comes closer
+    const tau = clamp((time - T.dep) / (T.end - T.dep), 0, 1);
+    const cam = ease(clamp(tau / 0.7, 0, 1));
+    const f = lerp(1, 0.4, cam);
+    const E = { x: lerp(mid.x, W * 0.12, cam), y: lerp(mid.y, H * 0.86, cam), r: re * f };
+    const g = ease(tau);
+    const size = m * 0.05 * Math.pow(0.62 / 0.05, g);
+    const D = { x: lerp(W * 0.9, W * 0.6, g), y: lerp(H * 0.14, H * 0.4, g), size };
+    const p0 = { x: E.x, y: E.y - ro * f };
+    const path = [p0, { x: p0.x + W * 0.2, y: p0.y }, { x: D.x - size * 0.35, y: D.y + size * 0.55 }, D];
+    const q = bezier(path, 1 - Math.pow(1 - tau, 1.6));
+    return {
+      earth: E,
+      ring: { x: E.x, y: E.y, r: ro * f, op: 0.5 * (1 - clamp(tau / 0.25, 0, 1)) },
+      dest: D,
+      path,
+      pathOp: 0.4 * clamp(tau / 0.1, 0, 1) * clamp((1 - tau) / 0.25, 0, 1),
+      rocket: { x: q.x, y: q.y, rot: q.rot, sc: so * lerp(1, 0.45, ease(clamp((tau - 0.6) / 0.4, 0, 1))) }
+    };
+  }
+
   function fly() {
     state.phase = 'fly';
     const n = state.dest.tanks;
-    const total = n * BURN + ARRIVE;
+    const T = timeline(n);
     state.parts.forEach((p) => {
       p.el.classList.remove('move', 'snap', 'pop');
       p.spin = rand(-1, 1) < 0 ? -1 : 1;
-      p.dropT = null;
+      p.drop = null;
     });
     const fl = {
+      T,
+      drops: Array.from({ length: n }, (_, i) => dropTime(T, i)),
       t0: performance.now(),
       last: 0,              // flight time of the previous frame
-      alt: 0,
-      total,
+      alt: 0,               // how far the world has moved down and left
+      side: 0,
+      relit: false,
+      cap: '',
       clouds: Array.from({ length: 6 }, (_, i) => ({ x: rand(0.05, 0.95), y: 0.6 + i * 0.28 + rand(0, 0.1), r: rand(0.09, 0.16) })),
       stars: Array.from({ length: 80 }, () => ({ x: Math.random(), y: Math.random(), z: rand(0.3, 1) })),
       smoke: Array.from({ length: 10 }, () => ({ x: rand(-1, 1), v: rand(0.5, 1.2), r: rand(0.6, 1.2) })),
@@ -738,7 +880,7 @@
     fl.flame = svgEl('g', {}, flameL);
     fl.flame.innerHTML = '<path d="M-30 0Q-38 55 0 135Q38 55 30 0Z" fill="url(#flameGrad)"/>' +
       '<path d="M-16 0Q-20 32 0 78Q20 32 16 0Z" fill="#fff7c2"/>';
-    sfx.rumble(total);
+    sfx.rumble(ASCENT + 0.6);
     fl.raf = requestAnimationFrame(frame);
   }
 
@@ -747,31 +889,37 @@
     if (!fl) return;
     const { W, H, k, gx, gy } = state.L;
     const n = state.dest.tanks;
+    const T = fl.T;
+    const Hr = rocketHeight(n);
     const time = (now - fl.t0) / 1000;
-    const burnEnd = n * BURN;
-    const arrive = clamp((time - burnEnd) / ARRIVE, 0, 1);
 
-    // speed up after liftoff, slow down when arriving; added up in small
-    // steps, so slow frames do not change how far the rocket gets
-    const speed = (tt) => H * 1.5 * clamp((tt - 0.3) / 2.2, 0, 1) * (1 - 0.85 * ease(clamp((tt - burnEnd) / ARRIVE, 0, 1)));
-    for (let tt = fl.last; tt < time; tt += 1 / 60) fl.alt += speed(tt) * Math.min(1 / 60, time - tt);
+    // climbing: speed up after liftoff, slow down when reaching orbit; added
+    // up in small steps, so slow frames do not change how far the rocket gets
+    const speed = (tt) => H * 1.5 * clamp((tt - 0.3) / 2.2, 0, 1) * (1 - ease(clamp((tt - T.z0 + 0.4) / 1.2, 0, 1)));
+    for (let tt = fl.last; tt < time; tt += 1 / 60) {
+      const d = speed(tt) * Math.min(1 / 60, time - tt);
+      const a = (pitchAt(T, tt) * Math.PI) / 180;
+      fl.alt += d * Math.cos(a);
+      fl.side += d * Math.sin(a);
+    }
     fl.last = time;
     const v = speed(time);
+    const pa = (pitchAt(T, time) * Math.PI) / 180;
     setSky(clamp(fl.alt / (H * 3), 0, 1));
-    worldL.style.transform = `translateY(${fl.alt}px)`;
+    worldL.style.transform = `translate(${-fl.side}px, ${fl.alt}px)`;
+    worldL.style.display = time > T.z1 ? 'none' : '';
 
-    // stars stream past, faster when near
-    const starsOn = clamp((fl.alt / (H * 3) - 0.3) / 0.5, 0, 1);
-    starsL.setAttribute('opacity', starsOn);
+    // stars stream past while climbing, faster when near
+    starsL.setAttribute('opacity', clamp((fl.alt / (H * 3) - 0.3) / 0.5, 0, 1));
     [...starsL.children].forEach((ln, i) => {
       const s = fl.stars[i];
-      const y = ((s.y * (H + 40) + fl.alt * s.z * 0.5) % (H + 40)) - 20;
-      const x = s.x * W;
+      const x = mod(s.x * (W + 40) - fl.side * s.z * 0.5, W + 40) - 20;
+      const y = mod(s.y * (H + 40) + fl.alt * s.z * 0.5, H + 40) - 20;
       const len = Math.min(40, v * s.z * 0.02);
       ln.setAttribute('x1', x);
-      ln.setAttribute('x2', x);
       ln.setAttribute('y1', y);
-      ln.setAttribute('y2', y - len);
+      ln.setAttribute('x2', x + Math.sin(pa) * len);
+      ln.setAttribute('y2', y - Math.cos(pa) * len);
       ln.setAttribute('stroke-width', 1 + 2 * s.z);
     });
 
@@ -785,66 +933,93 @@
       }).join('');
     }
 
-    // the planet comes into view near the end
-    const pp = clamp((time - (burnEnd - 1.6)) / (1.6 + ARRIVE * 0.8), 0, 1);
-    const pe = ease(pp);
-    const size = Math.min(W, H) * (0.1 + 0.62 * pe);
-    const pcy = lerp(-size * 0.6, H * 0.36, pe);
-    destImg.setAttribute('opacity', pp > 0 ? 1 : 0);
-    destImg.setAttribute('x', W / 2 - size / 2);
-    destImg.setAttribute('y', pcy - size / 2);
-    destImg.setAttribute('width', size);
-    destImg.setAttribute('height', size);
+    const sc = scenery(time);
+    earthL.style.display = sc.earth ? '' : 'none';
+    if (sc.earth) earthL.setAttribute('transform', `translate(${sc.earth.x} ${sc.earth.y}) scale(${sc.earth.r / 100})`);
+    orbitRing.setAttribute('opacity', sc.ring ? sc.ring.op : 0);
+    if (sc.ring) {
+      orbitRing.setAttribute('cx', sc.ring.x);
+      orbitRing.setAttribute('cy', sc.ring.y);
+      orbitRing.setAttribute('r', sc.ring.r);
+    }
+    tripPath.setAttribute('opacity', sc.path ? sc.pathOp : 0);
+    if (sc.path) {
+      const [a, b, c, d] = sc.path;
+      tripPath.setAttribute('d', `M${a.x} ${a.y}C${b.x} ${b.y} ${c.x} ${c.y} ${d.x} ${d.y}`);
+    }
+    destImg.setAttribute('opacity', sc.dest ? 1 : 0);
+    if (sc.dest) {
+      const D = sc.dest;
+      destImg.setAttribute('x', D.x - D.size / 2);
+      destImg.setAttribute('y', D.y - D.size / 2);
+      destImg.setAttribute('width', D.size);
+      destImg.setAttribute('height', D.size);
+    }
 
-    // rocket: shake on the pad, rise to the middle, then fly into the planet
-    const h = rocketHeight(n) * k;
-    const rise = ease(clamp((time - 0.3) / 2.2, 0, 1));
-    let ay = gy - Math.max(0, gy - h / 2 - H * 0.58) * rise;
-    const ax = gx + (time < 0.7 ? Math.sin(time * 80) * 2.5 * (1 - time / 0.7) : 0);
-    const ae = ease(arrive);
-    const rs = lerp(1, 0.25, ae);
-    ay = lerp(ay, pcy + size * 0.15 + h * rs, ae);
+    const R = sc.rocket;
+    const cos = Math.cos((R.rot * Math.PI) / 180);
+    const sin = Math.sin((R.rot * Math.PI) / 180);
+    // a point of the rocket, in units from its centre, on the screen
+    const toScreen = (ux, uy) => ({ x: R.x + (ux * cos - uy * sin) * R.sc, y: R.y + (ux * sin + uy * cos) * R.sc });
+
+    if (!fl.relit && time >= T.dep) {
+      fl.relit = true;
+      sfx.rumble(T.burn + 0.6);
+    }
 
     // empty tanks drop off; the engine and fins move up to the next tank
     let lift = 0;
-    for (let i = 0; i < n; i++) lift += 80 * ease(clamp((time - (i + 1) * BURN) / 0.35, 0, 1));
+    for (let i = 0; i < n; i++) lift += 80 * ease(clamp((time - fl.drops[i]) / 0.35, 0, 1));
+    const used = fuelUsed(T, n, time);
 
     for (const p of state.parts) {
-      const q = slotPos(p.slot);
-      let y = q.y;
-      if (p.kind === 'engine' || p.kind === 'fin') y -= lift * k;
-      let X = ax + (q.x - gx) * rs;
-      let Y = ay + (y - gy) * rs;
-      let rot = 0;
+      const s = p.slot;
+      const sh = SHAPES[p.kind];
+      let uy = s.ay + sh.h / 2 + Hr / 2;
+      if (p.kind === 'engine' || p.kind === 'fin') uy -= lift;
+      let pose = { ...toScreen(s.ax + s.flip * (sh.x0 + sh.w / 2), uy), rot: R.rot, sc: R.sc };
       let op = 1;
       if (p.kind === 'tank') {
-        const i = p.slot.tank;
-        p.inner.querySelector('.fuel').setAttribute('width', 52 * (1 - clamp((time - i * BURN) / BURN, 0, 1)));
-        const drop = time - (i + 1) * BURN;
-        if (drop > 0) {
-          if (p.dropT === null) {
-            p.dropT = time;
+        const i = s.tank;
+        p.inner.querySelector('.fuel').setAttribute('width', 52 * (1 - clamp(used - i, 0, 1)));
+        const dt = time - fl.drops[i];
+        if (dt > 0) {
+          if (!p.drop) {
+            p.drop = pose;
             sfx.pick();
           }
-          // falls back towards Earth, turning slowly
-          X += drop * 40 * p.spin;
-          Y += drop * drop * H * 0.45;
-          rot = drop * 50 * p.spin;
-          op = clamp(1 - drop / 1.4, 0, 1);
+          // falls behind the rocket, turning slowly
+          const d = p.drop;
+          const f = d.sc / k;
+          const lx = dt * 40 * p.spin * f;
+          const ly = dt * dt * H * 0.45 * f;
+          const c = Math.cos((d.rot * Math.PI) / 180);
+          const sn = Math.sin((d.rot * Math.PI) / 180);
+          pose = { x: d.x + lx * c - ly * sn, y: d.y + lx * sn + ly * c, rot: d.rot + dt * 50 * p.spin, sc: d.sc };
+          op = clamp(1 - dt / 1.4, 0, 1);
         }
       }
-      setTransform(p.el, X, Y, k * rs, p.flip, rot);
+      setTransform(p.el, pose.x, pose.y, pose.sc, p.flip, pose.rot);
       p.el.style.opacity = op;
     }
 
-    // flame below the engine, flickering
-    const fx = ax;
-    const fy = ay + (-lift * k) * rs;
-    const flick = rand(0.85, 1.15) * clamp(time / 0.3, 0, 1) * (1 - ae);
-    fl.flame.style.transform = `translate(${fx}px, ${fy}px) scale(${k * rs}, ${k * rs * flick})`;
+    // flame below the engine, flickering, only while the engine burns
+    const ramp = (a, b) => clamp((time - a) / 0.25, 0, 1) * clamp((b - time) / 0.25, 0, 1);
+    const fire = Math.max(ramp(0, ASCENT + 0.2), ramp(T.dep, T.dep + T.burn + 0.1)) * rand(0.85, 1.15);
+    const base = toScreen(0, Hr / 2 - lift);
+    fl.flame.style.transform = `translate(${base.x}px, ${base.y}px) rotate(${R.rot}deg) scale(${R.sc}, ${R.sc * fire})`;
 
-    updateProgress(clamp(time / fl.total, 0, 1));
-    if (time >= fl.total + 0.4) {
+    // a line of text for the grown-ups reading along
+    const cap = time >= T.z1 && time < T.dep ? t('orbiting')
+      : time >= T.dep && time < T.dep + 3 ? TEXT[Astro.lang].off(state.dest.to[Astro.lang]) : '';
+    if (cap !== fl.cap) {
+      fl.cap = cap;
+      if (cap) $('caption').textContent = cap;
+      $('caption').classList.toggle('show', !!cap);
+    }
+
+    updateProgress(clamp(time / T.end, 0, 1));
+    if (time >= T.end + 0.4) {
       state.phase = 'done';
       win();
       return;

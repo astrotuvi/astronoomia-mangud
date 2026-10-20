@@ -64,9 +64,14 @@ The game uses the photos in `pusle/images/`. The list of photos is at the top of
 - Pick where to fly and who flies (a cat, dog, bear, rabbit or astronaut). The farther away, the more fuel tanks the rocket needs: 1 for the Moon, 2 for Mars, 3 for Jupiter and 4 for Saturn.
 - Drag the parts from the tray onto the dashed outlines: engine, fuel tanks, body with a window, nose and two fins. A part snaps into the nearest free spot of its kind.
 - Tapping a part in the tray makes its spot glow. If nothing happens for a few seconds, the next empty spot glows and its part wiggles. Tapping a part on the rocket changes its colour.
-- When the rocket is complete, press **Start!** for a countdown and the flight. The sky turns from blue to black, each tank empties and drops off, and the rocket flies to its goal. The win screen shows the photo with the rocket and a short fact. Places visited get a 🌟 in the menu.
+- When the rocket is complete, press **Start!** for a countdown and the flight, which goes as on a real trip:
+  - The rocket lifts off and turns as it climbs, and the sky turns from blue to black.
+  - The view zooms out to show the whole Earth, and the rocket goes once round the Earth with its engine off.
+  - The engine fires again and the rocket leaves along a curved path. The Earth falls behind and the goal grows until the rocket lands.
+  - Getting into orbit takes the first tank, or half of it when there is only one. The other tanks are used to leave orbit. Each tank drops off when it is empty.
+- The win screen shows the photo with the rocket and a short fact. Places visited get a 🌟 in the menu.
 
-The destinations are in the `DESTS` list at the top of `rakett/app.js`. Mars has no photo, so the game draws it.
+The destinations are in the `DESTS` list at the top of `rakett/app.js`. Mars has no photo, so the game draws it, and the Earth seen from space is drawn too.
 
 ## Credits
 
