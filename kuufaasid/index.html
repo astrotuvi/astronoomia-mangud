@@ -13,16 +13,12 @@
 <body>
   <div class="sky" aria-hidden="true"></div>
 
-  <!-- Game: the task, the view from space and the view from the Earth -->
+  <!-- Game: the goals, the view from space and the view from the Earth -->
   <div id="game" class="screen game">
     <div class="bar">
       <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">🏠</a>
-      <div class="progress">
-        <div id="track" class="track"><div id="progressFill" class="fill"></div></div>
-        <div id="progressText" class="progress-text"></div>
-      </div>
+      <div id="goals" class="goals"></div>
       <button id="runBtn" class="icon" data-t-label="run" aria-label="Käivita">▶️</button>
-      <button id="taskBtn" class="icon" data-t-label="taskBtn" aria-label="Ülesanne">🎯</button>
       <button id="hintBtn" class="icon" data-t-label="hint" aria-label="Vihje">👁️</button>
       <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
       <div class="lang">
@@ -31,14 +27,6 @@
       </div>
     </div>
     <div id="area" class="area">
-      <div id="task" class="task">
-        <svg id="target" class="target" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
-        <div>
-          <div id="ask" class="ask"></div>
-          <div id="feedback" class="feedback"></div>
-        </div>
-        <button id="laterBtn" class="later" data-t-label="later" aria-label="Peida ülesanne">✕</button>
-      </div>
       <div class="panels">
         <div class="panel space">
           <svg id="space" viewBox="-110 -110 220 220"></svg>
@@ -50,6 +38,21 @@
             <div><i></i> <span data-t="weSee"></span></div>
           </div>
           <div class="sun-label" data-t="sun"></div>
+        </div>
+        <div class="panel view">
+          <div class="view-head">
+            <div class="panel-title" data-t="fromEarth"></div>
+            <div class="goal">
+              <div class="goal-text">
+                <b id="ask"></b>
+                <small id="feedback"></small>
+              </div>
+              <svg id="goalPic" class="goal-pic" viewBox="-100 -100 200 200" aria-hidden="true"></svg>
+            </div>
+          </div>
+          <svg id="view" viewBox="-120 -120 240 240"></svg>
+          <div class="phase-name" id="phaseName"></div>
+          <div class="phase-info" id="phaseInfo"></div>
           <div id="fact" class="fact hidden">
             <div class="fact-body">
               <figure id="factPic" class="hidden">
@@ -60,12 +63,6 @@
             </div>
             <button id="nextBtn" class="btn">▶ <span data-t="next"></span></button>
           </div>
-        </div>
-        <div class="panel view">
-          <div class="panel-title" data-t="fromEarth"></div>
-          <svg id="view" viewBox="-120 -120 240 240"></svg>
-          <div class="phase-name" id="phaseName"></div>
-          <div class="phase-info" id="phaseInfo"></div>
           <a class="photo-credit" href="https://www.astrobin.com/oy5di6/" target="_blank" rel="noopener" data-t="moonCredit"></a>
         </div>
       </div>

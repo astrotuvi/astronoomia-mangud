@@ -84,9 +84,12 @@ The destinations are in the `DESTS` list at the top of `rakett/app.js`, and the 
   - **from the Earth**: the Moon photo, lit to match, with its name below. The dark part glows faintly with light reflected from the Earth, except near new moon.
 - Drag the Moon anywhere along its path. Each new phase plays a note. ▶️ plays a whole month in 20 seconds. The view from the Earth also says how many days have passed since new moon.
 - As the Moon goes round, the nodes turn about 31 degrees a month relative to the Sun (as the Earth goes round the Sun), so they point towards the Sun about every six months. Then "Varjutuste aeg / Eclipse season" is shown.
-- The game opens straight into the views, with 10 tasks shown one at a time above them: first the four main phases (full moon, first quarter, new moon, last quarter), then the phases in between from pictures, both not in the order they come, and last a solar and a lunar eclipse. A task is solved when the Moon is let go in the right place, and then a short fact is shown.
+- The game opens straight into the views, with 10 tasks: first the four main phases (full moon, first quarter, new moon, last quarter), then the phases in between from pictures, both not in the order they come, and last a solar and a lunar eclipse.
+  - The top bar shows all the tasks as a row of small pictures. The current one is ringed, and solved ones get a ⭐ (on a phone the row is under the buttons).
+  - The current task is at the top right of the view from the Earth: its picture and a short text such as "Tee täiskuu", with a tip or a message below it.
+  - A task is solved when the Moon is let go in the right place. Then a short fact is shown under the Moon, with a button to go on.
   - The eclipses work only in eclipse season, so the child has to play months forward with ▶️ until it comes. When the solar eclipse task starts, the nodes turn so that the next new moon passes by the Sun and the one after it, one or two months away, makes an eclipse, with a lunar eclipse two weeks later. A new or full moon that misses says so.
-  - 🎯 or ✕ folds the task away to just explore, and 🎯 brings it back. 👁️ shows for a moment where the Moon should go.
+  - 👁️ shows for a moment where the Moon should go.
 - Near new moon the Sun appears behind the Moon. Usually the Moon passes above or below it, but in eclipse season it covers the Sun partly or completely. Near full moon the Earth's shadow likewise passes above or below the Moon, or in eclipse season crosses it and turns it copper red.
 
 The phases and their names are in the `PHASES` list at the top of `kuufaasid/app.js`, and the tasks in the `TASKS` list. The sizes and distances are not to scale.
