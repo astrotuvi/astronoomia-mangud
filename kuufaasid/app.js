@@ -176,7 +176,6 @@
       solar: 'päikesevarjutus',
       lunar: 'kuuvarjutus',
       age: (d) => `Noorkuust möödas ${d} ${d === 1 ? 'päev' : 'päeva'}`,
-      highest: (h) => (h === 0 ? 'kõige kõrgemal keskööl' : h === 12 ? 'kõige kõrgemal keskpäeval' : `kõige kõrgemal kell ${h}`),
       wellDone: 'Tubli!',
       allSolved: `Lahendasid kõik ${TASKS.length} ülesannet!`,
       winFact: 'Kuu ise on alati pooleldi valgustatud. Tema kuju muutub sellepärast, et me näeme Maalt iga päev erinevat osa tema valgustatud poolest.',
@@ -207,7 +206,6 @@
       solar: 'solar eclipse',
       lunar: 'lunar eclipse',
       age: (d) => `${d} ${d === 1 ? 'day' : 'days'} since new moon`,
-      highest: (h) => (h === 0 ? 'highest at midnight' : h === 12 ? 'highest at noon' : `highest at ${h}:00`),
       wellDone: 'Well done!',
       allSolved: `You solved all ${TASKS.length} tasks!`,
       winFact: 'Half of the Moon is always lit. Its shape changes because every day we see a different part of the lit half from the Earth.',
@@ -417,8 +415,11 @@
     sp.red.setAttribute('opacity', (0.75 * clamp((3.6 - shadowSep(a)) / 2, 0, 1)).toFixed(2));
     const at = (n) => `${(ORBIT * Math.cos(rad(n))).toFixed(2)} ${(-ORBIT * Math.sin(rad(n))).toFixed(2)}`;
     const n = state.node;
-    sp.orbitUp.setAttribute('d', `M${at(n)}A${ORBIT} ${ORBIT} 0 0 0 ${at(n + 180)}`);
-    sp.orbitDown.setAttribute('d', `M${at(n + 180)}A${ORBIT} ${ORBIT} 0 0 0 ${at(n)}`);
+    // each half as two quarters: an arc between two opposite points would
+    // wobble, as rounding moves its centre a little off the Earth
+    const half = (from) => `M${at(from)}A${ORBIT} ${ORBIT} 0 0 0 ${at(from + 90)}A${ORBIT} ${ORBIT} 0 0 0 ${at(from + 180)}`;
+    sp.orbitUp.setAttribute('d', half(n));
+    sp.orbitDown.setAttribute('d', half(n + 180));
     sp.nodeLine.setAttribute('x1', ORBIT * Math.cos(rad(n)));
     sp.nodeLine.setAttribute('y1', -ORBIT * Math.sin(rad(n)));
     sp.nodeLine.setAttribute('x2', -ORBIT * Math.cos(rad(n)));
@@ -455,8 +456,7 @@
     $('phaseName').textContent = nameOf(state.angle);
     const a = norm(state.angle);
     const days = Math.round((a / 360) * MONTH) % 30;
-    const hour = Math.round(12 + a / 15) % 24;   // the Moon is highest when it is due south
-    $('phaseInfo').textContent = `${t('age')(days)} · ${t('highest')(hour)}`;
+    $('phaseInfo').textContent = t('age')(days);
     const hint = state.open && performance.now() < state.hintUntil;
     sp.hint.style.display = hint ? '' : 'none';
     if (hint) {

@@ -137,16 +137,16 @@
 .phase-info {
   flex: none;
   min-height: 1.4em;
-  padding: 0 8px 8px;
+  padding: 0 8px;
   text-align: center;
   font-size: clamp(0.85rem, 2.4vmin, 1.05rem);
   font-weight: 600;
   color: var(--muted);
 }
 .photo-credit {
-  position: absolute;
-  right: 10px;
-  top: 6px;
+  flex: none;
+  align-self: flex-end;
+  padding: 8px 10px 4px;
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--muted);
