@@ -32,11 +32,6 @@
           <svg id="space" viewBox="-110 -110 220 220"></svg>
           <div class="panel-title" data-t="fromSpace"></div>
           <div id="season" class="season hidden" data-t="season"></div>
-          <div class="legend">
-            <div><i class="up"></i> <span data-t="higher"></span></div>
-            <div><i class="down"></i> <span data-t="lower"></span></div>
-            <div><i></i> <span data-t="weSee"></span></div>
-          </div>
           <div class="sun-label" data-t="sun"></div>
         </div>
         <div class="panel view">
@@ -69,11 +64,11 @@
     </div>
   </div>
 
-  <!-- Win overlay -->
+  <!-- Win: a card that pops up over the game -->
   <div id="win" class="overlay hidden">
     <canvas id="confetti"></canvas>
-    <div class="win-pic"><img src="../pusle/images/moon.jpg" alt=""></div>
     <div class="win-card">
+      <div class="win-moon"><img src="../pusle/images/moon.jpg" alt=""></div>
       <h2><span data-t="wellDone"></span> 🎉</h2>
       <p class="win-name" data-t="allSolved"></p>
       <p class="win-fact" data-t="winFact"></p>

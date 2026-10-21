@@ -103,17 +103,6 @@
 #space .hint-spot { fill: none; stroke: var(--accent); stroke-width: 3; animation: hint 0.5s ease-in-out infinite alternate; }
 @keyframes hint { from { opacity: 0.3; } to { opacity: 1; } }
 
-.legend {
-  position: absolute;
-  left: 12px;
-  bottom: 8px;
-  font-size: clamp(0.8rem, 2.2vmin, 0.95rem);
-  color: var(--muted);
-  pointer-events: none;
-}
-.legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; background: var(--sky); vertical-align: middle; }
-.legend i.up { height: 2px; background: rgba(255, 255, 255, 0.7); }
-.legend i.down { height: 0; border-radius: 0; background: none; border-top: 2px dashed rgba(255, 255, 255, 0.35); }
 .season {
   position: absolute;
   top: 30px;
@@ -181,6 +170,44 @@
 .fact figure img { width: 72px; height: 72px; border-radius: 10px; display: block; }
 .fact figure a { font-size: 0.65rem; font-weight: 600; color: var(--muted); text-decoration: none; }
 .fact .btn { font-size: 1.1rem; padding: 8px 22px; }
+/* on a tall screen there is little room under the Moon, so the fact pops
+   up in the middle of the screen over the dimmed game */
+@media (max-aspect-ratio: 1/1) {
+  .fact {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    width: calc(100% - 32px);
+    max-width: 460px;
+    height: fit-content;
+    max-height: calc(100% - 32px);
+    margin: auto;
+    padding: 16px 18px 18px;
+    background: rgba(20, 28, 80, 0.97);
+    border-width: 4px;
+    border-radius: 24px;
+    box-shadow: 0 0 0 100vmax rgba(5, 8, 30, 0.6), 0 16px 50px rgba(0, 0, 0, 0.5);
+  }
+  .fact p { font-size: 1.05rem; line-height: 1.45; }
+}
 
-.win-pic img { border-radius: 24px; }
+/* the win screen pops up as one card over the dimmed game, with the Moon
+   at its top, so that it fits on a phone */
+#win { background: rgba(5, 8, 30, 0.65); }
+#win .win-card { max-height: 100%; overflow-y: auto; }
+.win-moon {
+  width: clamp(80px, 22vh, 150px);
+  aspect-ratio: 1;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 24px rgba(220, 230, 255, 0.45);
+}
+/* the photo's Moon fills 89% of it */
+.win-moon img { display: block; width: 113%; margin: -6.5%; }
+@media (max-height: 600px) {
+  #win .win-card h2 { font-size: 2rem; }
+  #win .win-name { font-size: 1.1rem; }
+  #win .win-fact { font-size: 0.95rem; }
+}
 .win-buttons a.btn { text-decoration: none; display: inline-block; }
