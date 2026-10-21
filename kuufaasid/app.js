@@ -51,7 +51,7 @@
       ask: { et: 'Tee täiskuu', en: 'Make a full moon' },
       tip: { et: 'Lohista Kuud ümber Maa', en: 'Drag the Moon round the Earth' },
       fact: {
-        et: 'Täiskuu ajal on Kuu Päikesest Maa teisel pool. Päike valgustab kogu Kuu poolt, mis on meie poole. Täiskuu tõuseb õhtul, kui Päike loojub, ja on kõige kõrgemal keskööl.',
+        et: 'Täiskuu ajal on Kuu Päikesest vastassuunas. Päike valgustab kogu Kuu poolt, mis on meie poole. Täiskuu tõuseb õhtul, kui Päike loojub, ja on kõige kõrgemal keskööl.',
         en: 'At full moon, the Moon is on the other side of the Earth from the Sun. The Sun lights all of the side that faces us. A full moon rises in the evening as the Sun sets, and is highest at midnight.'
       }
     },

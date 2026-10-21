@@ -133,21 +133,11 @@
 .phase-info {
   flex: none;
   min-height: 1.4em;
-  padding: 0 8px;
+  padding: 0 8px 8px;
   text-align: center;
   font-size: clamp(0.85rem, 2.4vmin, 1.05rem);
   font-weight: 600;
   color: var(--muted);
-}
-.photo-credit {
-  flex: none;
-  align-self: flex-end;
-  padding: 8px 10px 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--muted);
-  text-decoration: none;
-  opacity: 0.7;
 }
 
 /* what was learnt, after a task is solved: under the Moon, in place of the
