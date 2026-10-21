@@ -13,57 +13,22 @@
 <body>
   <div class="sky" aria-hidden="true"></div>
 
-  <!-- Menu: explore freely or solve the tasks -->
-  <main id="menu" class="screen menu">
-    <div class="menu-inner">
-      <header class="menu-head">
-        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">⬅️</a>
-        <h1><svg id="logoMoon" class="logo-moon" viewBox="-100 -100 200 200" aria-hidden="true"></svg> <span data-t="title"></span></h1>
-        <div class="lang">
-          <button data-lang="et">EST</button>
-          <button data-lang="en">ENG</button>
-        </div>
-      </header>
-
-      <p class="intro" data-t="intro"></p>
-
-      <section>
-        <h2 data-t="chooseMode"></h2>
-        <div id="modes" class="pictures">
-          <button class="pic" data-mode="explore">
-            <img src="../pusle/images/moon.jpg" alt="">
-            <span data-t="explore"></span>
-            <small data-t="exploreText"></small>
-          </button>
-          <button class="pic" data-mode="tasks">
-            <svg id="modePhases" class="phase-grid" viewBox="0 0 200 200" aria-hidden="true"></svg>
-            <span data-t="tasks"></span>
-            <small data-t="tasksText"></small>
-          </button>
-        </div>
-      </section>
-
-      <div class="play-row">
-        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
-      </div>
-
-      <footer class="credit">
-        <a href="https://app.astrobin.com/u/Astronoomiaklubi" target="_blank" rel="noopener" data-t="credit"></a>
-      </footer>
-    </div>
-  </main>
-
-  <!-- Game: the view from space and the view from the Earth -->
-  <div id="game" class="screen game hidden">
+  <!-- Game: the task, the view from space and the view from the Earth -->
+  <div id="game" class="screen game">
     <div class="bar">
-      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">🏠</button>
+      <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">🏠</a>
       <div class="progress">
         <div id="track" class="track"><div id="progressFill" class="fill"></div></div>
         <div id="progressText" class="progress-text"></div>
       </div>
       <button id="runBtn" class="icon" data-t-label="run" aria-label="Käivita">▶️</button>
+      <button id="taskBtn" class="icon" data-t-label="taskBtn" aria-label="Ülesanne">🎯</button>
       <button id="hintBtn" class="icon" data-t-label="hint" aria-label="Vihje">👁️</button>
       <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+      <div class="lang">
+        <button data-lang="et">EST</button>
+        <button data-lang="en">ENG</button>
+      </div>
     </div>
     <div id="area" class="area">
       <div id="task" class="task">
@@ -72,6 +37,7 @@
           <div id="ask" class="ask"></div>
           <div id="feedback" class="feedback"></div>
         </div>
+        <button id="laterBtn" class="later" data-t-label="later" aria-label="Peida ülesanne">✕</button>
       </div>
       <div class="panels">
         <div class="panel space">
@@ -100,7 +66,7 @@
           <svg id="view" viewBox="-120 -120 240 240"></svg>
           <div class="phase-name" id="phaseName"></div>
           <div class="phase-info" id="phaseInfo"></div>
-          <div id="cover" class="cover hidden"><b>❓</b><span data-t="cover"></span></div>
+          <a class="photo-credit" href="https://www.astrobin.com/oy5di6/" target="_blank" rel="noopener" data-t="moonCredit"></a>
         </div>
       </div>
     </div>
@@ -117,7 +83,7 @@
       <a class="win-credit" href="https://www.astrobin.com/oy5di6/" target="_blank" rel="noopener" data-t="moonCredit"></a>
       <div class="win-buttons">
         <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
-        <button id="menuBtn" class="btn alt">🏠 <span data-t="menu"></span></button>
+        <a class="btn alt" href="../index.html">🏠 <span data-t="allGames"></span></a>
       </div>
     </div>
   </div>

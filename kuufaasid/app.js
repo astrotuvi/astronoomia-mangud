@@ -13,8 +13,6 @@
   // anticlockwise, so the angle grows day by day.
   const MONTH = 29.53;     // days from one new moon to the next
   const MONTH_S = 20;      // seconds for one month when ▶ plays it
-  const SOLAR_TOL = 3;     // how close to new moon an eclipse task must be
-  const LUNAR_TOL = 5;     // how close to full moon an eclipse task must be
 
   // The Moon's path is tilted by about 5 degrees, so at most new and full
   // moons it passes above or below the Sun or the Earth's shadow. Eclipses
@@ -41,15 +39,16 @@
     { at: 315, et: 'kahanev kuusirp', en: 'waning crescent' }
   ];
 
-  // Tasks: make a phase by name, make the Moon in a picture (a random angle
-  // in the range), or put the Moon at an angle (new or full moon), with the
-  // nodes at an angle from the Sun's direction (NODE0 if not given).
+  // Tasks, shown one at a time over the view, from the four main phases to
+  // the phases in between (not in the order they come) and the eclipses: make a phase by name, make the Moon
+  // in a picture (a random angle in the range), or make a solar or lunar
+  // eclipse, which needs eclipse season. A task is solved when the Moon is let go in the right place.
   const TASKS = [
     {
       phase: 4,
       ask: {
-        et: 'Lohista Kuud tema teel ümber Maa nii, et Maalt paistaks täiskuu.',
-        en: 'Drag the Moon along its path round the Earth so that we see a full moon from the Earth.'
+        et: 'Lohista Kuud tema teel ümber Maa nii, et Maalt paistaks täiskuu: Kuu, mis on üleni valgustatud.',
+        en: 'Drag the Moon along its path round the Earth so that we see a full moon from the Earth: a Moon that is lit all over.'
       },
       fact: {
         et: 'Täiskuu ajal on Kuu Päikesest Maa teisel pool. Päike valgustab kogu Kuu poolt, mis on meie poole. Täiskuu tõuseb õhtul, kui Päike loojub, ja on kõige kõrgemal keskööl.',
@@ -57,47 +56,36 @@
       }
     },
     {
-      phase: 0,
-      ask: {
-        et: 'Nüüd tee noorkuu: Kuu, mida me Maalt üldse ei näe.',
-        en: 'Now make a new moon: a Moon we cannot see from the Earth at all.'
-      },
-      fact: {
-        et: 'Noorkuu ajal on Kuu Maa ja Päikese vahel. Tema valge pool on Päikese poole ja meie poole jääb tume pool. Kuu on siis päeval taevas koos Päikesega ning Päikese sära varjab ta ära.',
-        en: 'At new moon, the Moon is between the Earth and the Sun. Its lit side faces the Sun, and its dark side faces us. The Moon is then in the daytime sky with the Sun, hidden in its glare.'
-      }
-    },
-    {
       phase: 2,
       ask: {
-        et: 'Tee esimene veerand: Kuu, mille parem pool on valge ja vasak pool tume.',
+        et: 'Tee esimene veerand: Kuu, mille parem pool on valgustatud ja vasak pool tume.',
         en: 'Make a first quarter: a Moon whose right half is lit and left half is dark.'
       },
       fact: {
-        et: 'Kuu on teinud veerandi tiirust ümber Maa ja noorkuust on möödas umbes nädal. Kuu on ise alati pooleldi valgustatud, aga nüüd näeme valgest poolest ainult poolt.',
+        et: 'Kuu on teinud veerandi tiirust ümber Maa ja noorkuust on möödas umbes nädal. Kuu on ise alati pooleldi valgustatud, aga nüüd näeme valgustatud poolest ainult poolt.',
         en: 'The Moon has gone a quarter of the way round the Earth, about a week after new moon. Half of the Moon is always lit, but now we see only half of the lit half.'
       }
     },
     {
-      pic: [30, 60],
+      phase: 0,
       ask: {
-        et: 'Tee selline Kuu nagu pildil.',
-        en: 'Make a Moon like the one in the picture.'
+        et: 'Tee noorkuu: Kuu, mida me Maalt üldse ei näe.',
+        en: 'Make a new moon: a Moon we cannot see from the Earth at all.'
       },
       fact: {
-        et: 'See on kasvav kuusirp. Seda näeb õhtul läänes, varsti pärast päikeseloojangut. Vahel paistab nõrgalt ka Kuu tume osa: sinna jõuab valgus, mis on peegeldunud Maalt.',
-        en: 'This is a waxing crescent. You can see it in the west in the evening, soon after sunset. Sometimes the dark part glows faintly too: it is lit by sunlight reflected from the Earth.'
+        et: 'Noorkuu ajal on Kuu Maa ja Päikese vahel. Tema valgustatud pool on Päikese poole ja meie poole jääb tume pool. Kuu on siis päeval taevas koos Päikesega ning Päikese sära varjab ta ära.',
+        en: 'At new moon, the Moon is between the Earth and the Sun. Its lit side faces the Sun, and its dark side faces us. The Moon is then in the daytime sky with the Sun, hidden in its glare.'
       }
     },
     {
       phase: 6,
       ask: {
-        et: 'Täna on täiskuu. Kuu teeb tiiru ümber Maa umbes 4 nädalaga. Kuidas paistab Kuu nädala pärast?',
-        en: 'Today there is a full moon. The Moon goes round the Earth in about 4 weeks. What will the Moon look like a week from now?'
+        et: 'Tee viimane veerand: Kuu, mille vasak pool on valgustatud ja parem pool tume.',
+        en: 'Make a last quarter: a Moon whose left half is lit and right half is dark.'
       },
       fact: {
-        et: 'See on viimane veerand: nüüd on valge vasak pool. Viimane veerand tõuseb keskööl ja on hommikul kõrgel taevas, nii et seda näeb ka koolimineku ajal.',
-        en: 'This is the last quarter: now the left half is lit. The last quarter rises at midnight and is high in the sky in the morning, so you can see it on your way to school.'
+        et: 'Täiskuust on möödas umbes nädal. Viimane veerand tõuseb keskööl ja on hommikul kõrgel taevas, nii et seda näeb ka koolimineku ajal.',
+        en: 'About a week has passed since full moon. The last quarter rises at midnight and is high in the sky in the morning, so you can see it on your way to school.'
       }
     },
     {
@@ -112,61 +100,55 @@
       }
     },
     {
+      pic: [30, 60],
+      ask: {
+        et: 'Tee selline Kuu nagu pildil.',
+        en: 'Make a Moon like the one in the picture.'
+      },
+      fact: {
+        et: 'See on kasvav kuusirp. Seda näeb õhtul läänes, varsti pärast päikeseloojangut. Vahel paistab nõrgalt ka Kuu tume osa: sinna jõuab valgus, mis on peegeldunud Maalt.',
+        en: 'This is a waxing crescent. You can see it in the west in the evening, soon after sunset. Sometimes the dark part glows faintly too: it is lit by sunlight reflected from the Earth.'
+      }
+    },
+    {
       pic: [300, 330],
       ask: {
         et: 'Tee selline Kuu nagu pildil.',
         en: 'Make a Moon like the one in the picture.'
       },
       fact: {
-        et: 'See on kahanev kuusirp. Seda näeb varahommikul idas, enne päikesetõusu. Mõne päeva pärast on jälle noorkuu ja kõik algab otsast peale.',
-        en: 'This is a waning crescent. You can see it in the east early in the morning, before sunrise. In a few days there will be a new moon again, and it all starts over.'
+        et: 'See on kahanev kuusirp. Seda näeb varahommikul idas, enne päikesetõusu. Mõne päeva pärast on jälle noorkuu ja kõik algab otsast peale. Noorkuust noorkuuni kulub 29 ja pool päeva.',
+        en: 'This is a waning crescent. You can see it in the east early in the morning, before sunrise. In a few days there will be a new moon again, and it all starts over. From one new moon to the next takes 29 and a half days.'
       }
     },
     {
-      phase: 4,
+      pic: [120, 150],
       ask: {
-        et: 'Täna on noorkuu. Kuidas paistab Kuu 2 nädala pärast?',
-        en: 'Today there is a new moon. What will the Moon look like 2 weeks from now?'
+        et: 'Tee selline Kuu nagu pildil.',
+        en: 'Make a Moon like the one in the picture.'
       },
       fact: {
-        et: 'Kahe nädalaga teeb Kuu pool tiiru ümber Maa ja on siis Päikesest teisel pool: täiskuu. Noorkuust noorkuuni kulub 29 ja pool päeva.',
-        en: 'In two weeks the Moon goes half way round the Earth, to the side away from the Sun: a full moon. From one new moon to the next takes 29 and a half days.'
+        et: 'See on kasvav kuu: valgustatud on rohkem kui pool, aga täiskuuni on veel mõni päev. Teda näeb juba pärastlõunal, kui Päike on veel taevas.',
+        en: 'This is a waxing gibbous Moon: more than half is lit, but full moon is still a few days away. You can see it already in the afternoon, while the Sun is still up.'
       }
     },
     {
-      at: 0,
-      ask: {
-        et: 'Päikesevarjutuse ajal katab Kuu Päikese. Pane Kuu täpselt Maa ja Päikese vahele.',
-        en: 'In a solar eclipse, the Moon covers the Sun. Put the Moon exactly between the Earth and the Sun.'
-      },
-      done: {
-        et: 'Kuu on Maa ja Päikese vahel, aga …',
-        en: 'The Moon is between the Earth and the Sun, but …'
-      },
-      fact: {
-        et: 'Varjutust ei tulnudki! Kuu tee on umbes 5 kraadi viltu. Vaates kosmosest on Kuu tee heledal poolel Kuu veidi kõrgemal ja tumedal poolel veidi madalamal. Nii läheb Kuu noorkuu ajal tavaliselt Päikesest kõrgemalt või madalamalt mööda.',
-        en: 'There was no eclipse! The Moon\'s path is tilted by about 5 degrees. In the view from space, the Moon is a little higher on the bright half of its path and a little lower on the faint half. So at new moon it usually passes above or below the Sun.'
-      }
-    },
-    {
-      at: 0,
-      node: 0,
+      eclipse: 'solar',
       photo: true,
       ask: {
-        et: 'Mõne kuu pärast on kohad, kus Kuu tee hele ja tume pool kokku saavad, Päikese suunas. See on varjutuste aeg. Tee nüüd päikesevarjutus!',
-        en: 'A few months later, the points where the bright and faint halves of the Moon\'s path meet are in line with the Sun. It is eclipse season. Now make a solar eclipse!'
+        et: 'Tee nüüd päikesevarjutus! See õnnestub ainult varjutuste ajal, kui kohad, kus Kuu tee hele ja tume pool kokku saavad, on Päikese suunas. Vajuta ▶️ ja oota, kuni näed kirja „Varjutuste aeg“.',
+        en: 'Now make a solar eclipse! It only works in eclipse season, when the points where the bright and faint halves of the Moon\'s path meet are in line with the Sun. Press ▶️ and wait until you see “Eclipse season”.'
       },
       fact: {
-        et: 'Kuu vari langeb Maale ja seal läheb keset päeva pimedaks. Varjutuste aeg tuleb umbes iga poole aasta tagant. Pildil on osaline päikesevarjutus 10. juunil 2021.',
-        en: 'The Moon\'s shadow falls on the Earth, and there it gets dark in the middle of the day. Eclipse season comes about every six months. The picture shows a partial solar eclipse on 10 June 2021.'
+        et: 'Kuu vari langeb Maale ja seal läheb keset päeva pimedaks. Kuu tee on umbes 5 kraadi viltu, nii et tavaliselt läheb Kuu noorkuu ajal Päikesest kõrgemalt või madalamalt mööda. Varjutuste aeg tuleb umbes iga poole aasta tagant. Pildil on osaline päikesevarjutus 10. juunil 2021.',
+        en: 'The Moon\'s shadow falls on the Earth, and there it gets dark in the middle of the day. The Moon\'s path is tilted by about 5 degrees, so at new moon it usually passes above or below the Sun. Eclipse season comes about every six months. The picture shows a partial solar eclipse on 10 June 2021.'
       }
     },
     {
-      at: 180,
-      node: 0,
+      eclipse: 'lunar',
       ask: {
-        et: 'Varjutuste aeg kestab veel. Tee kuuvarjutus: pane Kuu Maa varju.',
-        en: 'It is still eclipse season. Make a lunar eclipse: put the Moon in the Earth\'s shadow.'
+        et: 'Tee kuuvarjutus: pane Kuu Maa varju. Seegi õnnestub ainult varjutuste ajal.',
+        en: 'Make a lunar eclipse: put the Moon in the Earth\'s shadow. This too only works in eclipse season.'
       },
       fact: {
         et: 'Kuu ei kao ära, vaid muutub vaskpunaseks. Maa õhk painutab natuke Päikese valgust Kuu peale ja see valgus on punane nagu päikeseloojangul. Päikese- ja kuuvarjutus tulevad tihti paarikaupa, kahenädalase vahega.',
@@ -178,13 +160,6 @@
   const TEXT = {
     et: {
       title: 'Kuu faasid',
-      intro: 'Miks Kuu kuju muutub? Liiguta Kuud ümber Maa ja vaata, kuidas ta Maalt paistab. Mängu sees on ka päikese- ja kuuvarjutus.',
-      chooseMode: 'Mida teeme?',
-      explore: 'Uuri',
-      exploreText: 'Liiguta Kuud vabalt või vaata, kuidas möödub terve kuu.',
-      tasks: 'Ülesanded',
-      tasksText: `${TASKS.length} ülesannet faaside ja varjutuste kohta.`,
-      play: 'Alusta',
       fromSpace: 'Vaade kosmosest, põhjapooluse kohalt',
       fromEarth: 'Maalt vaadates',
       weSee: 'pool, mida näeme Maalt',
@@ -192,22 +167,22 @@
       lower: 'Kuu tee madalam pool',
       season: '⭐ Varjutuste aeg',
       sun: 'Päike',
-      cover: 'Lase Kuu lahti, siis näed, kuidas ta Maalt paistab.',
       next: 'Edasi',
       right: 'Õige! 🎉',
-      almost: 'Peaaegu! Liiguta Kuud veel natuke.',
-      wrong: (name) => `See on ${name}. Proovi veel!`,
+      missSolar: 'Kuu läks Päikesest mööda. Oota varjutuste aega!',
+      missLunar: 'Kuu läks Maa varjust mööda. Oota varjutuste aega!',
+      taskBtn: 'Ülesanne',
+      later: 'Peida ülesanne',
       solar: 'päikesevarjutus',
       lunar: 'kuuvarjutus',
       age: (d) => `Noorkuust möödas ${d} ${d === 1 ? 'päev' : 'päeva'}`,
       highest: (h) => (h === 0 ? 'kõige kõrgemal keskööl' : h === 12 ? 'kõige kõrgemal keskpäeval' : `kõige kõrgemal kell ${h}`),
       wellDone: 'Tubli!',
       allSolved: `Lahendasid kõik ${TASKS.length} ülesannet!`,
-      winFact: 'Kuu ise on alati pooleldi valgustatud. Tema kuju muutub sellepärast, et me näeme Maalt iga päev erinevat osa tema valgest poolest.',
+      winFact: 'Kuu ise on alati pooleldi valgustatud. Tema kuju muutub sellepärast, et me näeme Maalt iga päev erinevat osa tema valgustatud poolest.',
       moonCredit: 'Foto: Tõrva Astronoomiaklubi (AstroBin)',
       eclipseCredit: 'Foto: Tõrva Astronoomiaklubi',
       again: 'Uuesti',
-      menu: 'Menüü',
       allGames: 'Kõik mängud',
       run: 'Käivita',
       hint: 'Vihje',
@@ -216,13 +191,6 @@
     },
     en: {
       title: 'Moon Phases',
-      intro: 'Why does the Moon change its shape? Move the Moon round the Earth and see what it looks like from the Earth. There is a solar and a lunar eclipse to find too.',
-      chooseMode: 'What shall we do?',
-      explore: 'Explore',
-      exploreText: 'Move the Moon freely or watch a whole month go by.',
-      tasks: 'Tasks',
-      tasksText: `${TASKS.length} tasks about phases and eclipses.`,
-      play: 'Start',
       fromSpace: 'View from space, above the North Pole',
       fromEarth: 'Seen from the Earth',
       weSee: 'the side we see from the Earth',
@@ -230,11 +198,12 @@
       lower: 'lower half of the Moon\'s path',
       season: '⭐ Eclipse season',
       sun: 'Sun',
-      cover: 'Let go of the Moon to see what it looks like from the Earth.',
       next: 'Next',
       right: 'Correct! 🎉',
-      almost: 'Almost! Move the Moon a little more.',
-      wrong: (name) => `That is a ${name}. Try again!`,
+      missSolar: 'The Moon passed by the Sun. Wait for eclipse season!',
+      missLunar: 'The Moon passed by the Earth\'s shadow. Wait for eclipse season!',
+      taskBtn: 'Task',
+      later: 'Hide the task',
       solar: 'solar eclipse',
       lunar: 'lunar eclipse',
       age: (d) => `${d} ${d === 1 ? 'day' : 'days'} since new moon`,
@@ -245,7 +214,6 @@
       moonCredit: 'Photo: Tõrva Astronoomiaklubi (AstroBin)',
       eclipseCredit: 'Photo: Tõrva Astronoomiaklubi',
       again: 'Again',
-      menu: 'Menu',
       allGames: 'All games',
       run: 'Play',
       hint: 'Hint',
@@ -258,21 +226,19 @@
   // State
   // ---------------------------------------------------------------------------
 
-  const store = Astro.makeStore('kuufaasid.');
   const state = {
-    mode: store.get('mode', 'explore'),
     angle: 300,
     total: 0,           // degrees the Moon has gone round, for the nodes
     node: NODE0,        // the angle of a node from the Sun's direction
+    nodeShift: 0,       // added to the nodes when the eclipse task starts
     dragging: false,
     running: false,     // ▶ plays a month
+    open: true,         // the task card is shown; the child can fold it away and just explore
     task: 0,
     target: 0,          // the angle of the picture task
     solved: false,      // the task is done and its fact is showing
-    shown: true,        // the view from the Earth is visible (tasks hide it while dragging)
     hintUntil: 0
   };
-  if (!['explore', 'tasks'].includes(state.mode)) state.mode = 'explore';
 
   const t = (key) => TEXT[Astro.lang][key];
   const norm = (a) => ((a % 360) + 360) % 360;
@@ -486,18 +452,12 @@
   function update() {
     updateSpace();
     showView(state.angle);
-    const tasks = state.mode === 'tasks';
-    $('cover').classList.toggle('hidden', state.shown);
-    $('phaseName').textContent = state.shown || !tasks ? nameOf(state.angle) : '';
-    if (!tasks) {
-      const a = norm(state.angle);
-      const days = Math.round((a / 360) * MONTH) % 30;
-      const hour = Math.round(12 + a / 15) % 24;   // the Moon is highest when it is due south
-      $('phaseInfo').textContent = `${t('age')(days)} · ${t('highest')(hour)}`;
-    } else {
-      $('phaseInfo').textContent = '';
-    }
-    const hint = performance.now() < state.hintUntil;
+    $('phaseName').textContent = nameOf(state.angle);
+    const a = norm(state.angle);
+    const days = Math.round((a / 360) * MONTH) % 30;
+    const hour = Math.round(12 + a / 15) % 24;   // the Moon is highest when it is due south
+    $('phaseInfo').textContent = `${t('age')(days)} · ${t('highest')(hour)}`;
+    const hint = state.open && performance.now() < state.hintUntil;
     sp.hint.style.display = hint ? '' : 'none';
     if (hint) {
       sp.hint.setAttribute('cx', ORBIT * Math.cos(rad(state.target)));
@@ -509,11 +469,13 @@
   // Dragging the Moon
   // ---------------------------------------------------------------------------
 
+  const nodeNow = () => norm(NODE0 + state.nodeShift - (NODE_STEP * state.total) / 360);
+
   let lastPhase = -1;
   function setAngle(a) {
-    // while exploring, the nodes turn as the months go by, forwards or back
+    // the nodes turn as the months go by, forwards or back
     state.total += signed(a - state.angle);
-    if (state.mode === 'explore') state.node = norm(NODE0 - (NODE_STEP * state.total) / 360);
+    state.node = nodeNow();
     state.angle = norm(a);
     const ph = phaseOf(state.angle);
     if (ph !== lastPhase && lastPhase !== -1 && state.dragging) sfx.note(ph);
@@ -537,10 +499,7 @@
     space.setPointerCapture(ev.pointerId);
     state.dragging = true;
     stopRun();
-    if (state.mode === 'tasks') {
-      state.shown = false;
-      $('feedback').textContent = '';
-    }
+    if (state.open) $('feedback').textContent = '';
     sfx.pick();
     setAngle(a);
   });
@@ -552,13 +511,13 @@
   const release = () => {
     if (!state.dragging) return;
     state.dragging = false;
-    if (state.mode === 'tasks') check();
+    if (state.open) check();
   };
   space.addEventListener('pointerup', release);
   space.addEventListener('pointercancel', release);
 
   // ---------------------------------------------------------------------------
-  // ▶ plays a month (explore)
+  // ▶ plays a month
   // ---------------------------------------------------------------------------
 
   let runRaf = 0;
@@ -585,7 +544,7 @@
 
   function taskTarget(task) {
     if (task.pic) return state.target;
-    if (task.at !== undefined) return task.at;
+    if (task.eclipse) return task.eclipse === 'solar' ? 0 : 180;
     return PHASES[task.phase].at;
   }
 
@@ -597,9 +556,8 @@
     } else {
       state.target = taskTarget(task);
     }
-    state.node = task.node ?? NODE0;
     state.solved = false;
-    state.shown = false;
+    if (task.eclipse === 'solar') holdOffSeason();
     $('target').classList.toggle('hidden', !task.pic);
     $('fact').classList.add('hidden');
     $('feedback').textContent = '';
@@ -608,39 +566,63 @@
     update();
   }
 
+  // When the solar eclipse task starts, the nodes turn so that the next new
+  // moon passes by the Sun and the one after it, one or two months away,
+  // makes an eclipse, with a lunar eclipse two weeks later.
+  const ECLIPSE_NODE = 7;   // the nodes at that second new moon
+  function holdOffSeason() {
+    const ahead = norm(-state.angle) || 360;   // degrees to the next new moon
+    const next = state.node - (NODE_STEP * ahead) / 360;
+    const want = ECLIPSE_NODE + NODE_STEP;
+    let delta = signed(want - next);
+    if (Math.abs(delta) > 90) delta = signed(want + 180 - next);
+    const from = state.nodeShift;
+    const to = from + delta;
+    const t0 = performance.now();
+    (function step(now) {
+      const k = clamp((now - t0) / 1200, 0, 1);
+      state.nodeShift = from + (to - from) * k * k * (3 - 2 * k);
+      state.node = nodeNow();
+      update();
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+
   function showTaskText() {
-    if (state.mode !== 'tasks') return;
     const task = TASKS[state.task];
     $('ask').textContent = task.ask[Astro.lang];
     $('factText').textContent = task.fact[Astro.lang];
   }
 
+  // Called when the Moon is let go. A wrong place is not named, as the child
+  // may just be exploring, but a new or full moon without an eclipse is.
   function check() {
     const task = TASKS[state.task];
     const a = state.angle;
     let ok;
-    let near;
-    if (task.pic) {
+    let msg = '';
+    if (task.eclipse === 'solar') {
+      ok = sunSep(a) < 2;
+      if (!ok && dist(a, 0) < 10) msg = t('missSolar');
+    } else if (task.eclipse === 'lunar') {
+      ok = shadowSep(a) < 3.6;
+      if (!ok && dist(a, 180) < 10) msg = t('missLunar');
+    } else if (task.pic) {
       ok = dist(a, state.target) < 15;
-      near = phaseOf(a) === phaseOf(state.target);
-    } else if (task.at !== undefined) {
-      ok = dist(a, task.at) < (task.at ? LUNAR_TOL : SOLAR_TOL);
-      near = dist(a, task.at) < 15;
     } else {
       ok = phaseOf(a) === task.phase;
-      near = false;
     }
-    state.shown = true;
     if (!ok) {
-      $('feedback').textContent = near ? t('almost') : t('wrong')(nameOf(a));
-      sfx.oops();
-      update();
+      $('feedback').textContent = msg;
       return;
     }
-    // a picture or a new or full moon snaps exactly into place
-    if (task.pic || task.at !== undefined) state.angle = taskTarget(task);
+    // a picture snaps exactly into place, and an eclipse too if it is
+    // still there
+    const snap = taskTarget(task);
+    if (task.pic) setAngle(snap);
+    else if (task.eclipse && (task.eclipse === 'solar' ? sunSep(snap) < 2 : shadowSep(snap) < 3.6)) setAngle(snap);
     state.solved = true;
-    $('feedback').textContent = task.done ? task.done[Astro.lang] : t('right');
+    $('feedback').textContent = t('right');
     $('factPic').classList.toggle('hidden', !task.photo);
     $('fact').classList.remove('hidden');
     sfx.snap();
@@ -664,82 +646,69 @@
     $('progressText').textContent = `⭐ ${done} / ${TASKS.length}`;
   }
 
-  // ---------------------------------------------------------------------------
-  // Menu and game
-  // ---------------------------------------------------------------------------
-
-  function buildMenu() {
-    // the title's Moon: a waxing crescent, the rest faintly lit by the Earth
-    moonView($('logoMoon'), false)(75);
-    // the tasks card: four phases in a 2 × 2 grid
-    [45, 90, 180, 300].forEach((a, i) => {
-      const s = el('svg', {
-        x: 25 + (i % 2) * 80, y: 25 + Math.floor(i / 2) * 80, width: 70, height: 70, viewBox: '-100 -100 200 200'
-      }, $('modePhases'));
-      moonView(s, false)(a);
-    });
-    document.querySelectorAll('#modes .pic').forEach((b) => {
-      b.addEventListener('click', () => {
-        state.mode = b.dataset.mode;
-        store.set('mode', state.mode);
-        sfx.pick();
-        updateMenu();
-      });
-    });
+  // Folds the task card away to just explore, or brings it back.
+  function toggleTask() {
+    if (state.solved) return;
+    sfx.pick();
+    state.open = !state.open;
+    $('feedback').textContent = '';
+    updateTaskCard();
+    update();
   }
 
-  function updateMenu() {
-    document.querySelectorAll('#modes .pic').forEach((b) => {
-      b.classList.toggle('selected', b.dataset.mode === state.mode);
-    });
-    const card = document.querySelector('#modes [data-mode="tasks"]');
-    let badge = card.querySelector('.done-badge');
-    if (store.get('done', false) && !badge) {
-      badge = document.createElement('span');
-      badge.className = 'done-badge';
-      badge.textContent = '🌟';
-      card.appendChild(badge);
+  function updateTaskCard() {
+    $('task').classList.toggle('hidden', !state.open);
+    $('hintBtn').classList.toggle('hidden', !state.open);
+    $('taskBtn').classList.toggle('off', !state.open);
+    fitTaskCard();
+  }
+
+  // Makes the task card as tall as the tallest task with the longest
+  // message, so that the views below do not change size during play.
+  function fitTaskCard() {
+    const card = $('task');
+    if (card.classList.contains('hidden')) return;
+    const ask = $('ask');
+    const feedback = $('feedback');
+    const target = $('target');
+    const saved = [ask.textContent, feedback.textContent, target.classList.contains('hidden')];
+    const msgs = [t('right'), t('missSolar'), t('missLunar')];
+    card.style.minHeight = '';
+    target.classList.remove('hidden');
+    // (the emoji makes a line a little taller)
+    feedback.textContent = msgs.reduce((a, b) => (b.length > a.length ? b : a)) + ' 🎉';
+    let h = 0;
+    for (const task of TASKS) {
+      ask.textContent = task.ask[Astro.lang];
+      h = Math.max(h, Math.ceil(card.getBoundingClientRect().height));
     }
+    [ask.textContent, feedback.textContent] = saved;
+    target.classList.toggle('hidden', saved[2]);
+    card.style.minHeight = h + 'px';
   }
 
-  function showMenu() {
-    stopRun();
-    Astro.stopConfetti($('confetti'));
-    $('win').classList.add('hidden');
-    $('game').classList.add('hidden');
-    $('menu').classList.remove('hidden');
-    updateMenu();
-  }
+  // ---------------------------------------------------------------------------
+  // Game
+  // ---------------------------------------------------------------------------
 
   function startGame() {
     stopRun();
     Astro.stopConfetti($('confetti'));
     $('win').classList.add('hidden');
-    $('menu').classList.add('hidden');
-    $('game').classList.remove('hidden');
     updateToggles();
-    const tasks = state.mode === 'tasks';
-    $('game').classList.toggle('explore', !tasks);
-    $('track').classList.toggle('hidden', !tasks);
-    $('progressText').classList.toggle('hidden', !tasks);
-    $('runBtn').classList.toggle('hidden', tasks);
-    $('hintBtn').classList.toggle('hidden', !tasks);
-    $('task').classList.toggle('hidden', !tasks);
     $('fact').classList.add('hidden');
     state.angle = 300;
     state.total = 0;
     state.node = NODE0;
+    state.nodeShift = 0;
     state.dragging = false;
     state.solved = false;
-    state.shown = true;
     state.hintUntil = 0;
+    state.open = true;
+    state.task = 0;
     lastPhase = -1;
-    if (tasks) {
-      state.task = 0;
-      showTask();
-    } else {
-      update();
-    }
+    updateTaskCard();
+    showTask();
   }
 
   function updateToggles() {
@@ -757,7 +726,6 @@
   }
 
   function win() {
-    store.set('done', true);
     $('fact').classList.add('hidden');
     sfx.win();
     $('win').classList.remove('hidden');
@@ -768,12 +736,11 @@
   // Buttons
   // ---------------------------------------------------------------------------
 
-  $('playBtn').addEventListener('click', startGame);
   $('againBtn').addEventListener('click', startGame);
-  $('menuBtn').addEventListener('click', showMenu);
-  $('homeBtn').addEventListener('click', showMenu);
   $('nextBtn').addEventListener('click', next);
   $('hintBtn').addEventListener('click', hint);
+  $('taskBtn').addEventListener('click', toggleTask);
+  $('laterBtn').addEventListener('click', toggleTask);
   $('runBtn').addEventListener('click', () => {
     sfx.pick();
     if (state.running) stopRun();
@@ -786,10 +753,13 @@
   });
 
   buildSpace();
-  buildMenu();
   Astro.setupLanguage(TEXT, () => {
-    updateMenu();
     showTaskText();
-    if (!$('game').classList.contains('hidden')) update();
+    fitTaskCard();
+    update();
   });
+  window.addEventListener('resize', fitTaskCard);
+  // measured again with the right font
+  if (document.fonts) document.fonts.ready.then(fitTaskCard);
+  startGame();
 })();
