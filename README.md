@@ -67,7 +67,7 @@ The game uses the photos in `pusle/images/`. The list of photos is at the top of
 - Tapping a part in the tray makes its spot glow. If nothing happens for a few seconds, the next empty spot glows and its part wiggles. Tapping a part on the rocket changes its colour.
 - When the rocket is complete, press **Start!** for a countdown and the flight, which goes as on a real trip:
   - The rocket lifts off and turns as it climbs, and the sky turns from blue to black.
-  - The view zooms out to show the whole Earth, and the rocket goes once round the Earth with its engine off.
+  - The view zooms out to show the whole Earth, and the rocket goes twice round the Earth with its engine off.
   - To the Moon: the engine fires again and the rocket leaves along a curved path. The Earth falls behind and the Moon grows until the rocket lands.
   - To a planet: the engine fires again and the view zooms out to the Sun and the orbits of the planets, with the asteroid belt between Mars and Jupiter. The rocket flies half way round the Sun on an orbit that touches the Earth's orbit at one end and the planet's at the other, as real spacecraft do. It goes faster near the Sun and slower far from it, and the planets nearer the Sun go round faster (Kepler's laws). When the rocket crosses another planet's orbit, the orbit flashes. The planet moves along its own orbit and arrives at the meeting point together with the rocket, which brakes and lands as the view zooms in. The orbits are not to scale.
   - Everything is seen from above the North Pole, so the rocket and the planets go round anticlockwise, as they do in reality. The rocket turns left (east) as it climbs.

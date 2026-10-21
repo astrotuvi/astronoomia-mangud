@@ -472,9 +472,13 @@
   }
 
   space.addEventListener('pointerdown', (ev) => {
-    if (state.solved) return;
     const a = pointAngle(ev);
-    if (a === null) return;
+    // a tap on the Earth works like ▶
+    if (a === null) {
+      togglePlay();
+      return;
+    }
+    if (state.solved) return;
     space.setPointerCapture(ev.pointerId);
     state.dragging = true;
     stopRun();
@@ -692,7 +696,7 @@
   $('nextBtn').addEventListener('click', next);
   $('hintBtn').addEventListener('click', hint);
   // Stopping ▶ is a guess, like letting go of the Moon.
-  $('runBtn').addEventListener('click', () => {
+  function togglePlay() {
     sfx.pick();
     if (state.running) {
       stopRun();
@@ -701,7 +705,8 @@
       if (!state.solved) showFeedback('');
       startRun();
     }
-  });
+  }
+  $('runBtn').addEventListener('click', togglePlay);
   $('soundBtn').addEventListener('click', () => {
     sfx.on = !sfx.on;
     updateToggles();

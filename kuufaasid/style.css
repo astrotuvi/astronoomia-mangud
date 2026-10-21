@@ -100,6 +100,7 @@
 #space .rim { fill: none; stroke: var(--sky); stroke-width: 2.2; stroke-linecap: round; }
 #space .you { fill: var(--sky); }
 #space .moon { cursor: grab; }
+#space .earth { cursor: pointer; }
 #space .hint-spot { fill: none; stroke: var(--accent); stroke-width: 3; animation: hint 0.5s ease-in-out infinite alternate; }
 @keyframes hint { from { opacity: 0.3; } to { opacity: 1; } }
 

@@ -122,10 +122,13 @@
   const ASCENT = 3.8;     // from liftoff up into space
   const ZOOM = 1.6;       // the view zooms out until the whole Earth is seen
   const ORBIT = 3.4;      // one lap around the Earth
+  const LAPS = 2;         // laps around the Earth before leaving
   const BURN = 2.0;       // burning one fuel tank on the way to the goal
   const CRUISE = 2.6;     // to the Moon: from the last burn to landing
-  const LEAVE = 1.8;      // to a planet: the view zooms out to the Sun
+  const LEAVE = 2.4;      // to a planet: the view zooms out to the Sun
   const ARRIVE = 2.6;     // to a planet: the view zooms in to the planet
+  const TRIP = 8;         // to a planet: half way round the Sun to Mars …
+  const TRIP_TANK = 3;    // … and this much longer for each further tank
 
   // The planets seen from above, for the trip to a planet. r is the size of
   // the orbit (not to scale, but in the right order), a0 where the planet is
@@ -1009,7 +1012,7 @@
   // ---------------------------------------------------------------------------
 
   // The flight, as on a real trip: up into space, the view zooms out to show
-  // the whole Earth, one lap around the Earth with the engine off, then the
+  // the whole Earth, two laps around the Earth with the engine off, then the
   // engine fires again and the rocket leaves for its goal. To a planet it
   // flies half way round the Sun, on an orbit that meets the planet's.
 
@@ -1040,7 +1043,7 @@
     const A = Math.min(1, n / 2);
     const z0 = ASCENT + 0.2;
     const z1 = z0 + ZOOM;
-    const dep = z1 + ORBIT;
+    const dep = z1 + LAPS * ORBIT;
     const burns = [{ t0: 0.3, dur: ASCENT - 0.3, fuel: A }];
     if (dest.id === 'moon') {
       burns.push({ t0: dep, dur: (n - A) * BURN, fuel: n - A });
@@ -1048,7 +1051,7 @@
     }
     const away = n - A - 0.5;
     const trip0 = dep + LEAVE;
-    const trip = 2.5 + 1.5 * (n - 1);
+    const trip = TRIP + TRIP_TANK * (n - 2);
     const arrive = trip0 + trip;
     burns.push({ t0: dep, dur: away * BURN, fuel: away }, { t0: arrive, dur: 0.5 * BURN, fuel: 0.5 });
     return { z0, z1, dep, trip0, trip, arrive, burns, end: arrive + ARRIVE };
@@ -1228,7 +1231,7 @@
       };
     }
 
-    // one lap around the Earth, anticlockwise from the top as seen from
+    // laps around the Earth, anticlockwise from the top as seen from
     // above the North Pole, as rockets and planets go
     if (time < T.dep) {
       const phi = -Math.PI / 2 - (2 * Math.PI * (time - T.z1)) / ORBIT;
