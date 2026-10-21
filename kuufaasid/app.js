@@ -48,7 +48,7 @@
   const TASKS = [
     {
       phase: 4,
-      ask: { et: 'Tee täiskuu', en: 'Make a full moon' },
+      ask: { et: 'Leia täiskuu', en: 'Find a full moon' },
       tip: { et: 'Lohista Kuud ümber Maa', en: 'Drag the Moon round the Earth' },
       fact: {
         et: 'Täiskuu ajal on Kuu Päikesest vastassuunas. Päike valgustab kogu Kuu poolt, mis on meie poole. Täiskuu tõuseb õhtul, kui Päike loojub, ja on kõige kõrgemal keskööl.',
@@ -57,7 +57,7 @@
     },
     {
       phase: 2,
-      ask: { et: 'Tee esimene veerand', en: 'Make a first quarter' },
+      ask: { et: 'Leia esimene veerand', en: 'Find a first quarter' },
       fact: {
         et: 'Kuu on teinud veerandi tiirust ümber Maa ja noorkuust on möödas umbes nädal. Kuu on ise alati pooleldi valgustatud, aga nüüd näeme valgustatud poolest ainult poolt.',
         en: 'The Moon has gone a quarter of the way round the Earth, about a week after new moon. Half of the Moon is always lit, but now we see only half of the lit half.'
@@ -65,7 +65,7 @@
     },
     {
       phase: 0,
-      ask: { et: 'Tee noorkuu', en: 'Make a new moon' },
+      ask: { et: 'Leia noorkuu', en: 'Find a new moon' },
       fact: {
         et: 'Noorkuu ajal on Kuu Maa ja Päikese vahel. Tema valgustatud pool on Päikese poole ja meie poole jääb tume pool. Kuu on siis päeval taevas koos Päikesega ning Päikese sära varjab ta ära.',
         en: 'At new moon, the Moon is between the Earth and the Sun. Its lit side faces the Sun, and its dark side faces us. The Moon is then in the daytime sky with the Sun, hidden in its glare.'
@@ -73,7 +73,7 @@
     },
     {
       phase: 6,
-      ask: { et: 'Tee viimane veerand', en: 'Make a last quarter' },
+      ask: { et: 'Leia viimane veerand', en: 'Find a last quarter' },
       fact: {
         et: 'Täiskuust on möödas umbes nädal. Viimane veerand tõuseb keskööl ja on hommikul kõrgel taevas, nii et seda näeb ka koolimineku ajal.',
         en: 'About a week has passed since full moon. The last quarter rises at midnight and is high in the sky in the morning, so you can see it on your way to school.'
@@ -81,7 +81,7 @@
     },
     {
       pic: [210, 240],
-      ask: { et: 'Tee selline Kuu', en: 'Make a Moon like this' },
+      ask: { et: 'Leia selline Kuu', en: 'Find a Moon like this' },
       fact: {
         et: 'See on kahanev kuu. Iga päevaga liigub Kuu oma teel ümber Maa umbes 12 kraadi edasi, nii et ta tõuseb iga päev umbes 50 minutit hiljem.',
         en: 'This is a waning gibbous Moon. Every day the Moon moves about 12 degrees further round the Earth, so it rises about 50 minutes later each day.'
@@ -89,7 +89,7 @@
     },
     {
       pic: [30, 60],
-      ask: { et: 'Tee selline Kuu', en: 'Make a Moon like this' },
+      ask: { et: 'Leia selline Kuu', en: 'Find a Moon like this' },
       fact: {
         et: 'See on kasvav kuusirp. Seda näeb õhtul läänes, varsti pärast päikeseloojangut. Vahel paistab nõrgalt ka Kuu tume osa: sinna jõuab valgus, mis on peegeldunud Maalt.',
         en: 'This is a waxing crescent. You can see it in the west in the evening, soon after sunset. Sometimes the dark part glows faintly too: it is lit by sunlight reflected from the Earth.'
@@ -97,7 +97,7 @@
     },
     {
       pic: [300, 330],
-      ask: { et: 'Tee selline Kuu', en: 'Make a Moon like this' },
+      ask: { et: 'Leia selline Kuu', en: 'Find a Moon like this' },
       fact: {
         et: 'See on kahanev kuusirp. Seda näeb varahommikul idas, enne päikesetõusu. Mõne päeva pärast on jälle noorkuu ja kõik algab otsast peale. Noorkuust noorkuuni kulub 29 ja pool päeva.',
         en: 'This is a waning crescent. You can see it in the east early in the morning, before sunrise. In a few days there will be a new moon again, and it all starts over. From one new moon to the next takes 29 and a half days.'
@@ -105,7 +105,7 @@
     },
     {
       pic: [120, 150],
-      ask: { et: 'Tee selline Kuu', en: 'Make a Moon like this' },
+      ask: { et: 'Leia selline Kuu', en: 'Find a Moon like this' },
       fact: {
         et: 'See on kasvav kuu: valgustatud on rohkem kui pool, aga täiskuuni on veel mõni päev. Teda näeb juba pärastlõunal, kui Päike on veel taevas.',
         en: 'This is a waxing gibbous Moon: more than half is lit, but full moon is still a few days away. You can see it already in the afternoon, while the Sun is still up.'
@@ -114,15 +114,15 @@
     {
       eclipse: 'solar',
       photo: true,
-      ask: { et: 'Tee päikesevarjutus', en: 'Make a solar eclipse' },
+      ask: { et: 'Leia päikesevarjutus', en: 'Find a solar eclipse' },
       fact: {
-        et: 'Kuu vari langeb Maale ja seal läheb keset päeva pimedaks. Kuu tee on umbes 5 kraadi viltu, nii et tavaliselt läheb Kuu noorkuu ajal Päikesest kõrgemalt või madalamalt mööda. Varjutuste aeg tuleb umbes iga poole aasta tagant. Pildil on osaline päikesevarjutus 10. juunil 2021.',
-        en: 'The Moon\'s shadow falls on the Earth, and there it gets dark in the middle of the day. The Moon\'s path is tilted by about 5 degrees, so at new moon it usually passes above or below the Sun. Eclipse season comes about every six months. The picture shows a partial solar eclipse on 10 June 2021.'
+        et: 'Kuu katab Päikese osaliselt või tervenisti. Tavaliselt läheb Kuu Päikesest mööda, sest tema orbiit on veidi viltu. Pildil on osaline päikesevarjutus 10. juunil 2021.',
+        en: 'The Moon covers the Sun partly or completely. Usually the Moon passes by the Sun, because its orbit is a little tilted. The picture shows a partial solar eclipse on 10 June 2021.'
       }
     },
     {
       eclipse: 'lunar',
-      ask: { et: 'Tee kuuvarjutus', en: 'Make a lunar eclipse' },
+      ask: { et: 'Leia kuuvarjutus', en: 'Find a lunar eclipse' },
       fact: {
         et: 'Kuu ei kao ära, vaid muutub vaskpunaseks. Maa õhk painutab natuke Päikese valgust Kuu peale ja see valgus on punane nagu päikeseloojangul. Päikese- ja kuuvarjutus tulevad tihti paarikaupa, kahenädalase vahega.',
         en: 'The Moon does not disappear but turns copper red. The Earth\'s air bends a little sunlight onto the Moon, and that light is red like a sunset. Solar and lunar eclipses often come in pairs, two weeks apart.'
@@ -146,7 +146,6 @@
       age: (d) => `Noorkuust möödas ${d} ${d === 1 ? 'päev' : 'päeva'}`,
       wellDone: 'Tubli!',
       allSolved: `Lahendasid kõik ${TASKS.length} ülesannet!`,
-      winFact: 'Kuu ise on alati pooleldi valgustatud. Tema kuju muutub sellepärast, et me näeme Maalt iga päev erinevat osa tema valgustatud poolest.',
       moonCredit: 'Foto: Tõrva Astronoomiaklubi (AstroBin)',
       eclipseCredit: 'Foto: Tõrva Astronoomiaklubi',
       again: 'Uuesti',
@@ -171,7 +170,6 @@
       age: (d) => `${d} ${d === 1 ? 'day' : 'days'} since new moon`,
       wellDone: 'Well done!',
       allSolved: `You solved all ${TASKS.length} tasks!`,
-      winFact: 'Half of the Moon is always lit. Its shape changes because every day we see a different part of the lit half from the Earth.',
       moonCredit: 'Photo: Tõrva Astronoomiaklubi (AstroBin)',
       eclipseCredit: 'Photo: Tõrva Astronoomiaklubi',
       again: 'Again',
