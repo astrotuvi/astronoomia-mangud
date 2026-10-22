@@ -1,6 +1,7 @@
 /* Theme, menu, top bar and win screen shared by all games. */
 
 :root {
+  color-scheme: dark;
   --bg1: #0a0f30;
   --bg2: #1b2766;
   --text: #f4f6ff;
