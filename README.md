@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, and Kuu faasid for ages 8–10 (marked 8+ on the start page), in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, and Kuu faasid for ages 8–10, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -9,7 +9,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Tähtkujud / Constellations | [`tahtkujud/`](tahtkujud/) | Join the stars of a constellation in order 1, 2, 3 … |
 | Mälumäng / Memory | [`malumang/`](malumang/) | Turn cards over and find the pairs of astronomy photos |
 | Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
-| Kuu faasid / Moon Phases (8+) | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
+| Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 
 The language and sound settings are shared by all games.
 

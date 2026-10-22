@@ -42,7 +42,7 @@
       allGames: 'Kõik mängud',
       peek: 'Piilu',
       sound: 'Heli',
-      credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.',
+      credit: 'Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.',
       found: (n, tries) => `Leidsid kõik ${n} paari ${tries} katsega!`
     },
     en: {
@@ -56,7 +56,7 @@
       allGames: 'All games',
       peek: 'Peek',
       sound: 'Sound',
-      credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.',
+      credit: 'Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.',
       found: (n, tries) => `You found all ${n} pairs in ${tries} tries!`
     }
   };

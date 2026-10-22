@@ -148,14 +148,14 @@
       age: (d) => `Noorkuust möödas ${d} ${d === 1 ? 'päev' : 'päeva'}`,
       wellDone: 'Tubli!',
       allSolved: `Lahendasid kõik ${TASKS.length} ülesannet!`,
-      moonCredit: 'Foto: Tõrva Astronoomiaklubi (AstroBin)',
+      moonCredit: 'Foto: Tõrva Astronoomiaklubi',
       eclipseCredit: 'Foto: Tõrva Astronoomiaklubi',
       again: 'Uuesti',
       allGames: 'Kõik mängud',
       run: 'Käivita',
       hint: 'Vihje',
       sound: 'Heli',
-      credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.'
+      credit: 'Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.'
     },
     en: {
       title: 'Moon Phases',
@@ -172,14 +172,14 @@
       age: (d) => `${d} ${d === 1 ? 'day' : 'days'} since new moon`,
       wellDone: 'Well done!',
       allSolved: `You solved all ${TASKS.length} tasks!`,
-      moonCredit: 'Photo: Tõrva Astronoomiaklubi (AstroBin)',
+      moonCredit: 'Photo: Tõrva Astronoomiaklubi',
       eclipseCredit: 'Photo: Tõrva Astronoomiaklubi',
       again: 'Again',
       allGames: 'All games',
       run: 'Play',
       hint: 'Hint',
       sound: 'Sound',
-      credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.'
+      credit: 'Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.'
     }
   };
 

@@ -112,7 +112,7 @@
       wellDone: 'Tubli!',
       again: 'Uuesti',
       other: 'Teine pilt',
-      credit: 'Fotod: Tõrva Astronoomiaklubi (AstroBin), litsents CC BY-NC-SA.',
+      credit: 'Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.',
       photo: 'Foto: Tõrva Astronoomiaklubi',
       allGames: 'Kõik mängud'
     },
@@ -124,7 +124,7 @@
       wellDone: 'Well done!',
       again: 'Again',
       other: 'New picture',
-      credit: 'Photos: Tõrva Astronoomiaklubi (AstroBin), licence CC BY-NC-SA.',
+      credit: 'Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.',
       photo: 'Photo: Tõrva Astronoomiaklubi',
       allGames: 'All games'
     }
