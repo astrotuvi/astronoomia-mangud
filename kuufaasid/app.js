@@ -22,7 +22,9 @@
   // round about every six months.
   const TILT = 5.1;
   const NODE_STEP = 30.7;  // degrees a month
-  const NODE0 = 70;        // the nodes at the start, away from the Sun
+  const NODE0 = 110;       // the nodes at the start: far enough from the Sun
+                           // that the first tasks, up to the new moon, have
+                           // no eclipse, whichever way the Moon is dragged
   const SOLAR_LIM = 1.5;   // how far above or below (degrees) the Moon can still touch the Sun
   const LUNAR_LIM = 1.2;   // … and the Earth's shadow
   const SEASON = 17;       // nodes this close to the Sun's direction make an eclipse season
