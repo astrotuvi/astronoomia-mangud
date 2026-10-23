@@ -13,26 +13,80 @@
   const GRACE = 0.25;     // s a shooting star can still be caught after it fades
   const JAR_MAX = 44;     // stars that fit in the jar; more are counted but not drawn
 
-  // Cassiopeia and Perseus as in tahtkujud/app.js: RA and Dec (J2000, degrees)
-  // and magnitude. The Perseids seem to fly out of a spot between the two.
-  const CONSTELLATIONS = [
+  const DEG = Math.PI / 180;
+
+  // Where and when: Tõrva (58° N) on the night of the Perseids, 12 August,
+  // from 22:00 to 04:00 summer time. The view faces north-east, where
+  // Perseus rises, so the sky turns round the North Star as the night goes on.
+  const LAT = 58 * DEG;
+  const START = 22;       // h, when the night begins
+  const HOURS = 6;        // how long the night is, squeezed into ROUND
+  const LST0 = 272.4;     // degrees, the sidereal time at START
+  // where the view looks (azimuth from north towards east, and height above
+  // the horizon), and how much it shows at least to each side and upwards
+  const VIEW = { az: 55, alt: 35, half: 50, top: 72 };
+  const SUN_AZ = 45;      // where the Sun is below the horizon at dawn
+
+  // Stars with names: RA and Dec (J2000, degrees) and magnitude. Cassiopeia
+  // and Perseus are as in tahtkujud/app.js. The Perseids seem to fly out of
+  // a spot between the two, RADIANT.
+  const FIGURES = [
+    { id: 'polaris', name: { et: 'Põhjanael', en: 'North Star' }, stars: [[37.95, 89.26, 2.0]] },
     {
+      id: 'cassiopeia',
       name: { et: 'Kassiopeia', en: 'Cassiopeia' },
       stars: [[2.29, 59.15, 2.3], [10.13, 56.54, 2.2], [14.18, 60.72, 2.2], [21.45, 60.24, 2.7], [28.60, 63.67, 3.4]],
       lines: [[0, 1, 2, 3, 4]]
     },
     {
+      id: 'perseus',
       name: { et: 'Perseus', en: 'Perseus' },
       stars: [
         [42.67, 55.90, 3.8], [46.20, 53.51, 2.9], [51.08, 49.86, 1.8], [55.73, 47.79, 3.0], [59.46, 40.01, 2.9],
         [59.74, 35.79, 4.0], [58.53, 31.88, 2.9], [47.37, 44.86, 3.8], [47.04, 40.96, 2.1], [46.29, 38.84, 3.4]
       ],
       lines: [[0, 1, 2, 3, 4, 5, 6], [2, 7, 8, 9]]
-    }
+    },
+    { id: 'capella', name: { et: 'Kapella', en: 'Capella' }, stars: [[79.17, 46.00, 0.1]], color: '255, 243, 208' },
+    {
+      id: 'pleiades',
+      name: { et: 'Sõel', en: 'Pleiades' },
+      size: 0.7,
+      stars: [[56.87, 24.11, 2.9], [57.29, 24.05, 3.6], [56.22, 24.11, 3.7], [56.46, 24.37, 3.9], [56.58, 23.95, 4.2], [56.30, 24.47, 4.3], [57.30, 24.14, 5.0]]
+    },
+    // Aldebaran, the orange eye of the Bull, rises after midnight
+    { id: 'aldebaran', stars: [[68.98, 16.51, 0.9]], color: '255, 196, 136' }
   ];
   const RADIANT = [48, 58];
-  const CENTRE = [32, 48];   // the middle of the picture of the two
-  const DEG = Math.PI / 180;
+
+  // A place on the sky, ready for horizon().
+  function sphere(ra, dec) {
+    return { ra: ra * DEG, sd: Math.sin(dec * DEG), cd: Math.cos(dec * DEG) };
+  }
+  FIGURES.forEach((f) => { f.pts = f.stars.map(([ra, dec]) => sphere(ra, dec)); });
+  const RAD = sphere(...RADIANT);
+  const RAD_END = horizon(RAD, lst(ROUND))[2];
+  const PLEIADES = FIGURES.find((f) => f.id === 'pleiades').pts[0];
+
+  // faint stars all over the part of the sky that can come into view
+  const FIELD = (() => {
+    const r = seeded(11);
+    const lo = Math.sin(-25 * DEG);
+    return Array.from({ length: 1400 }, (_, i) => {
+      const s = sphere(r() * 360, Math.asin(lo + r() * (1 - lo)) / DEG);
+      s.r = 0.4 + r() * r() * 1.2;
+      s.a = 0.3 + r() * 0.6;
+      // some of them twinkle
+      if (i % 14 === 0) {
+        s.tw = { f: 1.5 + r() * 2.5, p: r() * 6.3 };
+        s.r = Math.max(s.r, 1);
+      }
+      return s;
+    });
+  })();
+
+  const CLOCKS = Array.from('🕛🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚');
+  const HALF_CLOCKS = Array.from('🕧🕜🕝🕞🕟🕠🕡🕢🕣🕤🕥🕦');
 
   // the real showers, by month (0 = January) and day of their best night
   const SHOWERS = [
@@ -57,8 +111,12 @@
         satelliteAgain: ['🛰️ Satelliit', ''],
         fact1: ['Kas teadsid?', 'Langev täht ei ole päris täht. See on liivatera suurune kivike, mis põleb õhus.'],
         fact2: ['Kas teadsid?', 'Langev täht lendab 60 km sekundis. Tartust Tallinna jõuaks ta 3 sekundiga!'],
+        pleiades: ['Sõel tõuseb!', 'Vaata, kuidas tähed puude tagant üles tulevad'],
+        midnight: ['Kas teadsid?', 'Pärast südaööd näeb kõige rohkem langevaid tähti, sest Perseus on siis kõrgemal.'],
+        turning: ['Kas teadsid?', 'Tähed liiguvad ringiratast ümber Põhjanaela. Tegelikult ei pöörle taevas, vaid Maa – nagu karussell.'],
         dawn: ['Hakkab valgeks minema', 'Veel natuke!']
       },
+      time: (h, mm) => `${String(h).padStart(2, '0')}:${mm}`,
       nightOver: 'Öö sai läbi!',
       count: (n) => (n === 0 ? 'Seekord ei jäänud ükski täht purki.' :
         n === 1 ? 'Püüdsid 1 langeva tähe!' : `Püüdsid ${n} langevat tähte!`),
@@ -86,8 +144,12 @@
         satelliteAgain: ['🛰️ A satellite', ''],
         fact1: ['Did you know?', 'A shooting star is not a real star. It is a little stone, as small as a grain of sand, burning up in the air.'],
         fact2: ['Did you know?', 'A shooting star flies 60 km every second. That is over 2000 times faster than a car!'],
+        pleiades: ['The Pleiades are rising!', 'See the stars come up from behind the trees'],
+        midnight: ['Did you know?', 'After midnight you see the most shooting stars, because Perseus is higher in the sky.'],
+        turning: ['Did you know?', 'The stars go round and round the North Star. It is not really the sky that turns, but the Earth, like a merry-go-round.'],
         dawn: ['The sky is getting light', 'Just a little longer!']
       },
+      time: (h, mm) => `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`,
       nightOver: 'The night is over!',
       count: (n) => (n === 0 ? 'No stars got into the jar this time.' :
         n === 1 ? 'You caught 1 shooting star!' : `You caught ${n} shooting stars!`),
@@ -248,13 +310,20 @@
       meteors: [], crafts: [], flying: [], sparks: [],
       nextMeteor: 1.2, burst: 0, seen: {}, caption: null, hinted: null,
       fireballAt: rand(18, 48),
-      facts: [[21, 'fact1'], [39, 'fact2'], [ROUND - DAWN, 'dawn']]
+      radZ: 0
     });
+    layout();
+    // [time, caption, how long it shows]; the Pleiades once they are above
+    // the trees and the jar
+    const L = state.L;
+    let up = 0;
+    while (up < ROUND && toScreen(L, horizon(PLEIADES, lst(up)))[1] > Math.min(L.jar.y, L.H - L.G) - 12) up += 0.5;
+    state.facts = [[9, 'fact1', 6], [up, 'pleiades', 4.5], [27, 'midnight', 6], [35, 'fact2', 6],
+      [42, 'turning', 6], [ROUND - DAWN, 'dawn', 5]].sort((a, b) => a[0] - b[0]);
     // a plane and a satellite in some order, then one more of either
     const kinds = shuffle(['plane', 'satellite']);
     kinds.push(Math.random() < 0.5 ? 'plane' : 'satellite');
     state.craftPlan = [[rand(5, 9), kinds[0]], [rand(23, 27), kinds[1]], [rand(41, 45), kinds[2]]];
-    layout();
     showCaption('start', 3.5);
     updateBar();
     state.last = performance.now();
@@ -281,16 +350,27 @@
       hitR: Math.max(40, u * 0.08),
       // where the shooting stars fly: below the caption and above the trees
       box: { x0: W * 0.04, x1: W * 0.96, y0: Math.min(70, H * 0.12), y1: H - G - 10 },
-      cx: W * (W > H ? 0.3 : 0.36),
-      cy: H * (W > H ? 0.34 : 0.3),
-      s: u * 0.62
+      hy: H - G * 0.55   // the horizon straight ahead, behind the trees
     };
-    [L.rx, L.ry] = project(L, RADIANT[0], RADIANT[1]);
+    // which way is forward, right and up in the view
+    const a = VIEW.az * DEG;
+    const h = VIEW.alt * DEG;
+    L.fwd = dirOf(VIEW.az, VIEW.alt);
+    L.right = [Math.cos(a), -Math.sin(a), 0];
+    L.up = [-Math.sin(h) * Math.sin(a), -Math.sin(h) * Math.cos(a), Math.cos(h)];
+    // as big as fits both the width and the height
+    Object.assign(L, { s: 1, cx: 0, cy: 0 });
+    const wide = toScreen(L, dirOf(VIEW.az + VIEW.half, 10))[0] - toScreen(L, dirOf(VIEW.az - VIEW.half, 10))[0];
+    const y0 = toScreen(L, dirOf(VIEW.az, 0))[1];
+    const tall = y0 - toScreen(L, dirOf(VIEW.az, VIEW.top))[1];
+    L.s = Math.min(W / wide, (L.hy - L.box.y0) / tall);
+    L.cx = W / 2;
+    L.cy = L.hy - y0 * L.s;
     state.L = L;
+    turnSky();
     Object.assign($('jar').style, { left: jar.x + 'px', top: jar.y + 'px', width: jw + 'px', height: jh + 'px' });
     L.sky = drawSky(L);
     L.ground = drawGround(L);
-    L.twinkles = makeTwinkles(L);
     // things in flight would be in the wrong place now
     state.meteors = [];
     state.inJar = state.caught;
@@ -299,17 +379,47 @@
     draw();
   }
 
-  // Gnomonic projection around CENTRE, as on a sky chart: north up, east left.
-  function project(L, ra, dec) {
-    const a0 = CENTRE[0] * DEG;
-    const d0 = CENTRE[1] * DEG;
-    const a = ra * DEG;
-    const d = dec * DEG;
-    const c = Math.sin(d0) * Math.sin(d) + Math.cos(d0) * Math.cos(d) * Math.cos(a - a0);
-    const xi = (Math.cos(d) * Math.sin(a - a0)) / c;
-    const eta = (Math.cos(d0) * Math.sin(d) - Math.sin(d0) * Math.cos(d) * Math.cos(a - a0)) / c;
-    return [L.cx - xi * L.s, L.cy - eta * L.s];
+  // the sidereal time t seconds into the night, radians
+  function lst(t) {
+    return (LST0 + (HOURS * 15.041 * t) / ROUND) * DEG;
   }
+
+  // Where a star is seen from Tõrva: x to the east, y to the north, z up.
+  function horizon(s, th) {
+    const h = th - s.ra;
+    const ch = Math.cos(h);
+    return [
+      -s.cd * Math.sin(h),
+      s.sd * Math.cos(LAT) - s.cd * ch * Math.sin(LAT),
+      s.sd * Math.sin(LAT) + s.cd * ch * Math.cos(LAT)
+    ];
+  }
+
+  function dirOf(az, alt) {
+    return [Math.cos(alt * DEG) * Math.sin(az * DEG), Math.cos(alt * DEG) * Math.cos(az * DEG), Math.sin(alt * DEG)];
+  }
+
+  // Stereographic projection around the middle of the view, which keeps
+  // the shapes of the figures. Pixels, or null for what is behind the viewer.
+  function toScreen(L, v) {
+    const d = v[0] * L.fwd[0] + v[1] * L.fwd[1] + v[2] * L.fwd[2];
+    if (d < -0.3) return null;
+    const k = 2 / (1 + d);
+    return [
+      L.cx + k * (v[0] * L.right[0] + v[1] * L.right[1]) * L.s,
+      L.cy - k * (v[0] * L.up[0] + v[1] * L.up[1] + v[2] * L.up[2]) * L.s
+    ];
+  }
+
+  // the radiant moves with Perseus; the higher it is, the more shooting stars
+  function turnSky() {
+    const v = horizon(RAD, lst(state.t));
+    state.radZ = v[2];
+    [state.L.rx, state.L.ry] = toScreen(state.L, v);
+  }
+
+  // Stars low down are dimmed by the air, and hidden below the horizon.
+  const lowDim = (z) => clamp(z / 0.1, 0, 1);
 
   function layer(L) {
     const c = document.createElement('canvas');
@@ -335,37 +445,6 @@
     grad.addColorStop(1, '#26357a');
     g.fillStyle = grad;
     g.fillRect(0, 0, L.W, L.H);
-    const r = seeded(11);
-    const n = clamp(Math.round((L.W * L.H) / 3500), 80, 320);
-    for (let i = 0; i < n; i++) {
-      const x = r() * L.W;
-      const y = r() * (L.H - L.G * 0.5);
-      dot(g, x, y, 0.4 + r() * r() * 1.2, `rgba(255,255,255,${(0.3 + r() * 0.6).toFixed(2)})`);
-    }
-    // Cassiopeia and Perseus, faintly joined
-    for (const con of CONSTELLATIONS) {
-      const p = con.stars.map(([ra, dec]) => project(L, ra, dec));
-      g.strokeStyle = 'rgba(150, 180, 255, 0.2)';
-      g.lineWidth = 1.2;
-      g.lineJoin = 'round';
-      for (const line of con.lines) {
-        g.beginPath();
-        line.forEach((k, i) => (i ? g.lineTo(...p[k]) : g.moveTo(...p[k])));
-        g.stroke();
-      }
-      con.stars.forEach(([, , mag], k) => {
-        const rr = 0.9 + (4.2 - mag) * 0.85;
-        dot(g, p[k][0], p[k][1], rr * 2.4, 'rgba(200, 220, 255, 0.12)');
-        dot(g, p[k][0], p[k][1], rr, '#fff');
-      });
-      // the name below the figure
-      const size = Math.round(clamp(L.u * 0.03, 11, 15));
-      g.fillStyle = 'rgba(200, 220, 255, 0.45)';
-      g.font = `700 ${size}px Nunito, sans-serif`;
-      g.textAlign = 'center';
-      const xs = p.map((q) => q[0]);
-      g.fillText(con.name[Astro.lang], (Math.min(...xs) + Math.max(...xs)) / 2, Math.max(...p.map((q) => q[1])) + size + 8);
-    }
     return c;
   }
 
@@ -424,17 +503,6 @@
       g.fill();
     }
     return c;
-  }
-
-  function makeTwinkles(L) {
-    const r = seeded(23);
-    return Array.from({ length: 26 }, () => ({
-      x: r() * L.W,
-      y: r() * (L.box.y1 - 20),
-      r: 0.9 + r() * 1.1,
-      f: 1.5 + r() * 2.5,
-      p: r() * 6.3
-    }));
   }
 
   // ---------------------------------------------------------------------------
@@ -513,6 +581,7 @@
     if (!state.over) {
       state.t += dt;
       state.idle += dt;
+      turnSky();
       plan();
       if (state.t >= ROUND) {
         state.t = ROUND;
@@ -560,7 +629,9 @@
       if (m && state.idle * 1000 >= HINT_MS && !state.hinted) state.hinted = m;
       if (state.burst > 0) state.burst--;
       else if (Math.random() < 0.15) state.burst = 2;
-      state.nextMeteor = T + (state.burst > 0 ? rand(0.25, 0.4) : rand(1.2, 2));
+      // from one every 2 s in the evening to one every 1.2 s at dawn
+      const rate = Math.max(0.3, state.radZ) / RAD_END;
+      state.nextMeteor = T + (state.burst > 0 ? rand(0.25, 0.4) : rand(0.9, 1.5) / rate);
     }
     if (state.fireballAt && T >= state.fireballAt) {
       state.fireballAt = 0;
@@ -568,7 +639,7 @@
     }
     if (state.craftPlan.length && T >= state.craftPlan[0][0]) spawnCraft(state.craftPlan.shift()[1]);
     // a fact waits until the caption before it is gone
-    if (state.facts.length && T >= state.facts[0][0] && !state.caption) showCaption(state.facts.shift()[1], 6);
+    if (state.facts.length && T >= state.facts[0][0] && !state.caption) showCaption(...state.facts.shift().slice(1));
   }
 
   function draw() {
@@ -577,18 +648,23 @@
     const T = state.t;
     ctx.clearRect(0, 0, L.W, L.H);
     ctx.drawImage(L.sky, 0, 0, L.W, L.H);
-    for (const s of L.twinkles) {
-      const a = 0.5 + 0.5 * Math.sin(T * s.f + s.p);
-      dot(ctx, s.x, s.y, s.r * (0.7 + 0.5 * a), `rgba(255,255,255,${(0.3 + 0.7 * a).toFixed(2)})`);
-    }
-    // dawn: the sky gets light and the stars fade
-    const dawn = clamp((T - (ROUND - DAWN)) / DAWN, 0, 1) + (state.over ? state.overT * 0.1 : 0);
+    drawStars(T);
+    // dawn: the sky gets light, most of all low in the north-east, above
+    // the Sun, and the stars fade
+    const dawn = Math.min(1, clamp((T - (ROUND - DAWN)) / DAWN, 0, 1) + (state.over ? state.overT * 0.1 : 0));
     if (dawn > 0) {
       const g = ctx.createLinearGradient(0, 0, 0, L.H);
-      g.addColorStop(0, `rgba(90, 140, 220, ${(0.85 * dawn).toFixed(3)})`);
-      g.addColorStop(0.7, `rgba(240, 170, 160, ${(0.85 * dawn).toFixed(3)})`);
-      g.addColorStop(1, `rgba(255, 190, 110, ${Math.min(1, dawn).toFixed(3)})`);
+      g.addColorStop(0, `rgba(70, 110, 190, ${(0.6 * dawn).toFixed(3)})`);
+      g.addColorStop(1, `rgba(150, 150, 210, ${(0.75 * dawn).toFixed(3)})`);
       ctx.fillStyle = g;
+      ctx.fillRect(0, 0, L.W, L.H);
+      const x = toScreen(L, dirOf(SUN_AZ, 0))[0];
+      const R = Math.max(L.W, L.H) * (0.45 + 0.55 * dawn);
+      const gl = ctx.createRadialGradient(x, L.hy, 0, x, L.hy, R);
+      gl.addColorStop(0, `rgba(255, 200, 120, ${dawn.toFixed(3)})`);
+      gl.addColorStop(0.45, `rgba(250, 160, 140, ${(0.6 * dawn).toFixed(3)})`);
+      gl.addColorStop(1, 'rgba(250, 160, 140, 0)');
+      ctx.fillStyle = gl;
       ctx.fillRect(0, 0, L.W, L.H);
     }
     for (const c of state.crafts) drawCraft(c);
@@ -618,6 +694,65 @@
       ctx.restore();
     }
     ctx.shadowBlur = 0;
+  }
+
+  // the stars where they are at time T, the named ones joined and labelled
+  function drawStars(T) {
+    const L = state.L;
+    const th = lst(T);
+    for (const s of FIELD) {
+      const v = horizon(s, th);
+      if (v[2] <= 0) continue;
+      const p = toScreen(L, v);
+      if (!p || p[0] < -3 || p[0] > L.W + 3 || p[1] < -3) continue;
+      let a = s.a;
+      let r = s.r;
+      if (s.tw) {
+        const w = 0.5 + 0.5 * Math.sin(T * s.tw.f + s.tw.p);
+        a = 0.3 + 0.7 * w;
+        r *= 0.7 + 0.5 * w;
+      }
+      dot(ctx, p[0], p[1], r, `rgba(255,255,255,${(a * lowDim(v[2])).toFixed(2)})`);
+    }
+    const size = Math.round(clamp(L.u * 0.03, 11, 15));
+    ctx.font = `700 ${size}px Nunito, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = 1.2;
+    for (const f of FIGURES) {
+      const v = f.pts.map((s) => horizon(s, th));
+      const p = v.map((q) => (q[2] > -0.05 ? toScreen(L, q) : null));
+      for (const line of f.lines || []) {
+        for (let i = 1; i < line.length; i++) {
+          const a = p[line[i - 1]];
+          const b = p[line[i]];
+          if (!a || !b) continue;
+          const dim = lowDim(Math.min(v[line[i - 1]][2], v[line[i]][2]) + 0.05);
+          ctx.strokeStyle = `rgba(150, 180, 255, ${(0.2 * dim).toFixed(2)})`;
+          ctx.beginPath();
+          ctx.moveTo(...a);
+          ctx.lineTo(...b);
+          ctx.stroke();
+        }
+      }
+      const seen = [];
+      f.stars.forEach(([, , mag], k) => {
+        if (!p[k] || v[k][2] <= 0) return;
+        const dim = lowDim(v[k][2]);
+        const rr = (0.9 + (4.2 - mag) * 0.85) * (f.size || 1);
+        const color = f.color || '255, 255, 255';
+        dot(ctx, p[k][0], p[k][1], rr * 2.4, `rgba(${color}, ${(0.12 * dim).toFixed(2)})`);
+        dot(ctx, p[k][0], p[k][1], rr, `rgba(${color}, ${dim.toFixed(2)})`);
+        seen.push(p[k]);
+      });
+      // the name below the figure
+      if (f.name && seen.length) {
+        const xs = seen.map((q) => q[0]);
+        const dim = lowDim(Math.max(...v.map((q) => q[2])));
+        ctx.fillStyle = `rgba(200, 220, 255, ${(0.45 * dim).toFixed(2)})`;
+        ctx.fillText(f.name[Astro.lang], (Math.min(...xs) + Math.max(...xs)) / 2, Math.max(...seen.map((q) => q[1])) + size + 6);
+      }
+    }
   }
 
   function drawMeteor(m) {
@@ -795,8 +930,18 @@
     $('caption').classList.add('hidden');
   }
 
+  // the time of night, in steps of 10 minutes, with a clock face to match
+  function clockText() {
+    const m = Math.floor((START * 60 + (HOURS * 60 * state.t) / ROUND) / 10) * 10;
+    const h = Math.floor(m / 60) % 24;
+    const face = (m % 60 >= 30 ? HALF_CLOCKS : CLOCKS)[h % 12];
+    return `${face} ${t('time')(h, String(m % 60).padStart(2, '0'))}`;
+  }
+
   function updateBar() {
     $('progressFill').style.width = (100 * state.t) / ROUND + '%';
+    const clock = clockText();
+    if ($('clock').textContent !== clock) $('clock').textContent = clock;
     const text = `⭐ ${state.caught}`;
     if ($('progressText').textContent !== text) $('progressText').textContent = text;
   }
@@ -867,8 +1012,7 @@
   Astro.setupLanguage(TEXT, () => {
     updateMenu();
     fillCaption();
-    // the names of the constellations are drawn on the sky
-    if (state.L && !$('game').classList.contains('hidden')) state.L.sky = drawSky(state.L);
+    if (!$('game').classList.contains('hidden')) updateBar();
     if (!$('win').classList.contains('hidden')) updateWin();
   });
 })();

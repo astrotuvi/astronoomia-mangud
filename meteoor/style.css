@@ -33,6 +33,7 @@
 
 /* the bar shows the time, so it moves smoothly every frame */
 #progressFill { transition: none; }
+.clock { font-size: 1.2rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 /* ---------- Night sky ---------- */
 

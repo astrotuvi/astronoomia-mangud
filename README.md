@@ -114,16 +114,17 @@ The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. 
 
 ## Püüa langev täht
 
-- One night lasts a minute. The bar at the top shows how much of it is left, and in the last ten seconds the sky turns to dawn.
-- Shooting stars flash across the sky about every one and a half seconds, sometimes three in quick succession. Tap one, or its tail, to catch it: it turns into a ⭐ that flies into the jar at the bottom. A star still counts if it is tapped just after it fades. Each catch plays the next note of a tune.
+- One night, from 22:00 to 04:00, lasts a minute. The top bar shows a clock and how much of the night is left. In the last ten seconds the sky gets light, most of all low in the north-east, where the Sun is below the horizon.
+- The sky is the real one above Tõrva (58° N) on the night of the Perseids, 12 August, looking north-east. As the night goes on it turns round the North Star (Põhjanael): Cassiopeia climbs over the top, Perseus rises higher, and Capella, the Pleiades (Sõel) and Aldebaran come up from behind the trees. Stars low down are dimmer.
+- Shooting stars flash across the sky, sometimes three in quick succession. They come more often as Perseus rises, from about one every two seconds in the evening to one every 1.2 seconds at dawn, as there are more after midnight in reality. Tap one, or its tail, to catch it: it turns into a ⭐ that flies into the jar at the bottom. A star still counts if it is tapped just after it fades. Each catch plays the next note of a tune.
 - Once a night a slow, bright green fireball (boliid) crosses the sky. It counts as two stars.
-- All shooting stars fly away from one spot between Perseus and Cassiopeia, which are drawn faintly in the sky, as the Perseids do in August.
+- All shooting stars fly away from one spot between Perseus and Cassiopeia, which moves with the sky, as the Perseids do in August.
 - A plane (red and green lights blinking in turn) and a satellite (a slow, steady dot) cross the sky too. Tapping them never costs anything: the first tap explains what they are, later taps only name them.
-- If nothing is caught for five seconds, a 👆 follows the next shooting star. Two short facts are shown during the night.
+- If nothing is caught for five seconds, a 👆 follows the next shooting star. A caption points out the Pleiades when they are up, and four short facts are shown during the night.
 - The most stars caught in one night is kept as the record. It is shown in the menu with a jar of that many stars, and the win screen says when it is beaten.
 - Within three days of the best night of the Perseids (12 August) or the Geminids (14 December), the menu says that there is a real meteor shower tonight.
 
-The length of the night and the other timings are at the top of `meteoor/app.js`, with the star positions of the two constellations.
+The length of the night, the place, the direction of the view and the other timings are at the top of `meteoor/app.js`, with the positions of the named stars. The sky is drawn with a stereographic projection, which keeps the shapes of the figures.
 
 ## Credits
 

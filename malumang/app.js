@@ -18,7 +18,7 @@
     { file: '../pusle/images/horsehead.jpg', name: { et: 'Hobusepea udu', en: 'Horsehead Nebula' } },
     { file: '../pusle/images/rosette.jpg', name: { et: 'Roseti udu', en: 'Rosette Nebula' } },
     { file: '../pusle/images/andromeda.jpg', name: { et: 'Andromeeda galaktika', en: 'Andromeda Galaxy' } },
-    { file: '../pusle/images/whirlpool.jpg', name: { et: 'Keerisgalaktika', en: 'Whirlpool Galaxy' } }
+    { file: '../pusle/images/whirlpool.jpg', name: { et: 'Keerise galaktika', en: 'Whirlpool Galaxy' } }
   ];
 
   // Number of pairs offered, with the columns of the little grid picture.

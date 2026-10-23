@@ -92,9 +92,9 @@
     {
       file: 'images/whirlpool.jpg',
       astrobin: 'ymu58n',
-      name: { et: 'Keerisgalaktika', en: 'Whirlpool Galaxy' },
+      name: { et: 'Keerise galaktika', en: 'Whirlpool Galaxy' },
       fact: {
-        et: 'Keerisgalaktika spiraalharud keerlevad nagu vesi vannis. Tema kõrval on väike kaaslasgalaktika.',
+        et: 'Keerise galaktika spiraalharud keerlevad nagu vesi vannis. Tema kõrval on väike kaaslasgalaktika.',
         en: 'The Whirlpool Galaxy has spiral arms that swirl like water down a drain. A small galaxy is right next to it.'
       }
     }
