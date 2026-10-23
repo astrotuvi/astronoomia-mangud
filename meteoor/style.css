@@ -1,0 +1,88 @@
+/* Püüa langev täht: the night sky and the jar. The rest is in shared/common.css. */
+
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.intro {
+  margin: 10px 0 0;
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  color: var(--muted);
+}
+
+/* the jar with the best night's stars */
+.menu-jar { display: flex; justify-content: center; margin-top: 22px; }
+.menu-jar svg { width: clamp(90px, 22vmin, 150px); aspect-ratio: 100 / 120; overflow: visible; }
+
+.best {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* shown only around the nights of the Perseids and the Geminids */
+.shower {
+  margin: 18px 0 0;
+  padding: 12px 16px;
+  border: 3px solid var(--accent);
+  border-radius: 20px;
+  background: rgba(255, 211, 77, 0.1);
+  font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+  line-height: 1.4;
+}
+
+/* the bar shows the time, so it moves smoothly every frame */
+#progressFill { transition: none; }
+
+/* ---------- Night sky ---------- */
+
+.area { cursor: pointer; }
+
+#night {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* placed from app.js */
+.jar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 2.6rem;
+  line-height: 1;
+  pointer-events: none;
+  animation: tap 0.6s ease-in-out infinite;
+}
+@keyframes tap { 50% { translate: 0 8px; } }
+
+.caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(26, 20, 64, 0.6), 0 0 10px rgba(26, 20, 64, 0.8);
+  pointer-events: none;
+  animation: pop 0.35s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+.caption b { display: block; font-size: clamp(1.4rem, 4.5vmin, 2.2rem); font-weight: 900; color: var(--accent); }
+.caption small { display: block; font-size: clamp(1rem, 3vmin, 1.3rem); line-height: 1.35; }
+
+/* ---------- Win screen: the jar of stars ---------- */
+
+.win-pic svg { width: 100%; height: 100%; overflow: visible; }
+.win-best { margin: 0 0 8px; font-size: 1.2rem; color: var(--accent); }

@@ -11,6 +11,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 | Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars and Jupiter and catch a star on each |
+| Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
 
 The language and sound settings are shared by all games.
 
@@ -110,6 +111,19 @@ The phases and their names are in the `PHASES` list at the top of `kuufaasid/app
 - The win screen shows the four jumps side by side at the same scale.
 
 The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. Jupiter has no ground, so the game stands on its cloud tops, as the fact says.
+
+## Püüa langev täht
+
+- One night lasts a minute. The bar at the top shows how much of it is left, and in the last ten seconds the sky turns to dawn.
+- Shooting stars flash across the sky about every one and a half seconds, sometimes three in quick succession. Tap one, or its tail, to catch it: it turns into a ⭐ that flies into the jar at the bottom. A star still counts if it is tapped just after it fades. Each catch plays the next note of a tune.
+- Once a night a slow, bright green fireball (boliid) crosses the sky. It counts as two stars.
+- All shooting stars fly away from one spot between Perseus and Cassiopeia, which are drawn faintly in the sky, as the Perseids do in August.
+- A plane (red and green lights blinking in turn) and a satellite (a slow, steady dot) cross the sky too. Tapping them never costs anything: the first tap explains what they are, later taps only name them.
+- If nothing is caught for five seconds, a 👆 follows the next shooting star. Two short facts are shown during the night.
+- The most stars caught in one night is kept as the record. It is shown in the menu with a jar of that many stars, and the win screen says when it is beaten.
+- Within three days of the best night of the Perseids (12 August) or the Geminids (14 December), the menu says that there is a real meteor shower tonight.
+
+The length of the night and the other timings are at the top of `meteoor/app.js`, with the star positions of the two constellations.
 
 ## Credits
 

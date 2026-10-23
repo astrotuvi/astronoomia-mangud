@@ -111,6 +111,11 @@ window.Astro = (() => {
     // a jump: a whistle that rises for as long as the way up takes (s)
     jump(up) { tone(330, 0, clamp(up, 0.08, 1.8), 'sine', 0.12, 990); },
     land() { tone(150, 0, 0.14, 'triangle', 0.2, 80); },
+    // a star dropping into a glass jar
+    clink() {
+      tone(2093, 0, 0.12, 'sine', 0.06);
+      tone(3136, 0.03, 0.1, 'sine', 0.03);
+    },
     // a rocket engine: low filtered noise that swells and fades over dur seconds
     rumble(dur) {
       if (!soundOn) return;
