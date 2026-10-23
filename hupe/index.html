@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- the pages are dark already: keeps phone browsers from recolouring them in dark mode -->
+  <meta name="color-scheme" content="dark">
+  <title>Hüppa planeedil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/common.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- gradients and the round crops of the planet pictures (kept out of display:none parts) -->
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="sky-earth" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3d9cf0" />
+        <stop offset="1" stop-color="#bfe6ff" />
+      </linearGradient>
+      <linearGradient id="sky-moon" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#000" />
+        <stop offset="1" stop-color="#0b0f2a" />
+      </linearGradient>
+      <linearGradient id="sky-mars" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#9c6a48" />
+        <stop offset="1" stop-color="#e8c39b" />
+      </linearGradient>
+      <linearGradient id="sky-jupiter" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0d0a1a" />
+        <stop offset="0.6" stop-color="#5a3d36" />
+        <stop offset="1" stop-color="#c9a77c" />
+      </linearGradient>
+      <radialGradient id="sunGrad" cx="0.42" cy="0.4" r="0.6">
+        <stop offset="0" stop-color="#fffbe0" />
+        <stop offset="0.5" stop-color="#ffd34d" />
+        <stop offset="1" stop-color="#ff9f1c" />
+      </radialGradient>
+      <radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0.4" stop-color="#fff3b0" stop-opacity="0.7" />
+        <stop offset="1" stop-color="#fff3b0" stop-opacity="0" />
+      </radialGradient>
+      <!-- each picture is 100 units wide, with the planet in the middle -->
+      <clipPath id="clip-earth"><circle cx="50" cy="50" r="49.5" /></clipPath>
+      <clipPath id="clip-moon"><circle cx="50" cy="50" r="44.5" /></clipPath>
+      <clipPath id="clip-mars"><circle cx="50" cy="50" r="40" /></clipPath>
+      <clipPath id="clip-jupiter"><circle cx="50" cy="50" r="40" /></clipPath>
+    </defs>
+  </svg>
+
+  <!-- Menu: pick who jumps -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">🏠</a>
+        <h1><span class="logo">🦘</span> <span data-t="title"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="intro"></p>
+
+      <section>
+        <h2 data-t="chooseWho"></h2>
+        <div id="whos" class="counts"></div>
+      </section>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+
+      <footer class="credit">
+        <a href="https://app.astrobin.com/u/Astronoomiaklubi" target="_blank" rel="noopener" data-t="credit"></a>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Game -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">⬅️</button>
+      <div class="progress">
+        <div class="track"><div id="progressFill" class="fill"></div></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+    </div>
+    <div id="area" class="area">
+      <svg id="scene" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div id="jumper" class="jumper"></div>
+      <div id="tap" class="tap hidden">👆</div>
+      <div id="starUp" class="star-up hidden">⬆️⭐</div>
+      <div id="caption" class="caption"><b id="worldName"></b><small id="worldTip"></small></div>
+      <div id="worlds" class="worlds"></div>
+      <div id="fact" class="fact hidden">
+        <p id="factText"></p>
+        <button id="nextBtn" class="btn"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Win overlay -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div class="win-pic"><svg id="winChart" viewBox="0 0 400 290" aria-hidden="true"></svg></div>
+    <div class="win-card">
+      <h2><span data-t="wellDone"></span> 🎉</h2>
+      <p id="winText" class="win-fact"></p>
+      <div class="win-buttons">
+        <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
+        <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/common.js"></script>
+  <script src="../shared/planets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Mälumäng / Memory | [`malumang/`](malumang/) | Turn cards over and find the pairs of astronomy photos |
 | Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
+| Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars and Jupiter and catch a star on each |
 
 The language and sound settings are shared by all games.
 
@@ -24,7 +25,7 @@ python3 -m http.server
 ## Layout
 
 - `index.html`: the start page with links to the games
-- `shared/`: the theme, menu, top bar and win screen (`common.css`), and settings, language, sounds and star confetti (`common.js`)
+- `shared/`: the theme, menu, top bar and win screen (`common.css`), settings, language, sounds and star confetti (`common.js`), and the drawn pictures of Mars and the Earth seen from space (`planets.js`)
 - one folder per game, each with its own `index.html`, `app.js` and `style.css`
 
 To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`.
@@ -94,6 +95,21 @@ The destinations are in the `DESTS` list at the top of `rakett/app.js`, and the 
 - Near new moon the Sun appears behind the Moon. Usually the Moon passes above or below it, but in eclipse season it covers the Sun partly or completely. Near full moon the Earth's shadow likewise passes above or below the Moon, or in eclipse season crosses it and turns it copper red.
 
 The phases and their names are in the `PHASES` list at the top of `kuufaasid/app.js`, and the tasks in the `TASKS` list. The sizes and distances are not to scale.
+
+## Hüppa planeedil
+
+- Pick who jumps (a cat, dog, bear, rabbit or astronaut). The game starts on the Earth.
+- Tap anywhere, or press the space bar, to jump. The jumper always leaves the ground equally fast, so only the world's pull (gravity) changes the jump:
+  - on the Earth 34 cm in half a second
+  - on the Moon 2.1 m (six times higher) in more than three seconds; the view follows the jumper up
+  - on Mars 91 cm
+  - on Jupiter 14 cm in a fifth of a second
+- A star hangs just within reach on each world. When it is caught, a short fact is shown after landing, with a button to fly to the next world. The round pictures at the bottom go to any world, and a ⭐ marks the worlds whose star is caught.
+- A pole beside the jumper fills up during the jump, and the highest jump on each world is marked on it with a small picture of that world.
+- Landing raises a puff of dust, which flies far on the Moon and hardly at all on Jupiter. If nothing happens for a few seconds, a 👆 shows where to tap.
+- The win screen shows the four jumps side by side at the same scale.
+
+The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. Jupiter has no ground, so the game stands on its cloud tops, as the fact says.
 
 ## Credits
 
