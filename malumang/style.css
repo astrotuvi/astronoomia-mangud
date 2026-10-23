@@ -6,6 +6,13 @@
   color: var(--muted);
 }
 
+.best {
+  margin: 14px 0 0;
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  font-weight: 800;
+  color: var(--accent);
+}
+
 .area {
   display: flex;
   align-items: center;

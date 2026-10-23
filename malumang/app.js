@@ -43,7 +43,12 @@
       peek: 'Piilu',
       sound: 'Heli',
       credit: 'Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.',
-      found: (n, tries) => `Leidsid kõik ${n} paari ${tries} katsega!`
+      found: (n, tries) => `Leidsid kõik ${n} paari ${tries} katsega!`,
+      foundPeeked: (n) => `Leidsid kõik ${n} paari! Sa piilusid, seega seekord katseid ei loeta.`,
+      newBest: 'See on sinu parim tulemus! 🏆',
+      oldBest: (b) => `Sinu parim: ${b} katset.`,
+      best: (b) => `🏆 Parim: ${b} katset`,
+      noBest: 'Parimat tulemust veel pole.'
     },
     en: {
       title: 'Memory',
@@ -57,7 +62,12 @@
       peek: 'Peek',
       sound: 'Sound',
       credit: 'Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.',
-      found: (n, tries) => `You found all ${n} pairs in ${tries} tries!`
+      found: (n, tries) => `You found all ${n} pairs in ${tries} tries!`,
+      foundPeeked: (n) => `You found all ${n} pairs! You peeked, so the tries don't count this time.`,
+      newBest: 'That is your best score! 🏆',
+      oldBest: (b) => `Your best: ${b} tries.`,
+      best: (b) => `🏆 Best: ${b} tries`,
+      noBest: 'No best score yet.'
     }
   };
 
@@ -75,9 +85,12 @@
     open: [],       // cards turned over, at most two
     closeTimer: 0,
     peeking: false,
+    peeked: false,  // the eye button was used, so the tries don't count
     found: [],      // pictures in the order they were found
-    tries: 0
+    tries: 0,
+    best: store.get('best', {}) // the fewest tries for each number of pairs
   };
+  if (!state.best || typeof state.best !== 'object') state.best = {};
   if (!PAIRS.some((p) => p.n === state.pairs)) state.pairs = 4;
 
   const area = $('area');
@@ -106,6 +119,8 @@
 
   function updateMenu() {
     [...$('counts').children].forEach((b, i) => b.classList.toggle('selected', PAIRS[i].n === state.pairs));
+    const best = state.best[state.pairs];
+    $('best').textContent = best ? t('best')(best) : t('noBest');
   }
 
   function updateNames() {
@@ -151,6 +166,7 @@
     state.found = [];
     state.tries = 0;
     state.peeking = false;
+    state.peeked = false;
     updateNames();
     layout();
     updateProgress();
@@ -221,6 +237,7 @@
     if (state.peeking || state.found.length === state.pairs) return;
     closeMismatch();
     state.peeking = true;
+    state.peeked = true;
     sfx.pick();
     state.cards.forEach((c) => { if (!c.matched) c.el.classList.add('open'); });
     setTimeout(() => {
@@ -243,7 +260,20 @@
   // Winning
   // ---------------------------------------------------------------------------
 
+  // The tries count only when the eye button was not used; the fewest are kept.
+  function winText() {
+    if (state.peeked) return t('foundPeeked')(state.pairs);
+    const old = state.best[state.pairs];
+    if (!old || state.tries < old) {
+      state.best[state.pairs] = state.tries;
+      store.set('best', state.best);
+    }
+    const best = state.tries <= (old || Infinity) ? t('newBest') : t('oldBest')(old);
+    return `${t('found')(state.pairs, state.tries)} ${best}`;
+  }
+
   function win() {
+    const text = winText(); // the best is kept even if the menu is opened at once
     setTimeout(() => sfx.win(), 600);
     setTimeout(() => {
       if ($('game').classList.contains('hidden')) return;
@@ -251,7 +281,7 @@
       $('winGrid').innerHTML = state.found
         .map((p) => `<figure><img src="${p.file}" alt=""><figcaption>${p.name[Astro.lang]}</figcaption></figure>`)
         .join('');
-      $('winText').textContent = t('found')(state.pairs, state.tries);
+      $('winText').textContent = text;
       $('win').classList.remove('hidden');
       Astro.startConfetti($('confetti'));
     }, 1300);

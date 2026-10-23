@@ -56,7 +56,8 @@ Star positions are J2000 coordinates, drawn as on a sky chart with north up and 
 
 - Pick the number of pairs (3, 4, 6, 8 or 10). Each game uses a different random set of the puzzle's photos.
 - Turn two cards over. A matching pair stays open and shows the object's name. Two different cards turn back after a moment, or at once when the next card is tapped.
-- 👁️ shows all cards for a moment. The win screen shows all the pairs found and the number of tries.
+- 👁️ shows all cards for a moment. The win screen shows all the pairs found and the number of tries, unless 👁️ was used: then the tries don't count.
+- The fewest tries for each number of pairs is kept as the best score, shown in the menu under the number of pairs ("🏆 Parim: 5 katset") and on the win screen.
 
 The game uses the photos in `pusle/images/`. The list of photos is at the top of `malumang/app.js`.
 
