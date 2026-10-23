@@ -12,6 +12,7 @@
   font-weight: 800;
   color: var(--accent);
 }
+#clearBtn { margin-top: 8px; }
 
 .area {
   display: flex;

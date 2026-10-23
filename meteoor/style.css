@@ -20,6 +20,8 @@
   color: var(--accent);
 }
 
+.clear-row { display: flex; justify-content: center; margin-top: 8px; }
+
 /* shown only around the nights of the Perseids and the Geminids */
 .shower {
   margin: 18px 0 0;

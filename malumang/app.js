@@ -48,7 +48,9 @@
       newBest: 'See on sinu parim tulemus! 🏆',
       oldBest: (b) => `Sinu parim: ${b} katset.`,
       best: (b) => `🏆 Parim: ${b} katset`,
-      noBest: 'Parimat tulemust veel pole.'
+      noBest: 'Parimat tulemust veel pole.',
+      clear: '🗑️ Kustuta parim tulemus',
+      clearSure: '🗑️ Puuduta uuesti, et kustutada'
     },
     en: {
       title: 'Memory',
@@ -67,7 +69,9 @@
       newBest: 'That is your best score! 🏆',
       oldBest: (b) => `Your best: ${b} tries.`,
       best: (b) => `🏆 Best: ${b} tries`,
-      noBest: 'No best score yet.'
+      noBest: 'No best score yet.',
+      clear: '🗑️ Clear the best score',
+      clearSure: '🗑️ Tap again to clear it'
     }
   };
 
@@ -88,7 +92,9 @@
     peeked: false,  // the eye button was used, so the tries don't count
     found: [],      // pictures in the order they were found
     tries: 0,
-    best: store.get('best', {}) // the fewest tries for each number of pairs
+    best: store.get('best', {}), // the fewest tries for each number of pairs
+    clearArmed: false, // the best score is cleared on the next tap of 🗑️
+    clearTimer: 0
   };
   if (!state.best || typeof state.best !== 'object') state.best = {};
   if (!PAIRS.some((p) => p.n === state.pairs)) state.pairs = 4;
@@ -110,6 +116,7 @@
       b.addEventListener('click', () => {
         state.pairs = n;
         store.set('pairs', n);
+        state.clearArmed = false;
         sfx.pick();
         updateMenu();
       });
@@ -121,6 +128,8 @@
     [...$('counts').children].forEach((b, i) => b.classList.toggle('selected', PAIRS[i].n === state.pairs));
     const best = state.best[state.pairs];
     $('best').textContent = best ? t('best')(best) : t('noBest');
+    $('clearBtn').classList.toggle('hidden', !best);
+    $('clearBtn').textContent = t(state.clearArmed ? 'clearSure' : 'clear');
   }
 
   function updateNames() {
@@ -295,6 +304,26 @@
     if (!$('game').classList.contains('hidden')) layout();
   }).observe(area);
 
+  // Clearing the best score for the chosen number of pairs takes two taps,
+  // so that it is not cleared by mistake. The second one must come within
+  // a few seconds.
+  $('clearBtn').addEventListener('click', () => {
+    clearTimeout(state.clearTimer);
+    if (state.clearArmed) {
+      state.clearArmed = false;
+      delete state.best[state.pairs];
+      store.set('best', state.best);
+      sfx.oops();
+    } else {
+      state.clearArmed = true;
+      sfx.pick();
+      state.clearTimer = setTimeout(() => {
+        state.clearArmed = false;
+        updateMenu();
+      }, 4000);
+    }
+    updateMenu();
+  });
   $('playBtn').addEventListener('click', startGame);
   $('againBtn').addEventListener('click', startGame);
   $('menuBtn').addEventListener('click', showMenu);

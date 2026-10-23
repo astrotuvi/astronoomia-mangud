@@ -59,7 +59,7 @@ Star positions are J2000 coordinates, drawn as on a sky chart with north up and 
 - Pick the number of pairs (3, 4, 6, 8 or 10). Each game uses a different random set of the puzzle's photos.
 - Turn two cards over. A matching pair stays open and shows the object's name. Two different cards turn back after a moment, or at once when the next card is tapped.
 - 👁️ shows all cards for a moment. The win screen shows all the pairs found and the number of tries, unless 👁️ was used: then the tries don't count.
-- The fewest tries for each number of pairs is kept as the best score, shown in the menu under the number of pairs ("🏆 Parim: 5 katset") and on the win screen.
+- The fewest tries for each number of pairs is kept as the best score, shown in the menu under the number of pairs ("🏆 Parim: 5 katset") and on the win screen. **🗑️ Kustuta parim tulemus** under it clears the best score for that number of pairs after a second tap.
 
 The game uses the photos in `pusle/images/`. The list of photos is at the top of `malumang/app.js`.
 
@@ -121,7 +121,7 @@ The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. 
 - All shooting stars fly away from one spot between Perseus and Cassiopeia, which moves with the sky, as the Perseids do in August.
 - A plane (red and green lights blinking in turn) and a satellite (a slow, steady dot) cross the sky too. Tapping them never costs anything: the first tap explains what they are, later taps only name them.
 - If nothing is caught for five seconds, a 👆 follows the next shooting star. A caption points out the Pleiades when they are up, and four short facts are shown during the night.
-- The most stars caught in one night is kept as the record. It is shown in the menu with a jar of that many stars, and the win screen says when it is beaten.
+- The most stars caught in one night is kept as the record. It is shown in the menu with a jar of that many stars, and the win screen says when it is beaten. **🗑️ Kustuta rekord** under it clears the record after a second tap.
 - Within three days of the best night of the Perseids (12 August) or the Geminids (14 December), the menu says that there is a real meteor shower tonight.
 
 The length of the night, the place, the direction of the view and the other timings are at the top of `meteoor/app.js`, with the positions of the named stars. The sky is drawn with a stereographic projection, which keeps the shapes of the figures.

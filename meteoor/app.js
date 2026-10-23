@@ -101,6 +101,8 @@
       play: 'Mängi',
       best: (n) => `🏆 Rekord: ${n} ⭐`,
       noBest: 'Rekordit veel pole.',
+      clear: '🗑️ Kustuta rekord',
+      clearSure: '🗑️ Puuduta uuesti, et kustutada',
       shower: (name) => `🌠 Täna öösel on päris tähesadu – ${name}! Mine pimedas õue ja vaata taevasse.`,
       captions: {
         start: ['Püüa langevaid tähti!', 'Puuduta tähte, kui see lendab'],
@@ -134,6 +136,8 @@
       play: 'Play',
       best: (n) => `🏆 Best: ${n} ⭐`,
       noBest: 'No best score yet.',
+      clear: '🗑️ Clear the record',
+      clearSure: '🗑️ Tap again to clear it',
       shower: (name) => `🌠 Tonight there is a real meteor shower, ${name}! Go out after dark and look up at the sky.`,
       captions: {
         start: ['Catch the shooting stars!', 'Tap a star while it flies'],
@@ -188,6 +192,8 @@
     seen: {},        // the plane and the satellite are explained only once
     caption: null,   // { key, until }
     hinted: null,    // the shooting star the hand points at
+    clearArmed: false, // the record is cleared on the next tap of 🗑️
+    clearTimer: 0,
     raf: 0,
     last: 0,
     L: null,         // layout, see layout()
@@ -276,6 +282,8 @@
   function updateMenu() {
     $('menuJar').innerHTML = jarSVG(Math.min(state.best, JAR_MAX));
     $('best').textContent = state.best ? t('best')(state.best) : t('noBest');
+    $('clearBtn').classList.toggle('hidden', !state.best);
+    $('clearBtn').textContent = t(state.clearArmed ? 'clearSure' : 'clear');
     const s = showerNow();
     $('shower').classList.toggle('hidden', !s);
     if (s) $('shower').textContent = t('shower')(s.name[Astro.lang]);
@@ -997,6 +1005,25 @@
   area.addEventListener('pointerdown', (e) => {
     const r = area.getBoundingClientRect();
     tap(e.clientX - r.left, e.clientY - r.top);
+  });
+  // Clearing the record takes two taps, so that it is not cleared by
+  // mistake. The second one must come within a few seconds.
+  $('clearBtn').addEventListener('click', () => {
+    clearTimeout(state.clearTimer);
+    if (state.clearArmed) {
+      state.clearArmed = false;
+      state.best = 0;
+      store.set('best', 0);
+      sfx.oops();
+    } else {
+      state.clearArmed = true;
+      sfx.pick();
+      state.clearTimer = setTimeout(() => {
+        state.clearArmed = false;
+        updateMenu();
+      }, 4000);
+    }
+    updateMenu();
   });
   $('playBtn').addEventListener('click', startGame);
   $('againBtn').addEventListener('click', startGame);
