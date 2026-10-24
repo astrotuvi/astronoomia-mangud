@@ -90,8 +90,8 @@
 
   // the real showers, by month (0 = January) and day of their best night
   const SHOWERS = [
-    { m: 7, d: 12, name: { et: 'Perseiidid', en: 'the Perseids' } },
-    { m: 11, d: 14, name: { et: 'Geminiidid', en: 'the Geminids' } }
+    { m: 7, d: 12, name: { et: 'perseiidid', en: 'the Perseids' } },
+    { m: 11, d: 14, name: { et: 'geminiidid', en: 'the Geminids' } }
   ];
 
   const TEXT = {
@@ -103,7 +103,7 @@
       noBest: 'Rekordit veel pole.',
       clear: '🗑️ Kustuta rekord',
       clearSure: '🗑️ Puuduta uuesti, et kustutada',
-      shower: (name) => `🌠 Täna öösel on päris tähesadu – ${name}! Mine pimedas õue ja vaata taevasse.`,
+      shower: (name) => `🌠 Täna öösel on päris meteoorivool – ${name}! Mine pimedas õue ja vaata taevasse.`,
       captions: {
         start: ['Püüa langevaid tähti!', 'Puuduta tähte, kui see lendab'],
         fireball: ['Boliid! ⭐⭐', 'Väga hele langev täht'],

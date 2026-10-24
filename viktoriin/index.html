@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- the pages are dark already: keeps phone browsers from recolouring them in dark mode -->
+  <meta name="color-scheme" content="dark">
+  <title>Kosmoseviktoriin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/common.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- Menu: who plays and the topic -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">🏠</a>
+        <h1><span class="logo">🧠</span> <span data-t="title"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="intro"></p>
+
+      <section>
+        <h2><span class="step">1</span> <span data-t="chooseMode"></span></h2>
+        <div id="modes" class="counts modes"></div>
+        <div id="players" class="players hidden">
+          <div class="player-row p1"><b data-t="player1"></b><div class="whos" data-p="0"></div></div>
+          <div class="player-row p2"><b data-t="player2"></b><div class="whos" data-p="1"></div></div>
+          <p class="duo-tip" data-t="duoTip"></p>
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="step">2</span> <span data-t="chooseTopic"></span></h2>
+        <div id="topics" class="topics"></div>
+        <p id="best" class="best"></p>
+        <button id="clearBtn" class="clear-best hidden"></button>
+      </section>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+
+      <footer class="credit">
+        <a href="https://app.astrobin.com/u/Astronoomiaklubi" target="_blank" rel="noopener" data-t="credit"></a>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Game -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">⬅️</button>
+      <div class="progress">
+        <div id="qNum" class="progress-text"></div>
+        <div class="track"><div id="timeFill" class="fill"></div></div>
+        <div id="timeText" class="progress-text time-text"></div>
+      </div>
+      <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+    </div>
+    <div id="stage" class="stage">
+      <div id="soloScore" class="solo-score"></div>
+      <div class="ask">
+        <div id="qPic" class="q-pic"></div>
+        <div class="ask-text">
+          <p id="question" class="question"></p>
+          <p id="explain" class="explain hidden"></p>
+          <button id="duoNext" class="btn next hidden">▶ <span data-t="next"></span></button>
+        </div>
+      </div>
+      <div id="reading" class="reading">
+        <span data-t="reading"></span>
+        <div class="read-track"><div id="readFill" class="read-fill"></div></div>
+        <button id="readyBtn" class="ready" data-t="ready"></button>
+      </div>
+      <!-- playing alone -->
+      <div id="answers" class="answers"></div>
+      <div id="result" class="result hidden">
+        <p id="verdict" class="verdict"></p>
+        <p id="why" class="why"></p>
+        <button id="nextBtn" class="btn next">▶ <span data-t="next"></span></button>
+      </div>
+      <!-- two players, side by side -->
+      <div id="sides" class="sides hidden">
+        <div class="side p1" data-p="0"><div class="side-head"><span class="side-who"></span><b class="side-pts"></b><span class="side-status"></span></div><div class="answers"></div></div>
+        <div class="side p2" data-p="1"><div class="side-head"><span class="side-who"></span><b class="side-pts"></b><span class="side-status"></span></div><div class="answers"></div></div>
+      </div>
+    </div>
+    <div id="rotate" class="rotate hidden"><span>📱↻</span><p data-t="rotate"></p></div>
+  </div>
+
+  <!-- End of the round -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div id="winPic" class="win-pic end-pic"></div>
+    <div class="win-card">
+      <h2 id="winTitle"></h2>
+      <p id="winScore" class="win-name"></p>
+      <p id="winBest" class="win-best"></p>
+      <div id="practice" class="practice"></div>
+      <div class="win-buttons">
+        <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
+        <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/common.js"></script>
+  <script src="../shared/planets.js"></script>
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

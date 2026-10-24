@@ -231,6 +231,27 @@
           <b data-t="meteor"></b>
           <span data-t="meteorText"></span>
         </a>
+        <a class="game-card" href="viktoriin/index.html">
+          <!-- a question about the Moon and four answer buttons, as in the quiz -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <g fill="#fff">
+              <circle cx="10" cy="10" r="0.7" opacity="0.7" /><circle cx="90" cy="12" r="0.6" opacity="0.6" />
+              <circle cx="8" cy="44" r="0.5" opacity="0.6" /><circle cx="93" cy="40" r="0.6" opacity="0.5" />
+            </g>
+            <text x="50" y="40" font-size="34" font-weight="900" text-anchor="middle" fill="#ffd34d" style="font-family: Nunito, sans-serif">?</text>
+            <circle cx="28" cy="27" r="9" fill="#d8d8de" /><path d="M28 18A9 9 0 0 0 28 36Z" fill="#3a3a48" />
+            <circle cx="73" cy="26" r="8" fill="#2d6fc0" /><path d="M69 22Q74 20 77 24Q75 29 71 30Z" fill="#4caf43" />
+            <g font-size="7" font-weight="900" fill="#fff" text-anchor="middle" style="font-family: Nunito, sans-serif">
+              <rect x="8" y="52" width="40" height="18" rx="5" fill="#d93a55" /><text x="28" y="63.5">▲</text>
+              <rect x="52" y="52" width="40" height="18" rx="5" fill="#2f74d9" /><text x="72" y="63.5">◆</text>
+              <rect x="8" y="74" width="40" height="18" rx="5" fill="#d79a0f" /><text x="28" y="85.5">●</text>
+              <rect x="52" y="74" width="40" height="18" rx="5" fill="#22a05a" /><text x="72" y="85.5">■</text>
+            </g>
+            <rect x="51" y="51" width="42" height="20" rx="6" fill="none" stroke="#fff" stroke-width="1.6" />
+          </svg>
+          <b data-t="quiz"></b>
+          <span data-t="quizText"></span>
+        </a>
       </div>
 
       <footer class="credit" data-t="credit"></footer>
@@ -248,7 +269,7 @@
         starsText: 'Ühenda tähed numbrite järjekorras ja leia tähtkuju.',
         memory: 'Mälumäng',
         memoryText: 'Pööra kaarte ja leia paarid: planeedid, udukogud ja galaktikad.',
-        rocket: 'Kosmoserakett',
+        rocket: 'Kosmose\u00adrakett',
         rocketText: 'Ehita rakett ja lenda Kuule, Marsile, Jupiterile või Saturnile.',
         phases: 'Kuu faasid',
         phasesText: 'Liiguta Kuud ümber Maa ja vaata, miks Kuu kuju muutub. Leia ka varjutused.',
@@ -256,6 +277,9 @@
         jumpText: 'Hüppa Maal, Kuul, Marsil ja Jupiteril ja vaata, kus saad kõige kõrgemale.',
         meteor: 'Püüa langev täht',
         meteorText: 'Püüa ühe ööga purki nii palju langevaid tähti kui jõuad.',
+        // a soft hyphen, so that a long name can break on a narrow card
+        quiz: 'Kosmose\u00adviktoriin',
+        quizText: 'Vasta küsimustele kõigist mängudest, üksi või kahekesi sõbraga.',
         credit: 'Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.'
       },
       en: {
@@ -274,6 +298,8 @@
         jumpText: 'Jump on the Earth, the Moon, Mars and Jupiter, and see where you get highest.',
         meteor: 'Catch a Shooting Star',
         meteorText: 'Catch as many shooting stars in your jar as you can in one night.',
+        quiz: 'Space Quiz',
+        quizText: 'Answer questions about all the games, alone or with a friend.',
         credit: 'Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.'
       }
     });

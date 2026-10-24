@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, and Kuu faasid for ages 8–10, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, and Kuu faasid and Kosmoseviktoriin for ages 8–10, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -12,6 +12,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars and Jupiter and catch a star on each |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
+| Kosmoseviktoriin / Space Quiz | [`viktoriin/`](viktoriin/) | Answer questions about what the other games teach, alone or two players on one phone |
 
 The language and sound settings are shared by all games.
 
@@ -125,6 +126,24 @@ The phases and their names are in the `PHASES` list at the top of `kuufaasid/app
 - Within three days of the best night of the Perseids (12 August) or the Geminids (14 December), the menu says that there is a real meteor shower tonight.
 
 The length of the night, the place, the direction of the view and the other timings are at the top of `meteoor/app.js`, with the positions of the named stars. The sky is drawn with a stereographic projection, which keeps the shapes of the figures.
+
+## Kosmoseviktoriin
+
+- Pick who plays, alone or two players, and the topic: all games together, one of the games, or Pildid (the photos of Tähepusle and Mälumäng). A round has 10 questions. With all topics, they come from each game in turn, and questions not asked lately come first.
+- Each question is first shown alone, for 3–8 seconds depending on its length. Then the answers appear and 30 seconds start to run down. Alone, **Olen valmis ▶** skips the reading time.
+- The answers are four coloured buttons with shapes (▲ ◆ ● ■), with text or pictures:
+  - photos from the puzzle, and pictures of the Earth, the Moon, Mars, Jupiter and Saturn
+  - the Moon as seen from the Earth, and the Sun, the Earth and the Moon from above the North Pole, as in Kuu faasid
+  - the stars of a constellation without lines
+  - short animations of a plane, a satellite and a shooting star, as in Püüa langev täht
+  - true or false
+  - putting 4 pictures in order, by tapping them into numbered places (alone only)
+- A right answer gets 1000 points at once, down to 500 at the last moment. From the third right answer in a row on, each gets 🔥 200 more.
+- After each answer the right one is marked and one sentence explains it.
+- **Alone:** the end screen shows the number of right answers and the points, and links to the games of the questions answered wrong. The most points for each topic are kept as the record, with **🗑️ Kustuta rekord** to clear it after a second tap.
+- **Two players:** each picks a different animal. The phone lies sideways on the table and each player answers on their own half. An answer cannot be changed, and the other player only sees ✔ until both have answered or the time is up. If the phone is held upright, the game asks to turn it sideways and the clock waits. The end screen shows both scores side by side and the winner.
+
+The questions are in `viktoriin/questions.js`, by topic, with the right answer first. The comment at the top explains the kinds of questions and pictures.
 
 ## Credits
 

@@ -1,0 +1,728 @@
+'use strict';
+
+// The questions of Kosmoseviktoriin, by the game that teaches them.
+//
+// Each question has
+//   q:    the question
+//   pic:  a picture shown with it (optional, see below)
+//   why:  one sentence shown after answering
+// and one kind of answer:
+//   answers: 2–4 answers, the right one FIRST (they are shuffled when shown).
+//            An answer is a text { et, en } or a picture with an optional label.
+//   tf:      true or false, for a statement to call right or wrong
+//   order:   2–4 items in the right order, to put in order (only when
+//            playing alone)
+//
+// Pictures:
+//   { photo: 'saturn' }   a photo from pusle/images/
+//   { world: 'mars' }     the Earth, the Moon, Mars, Jupiter or Saturn
+//   { moon: 90 }          the Moon seen from the Earth, by its angle from new
+//                         moon (0 new, 90 first quarter, 180 full, 270 last quarter)
+//   { space: 90 }         the Sun, the Earth and the Moon from above the North
+//                         Pole, the Moon at that angle, as in Kuu faasid
+//   { con: 'orion' }      the stars of a constellation without lines
+//   { anim: 'plane' }     a short animation of a plane, a satellite or a shooting star
+// A picture may have a label: { photo: 'saturn', label: { et, en } }.
+window.QUIZ = [
+  {
+    game: 'kuufaasid',
+    questions: [
+      {
+        q: { et: 'Kosmosest vaadates on Kuu siin. Milline paistab Kuu Maalt?', en: 'Seen from space, the Moon is here. What does it look like from the Earth?' },
+        pic: { space: 90 },
+        answers: [{ moon: 90 }, { moon: 270 }, { moon: 180 }, { moon: 35 }],
+        why: { et: 'See on esimene veerand: Kuu on teinud veerandi tiirust ja me näeme valgustatud poolest poolt, paremal pool.', en: 'This is the first quarter: the Moon has gone a quarter of the way round, and we see half of its lit half, on the right.' }
+      },
+      {
+        q: { et: 'Kosmosest vaadates on Kuu siin. Milline paistab Kuu Maalt?', en: 'Seen from space, the Moon is here. What does it look like from the Earth?' },
+        pic: { space: 270 },
+        answers: [{ moon: 270 }, { moon: 90 }, { moon: 0 }, { moon: 325 }],
+        why: { et: 'See on viimane veerand: Kuu on teinud kolm veerandit tiirust ja valgustatud on vasak pool.', en: 'This is the last quarter: the Moon has gone three quarters of the way round, and its left side is lit.' }
+      },
+      {
+        q: { et: 'Kuu paistab Maalt nii. Kus on Kuu kosmosest vaadates?', en: 'This is how the Moon looks from the Earth. Where is it, seen from space?' },
+        pic: { moon: 45 },
+        answers: [{ space: 45 }, { space: 135 }, { space: 315 }, { space: 225 }],
+        why: { et: 'Kasvav kuusirp on varsti pärast noorkuud, kui Kuu on Päikese poolt veidi edasi liikunud. Me näeme valgustatud poolest ainult kitsast serva.', en: 'A waxing crescent comes soon after new moon, when the Moon has moved a little on from the Sun’s side. We see only a thin edge of its lit half.' }
+      },
+      {
+        q: { et: 'Kuu paistab Maalt nii. Kus on Kuu kosmosest vaadates?', en: 'This is how the Moon looks from the Earth. Where is it, seen from space?' },
+        pic: { moon: 225 },
+        answers: [{ space: 225 }, { space: 135 }, { space: 45 }, { space: 315 }],
+        why: { et: 'See on kahanev kuu: täiskuust on möödas mõni päev ja valgustatud on üle poole, vasakul pool.', en: 'This is a waning gibbous moon: a few days after full moon, more than half is lit, on the left.' }
+      },
+      {
+        q: { et: 'Miks Kuu kuju kuu jooksul muutub?', en: 'Why does the Moon’s shape change during a month?' },
+        answers: [
+          { et: 'Kuu on alati pooleldi valgustatud, aga me näeme valgustatud poolest eri ajal erineva osa', en: 'The Moon is always half lit, but we see a different part of the lit half at different times' },
+          { et: 'Maa vari katab osa Kuust', en: 'The Earth’s shadow covers part of the Moon' },
+          { et: 'Pilved katavad osa Kuust', en: 'Clouds cover part of the Moon' },
+          { et: 'Kuu kasvab ja kahaneb päriselt', en: 'The Moon really grows and shrinks' }
+        ],
+        why: { et: 'Päike valgustab alati poolt Kuust. Kuu tiirleb ümber Maa ja me näeme sellest valgest poolest kord rohkem, kord vähem.', en: 'The Sun always lights half of the Moon. As the Moon goes round the Earth, we see more or less of that lit half.' }
+      },
+      {
+        q: { et: 'Maalt paistab kitsas kuusirp. Kui suur osa Kuust on sel ajal Päikese poolt valgustatud?', en: 'From the Earth you see a thin crescent. How much of the Moon is lit by the Sun at that time?' },
+        answers: [
+          { et: 'Pool', en: 'Half' },
+          { et: 'Ainult kitsas sirp', en: 'Only the thin crescent' },
+          { et: 'Peaaegu kogu Kuu', en: 'Nearly all of the Moon' },
+          { et: 'Mitte midagi', en: 'None of it' }
+        ],
+        why: { et: 'Kuu on alati pooleldi valgustatud. Sirbi ajal on valge pool peaaegu meist eemale pööratud.', en: 'The Moon is always half lit. At a crescent, the lit half is turned nearly away from us.' }
+      },
+      {
+        q: { et: 'Täna on noorkuu. Milline on Kuu umbes ühe nädala pärast?', en: 'Today is new moon. What will the Moon be like in about a week?' },
+        answers: [
+          { moon: 90, label: { et: 'Esimene veerand', en: 'First quarter' } },
+          { moon: 180, label: { et: 'Täiskuu', en: 'Full moon' } },
+          { moon: 270, label: { et: 'Viimane veerand', en: 'Last quarter' } },
+          { moon: 0, label: { et: 'Ikka noorkuu', en: 'Still new moon' } }
+        ],
+        why: { et: 'Ühe nädalaga teeb Kuu veerandi tiirust ümber Maa, nii et noorkuust saab esimene veerand.', en: 'In a week the Moon goes a quarter of the way round the Earth, so new moon becomes first quarter.' }
+      },
+      {
+        q: { et: 'Kui palju aega kulub ühest noorkuust järgmiseni?', en: 'How long is it from one new moon to the next?' },
+        answers: [
+          { et: '29 ja pool päeva', en: '29 and a half days' },
+          { et: '7 päeva', en: '7 days' },
+          { et: '15 päeva', en: '15 days' },
+          { et: 'Üks aasta', en: 'One year' }
+        ],
+        why: { et: 'Noorkuust noorkuuni kulub 29 ja pool päeva. Sellest tuleb ka sõna „kuu“ kalendris.', en: 'From new moon to new moon takes 29 and a half days. That is where the word “month” comes from.' }
+      },
+      {
+        q: { et: 'Millal saab olla päikesevarjutus?', en: 'When can there be a solar eclipse?' },
+        answers: [
+          { moon: 0, label: { et: 'Noorkuu ajal', en: 'At new moon' } },
+          { moon: 180, label: { et: 'Täiskuu ajal', en: 'At full moon' } },
+          { moon: 90, label: { et: 'Esimese veerandi ajal', en: 'At first quarter' } },
+          { moon: 270, label: { et: 'Viimase veerandi ajal', en: 'At last quarter' } }
+        ],
+        why: { et: 'Päikesevarjutuse ajal on Kuu Maa ja Päikese vahel. Nii on see ainult noorkuu ajal.', en: 'In a solar eclipse the Moon is between the Earth and the Sun. That happens only at new moon.' }
+      },
+      {
+        q: { et: 'Millal saab olla kuuvarjutus?', en: 'When can there be a lunar eclipse?' },
+        answers: [
+          { moon: 180, label: { et: 'Täiskuu ajal', en: 'At full moon' } },
+          { moon: 0, label: { et: 'Noorkuu ajal', en: 'At new moon' } },
+          { moon: 90, label: { et: 'Esimese veerandi ajal', en: 'At first quarter' } },
+          { moon: 270, label: { et: 'Viimase veerandi ajal', en: 'At last quarter' } }
+        ],
+        why: { et: 'Kuuvarjutuse ajal läheb Kuu Maa varju. Maa vari on Päikesest vastassuunas ja Kuu on seal täiskuu ajal.', en: 'In a lunar eclipse the Moon goes into the Earth’s shadow. The shadow points away from the Sun, where the Moon is at full moon.' }
+      },
+      {
+        q: { et: 'Miks ei ole päikesevarjutust igal noorkuul?', en: 'Why is there not a solar eclipse at every new moon?' },
+        answers: [
+          { et: 'Kuu tee on veidi viltu, nii et tavaliselt läheb Kuu Päikesest ülalt või alt mööda', en: 'The Moon’s path is a little tilted, so it usually passes above or below the Sun' },
+          { et: 'Päike on nii hele, et varjutust ei ole näha', en: 'The Sun is so bright that the eclipse cannot be seen' },
+          { et: 'Noorkuu on vahel öösel', en: 'New moon is sometimes at night' },
+          { et: 'Kuu on liiga väike, et Päikest katta', en: 'The Moon is too small to cover the Sun' }
+        ],
+        why: { et: 'Kuu tee on umbes 5 kraadi viltu. Varjutus tuleb ainult siis, kui noorkuu juhtub just sinna, kus Kuu tee Maa teed lõikab.', en: 'The Moon’s path is tilted by about 5 degrees. An eclipse comes only when new moon happens just where the Moon’s path crosses the Earth’s.' }
+      },
+      {
+        q: { et: 'Mis juhtub Kuuga täieliku kuuvarjutuse ajal?', en: 'What happens to the Moon in a total lunar eclipse?' },
+        answers: [
+          { et: 'Ta muutub vaskpunaseks', en: 'It turns copper red' },
+          { et: 'Ta kaob täiesti ära', en: 'It disappears completely' },
+          { et: 'Ta muutub siniseks', en: 'It turns blue' },
+          { et: 'Ta muutub sirbiks', en: 'It becomes a crescent' }
+        ],
+        why: { et: 'Maa õhk painutab natuke päikesevalgust Kuu peale. See valgus on punane nagu päikeseloojangul.', en: 'The Earth’s air bends a little sunlight onto the Moon. That light is red, like at sunset.' }
+      },
+      {
+        q: { et: 'Millal ja kus näed kasvavat kuusirpi?', en: 'When and where can you see a waxing crescent?' },
+        pic: { moon: 45 },
+        answers: [
+          { et: 'Õhtul läänes, varsti pärast päikeseloojangut', en: 'In the evening in the west, soon after sunset' },
+          { et: 'Keskööl kõrgel lõunas', en: 'At midnight high in the south' },
+          { et: 'Varahommikul idas', en: 'Early in the morning in the east' },
+          { et: 'Ainult keskpäeval', en: 'Only at midday' }
+        ],
+        why: { et: 'Kasvav kuusirp on taevas Päikese lähedal ja jääb temast veidi maha. Teda näeb õhtul läänes, kui Päike on just loojunud.', en: 'A waxing crescent is close to the Sun in the sky, a little behind it. You see it in the west in the evening, just after the Sun has set.' }
+      },
+      {
+        q: { et: 'Täiskuu tõuseb õhtul, kui Päike loojub.', en: 'The full moon rises in the evening, when the Sun sets.' },
+        tf: true,
+        why: { et: 'Täiskuu on Päikesest vastassuunas. Kui Päike loojub läänes, tõuseb täiskuu idas.', en: 'The full moon is on the opposite side from the Sun. When the Sun sets in the west, the full moon rises in the east.' }
+      },
+      {
+        q: { et: 'Pane Kuu kujud järjekorda, alates noorkuust.', en: 'Put the Moon’s shapes in order, starting from new moon.' },
+        order: [{ moon: 45 }, { moon: 90 }, { moon: 135 }, { moon: 180 }],
+        why: { et: 'Pärast noorkuud valgustatud osa kasvab: sirp, esimene veerand, kasvav kuu ja lõpuks täiskuu.', en: 'After new moon the lit part grows: a crescent, the first quarter, a gibbous moon and at last the full moon.' }
+      }
+    ]
+  },
+  {
+    game: 'hupe',
+    questions: [
+      {
+        q: { et: 'Kus hüppad kõige kõrgemale?', en: 'Where do you jump highest?' },
+        answers: [
+          { world: 'moon', label: { et: 'Kuu', en: 'The Moon' } },
+          { world: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { world: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { world: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } }
+        ],
+        why: { et: 'Kuu tõmbab kõige nõrgemalt, kuus korda nõrgemalt kui Maa. Seal hüppad kuus korda kõrgemale.', en: 'The Moon pulls most weakly, six times more weakly than the Earth. There you jump six times higher.' }
+      },
+      {
+        q: { et: 'Kus hüppad kõige madalamalt?', en: 'Where is your jump lowest?' },
+        answers: [
+          { world: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } },
+          { world: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { world: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { world: 'moon', label: { et: 'Kuu', en: 'The Moon' } }
+        ],
+        why: { et: 'Jupiter on palju suurem kui Maa ja tõmbab üle kahe korra tugevamalt. Seal saad vaevu hüpata.', en: 'Jupiter is much bigger than the Earth and pulls more than twice as strongly. There you can hardly jump.' }
+      },
+      {
+        q: { et: 'Kass hüppab Maal 34 cm kõrgusele. Kui kõrgele hüppab ta Kuul, kui tõukab end sama tugevasti?', en: 'A cat jumps 34 cm high on the Earth. How high does it jump on the Moon, pushing off just as hard?' },
+        answers: [
+          { et: 'Umbes 2 meetrit', en: 'About 2 metres' },
+          { et: '34 cm', en: '34 cm' },
+          { et: 'Umbes 6 cm', en: 'About 6 cm' },
+          { et: 'Ta lendab kosmosesse', en: 'It flies off into space' }
+        ],
+        why: { et: 'Kuul hüppad kuus korda kõrgemale: 6 × 34 cm on umbes 2 meetrit. Kuu tõmbab kassi siiski tagasi.', en: 'On the Moon you jump six times higher: 6 × 34 cm is about 2 metres. The Moon still pulls the cat back down.' }
+      },
+      {
+        q: { et: 'Koer hüppab Maal 34 cm kõrgusele. Kui kõrgele hüppab ta Marsil, kui tõukab end sama tugevasti?', en: 'A dog jumps 34 cm high on the Earth. How high does it jump on Mars, pushing off just as hard?' },
+        answers: [
+          { et: 'Umbes 1 meeter', en: 'About 1 metre' },
+          { et: '34 cm', en: '34 cm' },
+          { et: 'Umbes 12 cm', en: 'About 12 cm' },
+          { et: 'Umbes 10 meetrit', en: 'About 10 metres' }
+        ],
+        why: { et: 'Marss tõmbab peaaegu kolm korda nõrgemalt kui Maa, nii et hüpe on peaaegu kolm korda kõrgem: umbes 1 meeter.', en: 'Mars pulls nearly three times more weakly than the Earth, so the jump is nearly three times higher: about 1 metre.' }
+      },
+      {
+        q: { et: 'Miks hüppad Kuul kõrgemale kui Maal?', en: 'Why do you jump higher on the Moon than on the Earth?' },
+        answers: [
+          { et: 'Kuu on väiksem ja tõmbab nõrgemalt', en: 'The Moon is smaller and pulls more weakly' },
+          { et: 'Kuul ei ole õhku, mis takistaks', en: 'There is no air on the Moon to hold you back' },
+          { et: 'Kuu on Maast kaugel', en: 'The Moon is far from the Earth' },
+          { et: 'Kuul ei ole raskusjõudu', en: 'There is no gravity on the Moon' }
+        ],
+        why: { et: 'Mida väiksem on taevakeha, seda nõrgemalt ta tõmbab. Raskusjõud on Kuul olemas, ainult kuus korda nõrgem.', en: 'The smaller a world is, the more weakly it pulls. There is gravity on the Moon, only six times weaker.' }
+      },
+      {
+        q: { et: 'Miks hüppad Jupiteril madalamalt kui Maal?', en: 'Why is your jump lower on Jupiter than on the Earth?' },
+        answers: [
+          { et: 'Jupiter on palju suurem ja tõmbab tugevamalt', en: 'Jupiter is much bigger and pulls more strongly' },
+          { et: 'Jupiteril on tugev tuul', en: 'There are strong winds on Jupiter' },
+          { et: 'Jupiter on Päikesest kaugel ja seal on külm', en: 'Jupiter is far from the Sun and it is cold there' },
+          { et: 'Jupiteri õhk on paks ja takistab', en: 'Jupiter’s air is thick and holds you back' }
+        ],
+        why: { et: 'Jupiter on kõige suurem planeet ja tõmbab üle kahe korra tugevamalt kui Maa.', en: 'Jupiter is the biggest planet and pulls more than twice as strongly as the Earth.' }
+      },
+      {
+        q: { et: 'Kuul ei ole raskusjõudu.', en: 'There is no gravity on the Moon.' },
+        tf: false,
+        why: { et: 'Kuu tõmbab ka, ainult kuus korda nõrgemalt kui Maa. Seepärast tulid astronaudid pärast hüpet alati tagasi alla.', en: 'The Moon pulls too, only six times more weakly than the Earth. That is why the astronauts always came back down after a jump.' }
+      },
+      {
+        q: { et: 'Kuul hüppad kuus korda kõrgemale kui Maal. Kas hüpe kestab ka kauem?', en: 'On the Moon you jump six times higher than on the Earth. Does the jump also last longer?' },
+        answers: [
+          { et: 'Jah, Kuul tuled aeglaselt alla ja hüpe kestab mitu korda kauem', en: 'Yes, you float slowly down and the jump lasts several times longer' },
+          { et: 'Ei, hüpe kestab sama kaua, ainult kõrgemale', en: 'No, it lasts just as long, only higher' },
+          { et: 'Ei, hüpe on lühem, sest kukud kiiremini', en: 'No, it is shorter, because you fall faster' }
+        ],
+        why: { et: 'Nõrk tõmme pidurdab sind üles minnes aeglaselt ja tõmbab ka aeglaselt alla. Maal kestab hüpe pool sekundit, Kuul üle kolme sekundi.', en: 'A weak pull slows you down slowly on the way up and pulls you down slowly too. On the Earth a jump lasts half a second, on the Moon over three seconds.' }
+      },
+      {
+        q: { et: 'Mis on raskusjõud?', en: 'What is gravity?' },
+        answers: [
+          { et: 'Jõud, millega taevakeha tõmbab kõike enda poole', en: 'The pull of a world on everything towards it' },
+          { et: 'Õhk, mis surub meid maa vastu', en: 'Air pressing us down to the ground' },
+          { et: 'Maa magnet', en: 'The Earth’s magnet' },
+          { et: 'Tuul, mis puhub ülevalt alla', en: 'Wind blowing from above' }
+        ],
+        why: { et: 'Raskusjõud tõmbab kõike taevakeha poole. Seepärast kukud pärast hüpet alati tagasi maha.', en: 'Gravity pulls everything towards a world. That is why you always fall back down after a jump.' }
+      },
+      {
+        q: { et: 'Jupiteril saaks seista nagu Maal.', en: 'You could stand on Jupiter as on the Earth.' },
+        tf: false,
+        why: { et: 'Jupiteril pole maapinda, ainult pilved ja gaas. Mängus seisab hüppaja pilvede peal.', en: 'Jupiter has no ground, only clouds and gas. In the game the jumper stands on the cloud tops.' }
+      },
+      {
+        q: { et: 'Pane järjekorda: kus hüppad kõige kõrgemale, kus kõige madalamale?', en: 'Put them in order: where do you jump highest, where lowest?' },
+        order: [
+          { world: 'moon', label: { et: 'Kuu', en: 'The Moon' } },
+          { world: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { world: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { world: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } }
+        ],
+        why: { et: 'Kuu tõmbab kõige nõrgemalt, siis Marss, siis Maa. Jupiter tõmbab kõige tugevamalt.', en: 'The Moon pulls most weakly, then Mars, then the Earth. Jupiter pulls most strongly.' }
+      }
+    ]
+  },
+  {
+    game: 'rakett',
+    questions: [
+      {
+        q: { et: 'Kuhu lendamiseks on vaja kõige rohkem kütust?', en: 'Which trip needs the most fuel?' },
+        answers: [
+          { world: 'saturn', label: { et: 'Saturn', en: 'Saturn' } },
+          { world: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } },
+          { world: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { world: 'moon', label: { et: 'Kuu', en: 'The Moon' } }
+        ],
+        why: { et: 'Saturn on neist kõige kaugemal. Mängus vajab rakett sinna neli kütusepaaki.', en: 'Saturn is the farthest of them. In the game the rocket needs four fuel tanks to get there.' }
+      },
+      {
+        q: { et: 'Miks vajab rakett Saturnile lendamiseks rohkem kütust kui Marsile?', en: 'Why does a rocket need more fuel to fly to Saturn than to Mars?' },
+        answers: [
+          { et: 'Saturn on palju kaugemal', en: 'Saturn is much farther away' },
+          { et: 'Saturn on suurem', en: 'Saturn is bigger' },
+          { et: 'Saturnil on rõngad, millest peab mööda lendama', en: 'Saturn has rings to fly past' },
+          { et: 'Saturnil on külm ja kütus külmub', en: 'Saturn is cold and the fuel freezes' }
+        ],
+        why: { et: 'Mida kaugemale lendad, seda rohkem kütust on vaja.', en: 'The farther you fly, the more fuel you need.' }
+      },
+      {
+        q: { et: 'Pane järjekorda Maale kõige lähemast kõige kaugemani.', en: 'Put them in order from the nearest to the Earth to the farthest.' },
+        order: [
+          { world: 'moon', label: { et: 'Kuu', en: 'The Moon' } },
+          { world: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { world: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } },
+          { world: 'saturn', label: { et: 'Saturn', en: 'Saturn' } }
+        ],
+        why: { et: 'Kuu on meie lähim naaber. Planeetidest on Marss lähemal, Jupiter kaugemal ja Saturn veel kaugemal.', en: 'The Moon is our nearest neighbour. Of the planets, Mars is nearer, Jupiter farther and Saturn farther still.' }
+      },
+      {
+        q: { et: 'Millist teed lendab rakett Maalt Marsile?', en: 'Which way does a rocket fly from the Earth to Mars?' },
+        answers: [
+          { et: 'Kaarena poole tiiru ümber Päikese', en: 'Along a curve, half way round the Sun' },
+          { et: 'Sirgelt Marsi poole', en: 'Straight towards Mars' },
+          { et: 'Läbi Päikese', en: 'Through the Sun' },
+          { et: 'Tehes ringe ümber Maa, kuni jõuab Marsini', en: 'Going round and round the Earth until it reaches Mars' }
+        ],
+        why: { et: 'Rakett tiirleb ümber Päikese nagu planeedid. Tema tee puudutab ühes otsas Maa orbiiti ja teises Marsi orbiiti.', en: 'The rocket goes round the Sun like the planets. Its path touches the Earth’s orbit at one end and Mars’s orbit at the other.' }
+      },
+      {
+        q: { et: 'Rakett stardib Marsile. Kuhu poole peab ta lendama?', en: 'A rocket sets off to Mars. Where should it aim?' },
+        answers: [
+          { et: 'Sinna, kus Marss on siis, kui rakett kohale jõuab', en: 'Where Mars will be when the rocket gets there' },
+          { et: 'Sinna, kus Marss praegu on', en: 'Where Mars is now' },
+          { et: 'Päikese poole', en: 'Towards the Sun' },
+          { et: 'Otse üles', en: 'Straight up' }
+        ],
+        why: { et: 'Marss liigub lennu ajal oma orbiidil edasi. Rakett ja Marss peavad jõudma kohtumispaika korraga.', en: 'Mars moves on along its orbit during the flight. The rocket and Mars must reach the meeting point at the same time.' }
+      },
+      {
+        q: { et: 'Kumb tiirleb ümber Päikese kiiremini?', en: 'Which goes round the Sun faster?' },
+        answers: [
+          { world: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { world: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } }
+        ],
+        why: { et: 'Päikesele lähemal olevad planeedid liiguvad kiiremini. Marss on Päikesele lähemal kui Jupiter.', en: 'The planets nearer the Sun move faster. Mars is nearer the Sun than Jupiter is.' }
+      },
+      {
+        q: { et: 'Vaatame Päikesesüsteemi ülevalt, Maa põhjapooluse kohalt. Kuidas tiirlevad planeedid?', en: 'We look at the Solar System from above the Earth’s North Pole. Which way do the planets go round?' },
+        answers: [
+          { et: 'Kõik vastupäeva', en: 'All anticlockwise' },
+          { et: 'Kõik päripäeva', en: 'All clockwise' },
+          { et: 'Mõned ühte, mõned teist pidi', en: 'Some one way, some the other' }
+        ],
+        why: { et: 'Kõik planeedid tiirlevad ümber Päikese samas suunas. Ülevalt vaadates on see vastupäeva.', en: 'All the planets go round the Sun the same way. Seen from above, that is anticlockwise.' }
+      },
+      {
+        q: { et: 'Kuidas lendab rakett pärast starti?', en: 'How does a rocket fly after lift-off?' },
+        answers: [
+          { et: 'Pöörab tõustes itta, et minna tiirlema ümber Maa', en: 'It turns east as it climbs, to go round the Earth' },
+          { et: 'Lendab otse üles, kuni jõuab kosmosesse', en: 'It flies straight up until it is in space' },
+          { et: 'Pöörab tõustes läände', en: 'It turns west as it climbs' },
+          { et: 'Lendab kohe otse Kuu poole', en: 'It flies straight to the Moon at once' }
+        ],
+        why: { et: 'Maa pöörleb itta ja aitab niimoodi raketil kiirust koguda. Kõigepealt läheb rakett tiirlema ümber Maa.', en: 'The Earth turns eastwards, which helps the rocket gain speed. First the rocket goes into orbit round the Earth.' }
+      },
+      {
+        q: { et: 'Miks kukuvad kütusepaagid lennu ajal raketi küljest ära?', en: 'Why do the fuel tanks drop off the rocket during the flight?' },
+        answers: [
+          { et: 'Tühi paak oleks asjata raske', en: 'An empty tank would only be extra weight' },
+          { et: 'Et rakett pidurdaks', en: 'To slow the rocket down' },
+          { et: 'Need lähevad katki', en: 'They break' },
+          { et: 'Et teha ruumi astronaudile', en: 'To make room for the astronaut' }
+        ],
+        why: { et: 'Kui paak on tühi, viskab rakett selle ära. Kergemat raketti on lihtsam kiirendada.', en: 'When a tank is empty, the rocket drops it. A lighter rocket is easier to speed up.' }
+      },
+      {
+        q: { et: 'Mis on Marsi ja Jupiteri orbiidi vahel?', en: 'What is between the orbits of Mars and Jupiter?' },
+        answers: [
+          { et: 'Asteroidide vöö', en: 'The asteroid belt' },
+          { et: 'Saturn', en: 'Saturn' },
+          { et: 'Kuu', en: 'The Moon' },
+          { et: 'Mitte midagi', en: 'Nothing at all' }
+        ],
+        why: { et: 'Marsi ja Jupiteri vahel tiirleb ümber Päikese väga palju kivimürakaid. Seda nimetatakse asteroidide vööks.', en: 'Between Mars and Jupiter, lots of big rocks go round the Sun. This is called the asteroid belt.' }
+      },
+      {
+        q: { et: 'Mis juhtub taevaga, kui rakett tõuseb aina kõrgemale?', en: 'What happens to the sky as the rocket climbs higher and higher?' },
+        answers: [
+          { et: 'Sinine taevas muutub mustaks', en: 'The blue sky turns black' },
+          { et: 'Taevas muutub heledamaks', en: 'The sky gets brighter' },
+          { et: 'Taevas muutub punaseks', en: 'The sky turns red' },
+          { et: 'Taevas jääb samasuguseks', en: 'The sky stays the same' }
+        ],
+        why: { et: 'Taeva teeb siniseks õhk. Kosmoses õhku ei ole ja taevas on must ka päeval.', en: 'The air makes the sky blue. In space there is no air, so the sky is black even in the daytime.' }
+      },
+      {
+        q: { et: 'Päris astronaudid on Kuul käinud.', en: 'Real astronauts have been to the Moon.' },
+        tf: true,
+        why: { et: 'Astronaudid käisid Kuul juba üle 50 aasta tagasi, aastatel 1969–1972.', en: 'Astronauts went to the Moon over 50 years ago, between 1969 and 1972.' }
+      },
+      {
+        q: { et: 'Milline on kõige suurem planeet?', en: 'Which is the biggest planet?' },
+        answers: [
+          { world: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } },
+          { world: 'saturn', label: { et: 'Saturn', en: 'Saturn' } },
+          { world: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { world: 'mars', label: { et: 'Marss', en: 'Mars' } }
+        ],
+        why: { et: 'Jupiter on kõige suurem planeet. Selle sisse mahuks üle tuhande Maa!', en: 'Jupiter is the biggest planet. Over a thousand Earths would fit inside it!' }
+      },
+      {
+        q: { et: 'Millest on tehtud Saturni rõngad?', en: 'What are Saturn’s rings made of?' },
+        pic: { world: 'saturn' },
+        answers: [
+          { et: 'Lugematutest jäätükkidest ja kivikestest', en: 'Countless bits of ice and rock' },
+          { et: 'Ühest suurest kõvast kettast', en: 'One big solid disc' },
+          { et: 'Valgusest', en: 'Light' },
+          { et: 'Pilvedest', en: 'Clouds' }
+        ],
+        why: { et: 'Rõngad koosnevad lugematutest jäätükkidest ja kivikestest, mis kõik tiirlevad ümber Saturni.', en: 'The rings are countless bits of ice and rock, all going round Saturn.' }
+      }
+    ]
+  },
+  {
+    game: 'meteoor',
+    questions: [
+      {
+        q: { et: 'Mis see on?', en: 'What is this?' },
+        pic: { anim: 'plane' },
+        answers: [
+          { et: 'Lennuk', en: 'A plane' },
+          { et: 'Satelliit', en: 'A satellite' },
+          { et: 'Langev täht', en: 'A shooting star' },
+          { et: 'Täht', en: 'A star' }
+        ],
+        why: { et: 'Lennuki tuled vilguvad punaselt ja roheliselt.', en: 'A plane’s lights blink red and green.' }
+      },
+      {
+        q: { et: 'Mis see on?', en: 'What is this?' },
+        pic: { anim: 'satellite' },
+        answers: [
+          { et: 'Satelliit', en: 'A satellite' },
+          { et: 'Lennuk', en: 'A plane' },
+          { et: 'Langev täht', en: 'A shooting star' },
+          { et: 'Täht', en: 'A star' }
+        ],
+        why: { et: 'Satelliit liigub aeglaselt ja ühtlaselt üle taeva ega vilgu.', en: 'A satellite moves slowly and steadily across the sky and does not blink.' }
+      },
+      {
+        q: { et: 'Mis see on?', en: 'What is this?' },
+        pic: { anim: 'meteor' },
+        answers: [
+          { et: 'Langev täht', en: 'A shooting star' },
+          { et: 'Lennuk', en: 'A plane' },
+          { et: 'Satelliit', en: 'A satellite' },
+          { et: 'Täht', en: 'A star' }
+        ],
+        why: { et: 'Langev täht sähvatab väga kiiresti üle taeva ja kustub.', en: 'A shooting star flashes across the sky very fast and goes out.' }
+      },
+      {
+        q: { et: 'Mis on langev täht?', en: 'What is a shooting star?' },
+        answers: [
+          { et: 'Liivatera suurune kivike, mis põleb õhus', en: 'A little stone, as small as a grain of sand, burning up in the air' },
+          { et: 'Täht, mis kukub taevast alla', en: 'A star falling from the sky' },
+          { et: 'Satelliit, mis kukub alla', en: 'A satellite falling down' },
+          { et: 'Täht, mis plahvatab', en: 'A star exploding' }
+        ],
+        why: { et: 'Langev täht ei ole päris täht. See on pisike kivike, mis lendab väga kiiresti Maa õhku ja põleb seal.', en: 'A shooting star is not a real star. It is a tiny stone that flies into the Earth’s air very fast and burns up there.' }
+      },
+      {
+        q: { et: 'Langev täht on päris täht, mis kukub taevast alla.', en: 'A shooting star is a real star falling from the sky.' },
+        tf: false,
+        why: { et: 'Päris tähed on hiiglaslikud päikesed, mis on väga kaugel. Langev täht on liivatera suurune kivike.', en: 'Real stars are huge suns, very far away. A shooting star is a stone as small as a grain of sand.' }
+      },
+      {
+        q: { et: 'Kui kiiresti lendab langev täht?', en: 'How fast does a shooting star fly?' },
+        answers: [
+          { et: '60 km sekundis', en: '60 km every second' },
+          { et: 'Nagu auto', en: 'As fast as a car' },
+          { et: 'Nagu lennuk', en: 'As fast as a plane' },
+          { et: 'Nagu jalgratas', en: 'As fast as a bike' }
+        ],
+        why: { et: 'Langev täht lendab 60 km sekundis. Tartust Tallinna jõuaks ta 3 sekundiga!', en: 'A shooting star flies 60 km every second. That is over 2000 times faster than a car!' }
+      },
+      {
+        q: { et: 'Augustis on perseiidide meteoorivool. Millal näeb öösel kõige rohkem langevaid tähti?', en: 'In August there is the Perseid meteor shower. When in the night do you see the most shooting stars?' },
+        answers: [
+          { et: 'Pärast südaööd', en: 'After midnight' },
+          { et: 'Õhtul, kohe kui läheb pimedaks', en: 'In the evening, as soon as it gets dark' },
+          { et: 'Keskpäeval', en: 'At midday' },
+          { et: 'Kogu öö ühepalju', en: 'The same all night' }
+        ],
+        why: { et: 'Langevad tähed lendavad justkui Perseuse tähtkuju poolt. Pärast südaööd on Perseus kõrgemal ja neid näeb rohkem.', en: 'The shooting stars seem to fly from the constellation Perseus. After midnight Perseus is higher, so you see more of them.' }
+      },
+      {
+        q: { et: 'Millal on perseiidide meteoorivool?', en: 'When is the Perseid meteor shower?' },
+        answers: [
+          { et: 'Augusti keskel', en: 'In the middle of August' },
+          { et: 'Jaanipäeval', en: 'At midsummer' },
+          { et: 'Aastavahetusel', en: 'At New Year' },
+          { et: 'Märtsis', en: 'In March' }
+        ],
+        why: { et: 'Kõige tihedam on perseiidide meteoorivool umbes 12. augustil. Siis on ka ööd juba pimedad.', en: 'The Perseids are at their best around 12 August, when the nights are dark again.' }
+      },
+      {
+        q: { et: 'Mis on boliid?', en: 'What is a fireball?' },
+        answers: [
+          { et: 'Väga hele langev täht', en: 'A very bright shooting star' },
+          { et: 'Täht, mis plahvatab', en: 'A star exploding' },
+          { et: 'Tuli maa peal', en: 'A fire on the ground' },
+          { et: 'Lennuki tuli', en: 'A plane’s light' }
+        ],
+        why: { et: 'Boliid on väga hele langev täht. Teda tekitab tavalisest suurem kivike.', en: 'A fireball is a very bright shooting star. It comes from a bigger stone than usual.' }
+      },
+      {
+        q: { et: 'Miks liiguvad tähed öö jooksul üle taeva?', en: 'Why do the stars move across the sky during the night?' },
+        answers: [
+          { et: 'Maa pöörleb', en: 'The Earth turns' },
+          { et: 'Tähed lendavad kosmoses ringi', en: 'The stars fly round in space' },
+          { et: 'Tuul kannab neid', en: 'The wind carries them' },
+          { et: 'Maa tiirleb ümber Päikese', en: 'The Earth goes round the Sun' }
+        ],
+        why: { et: 'Tegelikult ei pöörle taevas, vaid Maa – nagu karussell. Seepärast tõusevad tähed idas ja loojuvad läänes.', en: 'The sky does not really turn, the Earth does, like a merry-go-round. That is why stars rise in the east and set in the west.' }
+      }
+    ]
+  },
+  {
+    game: 'tahtkujud',
+    questions: [
+      {
+        q: { et: 'Milline neist on Kassiopeia?', en: 'Which of these is Cassiopeia?' },
+        answers: [{ con: 'cassiopeia' }, { con: 'orion' }, { con: 'bigdipper' }, { con: 'leo' }],
+        why: { et: 'Kassiopeia viis heledat tähte moodustavad suure W- või M-tähe.', en: 'Cassiopeia’s five bright stars make a big letter W or M.' }
+      },
+      {
+        q: { et: 'Milline neist on Suur Vanker?', en: 'Which of these is the Big Dipper?' },
+        answers: [{ con: 'bigdipper' }, { con: 'cassiopeia' }, { con: 'cygnus' }, { con: 'pegasus' }],
+        why: { et: 'Suure Vankri seitse tähte on nagu kopp pika varrega.', en: 'The seven stars of the Big Dipper look like a ladle with a long handle.' }
+      },
+      {
+        q: { et: 'Milline neist on Orion?', en: 'Which of these is Orion?' },
+        answers: [{ con: 'orion' }, { con: 'leo' }, { con: 'cygnus' }, { con: 'bigdipper' }],
+        why: { et: 'Orioni tunned ära kolmest tähest tema vöös, keskel nelja heleda tähe vahel.', en: 'You can tell Orion by the three stars of his belt, in the middle of four bright stars.' }
+      },
+      {
+        q: { et: 'Mis tähtkuju see on?', en: 'Which constellation is this?' },
+        pic: { con: 'cygnus' },
+        answers: [
+          { et: 'Luik', en: 'Cygnus, the Swan' },
+          { et: 'Lõvi', en: 'Leo, the Lion' },
+          { et: 'Kassiopeia', en: 'Cassiopeia' },
+          { et: 'Suur Vanker', en: 'The Big Dipper' }
+        ],
+        why: { et: 'Luik on nagu suur rist: pikk kael, saba ja laiali sirutatud tiivad. Ta lendab suvel mööda Linnuteed.', en: 'The Swan is like a big cross: a long neck, a tail and wings spread wide. It flies along the Milky Way in summer.' }
+      },
+      {
+        q: { et: 'Mis on Põhjanaelas erilist?', en: 'What is special about the North Star?' },
+        answers: [
+          { et: 'Ta on alati põhjas ja peaaegu ei liigu', en: 'It is always in the north and hardly moves' },
+          { et: 'Ta on taeva kõige heledam täht', en: 'It is the brightest star in the sky' },
+          { et: 'Ta on Maale kõige lähem täht', en: 'It is the nearest star to the Earth' },
+          { et: 'Ta on alati otse pea kohal', en: 'It is always straight overhead' }
+        ],
+        why: { et: 'Kõik tähed liiguvad ringiratast ümber Põhjanaela, aga tema ise jääb paigale. Kui vaatad Põhjanaela poole, tead, kus on põhi.', en: 'All the stars go round the North Star, but it stays still. When you face the North Star, you know where north is.' }
+      },
+      {
+        q: { et: 'Põhjanael on taeva kõige heledam täht.', en: 'The North Star is the brightest star in the sky.' },
+        tf: false,
+        why: { et: 'Põhjanael ei ole eriti hele. Ta on eriline sellepärast, et on alati põhjas.', en: 'The North Star is not especially bright. It is special because it is always in the north.' }
+      },
+      {
+        q: { et: 'Kuidas leida Põhjanaela?', en: 'How do you find the North Star?' },
+        pic: { con: 'bigdipper' },
+        answers: [
+          { et: 'Suure Vankri kopa kaks äärmist tähte näitavad tema poole', en: 'The two end stars of the Big Dipper’s bowl point to it' },
+          { et: 'Otsi taeva kõige heledam täht', en: 'Look for the brightest star in the sky' },
+          { et: 'Vaata otse üles', en: 'Look straight up' },
+          { et: 'Vaata itta, kus tähed tõusevad', en: 'Look east, where the stars rise' }
+        ],
+        why: { et: 'Kui jätkad joont Suure Vankri kopa kahe äärmise tähe kaudu, jõuad Põhjanaelani.', en: 'If you carry on the line through the two end stars of the Big Dipper’s bowl, you come to the North Star.' }
+      },
+      {
+        q: { et: 'Millist tähtkuju näeb Eestis igal selgel ööl?', en: 'Which constellation can you see in Estonia on every clear night?' },
+        answers: [
+          { et: 'Suur Vanker', en: 'The Big Dipper' },
+          { et: 'Orion', en: 'Orion' },
+          { et: 'Luik', en: 'Cygnus, the Swan' },
+          { et: 'Lõvi', en: 'Leo, the Lion' }
+        ],
+        why: { et: 'Suur Vanker on Põhjanaela lähedal ja ei looju Eestis kunagi. Teised tähtkujud on taevas ainult osa aastast.', en: 'The Big Dipper is near the North Star and never sets in Estonia. Other constellations are up only part of the year.' }
+      },
+      {
+        q: { et: 'Millist tähtkuju näeb hästi talveõhtul?', en: 'Which constellation can you see well on a winter evening?' },
+        answers: [
+          { et: 'Orion', en: 'Orion' },
+          { et: 'Luik', en: 'Cygnus, the Swan' },
+          { et: 'Lõvi', en: 'Leo, the Lion' },
+          { et: 'Kotkas', en: 'Aquila, the Eagle' }
+        ],
+        why: { et: 'Orion on talvine tähtkuju. Luik ja Kotkas on suvel taevas ning Lõvi kevadel.', en: 'Orion is a winter constellation. The Swan and the Eagle are up in summer, and Leo in spring.' }
+      },
+      {
+        q: { et: 'Millised tähed moodustavad Suvekolmnurga?', en: 'Which stars make the Summer Triangle?' },
+        answers: [
+          { et: 'Veega, Deeneb ja Altair', en: 'Vega, Deneb and Altair' },
+          { et: 'Põhjanael, Kapella ja Aldebaran', en: 'The North Star, Capella and Aldebaran' },
+          { et: 'Orioni vöö kolm tähte', en: 'The three stars of Orion’s belt' },
+          { et: 'Päike, Kuu ja Maa', en: 'The Sun, the Moon and the Earth' }
+        ],
+        why: { et: 'Veega Lüürast, Deeneb Luigest ja Altair Kotkast moodustavad suveöödel suure kolmnurga.', en: 'Vega in Lyra, Deneb in the Swan and Altair in the Eagle make a big triangle on summer nights.' }
+      },
+      {
+        q: { et: 'Mis on Sõel?', en: 'What are the Pleiades?' },
+        answers: [
+          { et: 'Täheparv – hulk tähti koos', en: 'A star cluster – a group of stars together' },
+          { et: 'Üks väga hele täht', en: 'One very bright star' },
+          { et: 'Planeet', en: 'A planet' },
+          { et: 'Galaktika', en: 'A galaxy' }
+        ],
+        why: { et: 'Sõel ehk Plejaadid on hulk noori kuumi tähti Sõnni tähtkujus.', en: 'The Pleiades are a group of young hot stars in Taurus.' }
+      },
+      {
+        q: { et: 'Kus on Orioni udu?', en: 'Where is the Orion Nebula?' },
+        pic: { con: 'orion' },
+        answers: [
+          { et: 'Orioni vöö all', en: 'Below Orion’s belt' },
+          { et: 'Orioni vöö peal', en: 'On Orion’s belt' },
+          { et: 'Põhjanaela kõrval', en: 'Next to the North Star' },
+          { et: 'Kuu peal', en: 'On the Moon' }
+        ],
+        why: { et: 'Orioni vöö all on Orioni udu – gaasipilv, kus sünnivad uued tähed.', en: 'Below Orion’s belt is the Orion Nebula, a cloud of gas where new stars are born.' }
+      }
+    ]
+  },
+  {
+    game: 'pildid',
+    questions: [
+      {
+        q: { et: 'Mis on pildil?', en: 'What is in the picture?' },
+        pic: { photo: 'saturn' },
+        answers: [
+          { et: 'Saturn', en: 'Saturn' },
+          { et: 'Jupiter', en: 'Jupiter' },
+          { et: 'Kuu', en: 'The Moon' },
+          { et: 'Sõel', en: 'The Pleiades' }
+        ],
+        why: { et: 'Saturni tunned ära ilusate rõngaste järgi.', en: 'You can tell Saturn by its beautiful rings.' }
+      },
+      {
+        q: { et: 'Mis on pildil?', en: 'What is in the picture?' },
+        pic: { photo: 'jupiter' },
+        answers: [
+          { et: 'Jupiter', en: 'Jupiter' },
+          { et: 'Saturn', en: 'Saturn' },
+          { et: 'Kuu', en: 'The Moon' },
+          { et: 'Päike', en: 'The Sun' }
+        ],
+        why: { et: 'Jupiteril on triibulised pilved ja punane laik, mis on hiiglaslik torm.', en: 'Jupiter has striped clouds and a red spot, which is a giant storm.' }
+      },
+      {
+        q: { et: 'Mis on pildil?', en: 'What is in the picture?' },
+        pic: { photo: 'andromeda' },
+        answers: [
+          { et: 'Galaktika', en: 'A galaxy' },
+          { et: 'Udukogu', en: 'A nebula' },
+          { et: 'Täheparv', en: 'A star cluster' },
+          { et: 'Planeet', en: 'A planet' }
+        ],
+        why: { et: 'See on Andromeeda galaktika, meie Linnutee naaber. Selles on sadu miljardeid tähti!', en: 'This is the Andromeda Galaxy, the Milky Way’s neighbour. It has hundreds of billions of stars!' }
+      },
+      {
+        q: { et: 'Mis on pildil?', en: 'What is in the picture?' },
+        pic: { photo: 'orion' },
+        answers: [
+          { et: 'Udukogu', en: 'A nebula' },
+          { et: 'Galaktika', en: 'A galaxy' },
+          { et: 'Planeet', en: 'A planet' },
+          { et: 'Täheparv', en: 'A star cluster' }
+        ],
+        why: { et: 'See on Orioni udu, suur gaasipilv, kus sünnivad uued tähed.', en: 'This is the Orion Nebula, a big cloud of gas where new stars are born.' }
+      },
+      {
+        q: { et: 'Mis on pildil?', en: 'What is in the picture?' },
+        pic: { photo: 'pleiades' },
+        answers: [
+          { et: 'Täheparv', en: 'A star cluster' },
+          { et: 'Galaktika', en: 'A galaxy' },
+          { et: 'Planeet', en: 'A planet' },
+          { et: 'Langevad tähed', en: 'Shooting stars' }
+        ],
+        why: { et: 'See on Sõel ehk Plejaadid, hulk noori kuumi sinakaid tähti.', en: 'These are the Pleiades, a group of young hot bluish stars.' }
+      },
+      {
+        q: { et: 'Mis on pildil?', en: 'What is in the picture?' },
+        pic: { photo: 'eclipse' },
+        answers: [
+          { et: 'Päikesevarjutus', en: 'A solar eclipse' },
+          { et: 'Kuuvarjutus', en: 'A lunar eclipse' },
+          { et: 'Kuusirp', en: 'A crescent moon' },
+          { et: 'Päikeseloojang', en: 'A sunset' }
+        ],
+        why: { et: 'Kuu liikus Päikese ette ja kattis osa sellest. Ära kunagi vaata Päikest ilma spetsiaalsete prillideta!', en: 'The Moon moved in front of the Sun and covered part of it. Never look at the Sun without special glasses!' }
+      },
+      {
+        q: { et: 'Milline neist on galaktika?', en: 'Which of these is a galaxy?' },
+        answers: [{ photo: 'whirlpool' }, { photo: 'rosette' }, { photo: 'pleiades' }, { photo: 'saturn' }],
+        why: { et: 'Keerise galaktika spiraalharud keerlevad nagu vesi vannis.', en: 'The Whirlpool Galaxy’s spiral arms swirl like water in a bath.' }
+      },
+      {
+        q: { et: 'Milline neist on udukogu?', en: 'Which of these is a nebula?' },
+        answers: [{ photo: 'horsehead' }, { photo: 'andromeda' }, { photo: 'jupiter' }, { photo: 'moon' }],
+        why: { et: 'Hobusepea udu on tume tolmupilv, mis näeb välja nagu hobuse pea.', en: 'The Horsehead Nebula is a dark cloud of dust that looks like a horse’s head.' }
+      },
+      {
+        q: { et: 'Mis on Orioni udu?', en: 'What is the Orion Nebula?' },
+        answers: [
+          { et: 'Gaasipilv, kus sünnivad uued tähed', en: 'A cloud of gas where new stars are born' },
+          { et: 'Pilv Maa õhus', en: 'A cloud in the Earth’s air' },
+          { et: 'Planeet', en: 'A planet' },
+          { et: 'Suitsupilv', en: 'A cloud of smoke' }
+        ],
+        why: { et: 'Orioni udu on suur gaasipilv, kus sünnivad uued tähed. Talvel võid seda näha isegi binokliga.', en: 'The Orion Nebula is a big cloud of gas where new stars are born. In winter you can see it even with binoculars.' }
+      },
+      {
+        q: { et: 'Mis on Jupiteri punane laik?', en: 'What is Jupiter’s red spot?' },
+        pic: { photo: 'jupiter' },
+        answers: [
+          { et: 'Hiiglaslik torm', en: 'A giant storm' },
+          { et: 'Vulkaan', en: 'A volcano' },
+          { et: 'Meri', en: 'A sea' },
+          { et: 'Jupiteri kuu', en: 'One of Jupiter’s moons' }
+        ],
+        why: { et: 'Punane laik on hiiglaslik torm, mis on suurem kui meie Maa!', en: 'The red spot is a giant storm, bigger than our Earth!' }
+      },
+      {
+        q: { et: 'Mis on Andromeeda galaktika?', en: 'What is the Andromeda Galaxy?' },
+        pic: { photo: 'andromeda' },
+        answers: [
+          { et: 'Hiiglaslik hulk tähti, sadu miljardeid', en: 'A huge group of stars, hundreds of billions of them' },
+          { et: 'Üks suur täht', en: 'One big star' },
+          { et: 'Gaasipilv', en: 'A cloud of gas' },
+          { et: 'Planeet', en: 'A planet' }
+        ],
+        why: { et: 'Andromeeda galaktika on meie Linnutee naaber. Selles on sadu miljardeid tähti!', en: 'The Andromeda Galaxy is the Milky Way’s neighbour. It has hundreds of billions of stars!' }
+      },
+      {
+        q: { et: 'Sõela tähti näeb ka ilma pikksilmata.', en: 'You can see the stars of the Pleiades without a telescope.' },
+        tf: true,
+        why: { et: 'Selgel talveõhtul näed Sõela tähti palja silmaga. Pikksilmaga paistab neid veel rohkem.', en: 'On a clear winter evening you can see the Pleiades with your own eyes. A telescope shows even more of them.' }
+      }
+    ]
+  }
+];
