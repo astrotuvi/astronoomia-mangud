@@ -604,6 +604,52 @@ window.QUIZ = [
           { et: 'Kuu peal', en: 'On the Moon' }
         ],
         why: { et: 'Orioni vöö all on Orioni udu – gaasipilv, kus sünnivad uued tähed.', en: 'Below Orion’s belt is the Orion Nebula, a cloud of gas where new stars are born.' }
+      },
+      {
+        q: { et: 'Milline neist on Skorpion?', en: 'Which of these is the Scorpion?' },
+        answers: [{ con: 'scorpius' }, { con: 'cygnus' }, { con: 'leo' }, { con: 'pegasus' }],
+        why: { et: 'Skorpionil on ees sõrad ja taga pikk kaardus saba. Tema südames on punane täht Antaares.', en: 'The Scorpion has claws in front and a long curved tail behind. In its heart is the red star Antares.' }
+      },
+      {
+        q: { et: 'Milline neist on Lõunarist?', en: 'Which of these is the Southern Cross?' },
+        answers: [{ con: 'crux' }, { con: 'cassiopeia' }, { con: 'cepheus' }, { con: 'bigdipper' }],
+        why: { et: 'Lõunaristi neli heledat tähte moodustavad väikese risti. See on kõige väiksem tähtkuju.', en: 'The four bright stars of the Southern Cross make a small cross. It is the smallest constellation.' }
+      },
+      {
+        q: { et: 'Mis tähtkuju see on?', en: 'Which constellation is this?' },
+        pic: { con: 'cepheus' },
+        answers: [
+          { et: 'Kefeus', en: 'Cepheus' },
+          { et: 'Kassiopeia', en: 'Cassiopeia' },
+          { et: 'Skorpion', en: 'Scorpius, the Scorpion' },
+          { et: 'Orion', en: 'Orion' }
+        ],
+        why: { et: 'Kefeuse tähed näevad välja nagu lapse joonistatud maja. Vanas loos oli Kefeus kuningas ja Kassiopeia mees.', en: 'The stars of Cepheus look like a house drawn by a child. In the old story, Cepheus was a king and Cassiopeia’s husband.' }
+      },
+      {
+        q: { et: 'Mis on öötaeva kõige heledam täht?', en: 'What is the brightest star in the night sky?' },
+        answers: [
+          { et: 'Siirius', en: 'Sirius' },
+          { et: 'Põhjanael', en: 'The North Star' },
+          { et: 'Kapella', en: 'Capella' },
+          { et: 'Antaares', en: 'Antares' }
+        ],
+        why: { et: 'Siirius on Suure Peni tähtkujus. Eestis paistab ta talvel madalal lõunas, Orioni vöö kolme tähe joone jätkul.', en: 'Sirius is in the Great Dog. In Estonia it shines low in the south in winter, on from the line of Orion’s three belt stars.' }
+      },
+      {
+        q: { et: 'Lõunaristi näeb ka Eestist.', en: 'You can see the Southern Cross from Estonia.' },
+        tf: false,
+        why: { et: 'Lõunarist on lõunataevas ja Eestist teda ei näe. Lõunapoolkeral leitakse tema abil lõunasuund.', en: 'The Southern Cross is in the southern sky, so you cannot see it from Estonia. In the southern half of the Earth, people use it to find south.' }
+      },
+      {
+        q: { et: 'Mis on Kapella?', en: 'What is Capella?' },
+        answers: [
+          { et: 'Kits, keda Veomees süles hoiab', en: 'The goat the Charioteer carries' },
+          { et: 'Orioni koer', en: 'Orion’s dog' },
+          { et: 'Lohe pea', en: 'The Dragon’s head' },
+          { et: 'Skorpioni süda', en: 'The Scorpion’s heart' }
+        ],
+        why: { et: 'Kapella on Veomehe tähtkujus üks taeva heledamaid tähti. Talveõhtuti on ta peaaegu otse pea kohal.', en: 'Capella, in the Charioteer, is one of the brightest stars in the sky. On winter evenings it is almost straight overhead.' }
       }
     ]
   },
@@ -722,6 +768,66 @@ window.QUIZ = [
         q: { et: 'Sõela tähti näeb ka ilma pikksilmata.', en: 'You can see the stars of the Pleiades without a telescope.' },
         tf: true,
         why: { et: 'Selgel talveõhtul näed Sõela tähti palja silmaga. Pikksilmaga paistab neid veel rohkem.', en: 'On a clear winter evening you can see the Pleiades with your own eyes. A telescope shows even more of them.' }
+      },
+      {
+        q: { et: 'Mis on pildil?', en: 'What is in the picture?' },
+        pic: { photo: 'tsuchinshan' },
+        answers: [
+          { et: 'Komeet', en: 'A comet' },
+          { et: 'Langev täht', en: 'A shooting star' },
+          { et: 'Galaktika', en: 'A galaxy' },
+          { et: 'Lennuk', en: 'A plane' }
+        ],
+        why: { et: 'See on komeet Tsuchinshan-ATLAS. Komeet on suur jäine kivi, millel tekib Päikese lähedal pikk helendav saba.', en: 'This is Comet Tsuchinshan–ATLAS. A comet is a big lump of ice and rock that grows a long glowing tail near the Sun.' }
+      },
+      {
+        q: { et: 'Milline neist on komeet?', en: 'Which of these is a comet?' },
+        answers: [{ photo: 'ponsbrooks' }, { photo: 'pinwheel' }, { photo: 'heart' }, { photo: 'pleiades' }],
+        why: { et: 'Komeet Pons-Brooks tuleb Päikese juurde tagasi umbes iga 71 aasta järel.', en: 'Comet Pons–Brooks comes back to the Sun about every 71 years.' }
+      },
+      {
+        q: { et: 'Milline neist on galaktika?', en: 'Which of these is a galaxy?' },
+        answers: [{ photo: 'triangulum' }, { photo: 'bubble' }, { photo: 'crab' }, { photo: 'tsuchinshan' }],
+        why: { et: 'Kolmnurga galaktika on Andromeeda galaktika väike naaber. Väga pimedas kohas võib seda näha isegi palja silmaga.', en: 'The Triangulum Galaxy is a small neighbour of the Andromeda Galaxy. In a very dark place you can even see it without a telescope.' }
+      },
+      {
+        q: { et: 'Mis kujuga on see udu?', en: 'What shape is this nebula?' },
+        pic: { photo: 'heart' },
+        answers: [
+          { et: 'Süda', en: 'A heart' },
+          { et: 'Küsimärk', en: 'A question mark' },
+          { et: 'Hobuse pea', en: 'A horse’s head' },
+          { et: 'Elevandi lont', en: 'An elephant’s trunk' }
+        ],
+        why: { et: 'Südame udu on südame kujuline punane gaasipilv. Selle keskel on noored tähed, mis panevad gaasi helendama.', en: 'The Heart Nebula is a red cloud of gas shaped like a heart. Young stars in its middle make the gas glow.' }
+      },
+      {
+        q: { et: 'Mitu galaktikat on pildil?', en: 'How many galaxies are in the picture?' },
+        pic: { photo: 'triplet' },
+        answers: [
+          { et: 'Kolm', en: 'Three' },
+          { et: 'Üks', en: 'One' },
+          { et: 'Kaks', en: 'Two' },
+          { et: 'Sada', en: 'A hundred' }
+        ],
+        why: { et: 'See on Lõvi kolmik: kolm galaktikat, mis on Lõvi tähtkujus üksteise naabrid.', en: 'This is the Leo Triplet: three galaxies that are neighbours in the constellation Leo.' }
+      },
+      {
+        q: { et: 'Mis on Krabi udu?', en: 'What is the Crab Nebula?' },
+        pic: { photo: 'crab' },
+        answers: [
+          { et: 'Plahvatanud tähe jäänus', en: 'What is left of an exploded star' },
+          { et: 'Krabi kujuline planeet', en: 'A planet shaped like a crab' },
+          { et: 'Pilv Maa õhus', en: 'A cloud in the Earth’s air' },
+          { et: 'Galaktika', en: 'A galaxy' }
+        ],
+        why: { et: 'Inimesed nägid seda plahvatust aastal 1054. See oli nii ere, et paistis isegi päeval!', en: 'People saw the explosion in the year 1054. It was so bright that it could be seen even in the daytime!' }
+      },
+      {
+        q: { et: 'Kunagi heidab ka meie Päike oma välimised kihid minema, nagu see täht tegi.', en: 'One day our Sun too will throw off its outer layers, as this star did.' },
+        pic: { photo: 'dumbbell' },
+        tf: true,
+        why: { et: 'Hantli udu tekkis, kui üks Päikese-sarnane täht oma välimised kihid minema heitis. Päikesega juhtub see alles miljardite aastate pärast.', en: 'The Dumbbell Nebula formed when a star like the Sun threw off its outer layers. This will happen to the Sun only billions of years from now.' }
       }
     ]
   }
