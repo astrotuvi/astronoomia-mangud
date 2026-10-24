@@ -54,6 +54,24 @@
       }
     },
     {
+      file: 'images/tsuchinshan.jpg',
+      astrobin: '9k85ql',
+      name: { et: 'Komeet Tsuchinshan-ATLAS', en: 'Comet Tsuchinshan–ATLAS' },
+      fact: {
+        et: 'Komeet on suur jäine kivi. Kui see tuleb Päikese lähedale, hakkab jää aurama ja tekib pikk helendav saba. Seda komeeti nägi 2024. aasta oktoobris ka palja silmaga.',
+        en: 'A comet is a big lump of ice and rock. When it comes near the Sun, the ice turns to gas and makes a long glowing tail. In October 2024 you could see this comet without a telescope.'
+      }
+    },
+    {
+      file: 'images/ponsbrooks.jpg',
+      astrobin: '0tbdac',
+      name: { et: 'Komeet Pons-Brooks', en: 'Comet Pons–Brooks' },
+      fact: {
+        et: 'See komeet tuleb Päikese juurde tagasi umbes iga 71 aasta järel. Järgmine kord näeb seda alles 2095. aastal!',
+        en: 'This comet comes back to the Sun about every 71 years. The next time we can see it is in 2095!'
+      }
+    },
+    {
       file: 'images/orion.jpg',
       astrobin: 'uu55w0',
       name: { et: 'Orioni udu', en: 'Orion Nebula' },
@@ -81,6 +99,114 @@
       }
     },
     {
+      file: 'images/bubble.jpg',
+      astrobin: 's8kr1m',
+      name: { et: 'Mulli udu', en: 'Bubble Nebula' },
+      fact: {
+        et: 'Mulli udu on hiiglaslik gaasimull. Selle on puhunud üks väga kuum ja suur täht, mis on mulli sees.',
+        en: 'The Bubble Nebula is a giant bubble of gas. It was blown by a very hot, big star inside it.'
+      }
+    },
+    {
+      file: 'images/california.jpg',
+      astrobin: 'q8ho3d',
+      name: { et: 'California udu', en: 'California Nebula' },
+      fact: {
+        et: 'See udu on sama kujuga nagu California osariik Ameerikas. Taevas on see sama pikk kui viis täiskuud kõrvuti.',
+        en: 'This nebula has the same shape as the state of California in America. In the sky it is as long as five full moons side by side.'
+      }
+    },
+    {
+      file: 'images/crescent.jpg',
+      astrobin: 'h4lzn6',
+      name: { et: 'Poolkuu udu', en: 'Crescent Nebula' },
+      fact: {
+        et: 'Poolkuu udu on gaasikest, mille üks väga kuum täht on enda ümbert välja puhunud.',
+        en: 'The Crescent Nebula is a shell of gas that a very hot star has blown out around itself.'
+      }
+    },
+    {
+      file: 'images/cygnusloop.jpg',
+      astrobin: 'wgllu0',
+      name: { et: 'Luige silmus', en: 'Cygnus Loop' },
+      fact: {
+        et: 'Siin plahvatas tuhandeid aastaid tagasi üks täht. Plahvatuse jäänused paisuvad ikka veel laiali nagu suur rõngas.',
+        en: 'A star exploded here thousands of years ago. What is left of it is still spreading out like a big ring.'
+      }
+    },
+    {
+      file: 'images/dumbbell.jpg',
+      astrobin: '7uonbx',
+      name: { et: 'Hantli udu', en: 'Dumbbell Nebula' },
+      fact: {
+        et: 'Hantli udu tekkis, kui üks Päikese-sarnane täht oma välimised kihid minema heitis. Kunagi juhtub nii ka meie Päikesega.',
+        en: 'The Dumbbell Nebula formed when a star like the Sun threw off its outer layers. One day this will happen to our Sun too.'
+      }
+    },
+    {
+      file: 'images/elephant.jpg',
+      astrobin: 't3aagk',
+      name: { et: 'Elevandilondi udu', en: 'Elephant’s Trunk Nebula' },
+      fact: {
+        et: 'Selles suures gaasipilves on tume tolmusammas, mis meenutab elevandi lonti. Selle sees sünnivad uued tähed.',
+        en: 'In this big cloud of gas there is a dark pillar of dust that looks like an elephant’s trunk. New stars are being born inside it.'
+      }
+    },
+    {
+      file: 'images/iris.jpg',
+      astrobin: 'oay737',
+      name: { et: 'Iirise udu', en: 'Iris Nebula' },
+      fact: {
+        et: 'Iirise udu on tolmupilv, mis peegeldab ühe ereda tähe sinist valgust. See näeb välja nagu lill.',
+        en: 'The Iris Nebula is a cloud of dust that reflects the blue light of a bright star. It looks like a flower.'
+      }
+    },
+    {
+      file: 'images/northamerica.jpg',
+      astrobin: 'wl3iuw',
+      name: { et: 'Põhja-Ameerika udu', en: 'North America Nebula' },
+      fact: {
+        et: 'Kogu see udu on Põhja-Ameerika mandri kujuline. Pildil on selle keskosa. Udu on Luige tähtkujus ereda tähe Deenebi lähedal.',
+        en: 'The whole nebula has the shape of North America. The picture shows its middle part. It is in the constellation Cygnus, near the bright star Deneb.'
+      }
+    },
+    {
+      file: 'images/spider.jpg',
+      astrobin: 'ur6xpe',
+      name: { et: 'Ämbliku ja Kärbse udu', en: 'Spider and Fly Nebulae' },
+      fact: {
+        et: 'Siin on kaks gaasipilve, mida kutsutakse Ämblikuks ja Kärbseks. Mõlemas sünnivad uued tähed.',
+        en: 'Here are two clouds of gas called the Spider and the Fly. New stars are being born in both of them.'
+      }
+    },
+    {
+      file: 'images/questionmark.jpg',
+      astrobin: 'jnx2hb',
+      name: { et: 'Küsimärgi udu', en: 'Question Mark Nebula' },
+      fact: {
+        et: 'See punane gaasipilv on kaugelt vaadates küsimärgi kujuline. Selles sünnivad uued tähed.',
+        en: 'Seen from far away, this red cloud of gas is shaped like a question mark. New stars are being born in it.'
+      }
+    },
+    {
+      file: 'images/heart.jpg',
+      astrobin: 'daq9v5',
+      name: { et: 'Südame udu', en: 'Heart Nebula' },
+      fact: {
+        et: 'Südame udu on südame kujuline punane gaasipilv. Selle keskel on noored tähed, mis panevad gaasi helendama.',
+        en: 'The Heart Nebula is a red cloud of gas shaped like a heart. Young stars in its middle make the gas glow.'
+      }
+    },
+    {
+      file: 'images/crab.jpg',
+      astrobin: '9msc3y',
+      name: { et: 'Krabi udu', en: 'Crab Nebula' },
+      fact: {
+        et: 'Krabi udu on plahvatanud tähe jäänus. Inimesed nägid seda plahvatust aastal 1054. See oli nii ere, et paistis isegi päeval!',
+        en: 'The Crab Nebula is what is left of a star that exploded. People saw the explosion in the year 1054. It was so bright that it could be seen even in the daytime!'
+      }
+    },
+    {
       file: 'images/andromeda.jpg',
       astrobin: '4ocaul',
       name: { et: 'Andromeeda galaktika', en: 'Andromeda Galaxy' },
@@ -96,6 +222,42 @@
       fact: {
         et: 'Keerise galaktika spiraalharud keerlevad nagu vesi vannis. Tema kõrval on väike kaaslasgalaktika.',
         en: 'The Whirlpool Galaxy has spiral arms that swirl like water down a drain. A small galaxy is right next to it.'
+      }
+    },
+    {
+      file: 'images/pinwheel.jpg',
+      astrobin: 'aqmyzp',
+      name: { et: 'Tuuleveski galaktika', en: 'Pinwheel Galaxy' },
+      fact: {
+        et: 'See galaktika näeb välja nagu tuuleveski. Ta on meie Linnuteest suurem.',
+        en: 'This galaxy looks like a pinwheel. It is bigger than our Milky Way.'
+      }
+    },
+    {
+      file: 'images/triangulum.jpg',
+      astrobin: 'yvvd54',
+      name: { et: 'Kolmnurga galaktika', en: 'Triangulum Galaxy' },
+      fact: {
+        et: 'Kolmnurga galaktika on Andromeeda galaktika väike naaber. Väga pimedas kohas võib seda näha isegi palja silmaga.',
+        en: 'The Triangulum Galaxy is a small neighbour of the Andromeda Galaxy. In a very dark place you can even see it without a telescope.'
+      }
+    },
+    {
+      file: 'images/bode.jpg',
+      astrobin: 'xcthwy',
+      name: { et: 'Bode ja Sigari galaktika', en: 'Bode’s and Cigar Galaxies' },
+      fact: {
+        et: 'Vasakul on spiraalne Bode galaktika ja paremal Sigari galaktika, kus sünnib väga palju uusi tähti. Need on Suure Vankri lähedal.',
+        en: 'On the left is the spiral Bode’s Galaxy and on the right the Cigar Galaxy, where lots of new stars are being born. They are near the Big Dipper.'
+      }
+    },
+    {
+      file: 'images/triplet.jpg',
+      astrobin: '3frqwu',
+      name: { et: 'Lõvi kolmik', en: 'Leo Triplet' },
+      fact: {
+        et: 'Siin on korraga kolm galaktikat! Need on Lõvi tähtkujus üksteise naabrid.',
+        en: 'Here are three galaxies at once! They are neighbours in the constellation Leo.'
       }
     }
   ];

@@ -191,8 +191,26 @@ The files in `pusle/images/` are square crops, scaled to 1200×1200 px, and are 
 | `saturn.jpg` | Saturn | <https://www.astrobin.com/fu9tbu/> |
 | `jupiter.jpg` | Jupiter (Ganymede transit) | <https://www.astrobin.com/gnc57p/> |
 | `eclipse.jpg` | Solar eclipse, 10 June 2021 | <https://www.astrobin.com/ytu8fs/> |
+| `tsuchinshan.jpg` | Comet C/2023 A3 (Tsuchinshan–ATLAS) | <https://www.astrobin.com/9k85ql/> |
+| `ponsbrooks.jpg` | Comet 12P/Pons–Brooks | <https://www.astrobin.com/0tbdac/> |
 | `orion.jpg` | Orion Nebula (M42) | <https://www.astrobin.com/uu55w0/> |
 | `horsehead.jpg` | Horsehead and Flame Nebulae | <https://www.astrobin.com/4yxzcw/> |
 | `rosette.jpg` | Rosette Nebula | <https://www.astrobin.com/61be3g/> |
+| `bubble.jpg` | Bubble Nebula (NGC 7635) | <https://www.astrobin.com/s8kr1m/> |
+| `california.jpg` | California Nebula (NGC 1499) | <https://www.astrobin.com/q8ho3d/> |
+| `crescent.jpg` | Crescent Nebula (NGC 6888) | <https://www.astrobin.com/h4lzn6/> |
+| `cygnusloop.jpg` | Cygnus Loop | <https://www.astrobin.com/wgllu0/> |
+| `dumbbell.jpg` | Dumbbell Nebula (M27) | <https://www.astrobin.com/7uonbx/> |
+| `elephant.jpg` | Elephant’s Trunk Nebula (IC 1396) | <https://www.astrobin.com/t3aagk/> |
+| `iris.jpg` | Iris Nebula (NGC 7023) | <https://www.astrobin.com/oay737/> |
+| `northamerica.jpg` | North America Nebula (NGC 7000) | <https://www.astrobin.com/wl3iuw/> |
+| `spider.jpg` | Spider and Fly Nebulae (IC 417, NGC 1931) | <https://www.astrobin.com/ur6xpe/> |
+| `questionmark.jpg` | Question Mark Nebula (NGC 7822) | <https://www.astrobin.com/jnx2hb/> |
+| `heart.jpg` | Heart Nebula (IC 1805) | <https://www.astrobin.com/daq9v5/> |
+| `crab.jpg` | Crab Nebula (M1) | <https://www.astrobin.com/9msc3y/> |
 | `andromeda.jpg` | Andromeda Galaxy (M31) | <https://www.astrobin.com/4ocaul/> |
 | `whirlpool.jpg` | Whirlpool Galaxy (M51) | <https://www.astrobin.com/ymu58n/> |
+| `pinwheel.jpg` | Pinwheel Galaxy (M101) | <https://www.astrobin.com/aqmyzp/> |
+| `triangulum.jpg` | Triangulum Galaxy (M33) | <https://www.astrobin.com/yvvd54/> |
+| `bode.jpg` | Bode’s and Cigar Galaxies (M81, M82) | <https://www.astrobin.com/xcthwy/> |
+| `triplet.jpg` | Leo Triplet (M65, M66, NGC 3628) | <https://www.astrobin.com/3frqwu/> |

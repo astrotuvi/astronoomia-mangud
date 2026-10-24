@@ -14,11 +14,29 @@
     { file: '../pusle/images/saturn.jpg', name: { et: 'Saturn', en: 'Saturn' } },
     { file: '../pusle/images/jupiter.jpg', name: { et: 'Jupiter', en: 'Jupiter' } },
     { file: '../pusle/images/eclipse.jpg', name: { et: 'Päikesevarjutus', en: 'Solar eclipse' } },
+    { file: '../pusle/images/tsuchinshan.jpg', name: { et: 'Komeet Tsuchinshan-ATLAS', en: 'Comet Tsuchinshan–ATLAS' } },
+    { file: '../pusle/images/ponsbrooks.jpg', name: { et: 'Komeet Pons-Brooks', en: 'Comet Pons–Brooks' } },
     { file: '../pusle/images/orion.jpg', name: { et: 'Orioni udu', en: 'Orion Nebula' } },
     { file: '../pusle/images/horsehead.jpg', name: { et: 'Hobusepea udu', en: 'Horsehead Nebula' } },
     { file: '../pusle/images/rosette.jpg', name: { et: 'Roseti udu', en: 'Rosette Nebula' } },
+    { file: '../pusle/images/bubble.jpg', name: { et: 'Mulli udu', en: 'Bubble Nebula' } },
+    { file: '../pusle/images/california.jpg', name: { et: 'California udu', en: 'California Nebula' } },
+    { file: '../pusle/images/crescent.jpg', name: { et: 'Poolkuu udu', en: 'Crescent Nebula' } },
+    { file: '../pusle/images/cygnusloop.jpg', name: { et: 'Luige silmus', en: 'Cygnus Loop' } },
+    { file: '../pusle/images/dumbbell.jpg', name: { et: 'Hantli udu', en: 'Dumbbell Nebula' } },
+    { file: '../pusle/images/elephant.jpg', name: { et: 'Elevandilondi udu', en: 'Elephant’s Trunk Nebula' } },
+    { file: '../pusle/images/iris.jpg', name: { et: 'Iirise udu', en: 'Iris Nebula' } },
+    { file: '../pusle/images/northamerica.jpg', name: { et: 'Põhja-Ameerika udu', en: 'North America Nebula' } },
+    { file: '../pusle/images/spider.jpg', name: { et: 'Ämbliku ja Kärbse udu', en: 'Spider and Fly Nebulae' } },
+    { file: '../pusle/images/questionmark.jpg', name: { et: 'Küsimärgi udu', en: 'Question Mark Nebula' } },
+    { file: '../pusle/images/heart.jpg', name: { et: 'Südame udu', en: 'Heart Nebula' } },
+    { file: '../pusle/images/crab.jpg', name: { et: 'Krabi udu', en: 'Crab Nebula' } },
     { file: '../pusle/images/andromeda.jpg', name: { et: 'Andromeeda galaktika', en: 'Andromeda Galaxy' } },
-    { file: '../pusle/images/whirlpool.jpg', name: { et: 'Keerise galaktika', en: 'Whirlpool Galaxy' } }
+    { file: '../pusle/images/whirlpool.jpg', name: { et: 'Keerise galaktika', en: 'Whirlpool Galaxy' } },
+    { file: '../pusle/images/pinwheel.jpg', name: { et: 'Tuuleveski galaktika', en: 'Pinwheel Galaxy' } },
+    { file: '../pusle/images/triangulum.jpg', name: { et: 'Kolmnurga galaktika', en: 'Triangulum Galaxy' } },
+    { file: '../pusle/images/bode.jpg', name: { et: 'Bode ja Sigari galaktika', en: 'Bode’s and Cigar Galaxies' } },
+    { file: '../pusle/images/triplet.jpg', name: { et: 'Lõvi kolmik', en: 'Leo Triplet' } }
   ];
 
   // Number of pairs offered, with the columns of the little grid picture.
