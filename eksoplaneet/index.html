@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- the pages are dark already: keeps phone browsers from recolouring them in dark mode -->
+  <meta name="color-scheme" content="dark">
+  <title>Avasta eksoplaneet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/common.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- Menu: pick a star, and the planets found so far -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">🏠</a>
+        <h1><span class="logo">🔭</span> <span data-t="title"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="intro1"></p>
+      <p class="intro" data-t="intro2"></p>
+
+      <section>
+        <h2 data-t="chooseStar"></h2>
+        <div id="levels" class="levels"></div>
+      </section>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+
+      <section id="catalogueBox" class="hidden">
+        <h2><span data-t="catalogue"></span> <span id="catCount" class="cat-count"></span></h2>
+        <div id="catalogue" class="catalogue"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Game: the light curve and the questions beside or below it -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">⬅️</button>
+      <div class="progress">
+        <div class="track"><div id="progressFill" class="fill"></div></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <button id="hintBtn" class="icon" data-t-label="hint" aria-label="Vihje">💡</button>
+      <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+    </div>
+    <div class="area play-area">
+      <div id="graphBox" class="graph-box">
+        <canvas id="graph"></canvas>
+      </div>
+      <aside id="panel" class="panel">
+        <div id="starInfo" class="star-info"></div>
+        <h2 id="qTitle" class="q-title"></h2>
+        <p id="qText" class="q-text"></p>
+        <div id="qExtra" class="q-extra"></div>
+        <div id="options" class="options"></div>
+        <p id="feedback" class="feedback"></p>
+        <div class="next-row">
+          <button id="noPlanetBtn" class="btn alt hidden">🚫 <span data-t="noPlanet"></span></button>
+          <button id="nextBtn" class="btn hidden"></button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Win overlay: the planets found around this star -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div class="win-card found-card">
+      <h2><span id="winTitle"></span> 🎉</h2>
+      <div id="winPlanets" class="win-planets"></div>
+      <p class="pic-note"><span id="picNote" data-t="picNote"></span> <span id="madeUp"></span></p>
+      <div class="win-buttons">
+        <button id="newStarBtn" class="btn">🔭 <span data-t="newStar"></span></button>
+        <button id="nextLevelBtn" class="btn">▶ <span data-t="nextLevel"></span></button>
+        <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/common.js"></script>
+  <script src="../shared/planets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

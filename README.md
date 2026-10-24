@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, and Kuu faasid and Kosmoseviktoriin for ages 8–10, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, Kuu faasid and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet for ages 11–12, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -13,6 +13,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Planeetide rivi / Line Up the Planets | [`planeedid/`](planeedid/) | Drag the planets into order from the Sun outwards |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
+| Avasta eksoplaneet / Discover an Exoplanet | [`eksoplaneet/`](eksoplaneet/) | Find the dips in a star's light and work out the planet's year, size and whether it could have water |
 | Kosmoseviktoriin / Space Quiz | [`viktoriin/`](viktoriin/) | Answer questions about what the other games teach, alone or two players on one phone |
 
 The language and sound settings are shared by all games.
@@ -129,7 +130,7 @@ The phases and their names are in the `PHASES` list at the top of `kuufaasid/app
 
 - Pick a level. Level 1 is an ordinary night of the Perseids. Level 2 has twice as many shooting stars and two fireballs, and level 3 three times as many and three fireballs, with a meteor storm (tähesadu) from 00:00 to 02:00 that brings three times more again.
 - One night, from 22:00 to 04:00, lasts a minute. The top bar shows a clock and how much of the night is left. In the last ten seconds the sky gets light, most of all low in the north-east, where the Sun is below the horizon.
-- The sky is the real one above Tõrva (58° N) on the night of the Perseids, 12 August, looking north-east. As the night goes on it turns round the North Star (Põhjanael): Cassiopeia climbs over the top, Perseus rises higher, and Capella, the Pleiades (Sõel) and Aldebaran come up from behind the trees. Stars low down are dimmer.
+- The sky is the real one above Tõrva (58° N) on the night of the Perseids, 12 August, looking north-east. As the night goes on it turns round the North Star (Põhjanael): Cassiopeia climbs over the top, Perseus rises higher, and Capella, the Pleiades (Sõel) and Aldebaran come up from behind the trees. Stars low down are fainter.
 - Shooting stars flash across the sky, sometimes three in quick succession. They come more often as Perseus rises, on level 1 from about one every two seconds in the evening to one every 1.2 seconds at dawn, as there are more after midnight in reality. Tap one, or its tail, to catch it: it turns into a ⭐ that flies into the jar at the bottom. A star still counts if it is tapped just after it fades. Each catch plays the next note of a tune.
 - Once a night (on level 1) a slow, bright green fireball (boliid) crosses the sky. It counts as two stars.
 - All shooting stars fly away from one spot between Perseus and Cassiopeia, which moves with the sky, as the Perseids do in August.
@@ -139,6 +140,24 @@ The phases and their names are in the `PHASES` list at the top of `kuufaasid/app
 - Within three days of the best night of the Perseids (12 August) or the Geminids (14 December), the menu says that there is a real meteor shower tonight.
 
 The levels, the meteor storm, the length of the night, the place, the direction of the view and the other timings are at the top of `meteoor/app.js`, with the positions of the named stars. The sky is drawn with a stereographic projection, which keeps the shapes of the figures.
+
+## Avasta eksoplaneet
+
+- Pick one of four kinds of star, each harder than the one before. The first time each is a real star; after that it is a new made-up star of the same kind every time (named EKSO- and a number), with planets of other sizes and years:
+  1. Selge varjutus: deep, clear dips from a big planet (first HD 209458 with a hot Jupiter)
+  2. Väike varjutus: small dips in the noise from an Earth-sized planet or a super-Earth (first Kepler-22 b in the habitable zone)
+  3. Kaks planeeti: an orange or red dwarf with two planets whose dips differ in depth, the inner one going round three or four times for each turn of the outer one (first LHS 1140)
+  4. Rahutu täht: a red dwarf with spots that make its light wobble, and flares (first Kepler-1649)
+- The telescope records the star's brightness for about 18 seconds. Tap each dip; a tap on noise, a starspot's wobble or a flare says what it is instead. At least three dips of each planet are needed.
+- One made-up star in five (but never on Kaks planeeti) has no planet passing in front of it, as is so for most real stars. Once the recording is done, 🚫 Siin pole planeeti says so: on such a star the star counts as checked and goes into the catalogue, and on a star with a planet it asks to look again.
+- Then, for each planet:
+  - **Kui tihti?** The days of the dips show above them; pick how many days apart they are, which is the planet's year
+  - **Kui suur?** Drag the yellow line to the bottom of a dip to read its depth, and pick the planet size that makes such a dip round this star; the table changes with the star, so the same planet makes a deeper dip in front of a small star
+  - **Kas seal võiks olla vett?** Compare the year with the periods of the star's habitable zone: too hot, just right or too cold
+- 💡 points at a dip not found yet, or explains the question again.
+- The win screen shows each planet found with a picture of what it could look like and a fact, with 🔭 Uus täht for another star of the same kind and ▶ Järgmine tase. Every planet found goes into **Sinu avastused** in the menu, and a 🌟 marks the kinds whose real star is found.
+
+The real stars and planets are in the `LEVELS` list at the top of `eksoplaneet/app.js`, and `makeLevel` makes up the new ones. The real planets' sizes and periods and the stars' sizes are real, but the light curves are made up from them, with made-up noise, spots and flares, and the dips are drawn wider than they are (a few hours), so that they show. The habitable zones of the real stars are rough, and those of the made-up ones are worked out from the star's size and temperature. A made-up planet's year and size are always well inside one answer, so that the answers are clear. The pictures are the planets of `shared/planets.js` in other colours, and the facts of the made-up planets depend on their size and zone.
 
 ## Kosmoseviktoriin
 

@@ -240,7 +240,7 @@
       emoji: '🛡️',
       name: { et: 'Perseus', en: 'Perseus' },
       fact: {
-        et: 'Perseus on vanade lugude kangelane, kes hoiab käes koletise Medusa pead. Täht 9, Algol, on Medusa silm. See muutub iga kolme päeva tagant korraks tuhmimaks. Augustis lendab Perseuse poolt palju langevaid tähti.',
+        et: 'Perseus on vanade lugude kangelane, kes hoiab käes koletise Medusa pead. Täht 9, Algol, on Medusa silm. Selle valgus nõrgeneb iga kolme päeva tagant korraks. Augustis lendab Perseuse poolt palju langevaid tähti.',
         en: 'Perseus is a hero from old stories who holds the head of the monster Medusa. Star 9, Algol, is Medusa’s eye. It dims for a while every three days. In August many shooting stars fly out of Perseus.'
       },
       mention: { 8: 'Algol' },

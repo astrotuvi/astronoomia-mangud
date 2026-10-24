@@ -269,6 +269,43 @@
           <b data-t="meteor"></b>
           <span data-t="meteorText"></span>
         </a>
+        <a class="game-card" href="eksoplaneet/index.html">
+          <!-- a planet passing in front of its star, and the dips it makes in the star's light -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <radialGradient id="exoStar" cx="0.42" cy="0.4" r="0.6">
+                <stop offset="0" stop-color="#fffbe8" />
+                <stop offset="0.6" stop-color="#ffd98a" />
+                <stop offset="1" stop-color="#ff9f40" />
+              </radialGradient>
+              <radialGradient id="exoGlow">
+                <stop offset="0.6" stop-color="#ffb84d" stop-opacity="0.45" />
+                <stop offset="1" stop-color="#ffb84d" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <g fill="#fff">
+              <circle cx="10" cy="10" r="0.6" opacity="0.6" /><circle cx="88" cy="14" r="0.7" opacity="0.6" />
+              <circle cx="20" cy="44" r="0.5" opacity="0.5" /><circle cx="84" cy="42" r="0.6" opacity="0.5" />
+            </g>
+            <circle cx="50" cy="28" r="26" fill="url(#exoGlow)" />
+            <circle cx="50" cy="28" r="17" fill="url(#exoStar)" />
+            <circle cx="44" cy="31" r="3.6" fill="#0b1238" />
+            <path d="M24 31H38" stroke="#fff" stroke-width="0.6" stroke-dasharray="1.2 1.6" opacity="0.6" />
+            <rect x="8" y="56" width="84" height="36" rx="3" fill="#050820" opacity="0.7" />
+            <path d="M12 66H88" stroke="#fff" stroke-width="0.4" stroke-dasharray="1.5 1.5" opacity="0.35" />
+            <polyline fill="none" stroke="#fff" stroke-width="0.9" stroke-linejoin="round"
+              points="12,66 15,65.4 18,66.6 21,65.8 24,66.3 26,66 27,72 28,84 30,84.4 31,72 32,66 35,65.6 38,66.5 41,65.7 44,66.4 47,65.9 50,66.3 52,66 53,72 54,84 56,84.2 57,72 58,66 61,66.4 64,65.6 67,66.3 70,65.9 73,66.5 76,65.8 78,66.1 79,72 80,84 82,84.3 83,72 84,66 88,66.2" />
+            <g fill="#9fd8ff" opacity="0.8">
+              <circle cx="14" cy="64.8" r="0.6" /><circle cx="20" cy="67" r="0.6" /><circle cx="36" cy="64.9" r="0.6" />
+              <circle cx="45" cy="67.1" r="0.6" /><circle cx="62" cy="64.8" r="0.6" /><circle cx="72" cy="67" r="0.6" /><circle cx="86" cy="65" r="0.6" />
+            </g>
+            <g stroke="#ffd34d" stroke-width="0.7" stroke-dasharray="1.5 1.2">
+              <line x1="29" y1="58" x2="29" y2="90" /><line x1="55" y1="58" x2="55" y2="90" /><line x1="81" y1="58" x2="81" y2="90" />
+            </g>
+          </svg>
+          <b data-t="exo"></b>
+          <span data-t="exoText"></span>
+        </a>
         <a class="game-card" href="viktoriin/index.html">
           <!-- a question about the Moon and four answer buttons, as in the quiz -->
           <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -327,6 +364,8 @@
         orderText: 'Pane planeedid õigesse järjekorda, alates Päikesele kõige lähemast.',
         meteor: 'Püüa langev täht',
         meteorText: 'Püüa ühe ööga purki nii palju langevaid tähti kui jõuad.',
+        exo: 'Avasta ekso\u00adplaneet',
+        exoText: 'Leia tähe valguses lohud ja uuri välja, milline planeet tiirleb ümber kauge tähe.',
         // a soft hyphen, so that a long name can break on a narrow card
         quiz: 'Kosmose\u00adviktoriin',
         quizText: 'Vasta küsimustele kõigist mängudest, üksi või kahekesi sõbraga.',
@@ -350,6 +389,8 @@
         orderText: 'Put the planets in order, starting with the one closest to the Sun.',
         meteor: 'Catch a Shooting Star',
         meteorText: 'Catch as many shooting stars in your jar as you can in one night.',
+        exo: 'Discover an Exoplanet',
+        exoText: 'Find the dips in a star\'s light and work out what planet goes round a distant star.',
         quiz: 'Space Quiz',
         quizText: 'Answer questions about all the games, alone or with a friend.',
         credit: 'Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.'
