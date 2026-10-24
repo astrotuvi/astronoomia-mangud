@@ -71,7 +71,78 @@
     }
   ];
 
-  const WHOS = ['🐱', '🐶', '🐻', '🐰', '🧑‍🚀'];
+  // Who can jump: a little figure standing with the arms up, drawn in a
+  // 120 × 100 box with the feet at the bottom. `back` is drawn behind the
+  // body and the head (tails, ears), `front` on top of the head (the face).
+  const eyes =
+    '<circle cx="52" cy="28" r="3.3" fill="#222"/><circle cx="68" cy="28" r="3.3" fill="#222"/>' +
+    '<circle cx="53.2" cy="26.8" r="1.2" fill="#fff"/><circle cx="69.2" cy="26.8" r="1.2" fill="#fff"/>';
+  const cheeks = '<circle cx="45" cy="36" r="3.6" fill="#ff8fa3" opacity="0.55"/><circle cx="75" cy="36" r="3.6" fill="#ff8fa3" opacity="0.55"/>';
+  const smile = (y) => `<path d="M55 ${y}Q57.5 ${y + 3} 60 ${y}Q62.5 ${y + 3} 65 ${y}" stroke="#222" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
+  const WHOS = [
+    {
+      id: 'cat', name: { et: 'Kass', en: 'The cat' },
+      fur: '#f2a541', light: '#ffe3bf', dark: '#c4741f',
+      back: '<path d="M74 84Q95 86 92 64Q90 54 97 47" stroke="#f2a541" stroke-width="7" fill="none" stroke-linecap="round"/>' +
+        '<path d="M40 24L41 2L58 12Z" fill="#f2a541"/><path d="M80 24L79 2L62 12Z" fill="#f2a541"/>' +
+        '<path d="M44 18L44.5 8L53 13Z" fill="#ffb3c1"/><path d="M76 18L75.5 8L67 13Z" fill="#ffb3c1"/>',
+      front: '<path d="M56 9v6M60 8v7M64 9v6" stroke="#c4741f" stroke-width="2" stroke-linecap="round"/>' +
+        '<ellipse cx="60" cy="38" rx="8" ry="5.5" fill="#ffe3bf"/>' + eyes + cheeks +
+        '<path d="M57.5 34h5L60 37Z" fill="#ff7f96"/>' + smile(38.5) +
+        '<path d="M48 36L37 34M48 39.5L37 41M72 36L83 34M72 39.5L83 41" stroke="#7a4a22" stroke-width="1.2" stroke-linecap="round"/>'
+    },
+    {
+      id: 'dog', name: { et: 'Koer', en: 'The dog' },
+      fur: '#c98a4b', light: '#f6e1c6', dark: '#7a4a22',
+      back: '<path d="M75 78Q88 74 88 60" stroke="#c98a4b" stroke-width="7" fill="none" stroke-linecap="round"/>',
+      front: '<ellipse cx="68" cy="27" rx="6.5" ry="6" fill="#7a4a22"/>' +
+        '<ellipse cx="39" cy="30" rx="7" ry="14" fill="#7a4a22" transform="rotate(18 39 30)"/>' +
+        '<ellipse cx="81" cy="30" rx="7" ry="14" fill="#7a4a22" transform="rotate(-18 81 30)"/>' +
+        '<ellipse cx="60" cy="39" rx="10" ry="7" fill="#f6e1c6"/>' + eyes + cheeks +
+        '<ellipse cx="60" cy="35" rx="4" ry="3" fill="#222"/>' +
+        '<path d="M58 41h4v3a2 2 0 0 1-4 0Z" fill="#ff7f96"/>' + smile(40)
+    },
+    {
+      id: 'bear', name: { et: 'Karu', en: 'The bear' },
+      fur: '#a0703f', light: '#e2bf93', dark: '#5e3d1f',
+      back: '<circle cx="42" cy="13" r="8" fill="#a0703f"/><circle cx="78" cy="13" r="8" fill="#a0703f"/>' +
+        '<circle cx="42" cy="13" r="4.5" fill="#e2bf93"/><circle cx="78" cy="13" r="4.5" fill="#e2bf93"/>',
+      front: '<circle cx="60" cy="38" r="8" fill="#e2bf93"/>' + eyes + cheeks +
+        '<ellipse cx="60" cy="35" rx="3.6" ry="2.6" fill="#3a2410"/>' + smile(39)
+    },
+    {
+      id: 'bunny', name: { et: 'Jänes', en: 'The bunny' },
+      fur: '#f1eef5', light: '#ffd9e3', dark: '#b9b2c4',
+      back: '<circle cx="78" cy="82" r="6.5" fill="#fff"/>' +
+        '<ellipse cx="50" cy="-2" rx="6.5" ry="16" fill="#f1eef5" transform="rotate(-10 50 12)"/>' +
+        '<ellipse cx="70" cy="-2" rx="6.5" ry="16" fill="#f1eef5" transform="rotate(10 70 12)"/>' +
+        '<ellipse cx="50" cy="-1" rx="3" ry="11" fill="#ffc2d1" transform="rotate(-10 50 12)"/>' +
+        '<ellipse cx="70" cy="-1" rx="3" ry="11" fill="#ffc2d1" transform="rotate(10 70 12)"/>',
+      front: eyes + cheeks + '<path d="M58 34h4L60 36.5Z" fill="#ff7f96"/>' + smile(37) +
+        '<rect x="58.2" y="38.5" width="3.6" height="4" rx="1" fill="#fff" stroke="#c9c2d4" stroke-width="0.6"/>'
+    },
+    {
+      id: 'astronaut', name: { et: 'Astronaut', en: 'The astronaut' },
+      fur: '#eef1f6', light: '#5b6b8a', dark: '#8a95a8',
+      back: '<rect x="40" y="50" width="40" height="32" rx="6" fill="#8a95a8"/>',
+      chest: '<rect x="52" y="62" width="16" height="11" rx="2.5" fill="#5b6b8a"/>' +
+        '<circle cx="56.5" cy="67.5" r="2" fill="#ff5a6e"/><circle cx="63.5" cy="67.5" r="2" fill="#4cd07d"/>',
+      front: '<ellipse cx="60" cy="31" rx="15.5" ry="12.5" fill="#2b3b6b"/>' +
+        '<path d="M49 27Q52 21 59 20.5" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>'
+    }
+  ];
+
+  function figure(c, attrs = '') {
+    const belly = c.chest || `<ellipse cx="60" cy="71" rx="11" ry="12.5" fill="${c.light}"/>`;
+    const paws = c.id === 'astronaut' ? c.dark : c.light;
+    return `<svg ${attrs} viewBox="0 0 120 100" overflow="visible">${c.back}` +
+      `<rect x="47" y="76" width="11" height="20" rx="5.5" fill="${c.fur}"/><rect x="62" y="76" width="11" height="20" rx="5.5" fill="${c.fur}"/>` +
+      `<ellipse cx="51.5" cy="96" rx="8" ry="4" fill="${paws}"/><ellipse cx="68.5" cy="96" rx="8" ry="4" fill="${paws}"/>` +
+      `<path d="M47 59L34 45M73 59L86 45" stroke="${c.fur}" stroke-width="9" stroke-linecap="round"/>` +
+      `<circle cx="33" cy="43.5" r="5" fill="${paws}"/><circle cx="87" cy="43.5" r="5" fill="${paws}"/>` +
+      `<ellipse cx="60" cy="68" rx="18" ry="20" fill="${c.fur}"/>${belly}` +
+      `<circle cx="60" cy="30" r="22" fill="${c.fur}"/>${c.front}</svg>`;
+  }
 
   const TEXT = {
     et: {
@@ -84,7 +155,7 @@
       flyTo: (to) => `🚀 Lenda ${to}`,
       finish: '🏆 Vaata, kui kõrgele hüppasid',
       wellDone: 'Tubli!',
-      winText: (who) => `${who} hüppas Kuul kuus korda kõrgemale kui Maal! Mida nõrgemalt taevakeha sind enda poole tõmbab, seda kõrgemale saad hüpata.`,
+      winText: (who) => `${who.name.et} hüppas Kuul kuus korda kõrgemale kui Maal! Mida nõrgemalt taevakeha sind enda poole tõmbab, seda kõrgemale saad hüpata.`,
       again: 'Uuesti',
       menu: 'Menüü',
       allGames: 'Kõik mängud',
@@ -101,7 +172,7 @@
       flyTo: (to) => `🚀 Fly to ${to}`,
       finish: '🏆 See how high you jumped',
       wellDone: 'Well done!',
-      winText: (who) => `${who} jumped six times higher on the Moon than on the Earth! The more weakly a world pulls you towards it, the higher you can jump.`,
+      winText: (who) => `${who.name.en} jumped six times higher on the Moon than on the Earth! The more weakly a world pulls you towards it, the higher you can jump.`,
       again: 'Again',
       menu: 'Menu',
       allGames: 'All games',
@@ -130,7 +201,7 @@
 
   const store = Astro.makeStore('hupe.');
   const state = {
-    who: WHOS.includes(store.get('who', '')) ? store.get('who', '') : WHOS[0],
+    who: WHOS.find((w) => w.id === store.get('who', '')) || WHOS[0],
     world: WORLDS[0],
     caught: [],     // the worlds whose star is caught
     best: {},       // the highest jump on each world, m
@@ -173,10 +244,10 @@
     WHOS.forEach((w) => {
       const b = document.createElement('button');
       b.className = 'count who-btn';
-      b.innerHTML = `<b>${w}</b>`;
+      b.innerHTML = figure(w);
       b.addEventListener('click', () => {
         state.who = w;
-        store.set('who', w);
+        store.set('who', w.id);
         sfx.pick();
         updateMenu();
       });
@@ -196,7 +267,10 @@
   }
 
   function updateMenu() {
-    [...$('whos').children].forEach((b, i) => b.classList.toggle('selected', WHOS[i] === state.who));
+    [...$('whos').children].forEach((b, i) => {
+      b.classList.toggle('selected', WHOS[i] === state.who);
+      b.setAttribute('aria-label', WHOS[i].name[Astro.lang]);
+    });
   }
 
   function stopAll() {
@@ -224,7 +298,7 @@
     $('win').classList.add('hidden');
     $('menu').classList.add('hidden');
     $('game').classList.remove('hidden');
-    $('jumper').textContent = state.who;
+    $('jumper').innerHTML = figure(state.who);
     state.caught = [];
     state.best = {};
     arrive(WORLDS[0]);
@@ -389,7 +463,7 @@
       `<path id="star" fill="#ffd34d" stroke="#fff7c2" stroke-width="2" stroke-linejoin="round" d="${starPath(state.L.cx, G - starHeight(w) * k, state.L.star)}"/>` +
       '<g id="partsL"></g></g>';
     const jumper = $('jumper');
-    jumper.style.fontSize = BODY * k + 'px';
+    jumper.style.height = BODY * k + 'px';
     jumper.style.width = BODY * k * 1.2 + 'px';
     drawMarks();
   }
@@ -610,7 +684,7 @@
       return `<rect x="${x - 46}" y="${G}" width="92" height="8" rx="4" fill="${w.color}"/>` +
         `<line x1="${x}" y1="${G}" x2="${x}" y2="${y}" stroke="${w.color}" stroke-width="3" stroke-dasharray="4 5"/>` +
         `<ellipse cx="${x}" cy="${G + 2}" rx="${size * 0.3}" ry="4" fill="#000" opacity="0.4"/>` +
-        `<text x="${x}" y="${y - size * 0.12}" font-size="${size}" text-anchor="middle">${state.who}</text>` +
+        figure(state.who, `x="${x - size * 0.6}" y="${y - size}" width="${size * 1.2}" height="${size}"`) +
         ballSVG(w, `x="${x - 24}" y="${G + 16}" width="48" height="48"`);
     }).join('');
   }
