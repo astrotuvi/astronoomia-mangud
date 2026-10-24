@@ -510,7 +510,7 @@ window.QUIZ = [
       {
         q: { et: 'Milline neist on Suur Vanker?', en: 'Which of these is the Big Dipper?' },
         answers: [{ con: 'bigdipper' }, { con: 'cassiopeia' }, { con: 'cygnus' }, { con: 'pegasus' }],
-        why: { et: 'Suure Vankri seitse tähte on nagu kopp pika varrega.', en: 'The seven stars of the Big Dipper look like a ladle with a long handle.' }
+        why: { et: 'Suure Vankri seitse tähte on nagu pika aisaga vanker.', en: 'The seven stars of the Big Dipper look like a ladle with a long handle.' }
       },
       {
         q: { et: 'Milline neist on Orion?', en: 'Which of these is Orion?' },
@@ -552,7 +552,7 @@ window.QUIZ = [
           { et: 'Vaata otse üles', en: 'Look straight up' },
           { et: 'Vaata itta, kus tähed tõusevad', en: 'Look east, where the stars rise' }
         ],
-        why: { et: 'Kui jätkad joont Suure Vankri kopa kahe äärmise tähe kaudu, jõuad Põhjanaelani.', en: 'If you carry on the line through the two end stars of the Big Dipper’s bowl, you come to the North Star.' }
+        why: { et: 'Kui jätkad joont läbi Suure Vankri kahe tagumise ratta, jõuad Põhjanaelani.', en: 'If you carry on the line through the two end stars of the Big Dipper’s bowl, you come to the North Star.' }
       },
       {
         q: { et: 'Millist tähtkuju näeb Eestis igal selgel ööl?', en: 'Which constellation can you see in Estonia on every clear night?' },

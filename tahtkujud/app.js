@@ -14,9 +14,11 @@
   // Facts refer to stars by their number, so keep them in step with the order.
   // `mention` lists the stars the fact talks about, by index, with the name
   // to show beside the number ('' for the number only); the win picture
-  // marks them. `deco` adds a nebula or galaxy from the fact to that picture
-  // (angle: position angle of a galaxy's long axis, degrees from north).
-  // The menu shows them in this order, from fewest stars to most.
+  // marks them. `deco` adds a nebula, galaxy or star cluster from the fact
+  // to that picture (angle: position angle of a galaxy's long axis, degrees
+  // from north).
+  // The menu shows them in this order, from fewest stars to most, and
+  // last Lõunarist, which cannot be seen from Estonia.
   const CONSTELLATIONS = [
     {
       id: 'cassiopeia',
@@ -33,6 +35,24 @@
         ['Ruchbah', 21.45, 60.24, 2.7],
         ['Segin', 28.60, 63.67, 3.4]
       ]
+    },
+    {
+      id: 'auriga',
+      emoji: '🐐',
+      name: { et: 'Veomees', en: 'Auriga, the Charioteer' },
+      fact: {
+        et: 'Veomees hoiab süles kitse. Täht 1, Kapella, ongi see kits. Kapella on üks taeva heledamaid tähti ja talveõhtuti peaaegu otse pea kohal. Täht 4 kuulub ka Sõnni tähtkujusse.',
+        en: 'The Charioteer carries a goat. Star 1, Capella, is that goat. Capella is one of the brightest stars in the sky, almost straight overhead on winter evenings. Star 4 also belongs to Taurus.'
+      },
+      mention: { 0: { et: 'Kapella', en: 'Capella' } },
+      stars: [
+        ['Capella', 79.17, 46.00, 0.1],
+        ['Menkalinan', 89.88, 44.95, 1.9],
+        ['θ Aur', 89.93, 37.21, 2.6],
+        ['Elnath', 81.57, 28.61, 1.7],
+        ['Hassaleh', 74.25, 33.17, 2.7]
+      ],
+      extra: [[4, 0]]
     },
     {
       id: 'lyra',
@@ -73,11 +93,31 @@
       ]
     },
     {
+      id: 'cepheus',
+      emoji: '🤴',
+      name: { et: 'Kefeus', en: 'Cepheus' },
+      fact: {
+        et: 'Vanas loos oli Kefeus kuningas, Kassiopeia mees ja Andromeeda isa. Tähed 1–5 näevad välja nagu lapse joonistatud maja. Täht 6 läheb umbes iga viie päeva tagant heledamaks ja jälle nõrgemaks.',
+        en: 'In the old story, Cepheus was a king, Cassiopeia’s husband and Andromeda’s father. Stars 1 to 5 look like a house drawn by a child. Star 6 grows brighter and dimmer again about every five days.'
+      },
+      mention: { 0: '', 1: '', 2: '', 3: '', 4: '', 5: '' },
+      // the house: walls 1–2 and 4–5, roof 2–3–4, floor 5–1, ceiling 4–2
+      stars: [
+        ['Alderamin', 319.64, 62.59, 2.5],
+        ['Alfirk', 322.16, 70.56, 3.2],
+        ['Errai', 354.84, 77.63, 3.2],
+        ['ι Cep', 342.42, 66.20, 3.5],
+        ['ζ Cep', 332.71, 58.20, 3.4],
+        ['δ Cep', 337.29, 58.42, 4.1]
+      ],
+      extra: [[4, 0], [3, 1]]
+    },
+    {
       id: 'bigdipper',
       emoji: '🐻',
       name: { et: 'Suur Vanker', en: 'Big Dipper' },
       fact: {
-        et: 'Suur Vanker on osa Suure Karu tähtkujust. Eestis on ta taevas igal selgel ööl. Tähed 1 ja 2 näitavad teed Põhjanaelani.',
+        et: 'Suur Vanker on osa Suure Karu tähtkujust. Eestis on ta taevas igal selgel ööl. Tähed 1 ja 2 on vankri tagumised rattad. Kui jätkad nende vahelist joont, jõuad Põhjanaelani.',
         en: 'The Big Dipper is part of the Great Bear. In Estonia you can see it on every clear night. Stars 1 and 2 point the way to the North Star.'
       },
       mention: { 0: '', 1: '' },
@@ -283,6 +323,58 @@
       extra: [[3, 0]]
     },
     {
+      id: 'hercules',
+      emoji: '💪',
+      name: { et: 'Herkules', en: 'Hercules' },
+      fact: {
+        et: 'Herkules on vanade lugude kõige tugevam kangelane. Taevas on ta pea alaspidi. Tähed 1–4 on tema keha. Tähtede 1 ja 2 vahel on udune laik M13 – kerasparv, kus on sadu tuhandeid tähti.',
+        en: 'Hercules is the strongest hero of the old stories. In the sky he hangs upside down. Stars 1 to 4 are his body. Between stars 1 and 2 is a misty patch, M13 – a globular cluster of hundreds of thousands of stars.'
+      },
+      mention: { 0: '', 1: '', 2: '', 3: '' },
+      deco: [{ ra: 250.42, dec: 36.46, kind: 'cluster', name: 'M13' }],
+      stars: [
+        ['ζ Her', 250.32, 31.60, 2.8],
+        ['η Her', 250.72, 38.92, 3.5],
+        ['π Her', 258.76, 36.81, 3.2],
+        ['ε Her', 255.07, 30.93, 3.9],
+        ['Kornephoros', 247.55, 21.49, 2.8, 0],
+        ['γ Her', 245.48, 19.15, 3.8],
+        ['Sarin', 258.76, 24.84, 3.1, 3],
+        ['Rasalgethi', 258.66, 14.39, 3.1],
+        ['θ Her', 269.06, 37.25, 3.9, 2],
+        ['ι Her', 264.87, 46.01, 3.8],
+        ['σ Her', 248.53, 42.44, 4.2, 1],
+        ['τ Her', 244.94, 46.31, 3.9]
+      ],
+      extra: [[3, 0]]
+    },
+    {
+      id: 'canismajor',
+      emoji: '🐕',
+      name: { et: 'Suur Peni', en: 'Canis Major, the Great Dog' },
+      fact: {
+        et: 'Suur Peni on kütt Orioni koer. Täht 1, Siirius, on kogu öötaeva kõige heledam täht. Eestis paistab ta talvel madalal lõunas. Siiriuse leiad, kui jätkad Orioni vöö kolme tähe joont vasakule alla.',
+        en: 'The Great Dog is the hunter Orion’s dog. Star 1, Sirius, is the brightest star in the whole night sky. In Estonia it shines low in the south in winter. You can find Sirius by carrying on the line of Orion’s three belt stars down to the left.'
+      },
+      mention: { 0: { et: 'Siirius', en: 'Sirius' } },
+      // the IAU figure: the dog's body and legs, then the head above Sirius
+      stars: [
+        ['Sirius', 101.29, -16.72, -1.5],
+        ['Mirzam', 95.67, -17.96, 2.0],
+        ['ν2 CMa', 99.17, -19.26, 3.9],
+        ['ο1 CMa', 103.53, -24.18, 3.9],
+        ['Adhara', 104.66, -28.97, 1.5],
+        ['σ CMa', 105.43, -27.93, 3.5],
+        ['Wezen', 107.10, -26.39, 1.8],
+        ['ο2 CMa', 105.76, -23.83, 3.0],
+        ['Aludra', 111.02, -29.30, 2.4, 6],
+        ['ι CMa', 104.03, -17.05, 4.4, 0],
+        ['Muliphein', 105.94, -15.63, 4.1],
+        ['θ CMa', 103.55, -12.04, 4.1]
+      ],
+      extra: [[7, 0], [11, 9]]
+    },
+    {
       id: 'orion',
       emoji: '🏹',
       name: { et: 'Orion', en: 'Orion' },
@@ -334,6 +426,108 @@
         ['Alhena', 99.43, 16.40, 1.9],
         ['λ Gem', 109.52, 16.54, 3.6, 9],
         ['ξ Gem', 101.32, 12.90, 3.4]
+      ]
+    },
+    {
+      id: 'virgo',
+      emoji: '🌾',
+      name: { et: 'Neitsi', en: 'Virgo, the Maiden' },
+      fact: {
+        et: 'Neitsi on kevadine tähtkuju. Ta hoiab käes viljapead – see on täht 1, Spiika. Spiika leiad, kui jätkad Suure Vankri aisa kaart Arktuuruseni ja sealt veel edasi.',
+        en: 'Virgo is a spring constellation. She holds an ear of wheat – that is star 1, Spica. You can find Spica by following the curve of the Big Dipper’s handle to Arcturus and then on further.'
+      },
+      mention: { 0: { et: 'Spiika', en: 'Spica' } },
+      // the IAU figure: Spica, Porrima in the middle, the four stars of the
+      // head, Vindemiatrix, and the two lines out to the east
+      stars: [
+        ['Spica', 201.30, -11.16, 1.0],
+        ['θ Vir', 197.49, -5.54, 4.4],
+        ['Porrima', 190.42, -1.45, 2.7],
+        ['Minelauva', 193.90, 3.40, 3.4],
+        ['Vindemiatrix', 195.54, 10.96, 2.8],
+        ['Zaniah', 184.98, -0.67, 3.9, 2],
+        ['Zavijava', 177.67, 1.76, 3.6],
+        ['ν Vir', 176.46, 6.53, 4.0],
+        ['ο Vir', 181.30, 8.73, 4.1],
+        ['Heze', 203.67, -0.60, 3.4, 2],
+        ['τ Vir', 210.41, 1.54, 4.3],
+        ['109 Vir', 221.56, 1.89, 3.7],
+        ['ι Vir', 214.00, -6.00, 4.1, 9],
+        ['μ Vir', 220.77, -5.66, 3.9]
+      ],
+      extra: [[8, 5]]
+    },
+    {
+      id: 'draco',
+      emoji: '🐉',
+      name: { et: 'Lohe', en: 'Draco, the Dragon' },
+      fact: {
+        et: 'Lohe pikk keha looklev Suure ja Väikese Vankri vahel. Tähed 1–4 on tema pea. Täht 12, Thuban, oli Põhjanael siis, kui Egiptuses ehitati püramiide.',
+        en: 'The Dragon’s long body winds between the Big and Little Dippers. Stars 1 to 4 are its head. Star 12, Thuban, was the North Star when the pyramids were built in Egypt.'
+      },
+      mention: { 0: '', 1: '', 2: '', 3: '', 11: 'Thuban' },
+      stars: [
+        ['Eltanin', 269.15, 51.49, 2.2],
+        ['Rastaban', 262.61, 52.30, 2.8],
+        ['Kuma', 263.07, 55.17, 4.9],
+        ['Grumium', 268.38, 56.87, 3.8],
+        ['Altais', 288.14, 67.66, 3.1],
+        ['ε Dra', 297.04, 70.27, 3.8],
+        ['χ Dra', 275.26, 72.73, 3.6],
+        ['Aldhibah', 257.20, 65.71, 3.2],
+        ['Athebyne', 245.99, 61.51, 2.7],
+        ['θ Dra', 240.47, 58.57, 4.0],
+        ['Edasich', 231.23, 58.97, 3.3],
+        ['Thuban', 211.10, 64.38, 3.7],
+        ['κ Dra', 188.37, 69.79, 3.9],
+        ['Giausar', 172.85, 69.33, 3.8]
+      ],
+      extra: [[3, 0]]
+    },
+    {
+      id: 'scorpius',
+      emoji: '🦂',
+      name: { et: 'Skorpion', en: 'Scorpius, the Scorpion' },
+      fact: {
+        et: 'Skorpioni süda on punane hiidtäht Antaares, number 1. Eestis paistab Antaares suveöödel ainult madalal lõunas ja skorpioni saba ei tõuse siin üldse silmapiiri kohale. Kogu skorpioni näeb lõuna pool, näiteks Kreekas.',
+        en: 'The scorpion’s heart is the red giant star Antares, number 1. In Estonia Antares is only seen low in the south on summer nights, and the scorpion’s tail never rises above the horizon here. You can see the whole scorpion further south, for example in Greece.'
+      },
+      mention: { 0: { et: 'Antaares', en: 'Antares' } },
+      // stood up on the menu card (only), so that the claws do not reach
+      // under the 🌟 in its corner
+      cardTurn: -35,
+      stars: [
+        ['Antares', 247.35, -26.43, 1.0],
+        ['σ Sco', 245.30, -25.59, 2.9],
+        ['Dschubba', 240.08, -22.62, 2.3],
+        ['Acrab', 241.36, -19.81, 2.6],
+        ['π Sco', 239.71, -26.11, 2.9, 2],
+        ['τ Sco', 248.97, -28.22, 2.8, 0],
+        ['ε Sco', 252.54, -34.29, 2.3],
+        ['μ Sco', 252.97, -38.05, 3.0],
+        ['ζ Sco', 253.65, -42.36, 3.6],
+        ['η Sco', 258.04, -43.24, 3.3],
+        ['Sargas', 264.33, -43.00, 1.9],
+        ['ι Sco', 266.90, -40.13, 3.0],
+        ['κ Sco', 265.62, -39.03, 2.4],
+        ['Shaula', 263.40, -37.10, 1.6]
+      ]
+    },
+    {
+      id: 'crux',
+      emoji: '🧭',
+      name: { et: 'Lõunarist', en: 'Southern Cross' },
+      fact: {
+        et: 'Lõunarist on kõige väiksem tähtkuju. Eestist teda ei näe, sest ta on lõunataevas. Lõunapoolkeral leitakse tema abil lõunasuund: kui jätkad joont tähest 1 tähe 2 poole, näitab see lõunasse. Lõunaristi tähed on ka Austraalia ja Uus-Meremaa lipul.',
+        en: 'The Southern Cross is the smallest constellation. You cannot see it from Estonia, because it is in the southern sky. In the southern half of the Earth, people use it to find south: carry on the line from star 1 towards star 2 and it points south. The stars of the Southern Cross are also on the flags of Australia and New Zealand.'
+      },
+      mention: { 0: '', 1: '' },
+      // the long bar from top to bottom, then the short bar
+      stars: [
+        ['Gacrux', 187.79, -57.11, 1.6],
+        ['Acrux', 186.65, -63.10, 0.8],
+        ['Mimosa', 191.93, -59.69, 1.3, null],
+        ['Imai', 183.79, -58.75, 2.8]
       ]
     }
   ];
@@ -417,9 +611,10 @@
   }
 
   // Gnomonic projection around the middle of the constellation, as on a sky
-  // chart: north up, east to the left. Unit: radians on the sky.
+  // chart: north up, east to the left, then turned by `turn` degrees
+  // (clockwise on the screen). Unit: radians on the sky.
   // Returns the stars first, then the deco objects.
-  function project(con) {
+  function project(con, turn = 0) {
     const vec = (ra, dec) => {
       const a = ra * DEG;
       const d = dec * DEG;
@@ -434,9 +629,12 @@
     const east = norm(cross([0, 0, 1], c));
     const north = cross(c, east);
     const deco = (con.deco || []).map((d) => vec(d.ra, d.dec));
+    const t = turn * DEG;
     return vs.concat(deco).map((v) => {
       const k = dot(v, c);
-      return { x: -dot(v, east) / k, y: -dot(v, north) / k };
+      const x = -dot(v, east) / k;
+      const y = -dot(v, north) / k;
+      return { x: x * Math.cos(t) - y * Math.sin(t), y: x * Math.sin(t) + y * Math.cos(t) };
     });
   }
 
@@ -460,7 +658,7 @@
       const y0 = Math.min(...ys);
       return { x0, y0, w: Math.max(...xs) - x0, h: Math.max(...ys) - y0 };
     };
-    const all = project(con);
+    const all = project(con, opts.turn);
     const n = con.stars.length;
     const b = box(all.slice(0, n));
     const s = Math.min((W - 2 * pad) / Math.max(b.w, 1e-6), (H - 2 * pad) / Math.max(b.h, 1e-6));
@@ -537,7 +735,7 @@
 
   const decoSize = (d, u) => u * (d.kind === 'galaxy' ? 0.09 : 0.04);
 
-  // Misty patches for the nebula or galaxy a fact talks about.
+  // Misty patches for the nebula, galaxy or star cluster a fact talks about.
   function drawDeco(ctx, L) {
     for (const d of L.deco) {
       const R = decoSize(d, L.u);
@@ -555,6 +753,10 @@
         g.addColorStop(0.2, 'rgba(255, 240, 220, 0.8)');
         g.addColorStop(0.55, 'rgba(200, 205, 255, 0.4)');
         g.addColorStop(1, 'rgba(160, 170, 255, 0)');
+      } else if (d.kind === 'cluster') {
+        g.addColorStop(0, 'rgba(255, 252, 235, 1)');
+        g.addColorStop(0.25, 'rgba(255, 238, 200, 0.7)');
+        g.addColorStop(1, 'rgba(255, 220, 160, 0)');
       } else {
         g.addColorStop(0, 'rgba(255, 235, 245, 0.9)');
         g.addColorStop(0.3, 'rgba(255, 120, 190, 0.45)');
@@ -771,6 +973,7 @@
 
   // A finished constellation as a picture, for menu cards and the win screen.
   // With opts.lang, the stars and objects the fact talks about are marked.
+  // With opts.card, it is turned by con.cardTurn for the menu.
   function renderPicture(con, size, opts = {}) {
     const dpr = window.devicePixelRatio || 1;
     const cv = opts.canvas || document.createElement('canvas');
@@ -778,7 +981,7 @@
     cv.height = Math.round(size * dpr);
     const ctx = cv.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const L = computeLayout(con, size, size, { pad: size * 0.13 });
+    const L = computeLayout(con, size, size, { pad: size * 0.13, turn: opts.card && con.cardTurn });
     drawScene(ctx, L, {
       lit: con.stars.length,
       litAt: con.stars.map(() => -Infinity),
@@ -800,7 +1003,7 @@
     CONSTELLATIONS.forEach((con, i) => {
       const b = document.createElement('button');
       b.className = 'pic';
-      b.appendChild(renderPicture(con, 220));
+      b.appendChild(renderPicture(con, 220, { card: true }));
       b.insertAdjacentHTML('beforeend',
         `<span class="name"></span><b class="count-badge">⭐ ${con.stars.length}</b><b class="done-badge hidden">🌟</b>`);
       b.addEventListener('click', () => {

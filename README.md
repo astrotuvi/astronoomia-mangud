@@ -44,18 +44,19 @@ To add a picture, put a **square** image (about 1200×1200 px) in `pusle/images/
 
 ## Tähtkujud
 
-- Pick one of 15 constellations, listed from the fewest stars (5) to the most (14), with three or four for each season:
-  - all year: Suur Vanker (Big Dipper), Väike Vanker (Little Dipper), Kassiopeia
-  - winter: Orion, Kaksikud (Gemini), Sõnn (Taurus), Perseus
-  - spring: Lõvi (Leo), Karjane (Boötes)
-  - summer: Luik (Cygnus), Lüüra (Lyra), Kotkas (Aquila), Põhjakroon (Corona Borealis)
+- Pick one of 23 constellations, listed from the fewest stars (5) to the most (14), and last Lõunarist (Southern Cross), which cannot be seen from Estonia:
+  - all year: Suur Vanker (Big Dipper), Väike Vanker (Little Dipper), Kassiopeia, Kefeus (Cepheus), Lohe (Draco)
+  - winter: Orion, Suur Peni (Canis Major), Kaksikud (Gemini), Sõnn (Taurus), Perseus, Veomees (Auriga)
+  - spring: Lõvi (Leo), Karjane (Boötes), Neitsi (Virgo)
+  - summer: Luik (Cygnus), Lüüra (Lyra), Kotkas (Aquila), Põhjakroon (Corona Borealis), Herkules (Hercules), Skorpion (Scorpius)
   - autumn: Pegasus, Andromeeda (Andromeda)
+  - not seen from Estonia: Lõunarist (Southern Cross)
 - Tap the numbered stars in order, or slide a finger from star to star. Each star plays the next note of a tune, and a golden line joins it to the figure.
 - A star tapped out of turn only wiggles. If nothing happens for a few seconds, the next star starts to pulse.
 - 👁️ shows the whole figure as faint dashed lines. Finished constellations get a 🌟 in the menu.
-- The win screen tells a short fact. The stars it mentions are ringed and labelled in the picture, e.g. "1 Deeneb". The Orion Nebula and the Andromeda Galaxy are drawn where they are in the sky.
+- The win screen tells a short fact. The stars it mentions are ringed and labelled in the picture, e.g. "1 Deeneb". The Orion Nebula, the Andromeda Galaxy and the M13 star cluster are drawn where they are in the sky.
 
-Star positions are J2000 coordinates, drawn as on a sky chart with north up and east to the left. To add a constellation, add an entry to the `CONSTELLATIONS` list at the top of `tahtkujud/app.js`. The comment there explains how the stars are joined.
+Star positions are J2000 coordinates, drawn as on a sky chart with north up and east to the left. Only Skorpion's menu card is turned to stand upright, so that it does not reach under the 🌟 in the corner. To add a constellation, add an entry to the `CONSTELLATIONS` list at the top of `tahtkujud/app.js`. The comment there explains how the stars are joined.
 
 ## Mälumäng
 
