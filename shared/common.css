@@ -87,6 +87,12 @@ button {
   flex-wrap: wrap;
 }
 .menu-head h1 { flex: 1; }
+/* on a phone the title gets a line of its own under 🏠 and the language
+   buttons, so that a long name fits next to its logo */
+@media (max-width: 600px) {
+  .menu-head h1 { order: 1; flex-basis: 100%; margin-top: 0; }
+  .menu-head .lang { margin-left: auto; }
+}
 h1 {
   margin: 8px 0;
   font-size: clamp(2rem, 6vw, 3.2rem);
@@ -95,6 +101,7 @@ h1 {
   color: var(--accent);
   text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35), 0 0 24px rgba(255, 211, 77, 0.35);
 }
+@media (max-width: 359px) { h1 { font-size: 1.8rem; } }
 .logo { display: inline-block; animation: wiggle 3s ease-in-out infinite; }
 @keyframes wiggle { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg) scale(1.1); } }
 
