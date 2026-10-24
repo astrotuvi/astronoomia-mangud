@@ -178,24 +178,24 @@ window.QUIZ = [
         why: { et: 'Jupiter on palju suurem kui Maa ja tõmbab üle kahe korra tugevamalt. Seal saad vaevu hüpata.', en: 'Jupiter is much bigger than the Earth and pulls more than twice as strongly. There you can hardly jump.' }
       },
       {
-        q: { et: 'Kass hüppab Maal 34 cm kõrgusele. Kui kõrgele hüppab ta Kuul, kui tõukab end sama tugevasti?', en: 'A cat jumps 34 cm high on the Earth. How high does it jump on the Moon, pushing off just as hard?' },
+        q: { et: 'Kass hüppab Maal 10 cm kõrgusele. Kui kõrgele hüppab ta Kuul?', en: 'A cat jumps 10 cm high on the Earth. How high does it jump on the Moon?' },
         answers: [
-          { et: 'Umbes 2 meetrit', en: 'About 2 metres' },
-          { et: '34 cm', en: '34 cm' },
-          { et: 'Umbes 6 cm', en: 'About 6 cm' },
+          { et: '60 cm', en: '60 cm' },
+          { et: '10 cm', en: '10 cm' },
+          { et: 'Umbes 2 cm', en: 'About 2 cm' },
           { et: 'Ta lendab kosmosesse', en: 'It flies off into space' }
         ],
-        why: { et: 'Kuul hüppad kuus korda kõrgemale: 6 × 34 cm on umbes 2 meetrit. Kuu tõmbab kassi siiski tagasi.', en: 'On the Moon you jump six times higher: 6 × 34 cm is about 2 metres. The Moon still pulls the cat back down.' }
+        why: { et: 'Kuu tõmbab kuus korda nõrgemalt, nii et hüpe on kuus korda kõrgem: 6 × 10 cm = 60 cm. Kuu tõmbab kassi siiski tagasi.', en: 'The Moon pulls six times more weakly, so the jump is six times higher: 6 × 10 cm = 60 cm. The Moon still pulls the cat back down.' }
       },
       {
-        q: { et: 'Koer hüppab Maal 34 cm kõrgusele. Kui kõrgele hüppab ta Marsil, kui tõukab end sama tugevasti?', en: 'A dog jumps 34 cm high on the Earth. How high does it jump on Mars, pushing off just as hard?' },
+        q: { et: 'Koer hüppab Maal 10 cm kõrgusele. Kui kõrgele hüppab ta Marsil?', en: 'A dog jumps 10 cm high on the Earth. How high does it jump on Mars?' },
         answers: [
-          { et: 'Umbes 1 meeter', en: 'About 1 metre' },
-          { et: '34 cm', en: '34 cm' },
-          { et: 'Umbes 12 cm', en: 'About 12 cm' },
-          { et: 'Umbes 10 meetrit', en: 'About 10 metres' }
+          { et: 'Peaaegu 30 cm', en: 'Nearly 30 cm' },
+          { et: '10 cm', en: '10 cm' },
+          { et: 'Umbes 4 cm', en: 'About 4 cm' },
+          { et: '1 meeter', en: '1 metre' }
         ],
-        why: { et: 'Marss tõmbab peaaegu kolm korda nõrgemalt kui Maa, nii et hüpe on peaaegu kolm korda kõrgem: umbes 1 meeter.', en: 'Mars pulls nearly three times more weakly than the Earth, so the jump is nearly three times higher: about 1 metre.' }
+        why: { et: 'Marss tõmbab peaaegu kolm korda nõrgemalt kui Maa, nii et hüpe on peaaegu kolm korda kõrgem: peaaegu 30 cm.', en: 'Mars pulls nearly three times more weakly than the Earth, so the jump is nearly three times higher: nearly 30 cm.' }
       },
       {
         q: { et: 'Miks hüppad Kuul kõrgemale kui Maal?', en: 'Why do you jump higher on the Moon than on the Earth?' },

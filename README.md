@@ -131,7 +131,7 @@ The levels, the meteor storm, the length of the night, the place, the direction 
 ## Kosmoseviktoriin
 
 - Pick who plays, alone or two players, and the topic: all games together, one of the games, or Pildid (the photos of Tähepusle and Mälumäng). A round has 10 questions. With all topics, they come from each game in turn, and questions not asked lately come first.
-- Each question is first shown alone, for 3–8 seconds depending on its length. Then the answers appear and 30 seconds start to run down. Alone, **Olen valmis ▶** skips the reading time.
+- Each question is first shown alone, for 5–14 seconds depending on its length. Then the answers appear and 30 seconds start to run down. Alone, **Olen valmis ▶** skips the reading time.
 - The answers are four coloured buttons with shapes (▲ ◆ ● ■), with text or pictures:
   - photos from the puzzle, and pictures of the Earth, the Moon, Mars, Jupiter and Saturn
   - the Moon as seen from the Earth, and the Sun, the Earth and the Moon from above the North Pole, as in Kuu faasid

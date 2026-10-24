@@ -134,7 +134,7 @@
 
   // Time to read the question before the answers and the clock appear (s),
   // longer for a longer question.
-  const readTime = (q) => clamp(2 + q.q[Astro.lang].length * 0.06, 3, 8);
+  const readTime = (q) => clamp(3 + q.q[Astro.lang].length * 0.1, 5, 14);
 
   // Every question gets an id and its topic.
   const ALL = [];
