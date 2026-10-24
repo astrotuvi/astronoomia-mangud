@@ -45,7 +45,10 @@
     { n: 4, cols: 4 },
     { n: 6, cols: 4 },
     { n: 8, cols: 4 },
-    { n: 10, cols: 5 }
+    { n: 10, cols: 5 },
+    { n: 12, cols: 6 },
+    { n: 15, cols: 6 },
+    { n: 18, cols: 6 }
   ];
 
   const TEXT = {
