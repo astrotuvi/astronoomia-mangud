@@ -12,6 +12,10 @@
   const HINT_MS = 5000;   // time with nothing caught before the hand shows a star
   const GRACE = 0.25;     // s a shooting star can still be caught after it fades
   const JAR_MAX = 44;     // stars that fit in the jar; more are counted but not drawn
+  // how many times more shooting stars and fireballs than on level 1
+  const LEVELS = [1, 2, 3];
+  // on level 3 a meteor storm from 00:00 to 02:00, with this many times more
+  const STORM = { from: 20, to: 40, ramp: 2, x: 3 };
 
   const DEG = Math.PI / 180;
 
@@ -103,6 +107,8 @@
       noBest: 'Rekordit veel pole.',
       clear: '🗑️ Kustuta rekord',
       clearSure: '🗑️ Puuduta uuesti, et kustutada',
+      level: 'Vali tase',
+      stormTip: '🌠 Kesköö järel tuleb kaheks tunniks tähesadu!',
       shower: (name) => `🌠 Täna öösel on päris meteoorivool – ${name}! Mine pimedas õue ja vaata taevasse.`,
       captions: {
         start: ['Püüa langevaid tähti!', 'Puuduta tähte, kui see lendab'],
@@ -116,6 +122,7 @@
         pleiades: ['Sõel tõuseb!', 'Vaata, kuidas tähed puude tagant üles tulevad'],
         midnight: ['Kas teadsid?', 'Pärast südaööd näeb kõige rohkem langevaid tähti, sest Perseus on siis kõrgemal.'],
         turning: ['Kas teadsid?', 'Tähed liiguvad ringiratast ümber Põhjanaela. Tegelikult ei pöörle taevas, vaid Maa – nagu karussell.'],
+        storm: ['Tähesadu! 🌠', 'Väga harva lendab tunnis üle tuhande langeva tähe.'],
         dawn: ['Hakkab valgeks minema', 'Veel natuke!']
       },
       time: (h, mm) => `${String(h).padStart(2, '0')}:${mm}`,
@@ -138,6 +145,8 @@
       noBest: 'No best score yet.',
       clear: '🗑️ Clear the record',
       clearSure: '🗑️ Tap again to clear it',
+      level: 'Choose a level',
+      stormTip: '🌠 After midnight comes a meteor storm for two hours!',
       shower: (name) => `🌠 Tonight there is a real meteor shower, ${name}! Go out after dark and look up at the sky.`,
       captions: {
         start: ['Catch the shooting stars!', 'Tap a star while it flies'],
@@ -151,6 +160,7 @@
         pleiades: ['The Pleiades are rising!', 'See the stars come up from behind the trees'],
         midnight: ['Did you know?', 'After midnight you see the most shooting stars, because Perseus is higher in the sky.'],
         turning: ['Did you know?', 'The stars go round and round the North Star. It is not really the sky that turns, but the Earth, like a merry-go-round.'],
+        storm: ['A meteor storm! 🌠', 'Very rarely more than a thousand shooting stars fly in an hour.'],
         dawn: ['The sky is getting light', 'Just a little longer!']
       },
       time: (h, mm) => `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`,
@@ -173,7 +183,8 @@
 
   const store = Astro.makeStore('meteoor.');
   const state = {
-    best: Math.max(0, Math.floor(Number(store.get('best', 0)) || 0)),
+    level: Number(store.get('level', 1)),
+    best: store.get('bests', null), // the most stars caught on each level
     t: 0,            // time since the night began, s
     over: false,     // the night is over, the last stars fly to the jar
     overT: 0,
@@ -187,7 +198,7 @@
     nextMeteor: 0,
     burst: 0,        // how many more come quickly one after another
     craftPlan: [],   // [time, kind] of the planes and satellites still to come
-    fireballAt: 0,
+    fireballs: [],   // the times of the fireballs still to come
     facts: [],       // [time, key] of the facts still to come
     seen: {},        // the plane and the satellite are explained only once
     caption: null,   // { key, until }
@@ -199,6 +210,13 @@
     L: null,         // layout, see layout()
     gen: 0
   };
+  if (!LEVELS.includes(state.level)) state.level = 1;
+  if (!state.best || typeof state.best !== 'object') {
+    // the record from before there were levels is the one of level 1
+    const old = Math.max(0, Math.floor(Number(store.get('best', 0)) || 0));
+    state.best = old ? { 1: old } : {};
+  }
+  const bestNow = () => state.best[state.level] || 0;
 
   const area = $('area');
   const cv = $('night');
@@ -279,10 +297,29 @@
     return null;
   }
 
+  function buildMenu() {
+    LEVELS.forEach((n) => {
+      const b = document.createElement('button');
+      b.className = 'count level';
+      b.innerHTML = `<span class="lvl-stars">${'🌠'.repeat(n)}</span><b>${n}</b>`;
+      b.addEventListener('click', () => {
+        state.level = n;
+        store.set('level', n);
+        state.clearArmed = false;
+        sfx.pick();
+        updateMenu();
+      });
+      $('levels').appendChild(b);
+    });
+  }
+
   function updateMenu() {
-    $('menuJar').innerHTML = jarSVG(Math.min(state.best, JAR_MAX));
-    $('best').textContent = state.best ? t('best')(state.best) : t('noBest');
-    $('clearBtn').classList.toggle('hidden', !state.best);
+    [...$('levels').children].forEach((b, i) => b.classList.toggle('selected', LEVELS[i] === state.level));
+    $('stormTip').classList.toggle('hidden', state.level !== 3);
+    const best = bestNow();
+    $('menuJar').innerHTML = jarSVG(Math.min(best, JAR_MAX));
+    $('best').textContent = best ? t('best')(best) : t('noBest');
+    $('clearBtn').classList.toggle('hidden', !best);
     $('clearBtn').textContent = t(state.clearArmed ? 'clearSure' : 'clear');
     const s = showerNow();
     $('shower').classList.toggle('hidden', !s);
@@ -317,7 +354,6 @@
       t: 0, over: false, overT: 0, caught: 0, inJar: 0, idle: 0,
       meteors: [], crafts: [], flying: [], sparks: [],
       nextMeteor: 1.2, burst: 0, seen: {}, caption: null, hinted: null,
-      fireballAt: rand(18, 48),
       radZ: 0
     });
     layout();
@@ -327,11 +363,19 @@
     let up = 0;
     while (up < ROUND && toScreen(L, horizon(PLEIADES, lst(up)))[1] > Math.min(L.jar.y, L.H - L.G) - 12) up += 0.5;
     state.facts = [[9, 'fact1', 6], [up, 'pleiades', 4.5], [27, 'midnight', 6], [35, 'fact2', 6],
-      [42, 'turning', 6], [ROUND - DAWN, 'dawn', 5]].sort((a, b) => a[0] - b[0]);
+      [42, 'turning', 6], [ROUND - DAWN, 'dawn', 5]];
+    if (state.level === 3) state.facts.push([STORM.from, 'storm', 5]);
+    state.facts.sort((a, b) => a[0] - b[0]);
+    // one fireball for each level, spread over the night
+    const n = state.level;
+    state.fireballs = Array.from({ length: n }, (_, i) => rand(18 + (30 * i) / n, 18 + (30 * (i + 1)) / n));
     // a plane and a satellite in some order, then one more of either
     const kinds = shuffle(['plane', 'satellite']);
     kinds.push(Math.random() < 0.5 ? 'plane' : 'satellite');
     state.craftPlan = [[rand(5, 9), kinds[0]], [rand(23, 27), kinds[1]], [rand(41, 45), kinds[2]]];
+    // and many more satellites all through the night
+    for (let s = rand(10, 14); s < ROUND - 8; s += rand(4, 7)) state.craftPlan.push([s, 'satellite']);
+    state.craftPlan.sort((a, b) => a[0] - b[0]);
     showCaption('start', 3.5);
     updateBar();
     state.last = performance.now();
@@ -556,21 +600,37 @@
     };
   }
 
+  // A plane flies across, to the left or to the right. A
+  // satellite can come from any side and go any way, through the middle
+  // part of the sky, at about the same speed.
   function spawnCraft(kind) {
     const L = state.L;
     const B = L.box;
-    const left = Math.random() < 0.5;
-    const y0 = rand(B.y0 + 20, B.y0 + (B.y1 - B.y0) * 0.6);
-    state.crafts.push({
-      kind,
-      x0: left ? -20 : L.W + 20,
-      x1: left ? L.W + 20 : -20,
-      y0,
-      y1: clamp(y0 + rand(-0.15, 0.15) * L.u, B.y0, B.y1),
-      dur: kind === 'plane' ? 13 : 15,
-      age: 0,
-      p: rand(0, 1)
-    });
+    const c = { kind, age: 0, p: rand(0, 1) };
+    if (kind === 'plane') {
+      const left = Math.random() < 0.5;
+      c.y0 = rand(B.y0 + 20, B.y0 + (B.y1 - B.y0) * 0.6);
+      c.y1 = clamp(c.y0 + rand(-0.15, 0.15) * L.u, B.y0, B.y1);
+      c.x0 = left ? -20 : L.W + 20;
+      c.x1 = left ? L.W + 20 : -20;
+      c.dur = 13;
+    } else {
+      const px = rand(L.W * 0.3, L.W * 0.7);
+      const py = rand(B.y0 + (B.y1 - B.y0) * 0.25, B.y0 + (B.y1 - B.y0) * 0.75);
+      const a = rand(0, Math.PI * 2);
+      const dx = Math.cos(a);
+      const dy = Math.sin(a);
+      // where the line enters and leaves the sky, a little outside it
+      const span = (p, d, lo, hi) => (Math.abs(d) < 1e-6 ? [-Infinity, Infinity] :
+        [(lo - p) / d, (hi - p) / d].sort((u, v) => u - v));
+      const [ax, bx] = span(px, dx, -20, L.W + 20);
+      const [ay, by] = span(py, dy, -20, B.y1);
+      const s0 = Math.max(ax, ay);
+      const s1 = Math.min(bx, by);
+      Object.assign(c, { x0: px + dx * s0, y0: py + dy * s0, x1: px + dx * s1, y1: py + dy * s1 });
+      c.dur = clamp((15 * (s1 - s0)) / (L.W + 40), 8, 18);
+    }
+    state.crafts.push(c);
   }
 
   function craftXY(c) {
@@ -637,17 +697,25 @@
       if (m && state.idle * 1000 >= HINT_MS && !state.hinted) state.hinted = m;
       if (state.burst > 0) state.burst--;
       else if (Math.random() < 0.15) state.burst = 2;
-      // from one every 2 s in the evening to one every 1.2 s at dawn
-      const rate = Math.max(0.3, state.radZ) / RAD_END;
-      state.nextMeteor = T + (state.burst > 0 ? rand(0.25, 0.4) : rand(0.9, 1.5) / rate);
+      // on level 1 from one every 2 s in the evening to one every 1.2 s
+      // at dawn, and more often on the higher levels and in the storm
+      const rate = (Math.max(0.3, state.radZ) / RAD_END) * state.level * storm(T);
+      state.nextMeteor = T + (state.burst > 0 ? rand(0.25, 0.4) * Math.min(1, 2 / rate) : rand(0.9, 1.5) / rate);
     }
-    if (state.fireballAt && T >= state.fireballAt) {
-      state.fireballAt = 0;
+    if (state.fireballs.length && T >= state.fireballs[0]) {
+      state.fireballs.shift();
       spawnMeteor(true);
     }
     if (state.craftPlan.length && T >= state.craftPlan[0][0]) spawnCraft(state.craftPlan.shift()[1]);
     // a fact waits until the caption before it is gone
     if (state.facts.length && T >= state.facts[0][0] && !state.caption) showCaption(...state.facts.shift().slice(1));
+  }
+
+  // how many times more shooting stars the storm brings at time T
+  function storm(T) {
+    if (state.level !== 3) return 1;
+    const up = clamp((T - STORM.from) / STORM.ramp, 0, 1) * clamp((STORM.to - T) / STORM.ramp, 0, 1);
+    return 1 + (STORM.x - 1) * up * up * (3 - 2 * up);
   }
 
   function draw() {
@@ -970,11 +1038,11 @@
   function win() {
     stopAll();
     const n = state.caught;
-    const old = state.best;
+    const old = bestNow();
     state.record = n > old;
     if (state.record) {
-      state.best = n;
-      store.set('best', n);
+      state.best[state.level] = n;
+      store.set('bests', state.best);
     }
     sfx.win();
     if (state.record) {
@@ -991,7 +1059,7 @@
 
   function updateWin() {
     $('winCount').textContent = t('count')(state.caught);
-    $('winBest').textContent = state.record ? t('newBest') : state.best ? t('oldBest')(state.best) : '';
+    $('winBest').textContent = state.record ? t('newBest') : bestNow() ? t('oldBest')(bestNow()) : '';
   }
 
   // ---------------------------------------------------------------------------
@@ -1012,8 +1080,8 @@
     clearTimeout(state.clearTimer);
     if (state.clearArmed) {
       state.clearArmed = false;
-      state.best = 0;
-      store.set('best', 0);
+      delete state.best[state.level];
+      store.set('bests', state.best);
       sfx.oops();
     } else {
       state.clearArmed = true;
@@ -1035,6 +1103,7 @@
     sfx.pick();
   });
 
+  buildMenu();
   updateToggles();
   Astro.setupLanguage(TEXT, () => {
     updateMenu();

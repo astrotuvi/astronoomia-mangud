@@ -115,17 +115,18 @@ The phases and their names are in the `PHASES` list at the top of `kuufaasid/app
 
 ## Püüa langev täht
 
+- Pick a level. Level 1 is an ordinary night of the Perseids. Level 2 has twice as many shooting stars and two fireballs, and level 3 three times as many and three fireballs, with a meteor storm (tähesadu) from 00:00 to 02:00 that brings three times more again.
 - One night, from 22:00 to 04:00, lasts a minute. The top bar shows a clock and how much of the night is left. In the last ten seconds the sky gets light, most of all low in the north-east, where the Sun is below the horizon.
 - The sky is the real one above Tõrva (58° N) on the night of the Perseids, 12 August, looking north-east. As the night goes on it turns round the North Star (Põhjanael): Cassiopeia climbs over the top, Perseus rises higher, and Capella, the Pleiades (Sõel) and Aldebaran come up from behind the trees. Stars low down are dimmer.
-- Shooting stars flash across the sky, sometimes three in quick succession. They come more often as Perseus rises, from about one every two seconds in the evening to one every 1.2 seconds at dawn, as there are more after midnight in reality. Tap one, or its tail, to catch it: it turns into a ⭐ that flies into the jar at the bottom. A star still counts if it is tapped just after it fades. Each catch plays the next note of a tune.
-- Once a night a slow, bright green fireball (boliid) crosses the sky. It counts as two stars.
+- Shooting stars flash across the sky, sometimes three in quick succession. They come more often as Perseus rises, on level 1 from about one every two seconds in the evening to one every 1.2 seconds at dawn, as there are more after midnight in reality. Tap one, or its tail, to catch it: it turns into a ⭐ that flies into the jar at the bottom. A star still counts if it is tapped just after it fades. Each catch plays the next note of a tune.
+- Once a night (on level 1) a slow, bright green fireball (boliid) crosses the sky. It counts as two stars.
 - All shooting stars fly away from one spot between Perseus and Cassiopeia, which moves with the sky, as the Perseids do in August.
-- A plane (red and green lights blinking in turn) and a satellite (a slow, steady dot) cross the sky too. Tapping them never costs anything: the first tap explains what they are, later taps only name them.
+- A plane (red and green lights blinking in turn) crosses the sky to the left or right, and satellites (slow, steady dots), one every few seconds, cross it in any direction. Tapping them never costs anything: the first tap explains what they are, later taps only name them.
 - If nothing is caught for five seconds, a 👆 follows the next shooting star. A caption points out the Pleiades when they are up, and four short facts are shown during the night.
-- The most stars caught in one night is kept as the record. It is shown in the menu with a jar of that many stars, and the win screen says when it is beaten. **🗑️ Kustuta rekord** under it clears the record after a second tap.
+- The most stars caught in one night is kept as the record for each level. It is shown in the menu with a jar of that many stars, and the win screen says when it is beaten. **🗑️ Kustuta rekord** under it clears the record after a second tap.
 - Within three days of the best night of the Perseids (12 August) or the Geminids (14 December), the menu says that there is a real meteor shower tonight.
 
-The length of the night, the place, the direction of the view and the other timings are at the top of `meteoor/app.js`, with the positions of the named stars. The sky is drawn with a stereographic projection, which keeps the shapes of the figures.
+The levels, the meteor storm, the length of the night, the place, the direction of the view and the other timings are at the top of `meteoor/app.js`, with the positions of the named stars. The sky is drawn with a stereographic projection, which keeps the shapes of the figures.
 
 ## Kosmoseviktoriin
 

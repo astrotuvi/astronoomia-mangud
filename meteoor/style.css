@@ -8,6 +8,14 @@
   color: var(--muted);
 }
 
+/* the levels, with as many shooting stars as times more of them */
+.levels .lvl-stars { font-size: 1.1rem; line-height: 1; letter-spacing: -4px; white-space: nowrap; }
+.storm-tip {
+  margin: 12px 0 0;
+  font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+  font-weight: 800;
+}
+
 /* the jar with the best night's stars */
 .menu-jar { display: flex; justify-content: center; margin-top: 22px; }
 .menu-jar svg { width: clamp(90px, 22vmin, 150px); aspect-ratio: 100 / 120; overflow: visible; }
