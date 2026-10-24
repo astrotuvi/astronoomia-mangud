@@ -374,9 +374,32 @@
   height: 100%;
   min-height: 160px;
 }
-.step-col { width: min(140px, 40%); height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; }
-.podium-who { font-size: clamp(2rem, 9vmin, 3.5rem); line-height: 1; }
+.step-col {
+  --who: clamp(2rem, 9vmin, 3.5rem);
+  width: min(140px, 40%);
+  height: 100%;
+  padding-top: calc(var(--who) * 0.6);   /* room for the crown */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+.podium-who { position: relative; font-size: var(--who); height: var(--who); line-height: 1; white-space: nowrap; }
+/* the crown floats above the winner, so both players' bars start from the same line */
+.crown {
+  position: absolute;
+  bottom: 75%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-12deg);
+  font-size: 0.7em;
+  font-style: normal;
+}
 .podium-bar {
+  /* the share of the room below the name, in proportion to the points */
+  height: calc((100% - var(--who) - 6px) * var(--f));
+  min-height: 64px;
+  flex-shrink: 0;
   width: 100%;
   border-radius: 14px 14px 4px 4px;
   display: flex;

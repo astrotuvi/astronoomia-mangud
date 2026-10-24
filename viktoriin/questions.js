@@ -54,9 +54,9 @@ window.QUIZ = [
       {
         q: { et: 'Miks Kuu kuju kuu jooksul muutub?', en: 'Why does the Moon’s shape change during a month?' },
         answers: [
-          { et: 'Kuu on alati pooleldi valgustatud, aga me näeme valgustatud poolest eri ajal erineva osa', en: 'The Moon is always half lit, but we see a different part of the lit half at different times' },
-          { et: 'Maa vari katab osa Kuust', en: 'The Earth’s shadow covers part of the Moon' },
-          { et: 'Pilved katavad osa Kuust', en: 'Clouds cover part of the Moon' },
+          { et: 'Näeme valgest poolest eri osa', en: 'We see more or less of its lit half' },
+          { et: 'Maa vari katab osa Kuust', en: 'The Earth’s shadow covers it' },
+          { et: 'Pilved katavad osa Kuust', en: 'Clouds cover it' },
           { et: 'Kuu kasvab ja kahaneb päriselt', en: 'The Moon really grows and shrinks' }
         ],
         why: { et: 'Päike valgustab alati poolt Kuust. Kuu tiirleb ümber Maa ja me näeme sellest valgest poolest kord rohkem, kord vähem.', en: 'The Sun always lights half of the Moon. As the Moon goes round the Earth, we see more or less of that lit half.' }
@@ -114,10 +114,10 @@ window.QUIZ = [
       {
         q: { et: 'Miks ei ole päikesevarjutust igal noorkuul?', en: 'Why is there not a solar eclipse at every new moon?' },
         answers: [
-          { et: 'Kuu tee on veidi viltu, nii et tavaliselt läheb Kuu Päikesest ülalt või alt mööda', en: 'The Moon’s path is a little tilted, so it usually passes above or below the Sun' },
-          { et: 'Päike on nii hele, et varjutust ei ole näha', en: 'The Sun is so bright that the eclipse cannot be seen' },
+          { et: 'Kuu läheb ülalt või alt mööda', en: 'The Moon passes above or below' },
+          { et: 'Päike on liiga hele', en: 'The Sun is too bright' },
           { et: 'Noorkuu on vahel öösel', en: 'New moon is sometimes at night' },
-          { et: 'Kuu on liiga väike, et Päikest katta', en: 'The Moon is too small to cover the Sun' }
+          { et: 'Kuu on liiga väike', en: 'The Moon is too small' }
         ],
         why: { et: 'Kuu tee on umbes 5 kraadi viltu. Varjutus tuleb ainult siis, kui noorkuu juhtub just sinna, kus Kuu tee Maa teed lõikab.', en: 'The Moon’s path is tilted by about 5 degrees. An eclipse comes only when new moon happens just where the Moon’s path crosses the Earth’s.' }
       },
@@ -135,7 +135,7 @@ window.QUIZ = [
         q: { et: 'Millal ja kus näed kasvavat kuusirpi?', en: 'When and where can you see a waxing crescent?' },
         pic: { moon: 45 },
         answers: [
-          { et: 'Õhtul läänes, varsti pärast päikeseloojangut', en: 'In the evening in the west, soon after sunset' },
+          { et: 'Õhtul läänes', en: 'In the evening in the west' },
           { et: 'Keskööl kõrgel lõunas', en: 'At midnight high in the south' },
           { et: 'Varahommikul idas', en: 'Early in the morning in the east' },
           { et: 'Ainult keskpäeval', en: 'Only at midday' }
@@ -200,8 +200,8 @@ window.QUIZ = [
       {
         q: { et: 'Miks hüppad Kuul kõrgemale kui Maal?', en: 'Why do you jump higher on the Moon than on the Earth?' },
         answers: [
-          { et: 'Kuu on väiksem ja tõmbab nõrgemalt', en: 'The Moon is smaller and pulls more weakly' },
-          { et: 'Kuul ei ole õhku, mis takistaks', en: 'There is no air on the Moon to hold you back' },
+          { et: 'Kuu tõmbab nõrgemalt', en: 'The Moon pulls more weakly' },
+          { et: 'Kuul ei ole õhku', en: 'There is no air on the Moon' },
           { et: 'Kuu on Maast kaugel', en: 'The Moon is far from the Earth' },
           { et: 'Kuul ei ole raskusjõudu', en: 'There is no gravity on the Moon' }
         ],
@@ -210,10 +210,10 @@ window.QUIZ = [
       {
         q: { et: 'Miks hüppad Jupiteril madalamalt kui Maal?', en: 'Why is your jump lower on Jupiter than on the Earth?' },
         answers: [
-          { et: 'Jupiter on palju suurem ja tõmbab tugevamalt', en: 'Jupiter is much bigger and pulls more strongly' },
+          { et: 'Jupiter tõmbab tugevamalt', en: 'Jupiter pulls more strongly' },
           { et: 'Jupiteril on tugev tuul', en: 'There are strong winds on Jupiter' },
-          { et: 'Jupiter on Päikesest kaugel ja seal on külm', en: 'Jupiter is far from the Sun and it is cold there' },
-          { et: 'Jupiteri õhk on paks ja takistab', en: 'Jupiter’s air is thick and holds you back' }
+          { et: 'Jupiteril on külm', en: 'It is cold on Jupiter' },
+          { et: 'Jupiteri õhk on paks', en: 'Jupiter’s air is thick' }
         ],
         why: { et: 'Jupiter on kõige suurem planeet ja tõmbab üle kahe korra tugevamalt kui Maa.', en: 'Jupiter is the biggest planet and pulls more than twice as strongly as the Earth.' }
       },
@@ -225,17 +225,17 @@ window.QUIZ = [
       {
         q: { et: 'Kuul hüppad kuus korda kõrgemale kui Maal. Kas hüpe kestab ka kauem?', en: 'On the Moon you jump six times higher than on the Earth. Does the jump also last longer?' },
         answers: [
-          { et: 'Jah, Kuul tuled aeglaselt alla ja hüpe kestab mitu korda kauem', en: 'Yes, you float slowly down and the jump lasts several times longer' },
-          { et: 'Ei, hüpe kestab sama kaua, ainult kõrgemale', en: 'No, it lasts just as long, only higher' },
-          { et: 'Ei, hüpe on lühem, sest kukud kiiremini', en: 'No, it is shorter, because you fall faster' }
+          { et: 'Jah, mitu korda kauem', en: 'Yes, several times longer' },
+          { et: 'Ei, sama kaua', en: 'No, just as long' },
+          { et: 'Ei, see on lühem', en: 'No, it is shorter' }
         ],
         why: { et: 'Nõrk tõmme pidurdab sind üles minnes aeglaselt ja tõmbab ka aeglaselt alla. Maal kestab hüpe pool sekundit, Kuul üle kolme sekundi.', en: 'A weak pull slows you down slowly on the way up and pulls you down slowly too. On the Earth a jump lasts half a second, on the Moon over three seconds.' }
       },
       {
         q: { et: 'Mis on raskusjõud?', en: 'What is gravity?' },
         answers: [
-          { et: 'Jõud, millega taevakeha tõmbab kõike enda poole', en: 'The pull of a world on everything towards it' },
-          { et: 'Õhk, mis surub meid maa vastu', en: 'Air pressing us down to the ground' },
+          { et: 'Taevakeha tõmme', en: 'The pull of a world' },
+          { et: 'Õhk, mis surub alla', en: 'Air pressing us down' },
           { et: 'Maa magnet', en: 'The Earth’s magnet' },
           { et: 'Tuul, mis puhub ülevalt alla', en: 'Wind blowing from above' }
         ],
@@ -276,8 +276,8 @@ window.QUIZ = [
         answers: [
           { et: 'Saturn on palju kaugemal', en: 'Saturn is much farther away' },
           { et: 'Saturn on suurem', en: 'Saturn is bigger' },
-          { et: 'Saturnil on rõngad, millest peab mööda lendama', en: 'Saturn has rings to fly past' },
-          { et: 'Saturnil on külm ja kütus külmub', en: 'Saturn is cold and the fuel freezes' }
+          { et: 'Saturnil on rõngad', en: 'Saturn has rings' },
+          { et: 'Kütus külmub seal', en: 'The fuel freezes there' }
         ],
         why: { et: 'Mida kaugemale lendad, seda rohkem kütust on vaja.', en: 'The farther you fly, the more fuel you need.' }
       },
@@ -294,17 +294,17 @@ window.QUIZ = [
       {
         q: { et: 'Millist teed lendab rakett Maalt Marsile?', en: 'Which way does a rocket fly from the Earth to Mars?' },
         answers: [
-          { et: 'Kaarena poole tiiru ümber Päikese', en: 'Along a curve, half way round the Sun' },
+          { et: 'Mööda kaart', en: 'Along a curve' },
           { et: 'Sirgelt Marsi poole', en: 'Straight towards Mars' },
           { et: 'Läbi Päikese', en: 'Through the Sun' },
-          { et: 'Tehes ringe ümber Maa, kuni jõuab Marsini', en: 'Going round and round the Earth until it reaches Mars' }
+          { et: 'Tiirutades ümber Maa', en: 'Round and round the Earth' }
         ],
         why: { et: 'Rakett tiirleb ümber Päikese nagu planeedid. Tema tee puudutab ühes otsas Maa orbiiti ja teises Marsi orbiiti.', en: 'The rocket goes round the Sun like the planets. Its path touches the Earth’s orbit at one end and Mars’s orbit at the other.' }
       },
       {
         q: { et: 'Rakett stardib Marsile. Kuhu poole peab ta lendama?', en: 'A rocket sets off to Mars. Where should it aim?' },
         answers: [
-          { et: 'Sinna, kus Marss on siis, kui rakett kohale jõuab', en: 'Where Mars will be when the rocket gets there' },
+          { et: 'Sinna, kus Marss hiljem on', en: 'Where Mars will be later' },
           { et: 'Sinna, kus Marss praegu on', en: 'Where Mars is now' },
           { et: 'Päikese poole', en: 'Towards the Sun' },
           { et: 'Otse üles', en: 'Straight up' }
@@ -331,17 +331,17 @@ window.QUIZ = [
       {
         q: { et: 'Kuidas lendab rakett pärast starti?', en: 'How does a rocket fly after lift-off?' },
         answers: [
-          { et: 'Pöörab tõustes itta, et minna tiirlema ümber Maa', en: 'It turns east as it climbs, to go round the Earth' },
-          { et: 'Lendab otse üles, kuni jõuab kosmosesse', en: 'It flies straight up until it is in space' },
+          { et: 'Pöörab tõustes itta', en: 'It turns east as it climbs' },
+          { et: 'Lendab otse üles', en: 'It flies straight up' },
           { et: 'Pöörab tõustes läände', en: 'It turns west as it climbs' },
-          { et: 'Lendab kohe otse Kuu poole', en: 'It flies straight to the Moon at once' }
+          { et: 'Lendab otse Kuu poole', en: 'It flies straight to the Moon' }
         ],
         why: { et: 'Maa pöörleb itta ja aitab niimoodi raketil kiirust koguda. Kõigepealt läheb rakett tiirlema ümber Maa.', en: 'The Earth turns eastwards, which helps the rocket gain speed. First the rocket goes into orbit round the Earth.' }
       },
       {
         q: { et: 'Miks kukuvad kütusepaagid lennu ajal raketi küljest ära?', en: 'Why do the fuel tanks drop off the rocket during the flight?' },
         answers: [
-          { et: 'Tühi paak oleks asjata raske', en: 'An empty tank would only be extra weight' },
+          { et: 'Tühi paak oleks asjata raske', en: 'An empty tank is extra weight' },
           { et: 'Et rakett pidurdaks', en: 'To slow the rocket down' },
           { et: 'Need lähevad katki', en: 'They break' },
           { et: 'Et teha ruumi astronaudile', en: 'To make room for the astronaut' }
@@ -387,7 +387,7 @@ window.QUIZ = [
         q: { et: 'Millest on tehtud Saturni rõngad?', en: 'What are Saturn’s rings made of?' },
         pic: { world: 'saturn' },
         answers: [
-          { et: 'Lugematutest jäätükkidest ja kivikestest', en: 'Countless bits of ice and rock' },
+          { et: 'Jäätükkidest ja kivikestest', en: 'Bits of ice and rock' },
           { et: 'Ühest suurest kõvast kettast', en: 'One big solid disc' },
           { et: 'Valgusest', en: 'Light' },
           { et: 'Pilvedest', en: 'Clouds' }
@@ -435,7 +435,7 @@ window.QUIZ = [
       {
         q: { et: 'Mis on langev täht?', en: 'What is a shooting star?' },
         answers: [
-          { et: 'Liivatera suurune kivike, mis põleb õhus', en: 'A little stone, as small as a grain of sand, burning up in the air' },
+          { et: 'Kivike, mis põleb õhus', en: 'A tiny stone burning up' },
           { et: 'Täht, mis kukub taevast alla', en: 'A star falling from the sky' },
           { et: 'Satelliit, mis kukub alla', en: 'A satellite falling down' },
           { et: 'Täht, mis plahvatab', en: 'A star exploding' }
@@ -461,7 +461,7 @@ window.QUIZ = [
         q: { et: 'Augustis on perseiidide meteoorivool. Millal näeb öösel kõige rohkem langevaid tähti?', en: 'In August there is the Perseid meteor shower. When in the night do you see the most shooting stars?' },
         answers: [
           { et: 'Pärast südaööd', en: 'After midnight' },
-          { et: 'Õhtul, kohe kui läheb pimedaks', en: 'In the evening, as soon as it gets dark' },
+          { et: 'Kohe kui läheb pimedaks', en: 'As soon as it gets dark' },
           { et: 'Keskpäeval', en: 'At midday' },
           { et: 'Kogu öö ühepalju', en: 'The same all night' }
         ],
@@ -531,9 +531,9 @@ window.QUIZ = [
       {
         q: { et: 'Mis on Põhjanaelas erilist?', en: 'What is special about the North Star?' },
         answers: [
-          { et: 'Ta on alati põhjas ja peaaegu ei liigu', en: 'It is always in the north and hardly moves' },
-          { et: 'Ta on taeva kõige heledam täht', en: 'It is the brightest star in the sky' },
-          { et: 'Ta on Maale kõige lähem täht', en: 'It is the nearest star to the Earth' },
+          { et: 'Ta peaaegu ei liigu', en: 'It hardly moves' },
+          { et: 'Ta on kõige heledam', en: 'It is the brightest' },
+          { et: 'Ta on kõige lähem täht', en: 'It is the nearest star' },
           { et: 'Ta on alati otse pea kohal', en: 'It is always straight overhead' }
         ],
         why: { et: 'Kõik tähed liiguvad ringiratast ümber Põhjanaela, aga tema ise jääb paigale. Kui vaatad Põhjanaela poole, tead, kus on põhi.', en: 'All the stars go round the North Star, but it stays still. When you face the North Star, you know where north is.' }
@@ -547,8 +547,8 @@ window.QUIZ = [
         q: { et: 'Kuidas leida Põhjanaela?', en: 'How do you find the North Star?' },
         pic: { con: 'bigdipper' },
         answers: [
-          { et: 'Suure Vankri kopa kaks äärmist tähte näitavad tema poole', en: 'The two end stars of the Big Dipper’s bowl point to it' },
-          { et: 'Otsi taeva kõige heledam täht', en: 'Look for the brightest star in the sky' },
+          { et: 'Suure Vankri abil', en: 'With the Big Dipper' },
+          { et: 'Otsi kõige heledam täht', en: 'Find the brightest star' },
           { et: 'Vaata otse üles', en: 'Look straight up' },
           { et: 'Vaata itta, kus tähed tõusevad', en: 'Look east, where the stars rise' }
         ],
@@ -578,7 +578,7 @@ window.QUIZ = [
         q: { et: 'Millised tähed moodustavad Suvekolmnurga?', en: 'Which stars make the Summer Triangle?' },
         answers: [
           { et: 'Veega, Deeneb ja Altair', en: 'Vega, Deneb and Altair' },
-          { et: 'Põhjanael, Kapella ja Aldebaran', en: 'The North Star, Capella and Aldebaran' },
+          { et: 'Siirius, Kapella ja Rigel', en: 'Sirius, Capella and Rigel' },
           { et: 'Orioni vöö kolm tähte', en: 'The three stars of Orion’s belt' },
           { et: 'Päike, Kuu ja Maa', en: 'The Sun, the Moon and the Earth' }
         ],
@@ -587,7 +587,7 @@ window.QUIZ = [
       {
         q: { et: 'Mis on Sõel?', en: 'What are the Pleiades?' },
         answers: [
-          { et: 'Täheparv – hulk tähti koos', en: 'A star cluster – a group of stars together' },
+          { et: 'Täheparv', en: 'A star cluster' },
           { et: 'Üks väga hele täht', en: 'One very bright star' },
           { et: 'Planeet', en: 'A planet' },
           { et: 'Galaktika', en: 'A galaxy' }
@@ -689,7 +689,7 @@ window.QUIZ = [
       {
         q: { et: 'Mis on Orioni udu?', en: 'What is the Orion Nebula?' },
         answers: [
-          { et: 'Gaasipilv, kus sünnivad uued tähed', en: 'A cloud of gas where new stars are born' },
+          { et: 'Pilv, kus sünnivad tähed', en: 'A cloud where stars are born' },
           { et: 'Pilv Maa õhus', en: 'A cloud in the Earth’s air' },
           { et: 'Planeet', en: 'A planet' },
           { et: 'Suitsupilv', en: 'A cloud of smoke' }
@@ -711,7 +711,7 @@ window.QUIZ = [
         q: { et: 'Mis on Andromeeda galaktika?', en: 'What is the Andromeda Galaxy?' },
         pic: { photo: 'andromeda' },
         answers: [
-          { et: 'Hiiglaslik hulk tähti, sadu miljardeid', en: 'A huge group of stars, hundreds of billions of them' },
+          { et: 'Sadu miljardeid tähti', en: 'Billions of stars' },
           { et: 'Üks suur täht', en: 'One big star' },
           { et: 'Gaasipilv', en: 'A cloud of gas' },
           { et: 'Planeet', en: 'A planet' }

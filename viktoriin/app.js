@@ -718,8 +718,8 @@
       $('winScore').textContent = t('duoScore')(state.whos[0], a.score, state.whos[1], b.score);
       const top = Math.max(a.score, b.score, 1);
       $('winPic').innerHTML = '<div class="podium">' + state.players.map((pl, p) =>
-        `<div class="step-col p${p + 1}"><span class="podium-who">${winner === p ? '👑' : ''}${state.whos[p]}</span>` +
-        `<div class="podium-bar" style="height:${20 + (70 * pl.score) / top}%"><b>${pl.score}</b><small>${pl.rightCount} / ${n} ✅</small></div></div>`).join('') + '</div>';
+        `<div class="step-col p${p + 1}"><span class="podium-who">${winner === p ? '<i class="crown">👑</i>' : ''}${state.whos[p]}</span>` +
+        `<div class="podium-bar" style="--f:${pl.score / top}"><b>${pl.score}</b><small>${pl.rightCount} / ${n} ✅</small></div></div>`).join('') + '</div>';
     } else {
       const pl = state.players[0];
       const old = state.best[state.topic];
