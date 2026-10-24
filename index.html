@@ -169,6 +169,42 @@
           <b data-t="jump"></b>
           <span data-t="jumpText"></span>
         </a>
+        <a class="game-card" href="planeedid/index.html">
+          <!-- the first three planets in their places, Mars lifted from the tray towards its place;
+               the planets are drawn by shared/planets.js, as in the game -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <radialGradient id="riviSun">
+                <stop offset="0" stop-color="#fffbe0" />
+                <stop offset="0.55" stop-color="#ffd34d" />
+                <stop offset="0.85" stop-color="#ff9f1c" />
+                <stop offset="1" stop-color="#ff9f1c" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <g fill="#fff">
+              <circle cx="40" cy="10" r="0.6" opacity="0.6" /><circle cx="88" cy="14" r="0.7" opacity="0.6" />
+              <circle cx="60" cy="92" r="0.6" opacity="0.5" /><circle cx="8" cy="92" r="0.5" opacity="0.6" />
+            </g>
+            <g fill="none" stroke="#fff" stroke-opacity="0.18" stroke-width="0.5">
+              <circle cx="-22" cy="40" r="44" /><circle cx="-22" cy="40" r="57" /><circle cx="-22" cy="40" r="72.7" />
+              <circle cx="-22" cy="40" r="87" /><circle cx="-22" cy="40" r="107.3" />
+            </g>
+            <circle cx="-22" cy="40" r="38" fill="url(#riviSun)" />
+            <g transform="translate(22 40) scale(0.076)"><g id="riviMercury"><circle r="50" fill="#9a928a" /></g></g>
+            <g transform="translate(35 40) scale(0.124)"><g id="riviVenus"><circle r="50" fill="#e0c48c" /></g></g>
+            <g transform="translate(50.7 40) scale(0.13)"><g id="riviEarth"><circle r="50" fill="#2a5e9e" /></g></g>
+            <g fill="none" stroke="#fff" stroke-opacity="0.6" stroke-width="0.7" stroke-dasharray="1.6 1.6">
+              <circle cx="65" cy="40" r="4.8" /><circle cx="85.3" cy="40" r="12.5" />
+            </g>
+            <g transform="translate(26 78) scale(0.1785)"><g id="riviSaturn"><circle r="50" fill="#d9be86" /></g></g>
+            <g transform="translate(86 78) scale(0.1394)"><g id="riviNeptune"><circle r="50" fill="#3e64c8" /></g></g>
+            <path d="M62 64Q60 56 64 49" fill="none" stroke="#ffd34d" stroke-width="0.9" stroke-dasharray="1.5 1.8" stroke-linecap="round" />
+            <circle cx="62" cy="70" r="7" fill="#ffd34d" opacity="0.35" />
+            <g transform="translate(62 70) scale(0.096)"><g id="riviMars"><circle r="50" fill="#b86a44" /></g></g>
+          </svg>
+          <b data-t="order"></b>
+          <span data-t="orderText"></span>
+        </a>
         <a class="game-card" href="kuufaasid/index.html">
           <!-- a waxing crescent from the Moon photo, the rest faintly lit by the Earth -->
           <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -261,7 +297,17 @@
   </main>
 
   <script src="shared/common.js"></script>
+  <script src="shared/planets.js"></script>
   <script>
+    // the planets on the Planeetide rivi card, one after another
+    (function next(ids) {
+      if (!ids.length) return;
+      AstroPlanets.drawPlanet(ids[0].toLowerCase(), 128, (pic) => {
+        document.getElementById('rivi' + ids[0]).innerHTML =
+          `<image href="${pic.url}" x="${-pic.w / 2}" y="${-pic.h / 2}" width="${pic.w}" height="${pic.h}" />`;
+        next(ids.slice(1));
+      });
+    })(['Mercury', 'Venus', 'Earth', 'Mars', 'Saturn', 'Neptune']);
     Astro.setupLanguage({
       et: {
         title: 'Astronoomia mängud',
@@ -277,6 +323,8 @@
         phasesText: 'Liiguta Kuud ümber Maa ja vaata, miks Kuu kuju muutub. Leia ka varjutused.',
         jump: 'Hüppa planeedil',
         jumpText: 'Hüppa Maal, Kuul, Marsil ja Jupiteril ja vaata, kus saad kõige kõrgemale.',
+        order: 'Planeetide rivi',
+        orderText: 'Pane planeedid õigesse järjekorda, alates Päikesele kõige lähemast.',
         meteor: 'Püüa langev täht',
         meteorText: 'Püüa ühe ööga purki nii palju langevaid tähti kui jõuad.',
         // a soft hyphen, so that a long name can break on a narrow card
@@ -298,6 +346,8 @@
         phasesText: 'Move the Moon round the Earth and see why its shape changes. Find the eclipses too.',
         jump: 'Planet Jump',
         jumpText: 'Jump on the Earth, the Moon, Mars and Jupiter, and see where you get highest.',
+        order: 'Line Up the Planets',
+        orderText: 'Put the planets in order, starting with the one closest to the Sun.',
         meteor: 'Catch a Shooting Star',
         meteorText: 'Catch as many shooting stars in your jar as you can in one night.',
         quiz: 'Space Quiz',

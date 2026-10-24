@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- the pages are dark already: keeps phone browsers from recolouring them in dark mode -->
+  <meta name="color-scheme" content="dark">
+  <title>Planeetide rivi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/common.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- The Sun's glow in the menu and on the win screen. Not display:none,
+       or the browser would not draw it. -->
+  <svg class="defs" aria-hidden="true">
+    <defs>
+      <radialGradient id="sunGlow">
+        <stop offset="0" stop-color="#fffbe0" />
+        <stop offset="0.55" stop-color="#ffd34d" />
+        <stop offset="0.85" stop-color="#ff9f1c" />
+        <stop offset="1" stop-color="#ff9f1c" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <!-- Menu: pick how many planets -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">🏠</a>
+        <h1><span class="logo">🪐</span> <span data-t="title"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="intro"></p>
+
+      <section>
+        <h2 data-t="chooseLevel"></h2>
+        <div id="levels" class="levels"></div>
+      </section>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Game -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">⬅️</button>
+      <div class="progress">
+        <div class="track"><div id="progressFill" class="fill"></div></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <button id="hintBtn" class="icon toggle" data-t-label="hint" aria-label="Vihje">👁️</button>
+      <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+    </div>
+    <div id="area" class="area">
+      <svg id="orbits" class="orbits" aria-hidden="true"></svg>
+      <div id="sun" class="sun"></div>
+      <div id="toast" class="toast"></div>
+    </div>
+  </div>
+
+  <!-- Win overlay -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div id="winPic" class="win-pic win-row"></div>
+    <div class="win-card">
+      <h2><span data-t="wellDone"></span> 🎉</h2>
+      <p id="winText" class="win-fact"></p>
+      <div class="win-buttons">
+        <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
+        <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/common.js"></script>
+  <script src="../shared/planets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
