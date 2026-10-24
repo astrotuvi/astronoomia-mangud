@@ -19,14 +19,14 @@
       name: { et: 'Selge varjutus', en: 'A clear dip' },
       star: {
         name: 'HD 209458', R: 1.16, color: '#fff2d0', hz: [340, 750],
-        about: { et: 'Päikesesarnane täht, Päikesest veidi suurem', en: 'A star like the Sun, a little bigger' }
+        about: { et: 'Päikese-sarnane täht, Päikesest veidi suurem', en: 'A star like the Sun, a little bigger' }
       },
       days: 12, noise: 0.0008,
       planets: [{
         name: 'HD 209458 b', P: 3.525, t0: 1.7, Re: 15.1, dur: 0.13,
         pic: 'jupiter', filter: 'sepia(0.5) saturate(2) hue-rotate(-20deg) brightness(1.05)',
         fact: {
-          et: 'Esimene planeet, mille möödumist oma tähe eest nähti, aastal 1999. Ta on nii kuum, et tema atmosfäär aurab kosmosesse nagu komeedi saba.',
+          et: 'See on esimene planeet, mille möödumist oma tähe eest nähti 1999. aastal. Ta on nii kuum, et tema atmosfäär aurab kosmosesse nagu komeedi saba.',
           en: 'The first planet seen passing in front of its star, in 1999. It is so hot that its air streams away into space like the tail of a comet.'
         }
       }]
@@ -36,14 +36,14 @@
       name: { et: 'Väike varjutus', en: 'A small dip' },
       star: {
         name: 'Kepler-22', R: 0.98, color: '#ffe9b8', hz: [250, 650],
-        about: { et: 'Päikesesarnane täht, peaaegu sama suur kui Päike', en: 'A star like the Sun, almost the same size' }
+        about: { et: 'Päikese-sarnane täht, peaaegu sama suur kui Päike', en: 'A star like the Sun, almost the same size' }
       },
-      days: 900, noise: 0.0001,
+      days: 900, noise: 0.00016,
       planets: [{
         name: 'Kepler-22 b', P: 289.9, t0: 100, Re: 2.1, dur: 0.31,
         pic: 'neptune', filter: 'hue-rotate(-15deg) saturate(0.8) brightness(1.2)',
         fact: {
-          et: 'Esimene planeet, mis leiti Päikesesarnase tähe elamiskõlblikust vööndist, aastal 2011. Keegi ei tea veel, kas see on kivine või ookeaniga kaetud.',
+          et: 'See on esimene planeet, mis leiti Päikese-sarnase tähe elamiskõlblikust vööndist. Avastus tehti 2011. aastal. Keegi ei tea veel, kas planeet on kivine või ookeaniga kaetud.',
           en: 'The first planet found in the habitable zone of a star like the Sun, in 2011. Nobody knows yet whether it is rocky or covered by an ocean.'
         }
       }]
@@ -103,6 +103,7 @@
   const EARTH_IN_SUN = 0.009168; // the Earth's radius in Sun radii
   const SIZES = [1, 2, 4, 11];    // the size choices, in Earth radii
   const OBSERVE_S = 18;           // how long the telescope takes to record (s)
+  const FLATTEN_S = 1.5;          // how long the spots' wobble takes to be taken out (s)
   const COLORS = ['#ffd34d', '#5fd4ff'];
 
   const TEXT = {
@@ -115,6 +116,8 @@
       play: 'Alusta',
       menu: 'Menüü',
       newStar: 'Uus täht',
+      reset: '🗑️ Kustuta kõik avastused',
+      resetAsk: 'Kas kustutada kõik sinu avastused? Siis algab iga tase jälle päris tähega.',
       nextLevel: 'Järgmine tase',
       newEach: 'Iga kord uus täht',
       madeUp: 'See täht ja tema planeedid on välja mõeldud, aga just selliseid planeete on päriselt leitud.',
@@ -153,6 +156,7 @@
       days: (p) => `${p} päeva`,
       sizeTitle: '📏 Kui suur?',
       sizeText: 'Mida suurem planeet, seda sügavam lohk. Lohista kollane joon lohu põhja ja vali, milline planeet teeb sellise lohu.',
+      flattened: 'Eemaldasime plekkide muutlikkuse, nüüd saad lohu sügavust mõõta.',
       smallStar: 'Väikese tähe ees teeb sama planeet sügavama lohu, sest ta katab tähest suurema osa.',
       ruler: (d) => `Joone kohal on tähe valgus ${d} % nõrgem.`,
       sizeHint: (d) => `Selle planeedi lohk on umbes ${d} % sügav.`,
@@ -173,7 +177,7 @@
       tryAgain: 'Proovi uuesti.',
       nextPlanet: 'Nüüd uuri teist planeeti.',
       summary: (p, size, zone) => `Tiirleb ümber tähe ${p} päevaga, on ${size} ja ${zone}.`,
-      sunLike: (R) => `Päikesesarnane täht, ${R > 1.1 ? 'Päikesest veidi suurem' : R < 0.92 ? 'Päikesest veidi väiksem' : 'peaaegu sama suur kui Päike'}`,
+      sunLike: (R) => `Päikese-sarnane täht, ${R > 1.1 ? 'Päikesest veidi suurem' : R < 0.92 ? 'Päikesest veidi väiksem' : 'peaaegu sama suur kui Päike'}`,
       orange: 'Oranž kääbus, Päikesest veidi väiksem ja jahedam',
       red: (n) => `Punane kääbus, ${n} korda Päikesest väiksem ja palju jahedam`,
       restless: 'Rahutu punane kääbus: pinnal on plekid ja vahel lööb ta korraks heledaks',
@@ -202,6 +206,8 @@
       play: 'Start',
       menu: 'Menu',
       newStar: 'New star',
+      reset: '🗑️ Clear all discoveries',
+      resetAsk: 'Clear all your discoveries? Then each level starts again with a real star.',
       nextLevel: 'Next level',
       newEach: 'A new star every time',
       madeUp: 'This star and its planets are made up, but planets just like them have really been found.',
@@ -240,6 +246,7 @@
       days: (p) => `${p} days`,
       sizeTitle: '📏 How big?',
       sizeText: 'The bigger the planet, the deeper the dip. Drag the yellow line to the bottom of the dip and pick the planet that makes a dip like that.',
+      flattened: 'We took out the changes from the spots, so now you can measure the dip\'s depth.',
       smallStar: 'In front of a small star the same planet makes a deeper dip, because it covers more of the star.',
       ruler: (d) => `At the line the star is ${d} % fainter.`,
       sizeHint: (d) => `This planet's dip is about ${d} % deep.`,
@@ -418,7 +425,10 @@
     const empty = i !== 2 && Math.random() < 0.2;
     const depths = planets.map((p) => ((p.Re * EARTH_IN_SUN) / star.R) ** 2);
     const shallow = Math.min(...depths);
-    L.noise = shallow / [rand(12, 20), rand(3.8, 4.8), rand(5, 7), rand(4, 5)][i];
+    // a small dip is two to three and a half times as deep as the noise,
+    // and for half of the stars it is almost lost in it
+    const small = Math.random() < 0.5 ? rand(2.1, 2.6) : rand(2.6, 3.4);
+    L.noise = shallow / [rand(12, 20), small, rand(5, 7), rand(4, 5)][i];
     if (i === 3) {
       // spots whose wobble is not at its lowest at a dip, and a few flares away from the dips
       L.spots = { amp: shallow * rand(1.1, 1.6), P: rand(6, 16), phase: 0 };
@@ -457,7 +467,7 @@
     found: store.get('found', []), // the real stars done
     catalogue: store.get('catalogue', null), // every planet found, newest last
     L: null,
-    data: null,       // { t, f, avg } samples of the light curve
+    data: null,       // { t, f, avg, spot } samples of the light curve
     marks: [],        // [planet][transit] = marked
     phase: 'observe', // observe, period, size, zone, done
     pi: 0,            // the planet being studied
@@ -465,6 +475,8 @@
     shown: 0,         // how much of the curve is shown (days)
     raf: 0,
     ruler: null,      // the depth the ruler is at
+    flat: 0,          // how much of the spots' wobble is taken out, 0 to 1
+    flatT0: 0,        // when the taking out started
     hintAt: null      // { p, t, until } a dip to point at
   };
   if (!(state.level >= 0 && state.level < LEVELS.length)) state.level = 0;
@@ -593,12 +605,14 @@
     return best;
   }
 
+  function spotWobble(L, time) {
+    if (!L.spots) return 0;
+    const w = (2 * Math.PI * time) / L.spots.P;
+    return L.spots.amp * (Math.sin(w + L.spots.phase) + 0.35 * Math.sin(2 * (w + L.spots.phase)));
+  }
+
   function wobble(L, time) {
-    let f = 0;
-    if (L.spots) {
-      const w = (2 * Math.PI * time) / L.spots.P;
-      f += L.spots.amp * (Math.sin(w + L.spots.phase) + 0.35 * Math.sin(2 * (w + L.spots.phase)));
-    }
+    let f = spotWobble(L, time);
     for (const fl of L.flares || []) if (time >= fl.t) f += fl.a * Math.exp(-(time - fl.t) / 0.25);
     return f;
   }
@@ -623,12 +637,14 @@
       for (let j = Math.max(0, i - k); j <= Math.min(N - 1, i + k); j++) { s += f[j]; n++; }
       return s / n;
     });
+    // the spots' wobble alone, to take out before the dips are measured
+    const spot = tt.map((time) => spotWobble(L, time));
     const deepest = Math.max(0, ...L.planets.map((p) => p.depth));
     const swing = (L.spots ? L.spots.amp * 1.35 : 0) + 3.5 * L.noise;
     const lo = 1 - deepest - swing;
     const hi = 1 + swing;
     const pad = (hi - lo) * 0.08;
-    return { t: tt, f, avg, lo: lo - pad, hi: hi + pad };
+    return { t: tt, f, avg, spot, lo: lo - pad, hi: hi + pad };
   }
 
   // ---------------------------------------------------------------------------
@@ -714,12 +730,14 @@
 
     // the full brightness of the star
     ctx.setLineDash([6, 6]);
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(x0, Y(1));
     ctx.lineTo(x1, Y(1));
     ctx.stroke();
     ctx.setLineDash([]);
+    ctx.lineWidth = 1;
 
     ctx.save();
     ctx.beginPath();
@@ -738,19 +756,31 @@
     // the measurements, and the running average through them
     const n = D.t.findIndex((v) => v > state.shown);
     const upto = n < 0 ? D.t.length : n;
+    // with the spots' wobble taken out as much as state.flat says
+    const fl = state.flat;
     ctx.fillStyle = 'rgba(159, 216, 255, 0.75)';
     for (let i = 0; i < upto; i++) {
       ctx.beginPath();
-      ctx.arc(X(D.t[i]), Y(D.f[i]), 1.7, 0, Math.PI * 2);
+      ctx.arc(X(D.t[i]), Y(D.f[i] - fl * D.spot[i]), 1.7, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    for (let i = 0; i < upto; i++) ctx.lineTo(X(D.t[i]), Y(D.avg[i]));
+    for (let i = 0; i < upto; i++) ctx.lineTo(X(D.t[i]), Y(D.avg[i] - fl * D.spot[i]));
     ctx.stroke();
     ctx.lineWidth = 1;
     ctx.restore();
+
+    // its label, on top of the curve
+    const full = `${fmt(100, 0)} %`;
+    ctx.font = '900 13px Nunito, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(5, 8, 30, 0.85)';
+    ctx.fillRect(x0 + 2, Y(1) - 9, ctx.measureText(full).width + 10, 18);
+    ctx.fillStyle = '#fff';
+    ctx.fillText(full, x0 + 7, Y(1) + 1);
 
     // the dips found, with their days above
     ctx.textAlign = 'center';
@@ -814,9 +844,15 @@
       state.shown = Math.min(L.days, ((performance.now() - state.t0) / 1000 / OBSERVE_S) * L.days);
       if (state.shown >= L.days) updatePanel();
     }
+    const flattening = state.flatT0 && state.flat < 1;
+    if (flattening) {
+      const x = Math.min(1, (performance.now() - state.flatT0) / 1000 / FLATTEN_S);
+      state.flat = x * x * (3 - 2 * x);
+      if (x >= 1) state.flat = 1;
+    }
     draw();
     const hinting = state.hintAt && performance.now() < state.hintAt.until;
-    if ((state.phase === 'observe' && state.shown < L.days) || hinting) state.raf = requestAnimationFrame(loop);
+    if ((state.phase === 'observe' && state.shown < L.days) || hinting || flattening) state.raf = requestAnimationFrame(loop);
   }
 
   function animate() {
@@ -843,6 +879,8 @@
     state.shown = 0;
     state.t0 = performance.now();
     state.ruler = null;
+    state.flat = 0;
+    state.flatT0 = 0;
     state.hintAt = null;
     updateToggles();
     resize();
@@ -923,7 +961,7 @@
       }, () => periodHint(p)));
     } else if (state.phase === 'size') {
       $('qTitle').textContent = title + t('sizeTitle');
-      $('qText').textContent = t('sizeText') + (L.star.R < 0.5 ? ' ' + t('smallStar') : '');
+      $('qText').textContent = (L.spots ? t('flattened') + ' ' : '') + t('sizeText') + (L.star.R < 0.5 ? ' ' + t('smallStar') : '');
       $('qExtra').textContent = t('ruler')(fmtDepth(state.ruler));
       SIZES.forEach((s, k) => {
         const depth = ((s * EARTH_IN_SUN) / L.star.R) ** 2;
@@ -1010,6 +1048,11 @@
     state.phase = phase;
     setFeedback('');
     if (phase === 'size') state.ruler = 0;
+    // before the first dip is measured, the spots' wobble is taken out
+    if (phase === 'size' && state.L.spots && !state.flatT0) {
+      state.flatT0 = performance.now();
+      animate();
+    }
     updatePanel();
     draw();
   }
@@ -1177,6 +1220,14 @@
   });
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
+  $('resetBtn').addEventListener('click', () => {
+    if (!window.confirm(t('resetAsk'))) return;
+    state.found = [];
+    state.catalogue = [];
+    store.set('found', state.found);
+    store.set('catalogue', state.catalogue);
+    updateMenu();
+  });
   $('hintBtn').addEventListener('click', hint);
   $('noPlanetBtn').addEventListener('click', () => { if (state.phase === 'observe') noPlanet(); });
   $('soundBtn').addEventListener('click', () => {

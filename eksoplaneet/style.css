@@ -82,6 +82,16 @@
   box-shadow: 0 0 14px var(--star);
 }
 .cat-card.empty b { color: var(--muted); }
+.reset-row { display: flex; justify-content: center; margin-top: 18px; }
+.reset {
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.reset:hover { background: var(--card-hover); }
 .win-star { flex: none; width: 96px; height: 96px; }
 
 /* ---------- Game ---------- */
