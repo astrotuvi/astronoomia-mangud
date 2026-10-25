@@ -15,8 +15,8 @@
 <body>
   <div class="sky" aria-hidden="true"></div>
 
-  <!-- The Sun's glow in the menu and on the win screen. Not display:none,
-       or the browser would not draw it. -->
+  <!-- The Sun's glow in the menu and on the win screen, and the Sun in the
+       game. Not display:none, or the browser would not draw it. -->
   <svg class="defs" aria-hidden="true">
     <defs>
       <radialGradient id="sunGlow">
@@ -24,6 +24,17 @@
         <stop offset="0.55" stop-color="#ffd34d" />
         <stop offset="0.85" stop-color="#ff9f1c" />
         <stop offset="1" stop-color="#ff9f1c" stop-opacity="0" />
+      </radialGradient>
+      <radialGradient id="sunBall">
+        <stop offset="0" stop-color="#fffbe0" />
+        <stop offset="0.45" stop-color="#ffd34d" />
+        <stop offset="0.85" stop-color="#ff9f1c" />
+        <stop offset="1" stop-color="#ff7a1c" />
+      </radialGradient>
+      <radialGradient id="sunHalo">
+        <stop offset="0.45" stop-color="#ffb428" stop-opacity="0.7" />
+        <stop offset="0.6" stop-color="#ffa01e" stop-opacity="0.35" />
+        <stop offset="1" stop-color="#ffa01e" stop-opacity="0" />
       </radialGradient>
     </defs>
   </svg>
@@ -66,7 +77,13 @@
     </div>
     <div id="area" class="area">
       <svg id="orbits" class="orbits" aria-hidden="true"></svg>
-      <div id="sun" class="sun"></div>
+      <!-- an SVG, not a CSS gradient, so that phones in dark mode do not darken it -->
+      <div id="sun" class="sun">
+        <svg viewBox="-1 -1 2 2" overflow="visible" aria-hidden="true">
+          <circle class="halo" r="2.2" fill="url(#sunHalo)" />
+          <circle r="1" fill="url(#sunBall)" />
+        </svg>
+      </div>
       <div id="toast" class="toast"></div>
     </div>
   </div>

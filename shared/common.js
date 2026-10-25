@@ -211,3 +211,85 @@ window.Astro = (() => {
     get lang() { return lang; }
   };
 })();
+
+// Phone browsers in dark mode recolour pages even when they say they are dark
+// already, and turn the bright parts of SVG gradients dark: the Sun, glows and
+// flames. Pictures are left alone, so each gradient is swapped for a pattern
+// of the same name holding a picture of it. Gradients added later by the games
+// are swapped as they come. A gradient whose colours change as the game goes
+// is marked data-live and kept.
+(() => {
+  const SIZE = 256;
+  const cache = {};
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = SIZE;
+  const ctx = cv.getContext('2d');
+  const NS = 'http://www.w3.org/2000/svg';
+
+  const num = (el, name, def) => {
+    const v = el.getAttribute(name);
+    if (v === null) return def;
+    return v.trim().endsWith('%') ? parseFloat(v) / 100 : parseFloat(v);
+  };
+  // a stop's colour with its opacity, as rgba()
+  function stopColor(stop) {
+    const st = getComputedStyle(stop);
+    ctx.fillStyle = st.stopColor;
+    const c = ctx.fillStyle;
+    const a = parseFloat(st.stopOpacity);
+    if (c[0] === '#') {
+      const n = parseInt(c.slice(1), 16);
+      return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
+    }
+    const p = c.match(/[\d.]+/g).map(Number);
+    return `rgba(${p[0]},${p[1]},${p[2]},${(p[3] ?? 1) * a})`;
+  }
+
+  function swap(g) {
+    // only gradients in the units of the shape they fill, which all the games use
+    if (g.getAttribute('gradientUnits') === 'userSpaceOnUse' || g.hasAttribute('gradientTransform')) return;
+    const stops = [...g.querySelectorAll('stop')];
+    if (!stops.length) return;
+    const S = SIZE;
+    let shape;
+    if (g.localName === 'radialGradient') {
+      const cx = num(g, 'cx', 0.5), cy = num(g, 'cy', 0.5), r = num(g, 'r', 0.5);
+      shape = ['r', num(g, 'fx', cx) * S, num(g, 'fy', cy) * S, 0, cx * S, cy * S, r * S];
+    } else {
+      shape = ['l', num(g, 'x1', 0) * S, num(g, 'y1', 0) * S, num(g, 'x2', 1) * S, num(g, 'y2', 0) * S];
+    }
+    const list = stops.map((s) => [Math.min(1, Math.max(0, num(s, 'offset', 0))), stopColor(s)]);
+    const key = JSON.stringify([shape, list]);
+    if (!cache[key]) {
+      const grad = shape[0] === 'r' ? ctx.createRadialGradient(...shape.slice(1)) : ctx.createLinearGradient(...shape.slice(1));
+      let last = 0;
+      for (const [o, c] of list) grad.addColorStop((last = Math.max(last, o)), c);
+      ctx.clearRect(0, 0, S, S);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, S, S);
+      cache[key] = cv.toDataURL('image/png');
+    }
+    const pat = document.createElementNS(NS, 'pattern');
+    pat.id = g.id;
+    pat.setAttribute('patternContentUnits', 'objectBoundingBox');
+    pat.setAttribute('width', 1);
+    pat.setAttribute('height', 1);
+    const img = document.createElementNS(NS, 'image');
+    img.setAttribute('href', cache[key]);
+    img.setAttribute('width', 1);
+    img.setAttribute('height', 1);
+    img.setAttribute('preserveAspectRatio', 'none');
+    pat.appendChild(img);
+    g.replaceWith(pat);
+  }
+
+  const SEL = 'radialGradient[id]:not([data-live]), linearGradient[id]:not([data-live])';
+  const swapIn = (el) => {
+    if (el.nodeType !== 1) return;
+    if (el.matches(SEL)) swap(el);
+    else el.querySelectorAll(SEL).forEach(swap);
+  };
+  swapIn(document.documentElement);
+  new MutationObserver((list) => list.forEach((m) => m.addedNodes.forEach(swapIn)))
+    .observe(document.documentElement, { childList: true, subtree: true });
+})();

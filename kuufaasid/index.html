@@ -31,6 +31,16 @@
     <div id="area" class="area">
       <div class="panels">
         <div class="panel space">
+          <!-- the Sun as an SVG, not a CSS gradient: phones in dark mode darken CSS colours -->
+          <svg class="sunlight" viewBox="0 0 40 100" aria-hidden="true">
+            <radialGradient id="sunlight">
+              <stop offset="0" stop-color="#fffbe0" />
+              <stop offset="0.22" stop-color="#ffd34d" />
+              <stop offset="0.47" stop-color="#ff9f1c" stop-opacity="0.4" />
+              <stop offset="1" stop-color="#ff9f1c" stop-opacity="0" />
+            </radialGradient>
+            <circle cx="40" cy="50" r="40" fill="url(#sunlight)" />
+          </svg>
           <svg id="space" viewBox="-110 -110 220 220"></svg>
           <div class="panel-title" data-t="fromSpace"></div>
           <div id="season" class="season hidden" data-t="season"></div>

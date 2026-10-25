@@ -32,7 +32,7 @@ python3 -m http.server
 - `shared/`: the theme, menu, top bar and win screen (`common.css`), settings, language, sounds and star confetti (`common.js`), and the drawn pictures of the planets, among them Mars and the Earth seen from space (`planets.js`)
 - one folder per game, each with its own `index.html`, `app.js` and `style.css`
 
-To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`.
+To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`. Follow [DESIGN.md](DESIGN.md), so that it looks and works like the other games, also on phones in dark mode.
 
 ## Tähepusle
 

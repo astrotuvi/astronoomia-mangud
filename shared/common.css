@@ -37,18 +37,14 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* twinkling background stars */
+/* twinkling background stars. Bright things are drawn as pictures (SVG or
+   images), not CSS colours: phone browsers in dark mode darken CSS colours
+   even on pages that say they are dark already. */
 .sky {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(1.5px 1.5px at 20px 30px, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 120px 80px, #cfe8ff 50%, transparent 51%),
-    radial-gradient(2px 2px at 200px 150px, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 60px 190px, #ffe9b0 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 260px 40px, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 160px 230px, #fff 50%, transparent 51%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='260'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='20' cy='30' r='.75'/%3E%3Ccircle cx='120' cy='80' r='.5' fill='%23cfe8ff'/%3E%3Ccircle cx='200' cy='150' r='1'/%3E%3Ccircle cx='60' cy='190' r='.5' fill='%23ffe9b0'/%3E%3Ccircle cx='260' cy='40' r='.75'/%3E%3Ccircle cx='160' cy='230' r='.5'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 300px 260px;
   opacity: 0.55;
   animation: twinkle 6s ease-in-out infinite alternate;

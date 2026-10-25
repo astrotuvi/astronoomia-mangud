@@ -33,7 +33,8 @@
   transform: scale(1.03);
   box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
 }
-/* the star's colour, and a smaller dot for a smaller star */
+/* the star with its glow, from starPic() in app.js, and a smaller dot for
+   a smaller star */
 .level-dot {
   flex: none;
   width: 44px;
@@ -41,13 +42,9 @@
   display: grid;
   place-items: center;
 }
-.level-dot::before {
-  content: '';
-  width: calc(44px * var(--r));
-  height: calc(44px * var(--r));
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #fff, var(--star) 55%);
-  box-shadow: 0 0 14px var(--star);
+.level-dot svg {
+  width: calc(66px * var(--r));
+  height: calc(66px * var(--r));
 }
 .level-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .level-name { font-size: 1.15rem; }
@@ -73,14 +70,7 @@
 .cat-pic { flex: none; width: 64px; height: 64px; object-fit: contain; }
 /* a star checked, with no planet: just the star, smaller and dimmer */
 .cat-star, .win-star { display: grid; place-items: center; }
-.cat-star::before, .win-star::before {
-  content: '';
-  width: 55%;
-  height: 55%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #fff, var(--star) 55%);
-  box-shadow: 0 0 14px var(--star);
-}
+.cat-star svg, .win-star svg { width: 82%; height: 82%; }
 .cat-card.empty b { color: var(--muted); }
 .reset-row { display: flex; justify-content: center; margin-top: 18px; }
 .reset {
@@ -139,11 +129,9 @@
 .star-info b { color: var(--text); }
 .star-dot {
   flex: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #fff, var(--star) 55%);
-  box-shadow: 0 0 10px var(--star);
+  width: 33px;
+  height: 33px;
+  margin: -5.5px;
 }
 .q-title { margin: 12px 0 6px; font-size: clamp(1.2rem, 3vw, 1.45rem); color: var(--accent); }
 .q-text { margin: 0 0 8px; font-size: 1.02rem; font-weight: 700; line-height: 1.4; }

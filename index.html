@@ -50,14 +50,22 @@
       gap: 10%;
       padding: 12%;
     }
-    .memo i, .memo img {
+    .memo i, .memo span {
       width: 100%;
       aspect-ratio: 1;
       border-radius: 14%;
       display: block;
-      object-fit: cover;
     }
-    .memo img { border: 3px solid var(--accent); box-shadow: 0 0 14px rgba(255, 211, 77, 0.6); }
+    .memo span { overflow: hidden; border: 3px solid var(--accent); box-shadow: 0 0 14px rgba(255, 211, 77, 0.6); }
+    /* drawn twice as big and scaled down: phones in dark mode turn small dark pictures white */
+    .memo img {
+      display: block;
+      width: 200%;
+      height: 200%;
+      object-fit: cover;
+      transform: scale(0.5);
+      transform-origin: 0 0;
+    }
     .memo i {
       display: grid;
       place-items: center;
@@ -110,8 +118,8 @@
         </a>
         <a class="game-card" href="malumang/index.html">
           <div class="memo" aria-hidden="true">
-            <img src="pusle/images/saturn.jpg" alt=""><i>✦</i>
-            <i>✦</i><img src="pusle/images/saturn.jpg" alt="">
+            <span><img src="pusle/images/saturn.jpg" alt=""></span><i>✦</i>
+            <i>✦</i><span><img src="pusle/images/saturn.jpg" alt=""></span>
           </div>
           <b data-t="memory"></b>
           <span data-t="memoryText"></span>
@@ -119,7 +127,8 @@
         <a class="game-card" href="rakett/index.html">
           <!-- a rocket like the ones built in the game, flying to Saturn -->
           <svg viewBox="0 0 100 100" aria-hidden="true">
-            <image href="pusle/images/saturn.jpg" x="48" y="4" width="48" height="48" style="mix-blend-mode: screen" />
+            <!-- drawn twice as big and scaled down: phones in dark mode turn small dark pictures white -->
+            <image href="pusle/images/saturn.jpg" x="96" y="8" width="96" height="96" transform="scale(0.5)" style="mix-blend-mode: screen" />
             <g fill="#fff">
               <circle cx="12" cy="14" r="0.7" opacity="0.7" /><circle cx="30" cy="40" r="0.6" opacity="0.5" />
               <circle cx="85" cy="70" r="0.7" opacity="0.6" /><circle cx="15" cy="80" r="0.6" opacity="0.6" />
@@ -164,7 +173,7 @@
             <svg x="27.4" y="29" width="31.2" height="26" viewBox="0 0 120 100" overflow="visible">
               <circle cx="78" cy="82" r="6.5" fill="#fff"/><ellipse cx="50" cy="-2" rx="6.5" ry="16" fill="#f1eef5" transform="rotate(-10 50 12)"/><ellipse cx="70" cy="-2" rx="6.5" ry="16" fill="#f1eef5" transform="rotate(10 70 12)"/><ellipse cx="50" cy="-1" rx="3" ry="11" fill="#ffc2d1" transform="rotate(-10 50 12)"/><ellipse cx="70" cy="-1" rx="3" ry="11" fill="#ffc2d1" transform="rotate(10 70 12)"/><rect x="47" y="76" width="11" height="20" rx="5.5" fill="#f1eef5"/><rect x="62" y="76" width="11" height="20" rx="5.5" fill="#f1eef5"/><ellipse cx="51.5" cy="96" rx="8" ry="4" fill="#ffd9e3"/><ellipse cx="68.5" cy="96" rx="8" ry="4" fill="#ffd9e3"/><path d="M47 59L34 45M73 59L86 45" stroke="#f1eef5" stroke-width="9" stroke-linecap="round"/><circle cx="33" cy="43.5" r="5" fill="#ffd9e3"/><circle cx="87" cy="43.5" r="5" fill="#ffd9e3"/><ellipse cx="60" cy="68" rx="18" ry="20" fill="#f1eef5"/><ellipse cx="60" cy="71" rx="11" ry="12.5" fill="#ffd9e3"/><circle cx="60" cy="30" r="22" fill="#f1eef5"/><circle cx="52" cy="28" r="3.3" fill="#222"/><circle cx="68" cy="28" r="3.3" fill="#222"/><circle cx="45" cy="36" r="3.6" fill="#ff8fa3" opacity="0.55"/><circle cx="75" cy="36" r="3.6" fill="#ff8fa3" opacity="0.55"/><path d="M58 34h4L60 36.5Z" fill="#ff7f96"/><path d="M55 37Q57.5 40 60 37Q62.5 40 65 37" stroke="#222" stroke-width="1.8" fill="none" stroke-linecap="round"/><rect x="58.2" y="38.5" width="3.6" height="4" rx="1" fill="#fff" stroke="#c9c2d4" stroke-width="0.6"/>
             </svg>
-            <path transform="translate(0 -9)" d="M43 22l1.8 3.7 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6Z" fill="#ffd34d" />
+            <path transform="translate(-13 -5)" d="M43 22l1.8 3.7 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6Z" fill="#ffd34d" />
           </svg>
           <b data-t="jump"></b>
           <span data-t="jumpText"></span>

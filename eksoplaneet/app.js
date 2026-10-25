@@ -496,6 +496,22 @@
   // Pictures of the planets, drawn once each
   // ---------------------------------------------------------------------------
 
+  // A star of the given colour with its glow, as an inline SVG: phones in
+  // dark mode darken CSS gradients and shadows. The star fills the middle
+  // two thirds, the glow the rest.
+  let starIds = 0;
+  function starPic(color, cls = '') {
+    const id = 'star' + starIds++;
+    return (
+      `<svg class="${cls}" viewBox="-1.5 -1.5 3 3" aria-hidden="true">` +
+      `<radialGradient id="${id}g"><stop offset="0.55" stop-color="${color}" stop-opacity="0.8"/>` +
+      `<stop offset="1" stop-color="${color}" stop-opacity="0"/></radialGradient>` +
+      `<radialGradient id="${id}d" cx="0.4" cy="0.4" r="0.75"><stop offset="0" stop-color="#fff"/>` +
+      `<stop offset="0.55" stop-color="${color}"/></radialGradient>` +
+      `<circle r="1.5" fill="url(#${id}g)"/><circle r="1" fill="url(#${id}d)"/></svg>`
+    );
+  }
+
   const PICS = {};
   const waiting = {};
   function withPic(id, cb) {
@@ -525,7 +541,7 @@
       const b = document.createElement('button');
       b.className = 'level';
       b.innerHTML =
-        `<span class="level-dot" style="--star:${L.star.color}; --r:${0.6 + 0.4 * Math.min(1, L.star.R)}"></span>` +
+        `<span class="level-dot" style="--r:${0.6 + 0.4 * Math.min(1, L.star.R)}">${starPic(L.star.color)}</span>` +
         '<span class="level-text"><b class="level-name"></b><span class="level-star"></span></span>' +
         '<b class="done-badge hidden">🌟</b>';
       b.addEventListener('click', () => {
@@ -558,7 +574,7 @@
       card.className = 'cat-card';
       if (p.empty) {
         card.classList.add('empty');
-        card.innerHTML = `<span class="cat-pic cat-star" style="--star:${p.color}"></span>`;
+        card.innerHTML = `<span class="cat-pic cat-star">${starPic(p.color)}</span>`;
       } else {
         card.appendChild(planetImg(p, 'cat-pic'));
       }
@@ -924,7 +940,7 @@
     const L = state.L;
     const p = L.planets[state.pi];
     const two = L.planets.length > 1;
-    $('starInfo').innerHTML = `<span class="star-dot" style="--star:${L.star.color}"></span><span><b>${L.star.name}</b> · </span>`;
+    $('starInfo').innerHTML = `${starPic(L.star.color, 'star-dot')}<span><b>${L.star.name}</b> · </span>`;
     $('starInfo').lastChild.append(L.star.about[Astro.lang]);
     $('options').innerHTML = '';
     $('qExtra').innerHTML = '';
@@ -1160,7 +1176,7 @@
     if (empty) {
       const row = document.createElement('div');
       row.className = 'win-planet';
-      row.innerHTML = `<span class="win-star" style="--star:${state.L.star.color}"></span><div><b></b><p class="win-fact"></p></div>`;
+      row.innerHTML = `<span class="win-star">${starPic(state.L.star.color)}</span><div><b></b><p class="win-fact"></p></div>`;
       row.querySelector('b').textContent = state.L.star.name;
       row.querySelector('.win-fact').textContent = t('noneRight');
       box.appendChild(row);
