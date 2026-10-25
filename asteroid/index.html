@@ -38,6 +38,9 @@
       <div class="play-row">
         <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
       </div>
+      <div class="est-row">
+        <button id="estBtn" class="est-open">🇪🇪 <span data-t="estOpen"></span></button>
+      </div>
 
       <section id="catalogueBox" class="hidden">
         <h2><span data-t="catalogue"></span> <span id="catCount" class="cat-count"></span></h2>
@@ -46,6 +49,34 @@
           <button id="resetBtn" class="reset" data-t="reset"></button>
         </div>
       </section>
+    </div>
+  </main>
+
+  <!-- Eesti asteroidid: pick an asteroid named after Estonia to see its path -->
+  <main id="estonia" class="screen menu hidden">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <button id="estBackBtn" class="icon" data-t-label="menu" aria-label="Menüü">⬅️</button>
+        <h1><span class="logo">🇪🇪</span> <span data-t="estTitle"></span></h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="estIntro"></p>
+
+      <div class="est-layout">
+        <div id="estList" class="est-list"></div>
+        <div id="estCard" class="est-card">
+          <h2 id="estName"></h2>
+          <div id="estOrbit" class="orbits"></div>
+          <p id="estSum" class="win-sum"></p>
+          <p id="estFound" class="est-found"></p>
+          <p id="estFact" class="win-fact"></p>
+        </div>
+      </div>
+      <p class="credit" data-t="estCredit"></p>
     </div>
   </main>
 

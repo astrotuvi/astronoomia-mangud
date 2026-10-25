@@ -69,6 +69,44 @@
 }
 .reset:hover { background: var(--card-hover); }
 
+/* the button to Eesti asteroidid */
+.est-row { display: flex; justify-content: center; margin: 16px 0 10px; }
+.est-open {
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 1.15rem;
+  transition: background 0.15s;
+}
+.est-open:hover { background: var(--card-hover); }
+
+/* ---------- Eesti asteroidid ---------- */
+
+.est-layout { display: grid; gap: 16px; margin-top: 18px; }
+@media (min-width: 800px) {
+  .est-layout { grid-template-columns: 1fr minmax(320px, 440px); align-items: start; }
+}
+.est-list { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 8px; }
+.est-pick {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 1.02rem;
+  transition: transform 0.15s, background 0.15s;
+}
+.est-pick:hover { background: var(--card-hover); }
+.est-pick.selected { background: var(--accent); color: var(--ink); transform: scale(1.06); }
+.est-card {
+  scroll-margin-top: 12px;
+  padding: 16px 20px 18px;
+  border-radius: 22px;
+  background: rgba(20, 28, 80, 0.85);
+  text-align: center;
+}
+.est-card h2 { justify-content: center; margin: 0 0 6px; color: var(--accent); }
+.est-card .orbits { width: min(260px, 64vw); }
+.est-found { margin: 0 0 8px; font-size: 0.88rem; font-weight: 600; color: var(--muted); }
+
 /* ---------- Game ---------- */
 
 /* the sky above the questions, or beside them on a wide screen */

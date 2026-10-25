@@ -61,6 +61,140 @@
     ['uranus', 19.2, '#9fe8f0', 3.4], ['neptune', 30.1, '#6f8cff', 3.4]
   ];
 
+  // Asteroids named after Estonia, its places and people, with their paths
+  // round the Sun from the JPL Small-Body Database: a (AU), e, and peri, the
+  // direction of the point nearest the Sun (degrees), seen from above
+  const ESTONIAN = [
+    {
+      num: 768, name: 'Struveana', a: 3.14, e: 0.215, peri: 55.6, year: 1913,
+      who: { et: 'Grigori Neujmin', en: 'Grigory Neujmin' },
+      fact: {
+        et: 'Asteroid 768 Struveana kannab astronoomide Struvede nime. Friedrich Georg Wilhelm Struve töötas Tartu tähetornis ja oli üks esimesi, kes mõõtis, kui kaugel on üks täht.',
+        en: 'The asteroid 768 Struveana is named after the Struve family of astronomers. Friedrich Georg Wilhelm Struve worked at the Tartu Observatory and was one of the first to measure how far away a star is.'
+      }
+    },
+    {
+      num: 1541, name: 'Estonia', a: 2.77, e: 0.067, peri: 191.2, year: 1939,
+      who: { et: 'Yrjö Väisälä', en: 'Yrjö Väisälä' },
+      fact: {
+        et: 'Asteroid 1541 Estonia sai nime Eesti järgi. Selle avastaja, Soome astronoom Yrjö Väisälä, leidis Turus üle saja asteroidi.',
+        en: 'The asteroid 1541 Estonia was named after Estonia. The Finnish astronomer who found it, Yrjö Väisälä, found more than a hundred asteroids in Turku.'
+      }
+    },
+    {
+      num: 1743, name: 'Schmidt', a: 2.47, e: 0.134, peri: 191.0, year: 1960,
+      who: { et: 'Palomari ja Leideni asteroidiotsing', en: 'the Palomar–Leiden survey' },
+      fact: {
+        et: 'Asteroid 1743 Schmidt on nime saanud Naissaarel sündinud Bernhard Schmidti järgi. Ta kaotas noorena parema käe, aga lihvis ikkagi teleskoopide peegleid ja leiutas Schmidti kaamera, millega saab pildistada korraga suurt taevalaiku.',
+        en: 'The asteroid 1743 Schmidt is named after Bernhard Schmidt, who was born on the Estonian island of Naissaar. He lost his right hand as a boy, but still ground mirrors for telescopes, and invented the Schmidt camera, which takes pictures of a large patch of sky at once.'
+      }
+    },
+    {
+      num: 2099, name: 'Öpik', a: 2.30, e: 0.36, peri: 18.0, year: 1977,
+      who: { et: 'Eleanor Helin', en: 'Eleanor Helin' },
+      fact: {
+        et: 'Asteroid 2099 Öpik on nime saanud Eesti astronoomi Ernst Öpiku järgi, kes töötas Tartus ja uuris meteoore, komeete ja asteroide.',
+        en: 'The asteroid 2099 Öpik is named after the Estonian astronomer Ernst Öpik, who worked in Tartu and studied meteors, comets and asteroids.'
+      }
+    },
+    {
+      num: 3738, name: 'Ots', a: 2.22, e: 0.168, peri: 267.0, year: 1977,
+      who: { et: 'Nikolai Tšernõhh', en: 'Nikolai Chernykh' },
+      fact: {
+        et: 'Asteroid 3738 Ots on nime saanud Eesti laulja Georg Otsa järgi. Tema laule tunti ja armastati paljudes maades.',
+        en: 'The asteroid 3738 Ots is named after the Estonian singer Georg Ots. His songs were known and loved in many countries.'
+      }
+    },
+    {
+      num: 4087, name: 'Pärt', a: 2.18, e: 0.118, peri: 328.6, year: 1986,
+      who: { et: 'Edward Bowell', en: 'Edward Bowell' },
+      fact: {
+        et: 'Asteroid 4087 Pärt on nime saanud Eesti helilooja Arvo Pärdi järgi. Tema muusikat mängitakse üle kogu maailma.',
+        en: 'The asteroid 4087 Pärt is named after the Estonian composer Arvo Pärt. His music is played all over the world.'
+      }
+    },
+    {
+      num: 4163, name: 'Saaremaa', a: 3.02, e: 0.044, peri: 140.4, year: 1941,
+      who: { et: 'Liisi Oterma', en: 'Liisi Oterma' },
+      fact: {
+        et: 'Asteroid 4163 Saaremaa on nime saanud Eesti suurima saare järgi. Selle avastas Soome astronoom Liisi Oterma, kes leidis ka asteroidi 4227 Kaali, mis kannab Saaremaa kraatri nime.',
+        en: 'The asteroid 4163 Saaremaa is named after the largest island of Estonia. It was found by the Finnish astronomer Liisi Oterma, who also found the asteroid 4227 Kaali, named after a crater on Saaremaa.'
+      }
+    },
+    {
+      num: 4227, name: 'Kaali', a: 2.40, e: 0.152, peri: 154.3, year: 1942,
+      who: { et: 'Liisi Oterma', en: 'Liisi Oterma' },
+      fact: {
+        et: 'Asteroid 4227 Kaali on nime saanud Saaremaa Kaali kraatri järgi. Kraatri tekitas meteoriit, mis kukkus sinna umbes 3500 aastat tagasi.',
+        en: 'The asteroid 4227 Kaali is named after the Kaali crater on Saaremaa. The crater was made by a meteorite that fell there about 3500 years ago.'
+      }
+    },
+    {
+      num: 11577, name: 'Einasto', a: 2.45, e: 0.147, peri: 281.5, year: 1994,
+      who: { et: 'Eric Elst', en: 'Eric Elst' },
+      fact: {
+        et: 'Asteroid 11577 Einasto on nime saanud akadeemik Jaan Einasto järgi, kes töötab Tartu observatooriumis. Ta aitas avastada, et galaktikad moodustavad kosmilise võrgustiku, kus on tihedamad alad ja tühikud.',
+        en: 'The asteroid 11577 Einasto is named after Jaan Einasto, an astronomer at the Tartu Observatory and a member of the Estonian Academy of Sciences. He helped find out that the galaxies form a cosmic web, with denser regions and empty voids.'
+      }
+    },
+    {
+      num: 11829, name: 'Tuvikene', a: 2.28, e: 0.138, peri: 144.0, year: 1984,
+      who: { et: 'Henri Debehogne', en: 'Henri Debehogne' },
+      fact: {
+        et: 'Asteroid 11829 Tuvikene on nime saanud Eesti astronoomi Tõnu Tuvikese järgi. Ta töötas Tartu observatooriumis ja uuris muutlikke tähti.',
+        en: 'The asteroid 11829 Tuvikene is named after the Estonian astronomer Tõnu Tuvikene. He worked at the Tartu Observatory and studied variable stars.'
+      }
+    },
+    {
+      num: 11832, name: 'Pustylnik', a: 2.40, e: 0.207, peri: 305.2, year: 1984,
+      who: { et: 'Henri Debehogne', en: 'Henri Debehogne' },
+      fact: {
+        et: 'Asteroid 11832 Pustylnik on nime saanud Tartu observatooriumi astronoomi Izold Pustõlniku järgi. Sama astronoom avastas samal aastal ka asteroidi 11829 Tuvikene, nii et kahe Tartu kolleegi asteroidide numbrid on peaaegu kõrvuti.',
+        en: 'The asteroid 11832 Pustylnik is named after Izold Pustylnik, an astronomer at the Tartu Observatory. The same astronomer found the asteroid 11829 Tuvikene in the same year, so the numbers of the two Tartu colleagues\' asteroids are almost side by side.'
+      }
+    },
+    {
+      num: 13995, name: 'Tõravere', a: 2.41, e: 0.17, peri: 315.0, year: 1993,
+      who: { et: 'Uppsala ja ESO asteroidiotsing', en: 'the Uppsala–ESO survey' },
+      fact: {
+        et: 'Asteroid 13995 Tõravere on nime saanud Tõravere aleviku järgi. Seal asub Tartu Ülikooli Tartu observatoorium, Eesti kosmosekeskus.',
+        en: 'The asteroid 13995 Tõravere is named after the small borough of Tõravere. It is the home of the Tartu Observatory of the University of Tartu, the Estonian space centre.'
+      }
+    },
+    {
+      num: 28107, name: 'Sapar', a: 2.65, e: 0.082, peri: 259.0, year: 1998,
+      who: { et: 'Lenka Šarounová', en: 'Lenka Šarounová' },
+      fact: {
+        et: 'Asteroid 28107 Sapar on nime saanud Tartu astronoomi Arved Sapari järgi. Ta uuris, kuidas universum on aja jooksul muutunud, ja arvutas, milline on tähtede välimine kiht ehk atmosfäär.',
+        en: 'The asteroid 28107 Sapar is named after the Tartu astronomer Arved Sapar. He studied how the universe has changed over time, and worked out what the outer layers of stars, their atmospheres, are like.'
+      }
+    },
+    {
+      num: 29528, name: 'Kaplinski', a: 2.68, e: 0.098, peri: 10.3, year: 1998,
+      who: { et: 'Lenka Šarounová', en: 'Lenka Šarounová' },
+      fact: {
+        et: 'Asteroid 29528 Kaplinski on nime saanud Eesti luuletaja Jaan Kaplinski järgi. Ta oli ka harrastusastronoom ja kirjutas raamatu astronoomiast.',
+        en: 'The asteroid 29528 Kaplinski is named after the Estonian poet Jaan Kaplinski. He was also an amateur astronomer and wrote a book about astronomy.'
+      }
+    },
+    {
+      num: 35347, name: 'Tallinn', a: 3.01, e: 0.063, peri: 270.5, year: 1997,
+      who: { et: 'Eric Elst', en: 'Eric Elst' },
+      fact: {
+        et: 'Asteroid 35347 Tallinn on nime saanud Eesti pealinna järgi. Juba 1285. aastal sai Tallinnast Hansa Liidu kaubalinn.',
+        en: 'The asteroid 35347 Tallinn is named after the capital of Estonia. As early as 1285, Tallinn joined the Hanseatic League of trading towns.'
+      }
+    },
+    {
+      num: 35618, name: 'Tartu', a: 3.00, e: 0.232, peri: 49.1, year: 1998,
+      who: { et: 'Eric Elst', en: 'Eric Elst' },
+      fact: {
+        et: 'Asteroid 35618 Tartu on nime saanud Eesti suuruselt teise linna järgi. Tartus on vana tähetorn, kus töötas Friedrich Georg Wilhelm Struve.',
+        en: 'The asteroid 35618 Tartu is named after the second largest town of Estonia. Tartu has an old observatory, where Friedrich Georg Wilhelm Struve worked.'
+      }
+    }
+  ];
+
   const TEXT = {
     et: {
       title: 'Leia asteroid',
@@ -133,6 +267,14 @@
       kindShort: ['Neptuunist kaugemal', 'asteroidide vöös', 'Maa lähedal'],
       summary: (kind, v) => `Tiirleb ${kind} ja liigub ööga ${v} Kuu läbimõõtu.`,
       crosses: ['Tema tee ristub Maa teega.', 'Tuleb Maa tee lähedale.'],
+      estOpen: 'Eesti asteroidid',
+      estTitle: 'Eesti asteroidid',
+      estIntro: 'Need asteroidid on nime saanud Eesti, Eesti paikade ja eestlaste järgi. Vali asteroid, et näha tema teed ümber Päikese.',
+      estBelt: 'Tiirleb asteroidide vöös Marsi ja Jupiteri vahel.',
+      estMars: 'Tema tee ulatub asteroidide vööst Marsi teest seespoole.',
+      estYear: (p) => `Üks tiir ümber Päikese kestab ${p} aastat.`,
+      estFound: (who, year) => `Avastaja: ${who}, ${year}`,
+      estCredit: 'Asteroidide teed on NASA JPL-i väikekehade andmebaasist.',
       facts: [
         ['Clyde Tombaugh leidis 1930. aastal Pluuto täpselt nii: ta vilgutas kahte eri ööl tehtud fotot ja otsis täppi, mis liigub.',
           'Neptuunist kaugemal tiirleb tuhandeid jäiseid kehi. Mõned neist, näiteks Pluuto ja Eris, on kääbusplaneedid.'],
@@ -141,18 +283,6 @@
           'Asteroidid on tükid, mis jäid üle, kui planeedid 4,6 miljardit aastat tagasi tekkisid.'],
         ['Maa lähedal tiirlevaid asteroide otsitakse igal ööl, et teada nende teed aastateks ette. Praegu pole teada ühtki suurt asteroidi, mis lähema saja aasta jooksul Maale kukuks.',
           'Kosmosesond DART põrkas 2022. aastal asteroidi Dimorphos vastu ja muutis tema teed. Nii katsetati, kuidas asteroidi vajaduse korral eemale lükata.']
-      ],
-      // asteroids named after Estonia, its places and people
-      estonian: [
-        'Asteroid 1541 Estonia sai nime Eesti järgi. Selle avastas Soome astronoom Yrjö Väisälä 1939. aastal.',
-        'Asteroid 2099 Öpik on nime saanud Eesti astronoomi Ernst Öpiku järgi, kes töötas Tartus ja uuris meteoore, komeete ja asteroide.',
-        'Asteroid 1743 Schmidt on nime saanud Naissaarel sündinud Bernhard Schmidti järgi. Ta kaotas noorena parema käe, aga lihvis ikkagi teleskoopide peegleid ja leiutas Schmidti kaamera, millega saab pildistada korraga suurt taevalaiku.',
-        'Asteroid 768 Struveana kannab astronoomide Struvede nime. Friedrich Georg Wilhelm Struve töötas Tartu tähetornis ja oli üks esimesi, kes mõõtis, kui kaugel on üks täht.',
-        'Asteroid 11577 Einasto on nime saanud Tartu astronoomi Jaan Einasto järgi. Ta aitas avastada, et galaktikad paiknevad kosmoses nagu hiiglaslikus võrgus, mille silmade vahel on suured tühjad alad.',
-        'Asteroid 4227 Kaali on nime saanud Saaremaa Kaali kraatri järgi. Kraatri tekitas meteoriit, mis kukkus sinna umbes 3500 aastat tagasi.',
-        'Asteroid 11829 Tuvikene on nime saanud Eesti astronoomi Tõnu Tuvikese järgi.',
-        'Asteroide on nimetatud ka laulja Georg Otsa (3738 Ots), helilooja Arvo Pärdi (4087 Pärt) ja luuletaja Jaan Kaplinski (29528 Kaplinski) järgi.',
-        'Eesti kohtade järgi on nime saanud asteroidid 4163 Saaremaa, 35347 Tallinn, 35618 Tartu ja 13995 Tõravere. Tõraveres asub Tartu Ülikooli Tartu observatoorium, Eesti kosmosekeskus.'
       ],
       names: ['Kullerkupp', 'Sinilill', 'Ilmarine', 'Vanemuine', 'Linda', 'Kalev', 'Tõll', 'Lennuk', 'Säde', 'Virmaline', 'Rändur', 'Kivike', 'Tuisk', 'Kaja',
         'Udu', 'Välk', 'Piret', 'Ahti', 'Pikker', 'Äike', 'Vikerkaar', 'Tähetolm', 'Lumehelves', 'Merevaik', 'Kaste', 'Hõbe', 'Laine', 'Kiir',
@@ -234,6 +364,14 @@
       kindShort: ['beyond Neptune', 'in the asteroid belt', 'near the Earth'],
       summary: (kind, v) => `It goes round the Sun ${kind} and moves ${v} Moon widths a night.`,
       crosses: ['Its path crosses the Earth\'s.', 'It comes close to the Earth\'s path.'],
+      estOpen: 'Estonian asteroids',
+      estTitle: 'Estonian asteroids',
+      estIntro: 'These asteroids are named after Estonia, places in Estonia and Estonians. Pick one to see its path round the Sun.',
+      estBelt: 'It goes round in the asteroid belt between Mars and Jupiter.',
+      estMars: 'Its path reaches from the asteroid belt to inside the path of Mars.',
+      estYear: (p) => `It goes round the Sun once in ${p} years.`,
+      estFound: (who, year) => `Found by ${who} in ${year}`,
+      estCredit: 'The paths of the asteroids are from the NASA JPL Small-Body Database.',
       facts: [
         ['Clyde Tombaugh found Pluto in 1930 just like this: he flipped between two photos taken on different nights and looked for a dot that moved.',
           'Thousands of icy bodies go round the Sun beyond Neptune. Some of them, like Pluto and Eris, are dwarf planets.'],
@@ -242,17 +380,6 @@
           'Asteroids are pieces left over from when the planets formed 4.6 billion years ago.'],
         ['Asteroids near the Earth are searched for every night, so that their paths are known years ahead. No big asteroid is known that would hit the Earth in the next hundred years.',
           'In 2022 the DART spacecraft crashed into the asteroid Dimorphos and changed its path. It was a test of how to push an asteroid away if we ever need to.']
-      ],
-      estonian: [
-        'The asteroid 1541 Estonia was named after Estonia. It was found by the Finnish astronomer Yrjö Väisälä in 1939.',
-        'The asteroid 2099 Öpik is named after the Estonian astronomer Ernst Öpik, who worked in Tartu and studied meteors, comets and asteroids.',
-        'The asteroid 1743 Schmidt is named after Bernhard Schmidt, who was born on the Estonian island of Naissaar. He lost his right hand as a boy, but still ground mirrors for telescopes, and invented the Schmidt camera, which takes pictures of a large patch of sky at once.',
-        'The asteroid 768 Struveana is named after the Struve family of astronomers. Friedrich Georg Wilhelm Struve worked at the Tartu Observatory and was one of the first to measure how far away a star is.',
-        'The asteroid 11577 Einasto is named after the Tartu astronomer Jaan Einasto. He helped find out that the galaxies lie in a giant web, with huge empty spaces between its threads.',
-        'The asteroid 4227 Kaali is named after the Kaali crater on Saaremaa. The crater was made by a meteorite that fell there about 3500 years ago.',
-        'The asteroid 11829 Tuvikene is named after the Estonian astronomer Tõnu Tuvikene.',
-        'Asteroids are also named after the singer Georg Ots (3738 Ots), the composer Arvo Pärt (4087 Pärt) and the poet Jaan Kaplinski (29528 Kaplinski).',
-        'Asteroids named after places in Estonia are 4163 Saaremaa, 35347 Tallinn, 35618 Tartu and 13995 Tõravere. Tõravere is the home of the Tartu Observatory of the University of Tartu, the Estonian space centre.'
       ],
       names: ['Pebble', 'Wanderer', 'Spark', 'Willow', 'Thistle', 'Flint', 'Echo', 'Pip', 'Rocky', 'Cosmo', 'Puddle', 'Dandelion', 'Misty', 'Breeze', 'Bolt',
         'Ember', 'Glimmer', 'Twinkle', 'Hazel', 'Zephyr', 'Frost', 'Amber', 'Dewdrop', 'Thunder', 'Rainbow', 'Silver', 'Ripple', 'Starling',
@@ -484,6 +611,7 @@
     level: store.get('level', 0),
     done: store.get('done', []),           // the levels finished at least once
     catalogue: store.get('catalogue', []), // every asteroid found, newest last
+    factsShown: store.get('factsShown', {}), // [list] = the facts shown in this round
     F: null,
     phase: 'find',
     shown: 0,        // how many pictures can be shown
@@ -497,6 +625,7 @@
     ruler: null,     // [a, b] the pink line's ends
     entry: null,     // the catalogue entry of this asteroid
     names: [],       // the names to pick from
+    est: 1,          // the asteroid shown in Eesti asteroidid, 1541 Estonia
     view: { cx: FIELD / 2, cy: FIELD / 2, z: 1 },
     raf: 0
   };
@@ -583,6 +712,7 @@
     Astro.stopConfetti($('confetti'));
     $('win').classList.add('hidden');
     $('game').classList.add('hidden');
+    $('estonia').classList.add('hidden');
     $('menu').classList.remove('hidden');
     updateMenu();
   }
@@ -1331,6 +1461,23 @@
     orbitView($('orbits'), F);
   }
 
+  // A fact from a list that has not been shown yet; when all have been,
+  // they come again in a new order, but not the last one straight away
+  function freshFact(list, count) {
+    let shown = state.factsShown[list] || [];
+    let avoid = shown;
+    if (shown.length >= count) {
+      avoid = count > 1 ? shown.slice(-1) : [];
+      shown = [];
+    }
+    const free = [];
+    for (let k = 0; k < count; k++) if (!avoid.includes(k)) free.push(k);
+    const k = free[Math.floor(Math.random() * free.length)];
+    state.factsShown[list] = [...shown, k];
+    store.set('factsShown', state.factsShown);
+    return k;
+  }
+
   // Names to pick from that no asteroid in the catalogue has yet; once
   // they run out, the same names again with II, III and so on.
   function freshNames(count) {
@@ -1361,14 +1508,54 @@
     state.names = freshNames(4);
     // a fact about its kind, or for half of those in the belt and near the
     // Earth, one about an asteroid named after Estonia or an Estonian
-    const list = F.kind !== 0 && Math.random() < 0.5 ? 'estonian' : null;
-    const of = (lang) => (list ? TEXT[lang][list] : TEXT[lang].facts[F.kind]);
-    const k = Math.floor(Math.random() * of('et').length);
+    const est = F.kind !== 0 && Math.random() < 0.5;
+    const of = (lang) => (est ? ESTONIAN.map((x) => x.fact[lang]) : TEXT[lang].facts[F.kind]);
+    const k = freshFact(est ? 'estonian' : `kind${F.kind}`, of('et').length);
     state.fact = { et: of('et')[k], en: of('en')[k] };
     sfx.win();
     $('win').classList.remove('hidden');
     fillWin();
     Astro.startConfetti($('confetti'));
+  }
+
+  // ---------------------------------------------------------------------------
+  // Eesti asteroidid: the asteroids named after Estonia, with their paths
+  // ---------------------------------------------------------------------------
+
+  function showEstonia() {
+    $('menu').classList.add('hidden');
+    $('estonia').classList.remove('hidden');
+    $('estonia').scrollTop = 0;
+    fillEstonia();
+  }
+
+  function fillEstonia() {
+    const box = $('estList');
+    box.innerHTML = '';
+    ESTONIAN.forEach((x, k) => {
+      const b = document.createElement('button');
+      b.className = 'est-pick';
+      b.textContent = `${x.num} ${x.name}`;
+      b.classList.toggle('selected', k === state.est);
+      b.addEventListener('click', () => {
+        if (k === state.est) return;
+        state.est = k;
+        sfx.pick();
+        fillEstonia();
+        // on a phone the card is below the list
+        const card = $('estCard').getBoundingClientRect();
+        if (card.top > window.innerHeight - 120) $('estCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      box.appendChild(b);
+    });
+    const x = ESTONIAN[state.est];
+    $('estName').textContent = `${x.num} ${x.name}`;
+    // inside the path of Mars at its farthest from the Sun
+    const mars = x.a * (1 - x.e) < 1.666;
+    $('estSum').textContent = `${t(mars ? 'estMars' : 'estBelt')} ${t('estYear')(fmt(Math.pow(x.a, 1.5), 1))}`;
+    $('estFound').textContent = t('estFound')(x.who[Astro.lang], x.year);
+    $('estFact').textContent = x.fact[Astro.lang];
+    orbitView($('estOrbit'), { kind: 1, orbit: { a: x.a, e: x.e, w: (x.peri * Math.PI) / 180, M0: rand(0, 2 * Math.PI) } });
   }
 
   // ---------------------------------------------------------------------------
@@ -1392,6 +1579,8 @@
     startGame();
   });
   $('menuBtn').addEventListener('click', showMenu);
+  $('estBtn').addEventListener('click', showEstonia);
+  $('estBackBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
   $('resetBtn').addEventListener('click', () => {
     if (!window.confirm(t('resetAsk'))) return;
@@ -1419,5 +1608,6 @@
       draw();
     }
     if (!$('win').classList.contains('hidden')) fillWin();
+    if (!$('estonia').classList.contains('hidden')) fillEstonia();
   });
 })();
