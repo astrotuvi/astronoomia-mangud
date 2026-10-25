@@ -29,17 +29,32 @@ html, body {
   html { font-size: 87.5%; }
 }
 
+html { background: var(--bg2); }
 body {
   font-family: "Nunito", ui-rounded, "Trebuchet MS", system-ui, sans-serif;
   font-weight: 800;
   color: var(--text);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* the night sky, as tall as the screen with the browser's toolbar hidden:
+   on a phone the toolbar at the bottom hides when scrolling, and a
+   background on the page itself would end where the toolbar was */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
+  z-index: -1;
+  pointer-events: none;
   background:
     radial-gradient(ellipse at 20% 10%, #2c3d93 0%, transparent 55%),
     radial-gradient(ellipse at 85% 95%, #4b2a80 0%, transparent 55%),
     linear-gradient(160deg, var(--bg1), var(--bg2));
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* twinkling background stars. Bright things are drawn as pictures (SVG or
@@ -47,7 +62,11 @@ body {
    even on pages that say they are dark already. */
 .sky {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='260'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='20' cy='30' r='.75'/%3E%3Ccircle cx='120' cy='80' r='.5' fill='%23cfe8ff'/%3E%3Ccircle cx='200' cy='150' r='1'/%3E%3Ccircle cx='60' cy='190' r='.5' fill='%23ffe9b0'/%3E%3Ccircle cx='260' cy='40' r='.75'/%3E%3Ccircle cx='160' cy='230' r='.5'/%3E%3C/g%3E%3C/svg%3E");
   background-size: 300px 260px;
