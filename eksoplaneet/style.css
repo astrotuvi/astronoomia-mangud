@@ -39,10 +39,14 @@
   flex: none;
   width: 44px;
   height: 44px;
-  display: grid;
-  place-items: center;
+  /* flex, not grid: a glow bigger than the box spills out evenly on all
+     sides, where a grid would grow from its top left corner */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .level-dot svg {
+  flex: none;
   width: calc(66px * var(--r));
   height: calc(66px * var(--r));
 }
