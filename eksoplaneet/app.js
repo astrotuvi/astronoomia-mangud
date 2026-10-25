@@ -108,7 +108,7 @@
   const OBSERVE_S = 18;           // how long the telescope takes to record (s)
   const FLATTEN_S = 1.5;          // how long the spots' wobble takes to be taken out (s)
   const COLORS = ['#ffd34d', '#5fd4ff'];
-  const GAP_COLOR = '#ff8ad8'; // the days ruler, unlike the dips marked
+  const RULER_COLOR = '#ff8ad8'; // the days and depth rulers, unlike the dips marked
 
   const TEXT = {
     et: {
@@ -139,6 +139,8 @@
       next: 'Edasi ▶',
       discovered: 'Avastasid!',
       picNote: 'Pildid näitavad, milline planeet võiks olla. Päriselt pole keegi neid nii lähedalt näinud.',
+      hzName: 'elamiskõlblik vöönd',
+      notToScale: 'Täht, planeedid ja kaugused pole õiges mõõtkavas.',
       day: 'päev',
       zoomIn: 'Suurenda',
       zoomTip: 'Nupuga + saad graafikut suurendada ja iga lohku eraldi mõõta.',
@@ -163,10 +165,10 @@
       periodOk: (p) => `Õige! Planeet tiirleb ümber tähe ${p} päevaga. Nii pikk on seal aasta.`,
       days: (p) => `${p} päeva`,
       sizeTitle: '📏 Kui suur?',
-      sizeText: 'Mida suurem planeet, seda sügavam lohk. Lohista kollane joon lohu põhja ja vaata skaalalt, milline planeet teeb sellise lohu.',
+      sizeText: 'Mida suurem planeet, seda sügavam lohk. Lohista roosa joon lohu põhja ja vaata skaalalt, milline planeet teeb sellise lohu.',
       flattened: 'Eemaldasime plekkide muutlikkuse, nüüd saad lohu sügavust mõõta.',
       smallStar: 'Väikese tähe ees teeb sama planeet sügavama lohu, sest ta katab tähest suurema osa.',
-      sizeWrong: 'Vaata, kuhu kollane kriips skaalal jääb.',
+      sizeWrong: 'Vaata, kuhu roosa kriips skaalal jääb.',
       sizeHint: 'Hele kriips skaalal näitab, kui sügav on selle planeedi lohk.',
       sizeNames: ['Maa-suurune', 'Super-Maa', 'Neptuuni-suurune', 'Jupiteri-suurune'],
       sizeShort: ['Maa-suurune', 'super-Maa', 'Neptuuni-suurune', 'Jupiteri-suurune'],
@@ -234,6 +236,8 @@
       next: 'Next ▶',
       discovered: 'Discovered!',
       picNote: 'The pictures show what the planets could look like. Nobody has seen them this close.',
+      hzName: 'habitable zone',
+      notToScale: 'The star, the planets and the distances are not to scale.',
       day: 'day',
       zoomIn: 'Zoom in',
       zoomTip: 'With the + button you can zoom in on the graph and measure each dip on its own.',
@@ -258,10 +262,10 @@
       periodOk: (p) => `Right! The planet goes round the star in ${p} days. That is how long a year is there.`,
       days: (p) => `${p} days`,
       sizeTitle: '📏 How big?',
-      sizeText: 'The bigger the planet, the deeper the dip. Drag the yellow line to the bottom of the dip and see on the scale which planet makes a dip like that.',
+      sizeText: 'The bigger the planet, the deeper the dip. Drag the pink line to the bottom of the dip and see on the scale which planet makes a dip like that.',
       flattened: 'We took out the changes from the spots, so now you can measure the dip\'s depth.',
       smallStar: 'In front of a small star the same planet makes a deeper dip, because it covers more of the star.',
-      sizeWrong: 'See where the yellow mark is on the scale.',
+      sizeWrong: 'See where the pink mark is on the scale.',
       sizeHint: 'The pale mark on the scale shows how deep this planet\'s dip is.',
       sizeNames: ['Earth-sized', 'Super-Earth', 'Neptune-sized', 'Jupiter-sized'],
       sizeShort: ['Earth-sized', 'a super-Earth', 'Neptune-sized', 'Jupiter-sized'],
@@ -905,8 +909,8 @@
       ctx.beginPath();
       ctx.rect(x0, y0, x1 - x0, y1 - y0);
       ctx.clip();
-      ctx.strokeStyle = GAP_COLOR;
-      ctx.fillStyle = GAP_COLOR;
+      ctx.strokeStyle = RULER_COLOR;
+      ctx.fillStyle = RULER_COLOR;
       ctx.lineWidth = 3;
       ctx.setLineDash([10, 6]);
       for (const x of [xa, xb]) {
@@ -936,7 +940,7 @@
       ctx.textBaseline = 'middle';
       const lw = ctx.measureText(label).width + 16;
       const lx = clamp((xa + xb) / 2, x0 + lw / 2 + 2, x1 - lw / 2 - 2);
-      ctx.fillStyle = GAP_COLOR;
+      ctx.fillStyle = RULER_COLOR;
       ctx.beginPath();
       ctx.roundRect(lx - lw / 2, ym - 34, lw, 24, 12);
       ctx.fill();
@@ -948,7 +952,7 @@
     // the ruler for measuring a dip's depth
     if (state.phase === 'size' && state.ruler !== null) {
       const y = Y(1 - state.ruler);
-      ctx.strokeStyle = '#ffd34d';
+      ctx.strokeStyle = RULER_COLOR;
       ctx.lineWidth = 3;
       ctx.setLineDash([10, 6]);
       ctx.beginPath();
@@ -957,7 +961,7 @@
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.lineWidth = 1;
-      ctx.fillStyle = '#ffd34d';
+      ctx.fillStyle = RULER_COLOR;
       ctx.beginPath();
       ctx.arc(x1 - 16, y, 11, 0, Math.PI * 2);
       ctx.fill();
@@ -1155,7 +1159,7 @@
   }
 
   // The planet sizes as a scale of dip depths round this star, each size in
-  // an equal part, with the yellow ruler's depth on it. The edges between
+  // an equal part, with the pink ruler's depth on it. The edges between
   // the sizes are halfway between them on a log scale, as in prepare().
   const SCALE_EDGES = [SIZES[0] / 3, ...SIZES.slice(1).map((s, k) => Math.sqrt(s * SIZES[k])), SIZES[SIZES.length - 1] * 3];
 
@@ -1180,7 +1184,7 @@
     el.className = 'size-scale';
     el.innerHTML =
       `<div class="sizes">${t('sizeBar').map((name, k) => `<span class="s${k}">${name}</span>`).join('')}</div>` +
-      `<span class="scale-hint hidden">${markPic('#ffffff')}</span><span class="scale-ruler">${markPic(COLORS[0])}</span>`;
+      `<span class="scale-hint hidden">${markPic('#ffffff')}</span><span class="scale-ruler">${markPic(RULER_COLOR)}</span>`;
     return el;
   }
 
@@ -1422,6 +1426,7 @@
     const empty = !state.L.planets.length;
     $('winTitle').textContent = t(empty ? 'checked' : 'discovered');
     $('picNote').classList.toggle('hidden', empty);
+    $('orbits').classList.toggle('hidden', empty);
     $('madeUp').textContent = t(empty ? 'madeUpEmpty' : 'madeUp');
     if (empty) {
       const row = document.createElement('div');
@@ -1445,6 +1450,57 @@
     }
     $('nextLevelBtn').classList.toggle('hidden', state.level + 1 >= LEVELS.length);
     $('madeUp').classList.toggle('hidden', !state.L.generated);
+    if (!empty) orbitScheme(state.L);
+  }
+
+  // The star seen from above, with the habitable zone as a green ring and
+  // each planet going round on its orbit. The orbits are on a log scale of
+  // the period, so that a planet close to the star and the zone far out
+  // both fit; the inner one is still the faster, as the real one is.
+  let orbitRun = 0;
+  function orbitScheme(L) {
+    const el = $('orbits');
+    const run = ++orbitRun;
+    const Ps = L.planets.map((p) => p.P);
+    const [h0, h1] = L.star.hz;
+    const lo = Math.min(h0, ...Ps) / 1.6;
+    const hi = Math.max(h1, ...Ps) * 1.3;
+    const rad = (P) => 26 + (66 * Math.log(P / lo)) / Math.log(hi / lo);
+    const r0 = rad(h0);
+    const r1 = rad(h1);
+    const rm = (r0 + r1) / 2;
+    let svg =
+      `<svg viewBox="-100 -100 200 200" aria-hidden="true">` +
+      `<circle r="${r0}" fill="#ff7a4a" opacity="0.35"/>` +
+      `<circle r="${rm}" fill="none" stroke="#4fd08a" stroke-width="${r1 - r0}" opacity="0.45"/>` +
+      `<circle r="${(r1 + 98) / 2}" fill="none" stroke="#6fa8ff" stroke-width="${98 - r1}" opacity="0.2"/>` +
+      `<path id="hzArc" fill="none" d="M ${-rm} 0 A ${rm} ${rm} 0 0 1 ${rm} 0"/>` +
+      `<text class="orbit-label" dy="0.35em"><textPath href="#hzArc" startOffset="50%" text-anchor="middle">${t('hzName')}</textPath></text>` +
+      L.planets.map((p, k) => `<circle r="${rad(p.P)}" fill="none" stroke="${COLORS[k]}" stroke-width="1.2" opacity="0.8"/>`).join('') +
+      starPic(L.star.color).replace('<svg class=""', '<svg x="-18" y="-18" width="36" height="36"') +
+      L.planets.map((p, k) => {
+        const d = 9 + 4 * Math.sqrt(p.Re);
+        return `<g class="orbit-planet"><image x="${-d / 2}" y="${-d / 2}" width="${d}" height="${d}" style="filter:${p.filter}"/></g>`;
+      }).join('') +
+      `</svg>`;
+    el.innerHTML = svg + `<p class="orbit-note">${t('notToScale')}</p>`;
+    const groups = [...el.querySelectorAll('.orbit-planet')];
+    L.planets.forEach((p, k) => withPic(p.pic, (pic) => groups[k].querySelector('image').setAttribute('href', pic.url)));
+    // the fastest planet goes round in 5 s, the others in step with it
+    const fast = Math.min(...Ps);
+    const start = L.planets.map(() => Math.random() * 2 * Math.PI);
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const t0 = performance.now();
+    const place = (now) => {
+      if (run !== orbitRun || $('win').classList.contains('hidden')) return;
+      L.planets.forEach((p, k) => {
+        const a = start[k] - ((now - t0) / 5000) * (fast / p.P) * 2 * Math.PI;
+        const r = rad(p.P);
+        groups[k].setAttribute('transform', `translate(${(r * Math.cos(a)).toFixed(2)} ${(r * Math.sin(a)).toFixed(2)})`);
+      });
+      if (!still) requestAnimationFrame(place);
+    };
+    place(t0);
   }
 
   function win() {
@@ -1459,8 +1515,8 @@
     if (!state.L.planets.length) state.catalogue.push({ name: state.L.star.name, empty: true, color: state.L.star.color });
     store.set('catalogue', state.catalogue);
     sfx.win();
-    fillWin();
     $('win').classList.remove('hidden');
+    fillWin();
     Astro.startConfetti($('confetti'));
   }
 

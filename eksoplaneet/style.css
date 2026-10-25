@@ -203,7 +203,7 @@
 .feedback.good { color: #9dffbf; }
 .next-row { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin-top: 8px; }
 
-/* the planet sizes as dip depths, with the yellow ruler on it */
+/* the planet sizes as dip depths, with the pink ruler on it */
 .size-scale { position: relative; margin: 10px 0 14px; color: var(--ink); }
 .sizes { display: flex; height: 30px; border-radius: 999px; overflow: hidden; font-size: 0.85rem; }
 .sizes span { flex: 1; display: grid; place-items: center; white-space: nowrap; }
@@ -237,6 +237,12 @@
   font-size: 0.85rem;
   color: var(--muted);
 }
+
+/* win screen: the orbits, from orbitScheme() in app.js */
+.orbits { margin: 4px auto 10px; width: min(240px, 64vw); }
+.orbits svg { display: block; width: 100%; height: auto; }
+.orbit-label { font-size: 9px; font-weight: 800; fill: #c9ffe0; letter-spacing: 0.3px; }
+.orbit-note { margin: 2px 0 0; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
 
 /* win screen: each planet found with its picture */
 .found-card { max-width: 560px; max-height: calc(100dvh - 32px); overflow-y: auto; }
