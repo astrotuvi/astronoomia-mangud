@@ -47,7 +47,84 @@
       </header>
 
       <p class="intro" data-t="intro"></p>
-      <h2 data-t="level"></h2>
+      <h2><span class="step">1</span> <span data-t="night"></span></h2>
+      <!-- the nights to pick, in the order of NIGHTS in app.js; the pictures
+           are flat shapes, which phones in dark mode leave as they are -->
+      <div id="nights" class="pictures nights">
+        <button class="pic" data-night="perseids">
+          <!-- August, facing north-east: Kassiopeia, Perseus and the Perseids, the
+               figures as seen from Tõrva, both turned a little so that the W shows -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <rect width="100" height="100" fill="#0b1440" />
+            <g fill="#fff"><circle cx="6" cy="8" r="0.45" opacity="0.5" /><circle cx="40" cy="4" r="0.45" opacity="0.5" /><circle cx="92" cy="8" r="0.45" opacity="0.5" /><circle cx="86" cy="36" r="0.45" opacity="0.5" /><circle cx="6" cy="46" r="0.45" opacity="0.5" /><circle cx="52" cy="66" r="0.45" opacity="0.5" /><circle cx="94" cy="62" r="0.45" opacity="0.5" /><circle cx="24" cy="62" r="0.45" opacity="0.5" /><circle cx="70" cy="20" r="0.45" opacity="0.5" /><circle cx="16" cy="30" r="0.45" opacity="0.5" /></g>
+            <g fill="none" stroke="#a8bcff" stroke-opacity="0.7" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M43 16.7L36.5 27.5L27.5 19.6L19.1 23.5L9 16.5" /><path d="M78 28L74.3 32.2L68.6 38.2L62.9 41.1L55.9 53.5L54 60.8L54.3 68" /><path d="M68.6 38.2L72.3 47.2L72.4 54L73.2 57.7" /></g>
+            <g fill="#dbe9ff"><polygon points="80.7,22.1 98.2,18 98,17" opacity="0.3" /><polygon points="88.6,20 98.2,18 98,17" opacity="0.75" /><polygon points="79.9,34 92.1,52.3 92.9,51.8" opacity="0.3" /><polygon points="85.6,42.1 92.1,52.3 92.9,51.8" opacity="0.75" /><polygon points="63.2,31.1 44.9,43.3 45.4,44.1" opacity="0.3" /><polygon points="55.1,36.8 44.9,43.3 45.4,44.1" opacity="0.75" /></g>
+            <g fill="#fff"><circle cx="98.1" cy="17.5" r="0.9" /><circle cx="92.5" cy="52.1" r="0.9" /><circle cx="45.1" cy="43.7" r="0.9" /></g>
+            <circle cx="43" cy="16.7" r="1.2" fill="#fff" />
+            <circle cx="36.5" cy="27.5" r="1.2" fill="#fff" />
+            <circle cx="27.5" cy="19.6" r="1.2" fill="#fff" />
+            <circle cx="19.1" cy="23.5" r="1" fill="#fff" />
+            <circle cx="9" cy="16.5" r="0.7" fill="#fff" />
+            <circle cx="78" cy="28" r="0.6" fill="#fff" />
+            <circle cx="74.3" cy="32.2" r="0.9" fill="#fff" />
+            <circle cx="68.6" cy="38.2" r="1.4" fill="#fff" />
+            <circle cx="62.9" cy="41.1" r="0.9" fill="#fff" />
+            <circle cx="55.9" cy="53.5" r="0.9" fill="#fff" />
+            <circle cx="54" cy="60.8" r="0.6" fill="#fff" />
+            <circle cx="54.3" cy="68" r="0.9" fill="#fff" />
+            <circle cx="72.3" cy="47.2" r="0.6" fill="#fff" />
+            <circle cx="72.4" cy="54" r="1.3" fill="#fff" />
+            <circle cx="73.2" cy="57.7" r="0.7" fill="#fff" />
+            <path d="M0 84L4 75L8 84L12 71L16 84L21 74L25 84L30 72L34 84L38 77L42 84L46 70L50 84L54 76L58 84L64 84V100H0Z" fill="#03050f" />
+            <path d="M64 84V77H86V84Z" fill="#03050f" />
+            <path d="M62 77.5L75 69L88 77.5Z" fill="#03050f" />
+            <path d="M67 79H71V82H67ZM79 79H83V82H79Z" fill="#ffcf6b" />
+            <path d="M86 84L90 74L94 84L97 76L100 84V100H64V84Z" fill="#03050f" />
+          </svg>
+          <span><b data-t="augNight"></b><small data-t="perseids"></small></span>
+        </button>
+        <button class="pic" data-night="geminids">
+          <!-- December, facing south: the Twins, Orion, snow and the Geminids, the
+               figures as seen from Tõrva at 01:00 -->
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <rect width="100" height="100" fill="#0b1440" />
+            <g fill="#fff"><circle cx="6" cy="8" r="0.45" opacity="0.5" /><circle cx="40" cy="4" r="0.45" opacity="0.5" /><circle cx="92" cy="8" r="0.45" opacity="0.5" /><circle cx="86" cy="36" r="0.45" opacity="0.5" /><circle cx="6" cy="46" r="0.45" opacity="0.5" /><circle cx="52" cy="66" r="0.45" opacity="0.5" /><circle cx="94" cy="62" r="0.45" opacity="0.5" /><circle cx="24" cy="62" r="0.45" opacity="0.5" /><circle cx="70" cy="20" r="0.45" opacity="0.5" /><circle cx="16" cy="30" r="0.45" opacity="0.5" /></g>
+            <g fill="none" stroke="#a8bcff" stroke-opacity="0.7" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15.9 21L24 21.2L35.1 25.4L43.3 26.4L46 25.3" /><path d="M24 21.2L20.5 26.2L17.5 28.4L14 27.6" /><path d="M17.5 28.4L24.8 34L30.8 34.3L41.9 37" /><path d="M24.8 34L28 41.6L41.2 43" /><path d="M70.1 26L59.9 31L67 50.2L63.2 66" /><path d="M70.1 26L75.1 33.4L71.4 46.9L80.1 63.2" /><path d="M71.4 46.9L69.3 48.7L67 50.2" /></g>
+            <g fill="#dbe9ff"><polygon points="24.3,17.3 48.9,12.6 48.7,11.7" opacity="0.3" /><polygon points="35.4,15 48.9,12.6 48.7,11.7" opacity="0.75" /><polygon points="35.5,47.6 43.6,61.5 44.4,60.9" opacity="0.3" /><polygon points="39.3,53.7 43.6,61.5 44.4,60.9" opacity="0.75" /><polygon points="14.9,48.7 12.8,66.6 13.8,66.7" opacity="0.3" /><polygon points="14.2,56.8 12.8,66.6 13.8,66.7" opacity="0.75" /><polygon points="12.7,17.5 3.1,14.4 2.9,15.4" opacity="0.3" /><polygon points="8.3,16.3 3.1,14.4 2.9,15.4" opacity="0.75" /></g>
+            <g fill="#fff"><circle cx="48.8" cy="12.1" r="0.9" /><circle cx="44" cy="61.2" r="0.9" /><circle cx="13.3" cy="66.6" r="0.9" /><circle cx="3" cy="14.9" r="0.9" /></g>
+            <circle cx="59.9" cy="31" r="2" fill="#ffb27a" />
+            <circle cx="70.1" cy="26" r="0.7" fill="#fff" />
+            <circle cx="75.1" cy="33.4" r="1.5" fill="#fff" />
+            <circle cx="71.4" cy="46.9" r="1.2" fill="#fff" />
+            <circle cx="69.3" cy="48.7" r="1.5" fill="#fff" />
+            <circle cx="67" cy="50.2" r="1.4" fill="#fff" />
+            <circle cx="63.2" cy="66" r="1.3" fill="#fff" />
+            <circle cx="80.1" cy="63.2" r="2.2" fill="#cfe2ff" />
+            <circle cx="15.9" cy="21" r="1.5" fill="#fff" />
+            <circle cx="24" cy="21.2" r="0.6" fill="#fff" />
+            <circle cx="35.1" cy="25.4" r="0.9" fill="#fff" />
+            <circle cx="43.3" cy="26.4" r="0.9" fill="#fff" />
+            <circle cx="46" cy="25.3" r="0.8" fill="#fff" />
+            <circle cx="20.5" cy="26.2" r="0.6" fill="#fff" />
+            <circle cx="17.5" cy="28.4" r="0.6" fill="#fff" />
+            <circle cx="14" cy="27.6" r="1.7" fill="#ffe2b0" />
+            <circle cx="24.8" cy="34" r="0.7" fill="#fff" />
+            <circle cx="30.8" cy="34.3" r="0.6" fill="#fff" />
+            <circle cx="41.9" cy="37" r="1.4" fill="#fff" />
+            <circle cx="28" cy="41.6" r="0.6" fill="#fff" />
+            <circle cx="41.2" cy="43" r="0.7" fill="#fff" />
+            <path d="M0 84L4 75L8 84L12 71L16 84L21 74L25 84L30 72L34 84L38 77L42 84L46 70L50 84L54 76L58 84L64 84V100H0Z" fill="#03050f" />
+            <path d="M64 84V77H86V84Z" fill="#03050f" />
+            <path d="M62 77.5L75 69L88 77.5Z" fill="#03050f" />
+            <path d="M67 79H71V82H67ZM79 79H83V82H79Z" fill="#ffcf6b" />
+            <path d="M86 84L90 74L94 84L97 76L100 84V100H64V84Z" fill="#03050f" />
+            <path d="M61.5 77.5L75 69L88.5 77.5L86 77.5L75 71L64 77.5Z" fill="#e6eeff" />
+            <path d="M0 88C20 85 40 86 60 88S90 86 100 87V100H0Z" fill="#dce6fa" />
+          </svg>
+          <span><b data-t="decNight"></b><small data-t="geminids"></small></span>
+        </button>
+      </div>
+      <h2><span class="step">2</span> <span data-t="level"></span></h2>
       <div id="levels" class="counts levels"></div>
       <p id="stormTip" class="storm-tip hidden" data-t="stormTip"></p>
       <div class="menu-jar"><svg id="menuJar" viewBox="0 0 100 120" aria-hidden="true"></svg></div>
@@ -88,7 +165,7 @@
       <h2><span data-t="nightOver"></span> 🌅</h2>
       <p id="winCount" class="win-name"></p>
       <p id="winBest" class="win-best"></p>
-      <p class="win-fact" data-t="winTip"></p>
+      <p id="winTip" class="win-fact"></p>
       <div class="win-buttons">
         <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
         <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>

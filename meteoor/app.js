@@ -7,70 +7,184 @@
   // Content
   // ---------------------------------------------------------------------------
 
-  const ROUND = 60;       // s, one night
+  const HOUR = 10;        // s that an hour of the night lasts, on every night
   const DAWN = 10;        // s at the end of the night when the sky gets light
   const HINT_MS = 5000;   // time with nothing caught before the hand shows a star
-  const GRACE = 0.25;     // s a shooting star can still be caught after it fades
   const JAR_MAX = 44;     // stars that fit in the jar; more are counted but not drawn
   // how many times more shooting stars and fireballs than on level 1
   const LEVELS = [1, 2, 3];
-  // on level 3 a meteor storm from 00:00 to 02:00, with this many times more
-  const STORM = { from: 20, to: 40, ramp: 2, x: 3 };
+  const PLEIADES = {
+    id: 'pleiades',
+    name: { et: 'Sõel', en: 'Pleiades' },
+    size: 0.7,
+    stars: [[56.87, 24.11, 2.9], [57.29, 24.05, 3.6], [56.22, 24.11, 3.7], [56.46, 24.37, 3.9], [56.58, 23.95, 4.2], [56.30, 24.47, 4.3], [57.30, 24.14, 5.0]]
+  };
+
+  // on level 3 a meteor storm from 00:00 to 02:00 (h, with 24 for
+  // midnight), with this many times more; ramp: s it takes to come and go
+  const STORM = { from: 24, to: 26, ramp: 2, x: 3 };
 
   const DEG = Math.PI / 180;
+  const LAT = 58 * DEG;   // Tõrva
 
-  // Where and when: Tõrva (58° N) on the night of the Perseids, 12 August,
-  // from 22:00 to 04:00 summer time. The view faces north-east, where
-  // Perseus rises, so the sky turns round the North Star as the night goes on.
-  const LAT = 58 * DEG;
-  const START = 22;       // h, when the night begins
-  const HOURS = 6;        // how long the night is, squeezed into ROUND
-  const LST0 = 272.4;     // degrees, the sidereal time at START
-  // where the view looks (azimuth from north towards east, and height above
-  // the horizon), and how much it shows at least to each side and upwards
-  const VIEW = { az: 55, alt: 35, half: 50, top: 72 };
-  const SUN_AZ = 45;      // where the Sun is below the horizon at dawn
-
-  // Stars with names: RA and Dec (J2000, degrees) and magnitude. Cassiopeia
-  // and Perseus are as in tahtkujud/app.js. The Perseids seem to fly out of
-  // a spot between the two, RADIANT.
-  const FIGURES = [
-    { id: 'polaris', name: { et: 'Põhjanael', en: 'North Star' }, stars: [[37.95, 89.26, 2.0]] },
+  // The nights to pick in the menu, in the order of their cards in
+  // index.html. Each is the real sky above Tõrva on the best night of a
+  // shower:
+  //   bests: the key its records are kept under
+  //   start: h, when the night begins; hours: how long it is
+  //   lst0: degrees, the sidereal time at start
+  //   view: where the view looks (azimuth from north towards east, and
+  //     height above the horizon), and how much it shows at least to each
+  //     side and upwards
+  //   sunAz: where the Sun is below the horizon at dawn
+  //   radiant: RA and Dec (degrees) of the spot the shooting stars fly out of
+  //   rise: the figure whose rising from behind the trees gets a caption
+  //   snow: snow on the ground
+  //   How near a tap must be to catch a shooting star:
+  //   grace: s it can still be caught after it fades
+  //   hit: how far from its tail a tap may land, as a share of the sky's
+  //     size, and at least hitMin px
+  //   tail: how long the tail of a shooting star and of a fireball is, as a
+  //     share of the path they fly
+  //   figures: stars with names, as RA and Dec (J2000, degrees), magnitude
+  //     and, if it is not white, colour; lines join them by index
+  const NIGHTS = [
     {
-      id: 'cassiopeia',
-      name: { et: 'Kassiopeia', en: 'Cassiopeia' },
-      stars: [[2.29, 59.15, 2.3], [10.13, 56.54, 2.2], [14.18, 60.72, 2.2], [21.45, 60.24, 2.7], [28.60, 63.67, 3.4]],
-      lines: [[0, 1, 2, 3, 4]]
+      // 12 August, from 22:00 to 04:00 summer time, facing north-east,
+      // where Perseus rises, so the sky turns round the North Star.
+      // Cassiopeia and Perseus are as in tahtkujud/app.js, and the Perseids
+      // fly out of a spot between the two.
+      id: 'perseids',
+      bests: 'bests',
+      start: 22,
+      hours: 6,
+      lst0: 272.4,
+      view: { az: 55, alt: 35, half: 50, top: 72 },
+      sunAz: 45,
+      radiant: [48, 58],
+      rise: 'pleiades',
+      snow: false,
+      grace: 0.25,
+      hit: 0.08,
+      hitMin: 40,
+      tail: [0.42, 0.5],
+      figures: [
+        { id: 'polaris', name: { et: 'Põhjanael', en: 'North Star' }, stars: [[37.95, 89.26, 2.0]] },
+        {
+          id: 'cassiopeia',
+          name: { et: 'Kassiopeia', en: 'Cassiopeia' },
+          stars: [[2.29, 59.15, 2.3], [10.13, 56.54, 2.2], [14.18, 60.72, 2.2], [21.45, 60.24, 2.7], [28.60, 63.67, 3.4]],
+          lines: [[0, 1, 2, 3, 4]]
+        },
+        {
+          id: 'perseus',
+          name: { et: 'Perseus', en: 'Perseus' },
+          stars: [
+            [42.67, 55.90, 3.8], [46.20, 53.51, 2.9], [51.08, 49.86, 1.8], [55.73, 47.79, 3.0], [59.46, 40.01, 2.9],
+            [59.74, 35.79, 4.0], [58.53, 31.88, 2.9], [47.37, 44.86, 3.8], [47.04, 40.96, 2.1], [46.29, 38.84, 3.4]
+          ],
+          lines: [[0, 1, 2, 3, 4, 5, 6], [2, 7, 8, 9]]
+        },
+        { id: 'capella', name: { et: 'Kapella', en: 'Capella' }, stars: [[79.17, 46.00, 0.1, '255, 243, 208']] },
+        PLEIADES,
+        // Aldebaran, the orange eye of the Bull, rises after midnight
+        { id: 'aldebaran', stars: [[68.98, 16.51, 0.9, '255, 196, 136']] }
+      ]
     },
     {
-      id: 'perseus',
-      name: { et: 'Perseus', en: 'Perseus' },
-      stars: [
-        [42.67, 55.90, 3.8], [46.20, 53.51, 2.9], [51.08, 49.86, 1.8], [55.73, 47.79, 3.0], [59.46, 40.01, 2.9],
-        [59.74, 35.79, 4.0], [58.53, 31.88, 2.9], [47.37, 44.86, 3.8], [47.04, 40.96, 2.1], [46.29, 38.84, 3.4]
-      ],
-      lines: [[0, 1, 2, 3, 4, 5, 6], [2, 7, 8, 9]]
-    },
-    { id: 'capella', name: { et: 'Kapella', en: 'Capella' }, stars: [[79.17, 46.00, 0.1]], color: '255, 243, 208' },
-    {
-      id: 'pleiades',
-      name: { et: 'Sõel', en: 'Pleiades' },
-      size: 0.7,
-      stars: [[56.87, 24.11, 2.9], [57.29, 24.05, 3.6], [56.22, 24.11, 3.7], [56.46, 24.37, 3.9], [56.58, 23.95, 4.2], [56.30, 24.47, 4.3], [57.30, 24.14, 5.0]]
-    },
-    // Aldebaran, the orange eye of the Bull, rises after midnight
-    { id: 'aldebaran', stars: [[68.98, 16.51, 0.9]], color: '255, 196, 136' }
+      // 13–14 December, from 18:00, when it is dark, to 09:00, just before
+      // sunrise, so the night is two and a half times as long as in August,
+      // facing
+      // south. The Geminids fly out of a spot by Castor, which goes from
+      // the east over the top to the west, so the shooting stars come from
+      // the left, then from above, then from the right. Pegasus, Andromeda,
+      // Orion, the Twins and Leo are as in tahtkujud/app.js.
+      // Harder to catch: the taps must be quicker and nearer.
+      id: 'geminids',
+      bests: 'bests-geminids',
+      start: 18,
+      hours: 15,
+      lst0: 348.3,
+      view: { az: 180, alt: 35, half: 55, top: 72 },
+      sunAz: 135,
+      radiant: [112, 33],
+      rise: 'sirius',
+      snow: true,
+      grace: 0.1,
+      hit: 0.042,
+      hitMin: 24,
+      tail: [0.65, 0.7],
+      figures: [
+        {
+          id: 'orion',
+          name: { et: 'Orion', en: 'Orion' },
+          stars: [
+            [88.79, 7.41, 0.5, '255, 196, 136'], [83.78, 9.93, 3.4], [81.28, 6.35, 1.6], [83.00, -0.30, 2.2],
+            [84.05, -1.20, 1.7], [85.19, -1.94, 1.8], [86.94, -9.67, 2.1], [78.63, -8.20, 0.1, '214, 230, 255']
+          ],
+          lines: [[1, 0, 5, 6], [1, 2, 3, 7], [3, 4, 5]]
+        },
+        {
+          id: 'gemini',
+          name: { et: 'Kaksikud', en: 'Gemini' },
+          stars: [
+            [113.65, 31.89, 1.6], [107.78, 30.25, 4.4], [100.98, 25.13, 3.0], [95.74, 22.51, 2.9], [93.72, 22.51, 3.3],
+            [111.43, 27.80, 3.8], [113.98, 26.90, 4.1], [116.33, 28.03, 1.1, '255, 226, 176'], [110.03, 21.98, 3.5],
+            [106.03, 20.57, 3.9], [99.43, 16.40, 1.9], [109.52, 16.54, 3.6], [101.32, 12.90, 3.4]
+          ],
+          lines: [[0, 1, 2, 3, 4], [1, 5, 6, 7], [6, 8, 9, 10], [8, 11, 12]]
+        },
+        // Pegasus and Andromeda are high in the south in the evening, and
+        // set in the west before Orion is at its highest
+        {
+          id: 'pegasus',
+          name: { et: 'Pegasus', en: 'Pegasus' },
+          stars: [
+            [2.10, 29.09, 2.1], [345.94, 28.08, 2.4], [346.19, 15.21, 2.5], [3.31, 15.18, 2.8], [340.37, 10.83, 3.4],
+            [332.55, 6.20, 3.5], [326.05, 9.88, 2.4], [340.75, 30.22, 2.9], [332.50, 33.18, 4.3], [342.50, 24.60, 3.5],
+            [331.75, 25.35, 3.8], [326.16, 25.65, 4.1]
+          ],
+          lines: [[0, 1, 2, 3, 0], [2, 4, 5, 6], [1, 7, 8], [1, 9, 10, 11]]
+        },
+        {
+          id: 'andromeda',
+          name: { et: 'Andromeeda', en: 'Andromeda' },
+          stars: [[2.10, 29.09, 2.1], [9.83, 30.86, 3.3], [17.43, 35.62, 2.1], [30.97, 42.33, 2.1], [14.19, 38.50, 3.9], [12.45, 41.08, 4.5]],
+          lines: [[0, 1, 2, 3], [2, 4, 5]]
+        },
+        // Leo and Arcturus rise after midnight, when Orion is setting
+        {
+          id: 'leo',
+          name: { et: 'Lõvi', en: 'Leo' },
+          stars: [
+            [152.09, 11.97, 1.4], [151.83, 16.76, 3.5], [154.99, 19.84, 2.0], [154.17, 23.42, 3.4], [148.19, 26.01, 3.9],
+            [146.46, 23.77, 3.0], [168.53, 20.52, 2.6], [177.26, 14.57, 2.1], [168.56, 15.43, 3.3]
+          ],
+          lines: [[0, 1, 2, 3, 4, 5], [2, 6, 7, 8, 0]]
+        },
+        { id: 'arcturus', name: { et: 'Arktuurus', en: 'Arcturus' }, stars: [[213.92, 19.18, 0.0, '255, 210, 160']] },
+        { id: 'sirius', name: { et: 'Siirius', en: 'Sirius' }, stars: [[101.29, -16.72, -1.0, '214, 230, 255']] },
+        { id: 'procyon', name: { et: 'Prokyon', en: 'Procyon' }, stars: [[114.83, 5.22, 0.4, '255, 243, 220']] },
+        { id: 'capella', name: { et: 'Kapella', en: 'Capella' }, stars: [[79.17, 46.00, 0.1, '255, 243, 208']] },
+        PLEIADES,
+        { id: 'aldebaran', stars: [[68.98, 16.51, 0.9, '255, 196, 136']] }
+      ]
+    }
   ];
-  const RADIANT = [48, 58];
 
   // A place on the sky, ready for horizon().
   function sphere(ra, dec) {
     return { ra: ra * DEG, sd: Math.sin(dec * DEG), cd: Math.cos(dec * DEG) };
   }
-  FIGURES.forEach((f) => { f.pts = f.stars.map(([ra, dec]) => sphere(ra, dec)); });
-  const RAD = sphere(...RADIANT);
-  const RAD_END = horizon(RAD, lst(ROUND))[2];
-  const PLEIADES = FIGURES.find((f) => f.id === 'pleiades').pts[0];
+  // the places of the stars and the radiant, and how high the radiant gets
+  NIGHTS.forEach((n) => {
+    n.figures.forEach((f) => { f.pts = f.pts || f.stars.map(([ra, dec]) => sphere(ra, dec)); });
+    n.rad = sphere(...n.radiant);
+    n.radTop = 0;
+    for (let t = 0; t <= n.hours * HOUR; t++) n.radTop = Math.max(n.radTop, horizon(n.rad, lst(t, n))[2]);
+  });
+  // the night being played
+  let N = NIGHTS[0];
 
   // faint stars all over the part of the sky that can come into view
   const FIELD = (() => {
@@ -92,10 +206,13 @@
   const CLOCKS = Array.from('🕛🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚');
   const HALF_CLOCKS = Array.from('🕧🕜🕝🕞🕟🕠🕡🕢🕣🕤🕥🕦');
 
-  // the real showers, by month (0 = January) and day of their best night
+  // the real showers, by month (0 = January) and day of their best night,
+  // how many days before and after it the menu tells about them, and the
+  // night in the game that shows it
   const SHOWERS = [
-    { m: 7, d: 12, name: { et: 'perseiidid', en: 'the Perseids' } },
-    { m: 11, d: 14, name: { et: 'geminiidid', en: 'the Geminids' } }
+    { m: 0, d: 3, days: 1, name: { et: 'kvadrantiidid', en: 'the Quadrantids' } },
+    { m: 7, d: 12, days: 3, night: 'perseids', name: { et: 'perseiidid', en: 'the Perseids' } },
+    { m: 11, d: 14, days: 3, night: 'geminids', name: { et: 'geminiidid', en: 'the Geminids' } }
   ];
 
   const TEXT = {
@@ -107,6 +224,11 @@
       noBest: 'Rekordit veel pole.',
       clear: '🗑️ Kustuta rekord',
       clearSure: '🗑️ Puuduta uuesti, et kustutada',
+      night: 'Vali öö',
+      augNight: 'Augusti öö',
+      decNight: 'Detsembri öö',
+      perseids: 'perseiidid',
+      geminids: 'geminiidid',
       level: 'Vali tase',
       stormTip: '🌠 Kesköö järel tuleb kaheks tunniks tähesadu!',
       shower: (name) => `🌠 Täna öösel on päris meteoorivool – ${name}! Mine pimedas õue ja vaata taevasse.`,
@@ -118,10 +240,6 @@
         satellite: ['🛰️ See on satelliit', 'Ta liigub aeglaselt ega vilgu'],
         satelliteAgain: ['🛰️ Satelliit', ''],
         fact1: ['Kas teadsid?', 'Langev täht ei ole päris täht. See on liivatera suurune kivike, mis põleb õhus.'],
-        fact2: ['Kas teadsid?', 'Langev täht lendab 60 km sekundis. Tartust Tallinna jõuaks ta 3 sekundiga!'],
-        pleiades: ['Sõel tõuseb!', 'Vaata, kuidas tähed puude tagant üles tulevad'],
-        midnight: ['Kas teadsid?', 'Pärast südaööd näeb kõige rohkem langevaid tähti, sest Perseus on siis kõrgemal.'],
-        turning: ['Kas teadsid?', 'Tähed liiguvad ringiratast ümber Põhjanaela. Tegelikult ei pöörle taevas, vaid Maa – nagu karussell.'],
         storm: ['Tähesadu! 🌠', 'Väga harva lendab tunnis üle tuhande langeva tähe.'],
         dawn: ['Hakkab valgeks minema', 'Veel natuke!']
       },
@@ -131,7 +249,27 @@
         n === 1 ? 'Püüdsid 1 langeva tähe!' : `Püüdsid ${n} langevat tähte!`),
       newBest: 'Uus rekord! 🏆',
       oldBest: (n) => `Rekord: ${n} ⭐`,
-      winTip: 'Kõige rohkem langevaid tähti näeb augusti keskel. Siis lendavad nad justkui Perseuse tähtkuju poolt, nagu selles mängus. Lama pimedas tekil ja vaata taevasse!',
+      // the captions and the tip on the win screen that differ for each night
+      nights: {
+        perseids: {
+          captions: {
+            fact2: ['Kas teadsid?', 'Langev täht lendab 60 km sekundis. Tartust Tallinna jõuaks ta 3 sekundiga!'],
+            rise: ['Sõel tõuseb!', 'Vaata, kuidas tähed puude tagant üles tulevad'],
+            midnight: ['Kas teadsid?', 'Pärast südaööd näeb kõige rohkem langevaid tähti, sest Perseus on siis kõrgemal.'],
+            turning: ['Kas teadsid?', 'Tähed liiguvad ringiratast ümber Põhjanaela. Tegelikult ei pöörle taevas, vaid Maa – nagu karussell.']
+          },
+          winTip: 'Augusti keskel näeb väga palju langevaid tähti. Siis lendavad nad justkui Perseuse tähtkuju poolt, nagu selles mängus. Lama pimedas tekil ja vaata taevasse!'
+        },
+        geminids: {
+          captions: {
+            fact2: ['Kas teadsid?', 'Geminiidid lendavad 35 km sekundis. Tartust Tallinna jõuaksid nad 5 sekundiga!'],
+            rise: ['Siirius tõuseb!', 'See on kõige heledam täht kogu öötaevas'],
+            midnight: ['Kas teadsid?', 'Pärast südaööd näeb kõige rohkem langevaid tähti, sest Kaksikud on siis kõige kõrgemal.'],
+            turning: ['Kas teadsid?', 'Tähed liiguvad üle taeva vasakult paremale, nagu Päike päeval. Tegelikult ei liigu tähed, vaid Maa pöörleb – nagu karussell.']
+          },
+          winTip: 'Kõige rohkem langevaid tähti terves aastas näeb detsembri keskel. Siis lendavad nad justkui Kaksikute tähtkuju poolt, nagu selles mängus. Need kivikesed on pärit asteroidilt Phaethon. Pane end soojalt riidesse ja vaata taevasse!'
+        }
+      },
       again: 'Uuesti',
       menu: 'Menüü',
       allGames: 'Kõik mängud',
@@ -145,6 +283,11 @@
       noBest: 'No best score yet.',
       clear: '🗑️ Clear the record',
       clearSure: '🗑️ Tap again to clear it',
+      night: 'Choose a night',
+      augNight: 'A night in August',
+      decNight: 'A night in December',
+      perseids: 'the Perseids',
+      geminids: 'the Geminids',
       level: 'Choose a level',
       stormTip: '🌠 After midnight comes a meteor storm for two hours!',
       shower: (name) => `🌠 Tonight there is a real meteor shower, ${name}! Go out after dark and look up at the sky.`,
@@ -156,10 +299,6 @@
         satellite: ['🛰️ That is a satellite', 'It moves slowly and does not blink'],
         satelliteAgain: ['🛰️ A satellite', ''],
         fact1: ['Did you know?', 'A shooting star is not a real star. It is a little stone, as small as a grain of sand, burning up in the air.'],
-        fact2: ['Did you know?', 'A shooting star flies 60 km every second. That is over 2000 times faster than a car!'],
-        pleiades: ['The Pleiades are rising!', 'See the stars come up from behind the trees'],
-        midnight: ['Did you know?', 'After midnight you see the most shooting stars, because Perseus is higher in the sky.'],
-        turning: ['Did you know?', 'The stars go round and round the North Star. It is not really the sky that turns, but the Earth, like a merry-go-round.'],
         storm: ['A meteor storm! 🌠', 'Very rarely more than a thousand shooting stars fly in an hour.'],
         dawn: ['The sky is getting light', 'Just a little longer!']
       },
@@ -169,7 +308,26 @@
         n === 1 ? 'You caught 1 shooting star!' : `You caught ${n} shooting stars!`),
       newBest: 'New record! 🏆',
       oldBest: (n) => `Best: ${n} ⭐`,
-      winTip: 'The most shooting stars can be seen in the middle of August. Then they seem to fly out of the constellation Perseus, as in this game. Lie on a blanket in the dark and look up!',
+      nights: {
+        perseids: {
+          captions: {
+            fact2: ['Did you know?', 'A shooting star flies 60 km every second. That is over 2000 times faster than a car!'],
+            rise: ['The Pleiades are rising!', 'See the stars come up from behind the trees'],
+            midnight: ['Did you know?', 'After midnight you see the most shooting stars, because Perseus is higher in the sky.'],
+            turning: ['Did you know?', 'The stars go round and round the North Star. It is not really the sky that turns, but the Earth, like a merry-go-round.']
+          },
+          winTip: 'In the middle of August you can see lots of shooting stars. Then they seem to fly out of the constellation Perseus, as in this game. Lie on a blanket in the dark and look up!'
+        },
+        geminids: {
+          captions: {
+            fact2: ['Did you know?', 'The Geminids fly 35 km every second. That is over 1000 times faster than a car!'],
+            rise: ['Sirius is rising!', 'It is the brightest star in the whole night sky'],
+            midnight: ['Did you know?', 'After midnight you see the most shooting stars, because the Twins are highest in the sky then.'],
+            turning: ['Did you know?', 'The stars move across the sky from left to right, like the Sun in the day. It is not really the stars that move, but the Earth that turns, like a merry-go-round.']
+          },
+          winTip: 'The most shooting stars of the whole year can be seen in the middle of December. Then they seem to fly out of the constellation Gemini, the Twins, as in this game. These little stones come from the asteroid Phaethon. Dress warmly and look up!'
+        }
+      },
       again: 'Again',
       menu: 'Menu',
       allGames: 'All games',
@@ -183,8 +341,9 @@
 
   const store = Astro.makeStore('meteoor.');
   const state = {
+    night: store.get('night', null),
     level: Number(store.get('level', 1)),
-    best: store.get('bests', null), // the most stars caught on each level
+    best: {},        // the most stars caught on each night and level
     t: 0,            // time since the night began, s
     over: false,     // the night is over, the last stars fly to the jar
     overT: 0,
@@ -211,12 +370,20 @@
     gen: 0
   };
   if (!LEVELS.includes(state.level)) state.level = 1;
-  if (!state.best || typeof state.best !== 'object') {
+  NIGHTS.forEach((n) => {
+    const b = store.get(n.bests, null);
+    state.best[n.id] = b && typeof b === 'object' ? b : {};
+  });
+  if (!store.get('bests', null)) {
     // the record from before there were levels is the one of level 1
     const old = Math.max(0, Math.floor(Number(store.get('best', 0)) || 0));
-    state.best = old ? { 1: old } : {};
+    if (old) state.best.perseids[1] = old;
   }
-  const bestNow = () => state.best[state.level] || 0;
+  const nightNow = () => NIGHTS.find((n) => n.id === state.night);
+  const bestNow = () => state.best[state.night][state.level] || 0;
+  function saveBests() {
+    store.set(nightNow().bests, state.best[state.night]);
+  }
 
   const area = $('area');
   const cv = $('night');
@@ -286,18 +453,46 @@
   // Menu
   // ---------------------------------------------------------------------------
 
-  // a real shower within three days of its best night
+  // a real shower near its best night
   function showerNow() {
     const now = new Date();
     for (const s of SHOWERS) {
       for (const y of [now.getFullYear() - 1, now.getFullYear(), now.getFullYear() + 1]) {
-        if (Math.abs(now - new Date(y, s.m, s.d, 12)) <= 3.5 * 864e5) return s;
+        if (Math.abs(now - new Date(y, s.m, s.d, 12)) <= (s.days + 0.5) * 864e5) return s;
       }
     }
     return null;
   }
 
+  // the night to start with: the one whose shower is on tonight, else the
+  // one picked last time, else the one whose shower comes next
+  function firstNight() {
+    const s = showerNow();
+    if (s && s.night) return s.night;
+    if (NIGHTS.some((n) => n.id === state.night)) return state.night;
+    const now = new Date();
+    let next = null;
+    let soonest = Infinity;
+    for (const s of SHOWERS) {
+      if (!s.night) continue;
+      let d = new Date(now.getFullYear(), s.m, s.d, 12) - now;
+      if (d < -(s.days + 0.5) * 864e5) d = new Date(now.getFullYear() + 1, s.m, s.d, 12) - now;
+      if (d < soonest) [next, soonest] = [s.night, d];
+    }
+    return next;
+  }
+
   function buildMenu() {
+    state.night = firstNight();
+    [...$('nights').children].forEach((b) => {
+      b.addEventListener('click', () => {
+        state.night = b.dataset.night;
+        store.set('night', state.night);
+        state.clearArmed = false;
+        sfx.pick();
+        updateMenu();
+      });
+    });
     LEVELS.forEach((n) => {
       const b = document.createElement('button');
       b.className = 'count level';
@@ -314,6 +509,7 @@
   }
 
   function updateMenu() {
+    [...$('nights').children].forEach((b) => b.classList.toggle('selected', b.dataset.night === state.night));
     [...$('levels').children].forEach((b, i) => b.classList.toggle('selected', LEVELS[i] === state.level));
     $('stormTip').classList.toggle('hidden', state.level !== 3);
     const best = bestNow();
@@ -356,25 +552,37 @@
       nextMeteor: 1.2, burst: 0, seen: {}, caption: null, hinted: null,
       radZ: 0
     });
+    N = nightNow();
     layout();
-    // [time, caption, how long it shows]; the Pleiades once they are above
-    // the trees and the jar
+    // [time, caption, how long it shows]; the rising figure once it is
+    // above the trees, and above the jar if it is behind it
     const L = state.L;
+    const riser = N.figures.find((f) => f.id === N.rise).pts[0];
+    const isUp = (t) => {
+      const v = horizon(riser, lst(t));
+      const p = toScreen(L, v);
+      if (!p || v[2] <= 0) return false;
+      const behindJar = p[0] > L.jar.x - 12 && p[0] < L.jar.x + L.jar.w + 12;
+      return p[1] < (behindJar ? Math.min(L.jar.y, L.H - L.G) : L.H - L.G) - 12;
+    };
     let up = 0;
-    while (up < ROUND && toScreen(L, horizon(PLEIADES, lst(up)))[1] > Math.min(L.jar.y, L.H - L.G) - 12) up += 0.5;
-    state.facts = [[9, 'fact1', 6], [up, 'pleiades', 4.5], [27, 'midnight', 6], [35, 'fact2', 6],
-      [42, 'turning', 6], [ROUND - DAWN, 'dawn', 5]];
-    if (state.level === 3) state.facts.push([STORM.from, 'storm', 5]);
+    while (up < night() && !isUp(up)) up += 0.5;
+    // the other times are for the 60 s night in August, and spread out
+    // over a longer one
+    const at = (s) => (s * night()) / 60;
+    state.facts = [[at(9), 'fact1', 6], [up, 'rise', 4.5], [at(27), 'midnight', 6], [at(35), 'fact2', 6],
+      [at(42), 'turning', 6], [night() - DAWN, 'dawn', 5]];
+    if (state.level === 3) state.facts.push([atHour(STORM.from), 'storm', 5]);
     state.facts.sort((a, b) => a[0] - b[0]);
     // one fireball for each level, spread over the night
     const n = state.level;
-    state.fireballs = Array.from({ length: n }, (_, i) => rand(18 + (30 * i) / n, 18 + (30 * (i + 1)) / n));
+    state.fireballs = Array.from({ length: n }, (_, i) => at(rand(18 + (30 * i) / n, 18 + (30 * (i + 1)) / n)));
     // a plane and a satellite in some order, then one more of either
     const kinds = shuffle(['plane', 'satellite']);
     kinds.push(Math.random() < 0.5 ? 'plane' : 'satellite');
-    state.craftPlan = [[rand(5, 9), kinds[0]], [rand(23, 27), kinds[1]], [rand(41, 45), kinds[2]]];
+    state.craftPlan = [[at(rand(5, 9)), kinds[0]], [at(rand(23, 27)), kinds[1]], [at(rand(41, 45)), kinds[2]]];
     // and many more satellites all through the night
-    for (let s = rand(10, 14); s < ROUND - 8; s += rand(4, 7)) state.craftPlan.push([s, 'satellite']);
+    for (let s = rand(10, 14); s < night() - 8; s += rand(4, 7)) state.craftPlan.push([s, 'satellite']);
     state.craftPlan.sort((a, b) => a[0] - b[0]);
     showCaption('start', 3.5);
     updateBar();
@@ -399,12 +607,13 @@
     const jar = { w: jw, h: jh, x: (W - jw) / 2, y: H - G * 0.3 - jh };
     const L = {
       W, H, u, G, dpr, jar,
-      hitR: Math.max(40, u * 0.08),
+      hitR: Math.max(N.hitMin, u * N.hit),
       // where the shooting stars fly: below the caption and above the trees
       box: { x0: W * 0.04, x1: W * 0.96, y0: Math.min(70, H * 0.12), y1: H - G - 10 },
       hy: H - G * 0.55   // the horizon straight ahead, behind the trees
     };
     // which way is forward, right and up in the view
+    const VIEW = N.view;
     const a = VIEW.az * DEG;
     const h = VIEW.alt * DEG;
     L.fwd = dirOf(VIEW.az, VIEW.alt);
@@ -432,8 +641,18 @@
   }
 
   // the sidereal time t seconds into the night, radians
-  function lst(t) {
-    return (LST0 + (HOURS * 15.041 * t) / ROUND) * DEG;
+  function lst(t, n = N) {
+    return (n.lst0 + (15.041 * t) / HOUR) * DEG;
+  }
+
+  // s, how long the night lasts
+  function night() {
+    return N.hours * HOUR;
+  }
+
+  // s into the night at a time of day (h, with 24 for midnight)
+  function atHour(h) {
+    return (h - N.start) * HOUR;
   }
 
   // Where a star is seen from Tõrva: x to the east, y to the north, z up.
@@ -452,10 +671,11 @@
   }
 
   // Stereographic projection around the middle of the view, which keeps
-  // the shapes of the figures. Pixels, or null for what is behind the viewer.
-  function toScreen(L, v) {
+  // the shapes of the figures. Pixels, or null for what is behind the viewer,
+  // unless behind is true.
+  function toScreen(L, v, behind = false) {
     const d = v[0] * L.fwd[0] + v[1] * L.fwd[1] + v[2] * L.fwd[2];
-    if (d < -0.3) return null;
+    if (d < -0.3 && !behind) return null;
     const k = 2 / (1 + d);
     return [
       L.cx + k * (v[0] * L.right[0] + v[1] * L.right[1]) * L.s,
@@ -463,11 +683,13 @@
     ];
   }
 
-  // the radiant moves with Perseus; the higher it is, the more shooting stars
+  // the radiant moves with the sky; the higher it is, the more shooting
+  // stars. In the December evening it is behind the viewer, far off the
+  // screen, and the shooting stars come from that side.
   function turnSky() {
-    const v = horizon(RAD, lst(state.t));
+    const v = horizon(N.rad, lst(state.t));
     state.radZ = v[2];
-    [state.L.rx, state.L.ry] = toScreen(state.L, v);
+    [state.L.rx, state.L.ry] = toScreen(state.L, v, true);
   }
 
   // Stars low down are dimmed by the air, and hidden below the horizon.
@@ -500,12 +722,14 @@
     return c;
   }
 
-  // Spruces, a house with a lit window and the dome of a little observatory.
+  // Spruces, a house with a lit window and the dome of a little observatory,
+  // in December with snow on the ground and on the roofs.
   function drawGround(L) {
     const [c, g] = layer(L);
     const r = seeded(5);
     const base = L.H - L.G * 0.45;
     const ink = '#03050f';
+    const snow = '#8d9bc6';
     g.fillStyle = ink;
     g.fillRect(0, base, L.W, L.H - base);
     // the house on the right and the dome on the left
@@ -533,6 +757,20 @@
     g.moveTo(dx + ds * 0.15, base - ds * 1.85);
     g.lineTo(dx + ds * 0.15, base - ds * 1.1);
     g.stroke();
+    if (N.snow) {
+      g.strokeStyle = snow;
+      g.lineWidth = Math.max(2, hs * 0.14);
+      g.lineJoin = 'round';
+      g.beginPath();
+      g.moveTo(hx - hs * 1.12, base - hs * 0.84);
+      g.lineTo(hx, base - hs * 1.52);
+      g.lineTo(hx + hs * 1.12, base - hs * 0.84);
+      g.stroke();
+      g.lineWidth = Math.max(2, ds * 0.16);
+      g.beginPath();
+      g.arc(dx, base - ds * 0.9, ds * 0.98, Math.PI * 1.12, Math.PI * 1.88);
+      g.stroke();
+    }
     // spruces, kept away from the house and the dome
     for (let x = -10; x < L.W + 20; x += 8 + r() * 16) {
       if (Math.abs(x - hx) < hs * 1.4 || Math.abs(x - dx) < ds * 1.3) continue;
@@ -552,6 +790,16 @@
         g.lineTo(x - (w * k) / 4, base - h + (h * k) / 4.3);
       }
       g.closePath();
+      g.fill();
+    }
+    // the snow, in gentle waves, in front of the foot of the trees
+    if (N.snow) {
+      const top = base + L.G * 0.06;
+      g.fillStyle = snow;
+      g.beginPath();
+      g.moveTo(0, L.H);
+      for (let x = 0; x <= L.W + 8; x += 8) g.lineTo(x, top + Math.sin(x / 47) * 2.5 + Math.sin(x / 13 + 1) * 1.2);
+      g.lineTo(L.W, L.H);
       g.fill();
     }
     return c;
@@ -591,7 +839,7 @@
   function track(m) {
     const p = clamp(m.age / m.dur, 0, 1);
     const head = m.len * p;
-    const tail = Math.max(0, head - m.len * (m.fireball ? 0.5 : 0.42));
+    const tail = Math.max(0, head - m.len * (m.fireball ? N.tail[1] : N.tail[0]));
     return {
       hx: m.x + m.ux * head, hy: m.y + m.uy * head,
       tx: m.x + m.ux * tail, ty: m.y + m.uy * tail,
@@ -651,8 +899,8 @@
       state.idle += dt;
       turnSky();
       plan();
-      if (state.t >= ROUND) {
-        state.t = ROUND;
+      if (state.t >= night()) {
+        state.t = night();
         state.over = true;
         hideHint();
         hideCaption();
@@ -692,14 +940,15 @@
   // what comes next in the night
   function plan() {
     const T = state.t;
-    if (T >= state.nextMeteor && T < ROUND - 1.2) {
+    if (T >= state.nextMeteor && T < night() - 1.2) {
       const m = spawnMeteor(false);
       if (m && state.idle * 1000 >= HINT_MS && !state.hinted) state.hinted = m;
       if (state.burst > 0) state.burst--;
       else if (Math.random() < 0.15) state.burst = 2;
-      // on level 1 from one every 2 s in the evening to one every 1.2 s
-      // at dawn, and more often on the higher levels and in the storm
-      const rate = (Math.max(0.3, state.radZ) / RAD_END) * state.level * storm(T);
+      // on level 1 one every 1.2 s when the radiant is highest (at dawn in
+      // August), fewer when it is lower, and more often on the higher
+      // levels and in the storm
+      const rate = (Math.max(0.3, state.radZ) / N.radTop) * state.level * storm(T);
       state.nextMeteor = T + (state.burst > 0 ? rand(0.25, 0.4) * Math.min(1, 2 / rate) : rand(0.9, 1.5) / rate);
     }
     if (state.fireballs.length && T >= state.fireballs[0]) {
@@ -714,7 +963,7 @@
   // how many times more shooting stars the storm brings at time T
   function storm(T) {
     if (state.level !== 3) return 1;
-    const up = clamp((T - STORM.from) / STORM.ramp, 0, 1) * clamp((STORM.to - T) / STORM.ramp, 0, 1);
+    const up = clamp((T - atHour(STORM.from)) / STORM.ramp, 0, 1) * clamp((atHour(STORM.to) - T) / STORM.ramp, 0, 1);
     return 1 + (STORM.x - 1) * up * up * (3 - 2 * up);
   }
 
@@ -725,16 +974,16 @@
     ctx.clearRect(0, 0, L.W, L.H);
     ctx.drawImage(L.sky, 0, 0, L.W, L.H);
     drawStars(T);
-    // dawn: the sky gets light, most of all low in the north-east, above
-    // the Sun, and the stars fade
-    const dawn = Math.min(1, clamp((T - (ROUND - DAWN)) / DAWN, 0, 1) + (state.over ? state.overT * 0.1 : 0));
+    // dawn: the sky gets light, most of all low above the Sun, and the
+    // stars fade
+    const dawn = Math.min(1, clamp((T - (night() - DAWN)) / DAWN, 0, 1) + (state.over ? state.overT * 0.1 : 0));
     if (dawn > 0) {
       const g = ctx.createLinearGradient(0, 0, 0, L.H);
       g.addColorStop(0, `rgba(70, 110, 190, ${(0.6 * dawn).toFixed(3)})`);
       g.addColorStop(1, `rgba(150, 150, 210, ${(0.75 * dawn).toFixed(3)})`);
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, L.W, L.H);
-      const x = toScreen(L, dirOf(SUN_AZ, 0))[0];
+      const x = toScreen(L, dirOf(N.sunAz, 0))[0];
       const R = Math.max(L.W, L.H) * (0.45 + 0.55 * dawn);
       const gl = ctx.createRadialGradient(x, L.hy, 0, x, L.hy, R);
       gl.addColorStop(0, `rgba(255, 200, 120, ${dawn.toFixed(3)})`);
@@ -795,7 +1044,7 @@
     ctx.textAlign = 'center';
     ctx.lineJoin = 'round';
     ctx.lineWidth = 1.2;
-    for (const f of FIGURES) {
+    for (const f of N.figures) {
       const v = f.pts.map((s) => horizon(s, th));
       const p = v.map((q) => (q[2] > -0.05 ? toScreen(L, q) : null));
       for (const line of f.lines || []) {
@@ -812,11 +1061,10 @@
         }
       }
       const seen = [];
-      f.stars.forEach(([, , mag], k) => {
+      f.stars.forEach(([, , mag, color = '255, 255, 255'], k) => {
         if (!p[k] || v[k][2] <= 0) return;
         const dim = lowDim(v[k][2]);
         const rr = (0.9 + (4.2 - mag) * 0.85) * (f.size || 1);
-        const color = f.color || '255, 255, 255';
         dot(ctx, p[k][0], p[k][1], rr * 2.4, `rgba(${color}, ${(0.12 * dim).toFixed(2)})`);
         dot(ctx, p[k][0], p[k][1], rr, `rgba(${color}, ${dim.toFixed(2)})`);
         seen.push(p[k]);
@@ -907,7 +1155,7 @@
     let best = null;
     let bestD = R;
     for (const m of state.meteors) {
-      if (m.hit || m.age > m.dur + GRACE) continue;
+      if (m.hit || m.age > m.dur + N.grace) continue;
       const k = track(m);
       const d = distToSegment(x, y, k.tx, k.ty, k.hx, k.hy);
       if (d < bestD) {
@@ -995,7 +1243,8 @@
 
   function fillCaption() {
     if (!state.caption) return;
-    const [b, s] = t('captions')[state.caption.key];
+    const key = state.caption.key;
+    const [b, s] = t('nights')[N.id].captions[key] || t('captions')[key];
     $('capTitle').textContent = b;
     $('capText').textContent = s;
     $('capText').classList.toggle('hidden', !s);
@@ -1008,14 +1257,14 @@
 
   // the time of night, in steps of 10 minutes, with a clock face to match
   function clockText() {
-    const m = Math.floor((START * 60 + (HOURS * 60 * state.t) / ROUND) / 10) * 10;
+    const m = Math.floor((N.start * 60 + (60 * state.t) / HOUR) / 10) * 10;
     const h = Math.floor(m / 60) % 24;
     const face = (m % 60 >= 30 ? HALF_CLOCKS : CLOCKS)[h % 12];
     return `${face} ${t('time')(h, String(m % 60).padStart(2, '0'))}`;
   }
 
   function updateBar() {
-    $('progressFill').style.width = (100 * state.t) / ROUND + '%';
+    $('progressFill').style.width = (100 * state.t) / night() + '%';
     const clock = clockText();
     if ($('clock').textContent !== clock) $('clock').textContent = clock;
     const text = `⭐ ${state.caught}`;
@@ -1041,8 +1290,8 @@
     const old = bestNow();
     state.record = n > old;
     if (state.record) {
-      state.best[state.level] = n;
-      store.set('bests', state.best);
+      state.best[state.night][state.level] = n;
+      saveBests();
     }
     sfx.win();
     if (state.record) {
@@ -1060,6 +1309,7 @@
   function updateWin() {
     $('winCount').textContent = t('count')(state.caught);
     $('winBest').textContent = state.record ? t('newBest') : bestNow() ? t('oldBest')(bestNow()) : '';
+    $('winTip').textContent = t('nights')[N.id].winTip;
   }
 
   // ---------------------------------------------------------------------------
@@ -1080,8 +1330,8 @@
     clearTimeout(state.clearTimer);
     if (state.clearArmed) {
       state.clearArmed = false;
-      delete state.best[state.level];
-      store.set('bests', state.best);
+      delete state.best[state.night][state.level];
+      saveBests();
       sfx.oops();
     } else {
       state.clearArmed = true;

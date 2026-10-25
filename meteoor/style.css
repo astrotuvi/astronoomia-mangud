@@ -8,6 +8,12 @@
   color: var(--muted);
 }
 
+/* the nights: a picture of each, with its month and its shower */
+.nights { grid-template-columns: repeat(2, minmax(0, 200px)); }
+.nights svg { display: block; width: 100%; aspect-ratio: 1; border-radius: 14px; pointer-events: none; }
+.nights span b { display: block; }
+.nights span small { display: block; font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+
 /* the levels, with as many shooting stars as times more of them */
 .levels .lvl-stars { font-size: 1.1rem; line-height: 1; letter-spacing: -4px; white-space: nowrap; }
 .storm-tip {
