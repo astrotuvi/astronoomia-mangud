@@ -12,47 +12,56 @@
   // the size in the game: not to scale (Jupiter would be 28 times as wide as
   // Mercury), but bigger and smaller in the right order, so the empty places
   // hint at which planet goes where. wf and hf are how much wider and taller
-  // than the ball the picture is with the rings.
+  // than the ball the picture is with the rings. big is said when the planet
+  // is put in its place in the game by size.
   const PLANETS = [
     {
       id: 'mercury', r: 0.38, base: '#9a928a',
       name: { et: 'Merkuur', en: 'Mercury' },
-      fact: { et: 'Päikesele kõige lähem ja kõige väiksem planeet.', en: 'The closest planet to the Sun, and the smallest.' }
+      fact: { et: 'Päikesele kõige lähem ja kõige väiksem planeet.', en: 'The closest planet to the Sun, and the smallest.' },
+      big: { et: 'Kõige väiksem planeet. Maa läbimõõt on temast peaaegu kolm korda suurem.', en: 'The smallest planet. The Earth is almost three times as wide.' }
     },
     {
       id: 'venus', r: 0.62, base: '#e0c48c',
       name: { et: 'Veenus', en: 'Venus' },
-      fact: { et: 'Kõige kuumem planeet. Taevas paistab ta väga heleda tähena.', en: 'The hottest planet. In the sky it looks like a very bright star.' }
+      fact: { et: 'Kõige kuumem planeet. Taevas paistab ta väga heleda tähena.', en: 'The hottest planet. In the sky it looks like a very bright star.' },
+      big: { et: 'Veenus on peaaegu sama suur kui Maa.', en: 'Venus is almost as big as the Earth.' }
     },
     {
       id: 'earth', r: 0.65, base: '#2a5e9e',
       name: { et: 'Maa', en: 'Earth' },
-      fact: { et: 'Meie kodu. Ainus planeet, kus teame elu olevat.', en: 'Our home, and the only planet where we know there is life.' }
+      fact: { et: 'Meie kodu. Ainus planeet, kus teame elu olevat.', en: 'Our home, and the only planet where we know there is life.' },
+      big: { et: 'Maa on kivistest planeetidest kõige suurem.', en: 'The Earth is the biggest of the rocky planets.' }
     },
     {
       id: 'mars', r: 0.48, base: '#b86a44',
       name: { et: 'Marss', en: 'Mars' },
-      fact: { et: 'Punane planeet. Seal on kõige kõrgem mägi kogu Päikesesüsteemis.', en: 'The red planet. It has the tallest mountain in the Solar System.' }
+      fact: { et: 'Punane planeet. Seal on kõige kõrgem mägi kogu Päikesesüsteemis.', en: 'The red planet. It has the tallest mountain in the Solar System.' },
+      big: { et: 'Marsi läbimõõt on umbes pool Maa omast.', en: 'Mars is about half as wide as the Earth.' }
     },
     {
       id: 'jupiter', r: 1.25, base: '#c9a47e',
       name: { et: 'Jupiter', en: 'Jupiter' },
-      fact: { et: 'Kõige suurem planeet. Tema punane laik on torm, mis on suurem kui Maa.', en: 'The biggest planet. Its red spot is a storm bigger than the Earth.' }
+      fact: { et: 'Kõige suurem planeet. Tema punane laik on torm, mis on suurem kui Maa.', en: 'The biggest planet. Its red spot is a storm bigger than the Earth.' },
+      big: { et: 'Kõige suurem planeet. Tema läbimõõt on üksteist korda suurem kui Maal.', en: 'The biggest planet, eleven times as wide as the Earth.' }
     },
     {
       id: 'saturn', r: 1.05, wf: 2.0, base: '#d9be86',
       name: { et: 'Saturn', en: 'Saturn' },
-      fact: { et: 'Tal on ilusad rõngad, mis on tehtud jää- ja kivitükkidest.', en: 'It has beautiful rings made of bits of ice and rock.' }
+      fact: { et: 'Tal on ilusad rõngad, mis on tehtud jää- ja kivitükkidest.', en: 'It has beautiful rings made of bits of ice and rock.' },
+      big: { et: 'Saturni läbimõõt on ilma rõngasteta üheksa korda suurem kui Maal.', en: 'Without its rings, Saturn is nine times as wide as the Earth.' }
     },
     {
       id: 'uranus', r: 0.85, wf: 1.04, hf: 1.66, base: '#a5dbe2',
       name: { et: 'Uraan', en: 'Uranus' },
-      fact: { et: 'Ta on külili ja veereb nagu pall ümber Päikese.', en: 'It lies on its side and rolls round the Sun like a ball.' }
+      fact: { et: 'Ta on külili ja veereb nagu pall ümber Päikese.', en: 'It lies on its side and rolls round the Sun like a ball.' },
+      big: { et: 'Uraani läbimõõt on neli korda suurem kui Maal. Ta on Neptuunist natuke suurem.', en: 'Uranus is four times as wide as the Earth, a little bigger than Neptune.' }
     },
     {
       id: 'neptune', r: 0.82, base: '#3e64c8',
       name: { et: 'Neptuun', en: 'Neptune' },
-      fact: { et: 'Päikesest kõige kaugem planeet. Seal puhuvad kõige tugevamad tuuled.', en: 'The planet farthest from the Sun. It has the strongest winds.' }
+      fact: { et: 'Päikesest kõige kaugem planeet. Seal puhuvad kõige tugevamad tuuled.', en: 'The planet farthest from the Sun. It has the strongest winds.' },
+      big: { et: 'Neptuuni läbimõõt on peaaegu neli korda suurem kui Maal.', en: 'Neptune is almost four times as wide as the Earth.' }
     }
   ];
   for (const p of PLANETS) {
@@ -64,10 +73,24 @@
   // that can be seen without a telescope, or all eight.
   const LEVELS = [4, 6, 8];
 
+  // In what order: from the Sun outwards, from the smallest to the biggest,
+  // or from the biggest to the smallest. The game sizes are in the same order
+  // as the real ones.
+  const ORDERS = ['sun', 'size', 'big'];
+  const bySize = (ps) => ps.slice().sort((a, b) => a.r - b.r);
+  // three balls growing, or shrinking when turned round, for the buttons by size
+  const balls = (turn) =>
+    `<svg viewBox="0 0 62 28" aria-hidden="true"><g fill="currentColor"${turn ? ' transform="matrix(-1 0 0 1 62 0)"' : ''}>` +
+    '<circle cx="7" cy="14" r="4" /><circle cx="25" cy="14" r="7" /><circle cx="48" cy="14" r="12" />' +
+    '</g></svg>';
+
   const TEXT = {
     et: {
       title: 'Planeetide rivi',
-      intro: 'Lohista planeedid oma kohale. Esimene on Päikesele kõige lähem.',
+      intro: 'Lohista planeedid oma kohale, Päikesest kaugemale või suuruse järgi.',
+      chooseOrder: 'Mis järjekorras?',
+      order: { sun: 'Päikesest kaugemale', size: 'Väiksemast suuremaks', big: 'Suuremast väiksemaks' },
+      task: { sun: 'Esimene on Päikesele kõige lähem.', size: 'Esimene on kõige väiksem.', big: 'Esimene on kõige suurem.' },
       chooseLevel: 'Mitu planeeti?',
       level: (n) => `${n} planeeti`,
       play: 'Mängi',
@@ -79,7 +102,15 @@
       sound: 'Heli',
       farther: (name) => `${name} on Päikesest kaugemal.`,
       closer: (name) => `${name} on Päikesele lähemal.`,
+      bigger: (name) => `${name} on suurem.`,
+      smaller: (name) => `${name} on väiksem.`,
       win: (n) => `Panid kõik ${n} planeeti õigesse järjekorda!`,
+      winSize: (n) => `Panid kõik ${n} planeeti suuruse järjekorda!`,
+      sizeFact: {
+        4: 'Kivised planeedid on kõik väikesed. Maa on neist kõige suurem.',
+        6: 'Jupiter ja Saturn on palju suuremad kui kivised planeedid.',
+        8: 'Jupiteri sisse mahuks üle tuhande Maa.'
+      },
       winFact: {
         4: 'Need neli on väikesed kivised planeedid, nagu Maa.',
         6: 'Saturnini välja näeb planeete taevas ka ilma teleskoobita.',
@@ -88,7 +119,10 @@
     },
     en: {
       title: 'Line Up the Planets',
-      intro: 'Drag the planets to their places. The first one is closest to the Sun.',
+      intro: 'Drag the planets to their places, from the Sun outwards or by size.',
+      chooseOrder: 'In what order?',
+      order: { sun: 'From the Sun outwards', size: 'From smallest to biggest', big: 'From biggest to smallest' },
+      task: { sun: 'The first one is closest to the Sun.', size: 'The first one is the smallest.', big: 'The first one is the biggest.' },
       chooseLevel: 'How many planets?',
       level: (n) => `${n} planets`,
       play: 'Play',
@@ -100,7 +134,15 @@
       sound: 'Sound',
       farther: (name) => `${name} is farther from the Sun.`,
       closer: (name) => `${name} is closer to the Sun.`,
+      bigger: (name) => `${name} is bigger.`,
+      smaller: (name) => `${name} is smaller.`,
       win: (n) => `You put all ${n} planets in the right order!`,
+      winSize: (n) => `You put all ${n} planets in order of size!`,
+      sizeFact: {
+        4: 'The rocky planets are all small. The Earth is the biggest of them.',
+        6: 'Jupiter and Saturn are much bigger than the rocky planets.',
+        8: 'More than a thousand Earths would fit inside Jupiter.'
+      },
       winFact: {
         4: 'These four are small rocky planets, like the Earth.',
         6: 'The planets as far as Saturn can be seen in the sky without a telescope.',
@@ -123,8 +165,9 @@
   const store = Astro.makeStore('planeedid.');
   const state = {
     n: store.get('n', 4),
+    order: store.get('order', 'sun'),
     hint: store.get('hint', false),
-    finished: store.get('finished', []), // the levels done at least once
+    finished: store.get('finished', []), // the levels done at least once: n, or 's' + n or 'b' + n by size
     slots: [],     // { p, i, el, ghost, label, x, y, filled }
     pieces: [],    // { p, i, el, svg, x, y, tx, ty, placed, wrong }
     selected: null,
@@ -134,10 +177,20 @@
     toastTimer: 0
   };
   if (!LEVELS.includes(state.n)) state.n = 4;
+  if (!ORDERS.includes(state.order)) state.order = 'sun';
   if (!Array.isArray(state.finished)) state.finished = [];
 
   const area = $('area');
   const t = (key) => TEXT[Astro.lang][key];
+  const bySizeNow = () => state.order !== 'sun';
+  const levelKey = (n) => (bySizeNow() ? state.order[0] + n : n);
+  // the first n planets from the Sun, in the order to put them in
+  const levelPlanets = (n) => {
+    const ps = PLANETS.slice(0, n);
+    if (state.order === 'size') return bySize(ps);
+    if (state.order === 'big') return bySize(ps).reverse();
+    return ps;
+  };
 
   // ---------------------------------------------------------------------------
   // Drawing
@@ -179,11 +232,14 @@
   }
 
   // The planets in a row next to the Sun, for the menu and the win screen.
+  // By size there is no Sun, since the row is not their way out from it, and
+  // the row has a little room at the ends so that Mercury's name fits.
   // Names under them alternate between two lines so that they do not overlap.
   // In the menu every row is as tall as the one with all eight, so that the
   // planets are the same size in each and only the row grows longer.
   function rowSVG(ps, names) {
-    let x = SUN + GAP;
+    const sun = !bySizeNow();
+    let x = (sun ? SUN : names ? 0.8 : 0) + GAP;
     const top = Math.max(...(names ? ps : PLANETS).map((p) => p.r * p.hf)) + 0.15;
     let parts = '';
     let labels = '';
@@ -196,11 +252,12 @@
       }
       x = cx + p.r * p.wf + GAP;
     });
+    if (!sun && names) x += 0.8;
     const bottom = names ? top + 1.3 : top;
     const vb = [0, -top * 50, x * 50, (top + bottom) * 50];
     const svg =
       `<svg viewBox="${vb.join(' ')}" preserveAspectRatio="xMinYMid meet" aria-hidden="true">` +
-      `<circle cx="${(SUN - 3.2) * 50}" r="${3.2 * 50 + 12}" fill="url(#sunGlow)" />` +
+      (sun ? `<circle cx="${(SUN - 3.2) * 50}" r="${3.2 * 50 + 12}" fill="url(#sunGlow)" />` : '') +
       parts +
       (names ? `<g class="row-names">${labels}</g>` : '') +
       '</svg>';
@@ -212,13 +269,25 @@
   // ---------------------------------------------------------------------------
 
   function buildMenu() {
+    [['sun', '☀️'], ['size', balls(false)], ['big', balls(true)]].forEach(([key, icon]) => {
+      const b = document.createElement('button');
+      b.className = 'count order';
+      b.innerHTML = `<b>${icon}</b><span></span>`;
+      b.addEventListener('click', () => {
+        state.order = key;
+        store.set('order', key);
+        sfx.pick();
+        updateMenu();
+      });
+      $('orders').appendChild(b);
+    });
+
     const box = $('levels');
     LEVELS.forEach((n) => {
       const b = document.createElement('button');
       b.className = 'level';
-      const row = rowSVG(PLANETS.slice(0, n), false);
       b.innerHTML =
-        `<span class="level-row" style="--aspect:${row.aspect}">${row.svg}</span>` +
+        '<span class="level-row"></span>' +
         '<span class="level-name"></span><b class="done-badge hidden">🌟</b>';
       b.addEventListener('click', () => {
         state.n = n;
@@ -231,11 +300,20 @@
   }
 
   function updateMenu() {
+    [...$('orders').children].forEach((b, i) => {
+      b.classList.toggle('selected', ORDERS[i] === state.order);
+      b.querySelector('span').textContent = t('order')[ORDERS[i]];
+    });
     [...$('levels').children].forEach((b, i) => {
       const n = LEVELS[i];
       b.classList.toggle('selected', n === state.n);
+      // the row in the order chosen
+      const row = rowSVG(levelPlanets(n), false);
+      const rowEl = b.querySelector('.level-row');
+      rowEl.style.setProperty('--aspect', row.aspect);
+      rowEl.innerHTML = row.svg;
       b.querySelector('.level-name').textContent = t('level')(n);
-      b.querySelector('.done-badge').classList.toggle('hidden', !state.finished.includes(n));
+      b.querySelector('.done-badge').classList.toggle('hidden', !state.finished.includes(levelKey(n)));
     });
   }
 
@@ -261,7 +339,7 @@
     area.querySelectorAll('.slot, .label, .piece').forEach((el) => el.remove());
     $('toast').classList.remove('show');
 
-    const ps = PLANETS.slice(0, state.n);
+    const ps = levelPlanets(state.n);
     state.slots = ps.map((p, i) => {
       const el = document.createElement('div');
       el.className = 'slot';
@@ -294,12 +372,14 @@
     updateLabels();
     layout();
     updateProgress();
+    say(t('task')[state.order], 3500);
   }
 
   // Where everything goes. On a wide screen the Sun is at the left, the
   // places run to the right and the tray is below them; on a tall screen the
   // Sun is at the top, the places run down and the tray is to their right.
-  // u runs away from the Sun, v across.
+  // u runs away from the Sun, v across. By size the Sun and the orbits are
+  // left out, and the places start at the edge.
   function layout() {
     if (!state.slots.length) return;
     const W = area.clientWidth;
@@ -307,6 +387,7 @@
     const hor = W >= H;
     const ps = state.slots.map((s) => s.p);
     const n = ps.length;
+    const sunK = bySizeNow() ? 0 : SUN;
     const along = (p) => 2 * p.r * (hor ? p.wf : p.hf);
     const across = (p) => 2 * p.r * (hor ? p.hf : p.wf);
 
@@ -315,7 +396,7 @@
     const LB = hor ? 46 : 84; // room for the names
     const band = Math.max(...ps.map(across));
     const sumAlong = ps.reduce((a, p) => a + along(p), 0);
-    const units = SUN + sumAlong + GAP * (n + 1);
+    const units = sunK + sumAlong + GAP * (n + 1);
     const s = Math.max(10, Math.min(
       (crossLen - LB - PAD * 3) / (band * (1 + TRAY)),
       (mainLen - PAD * 2) / units,
@@ -327,7 +408,7 @@
 
     const used = band * s * (1 + TRAY) + LB + PAD * 3;
     const off = Math.max(0, (crossLen - used) / 2);
-    const u0 = (hor ? 0 : TOP) + PAD + SUN * s;
+    const u0 = (hor ? 0 : TOP) + PAD + sunK * s;
     const v1 = (hor ? TOP : 0) + off + PAD + (band * s) / 2;
     const v2 = v1 + (band * s) / 2 + LB + PAD + (band * TRAY * s) / 2;
     const at = (u, v) => (hor ? { x: u, y: v } : { x: v, y: u });
@@ -335,6 +416,7 @@
     const sunR = 3.2 * s;
     const sunU = u0 - sunR;
     const sun = at(sunU, v1);
+    $('sun').classList.toggle('hidden', !sunK);
     Object.assign($('sun').style, {
       left: sun.x - sunR + 'px', top: sun.y - sunR + 'px', width: 2 * sunR + 'px', height: 2 * sunR + 'px'
     });
@@ -360,7 +442,7 @@
     const clip = hor
       ? `<rect x="0" y="${v1 - bandPx / 2}" width="${W}" height="${bandPx}" />`
       : `<rect x="${v1 - bandPx / 2}" y="0" width="${bandPx}" height="${H}" />`;
-    $('orbits').innerHTML =
+    $('orbits').innerHTML = !sunK ? '' :
       `<defs><clipPath id="orbitClip">${clip}</clipPath></defs><g clip-path="url(#orbitClip)">` +
       state.slots.map((sl) => `<circle cx="${sun.x}" cy="${sun.y}" r="${Math.hypot(sl.x - sun.x, sl.y - sun.y)}" />`).join('') +
       '</g>';
@@ -527,7 +609,8 @@
       home(piece);
       sfx.snap();
       setTimeout(() => sfx.note(slot.i), 160);
-      say(`${slot.i + 1}. ${name}. ${piece.p.fact[Astro.lang]}`, 5000);
+      const fact = bySizeNow() ? piece.p.big : piece.p.fact;
+      say(`${slot.i + 1}. ${name}. ${fact[Astro.lang]}`, 5000);
       updateLabels();
       updateProgress();
       if (state.slots.every((s) => s.filled)) win();
@@ -540,7 +623,9 @@
     void slot.el.offsetWidth; // restart the animation
     slot.el.classList.add('wiggle');
     home(piece);
-    say(t(piece.i > slot.i ? 'farther' : 'closer')(name), 2500);
+    const later = piece.i > slot.i;
+    const hint = { sun: later ? 'farther' : 'closer', size: later ? 'bigger' : 'smaller', big: later ? 'smaller' : 'bigger' }[state.order];
+    say(t(hint)(name), 2500);
     if (piece.wrong >= 2) state.slots[piece.i].el.classList.add('pulse');
   }
 
@@ -572,19 +657,21 @@
 
   function showWinRow() {
     $('winPic').innerHTML = rowSVG(state.slots.map((s) => s.p), true).svg;
+    $('winText').textContent = bySizeNow()
+      ? `${t('winSize')(state.n)} ${t('sizeFact')[state.n]}`
+      : `${t('win')(state.n)} ${t('winFact')[state.n]}`;
   }
 
   function win() {
     state.done = true;
-    if (!state.finished.includes(state.n)) {
-      state.finished.push(state.n);
+    if (!state.finished.includes(levelKey(state.n))) {
+      state.finished.push(levelKey(state.n));
       store.set('finished', state.finished);
     }
     setTimeout(() => sfx.win(), 900);
     setTimeout(() => {
       if (!state.done || $('game').classList.contains('hidden')) return;
       showWinRow();
-      $('winText').textContent = `${t('win')(state.n)} ${t('winFact')[state.n]}`;
       $('win').classList.remove('hidden');
       Astro.startConfetti($('confetti'));
     }, 2600);
@@ -618,9 +705,6 @@
   Astro.setupLanguage(TEXT, () => {
     updateMenu();
     updateLabels();
-    if (!$('win').classList.contains('hidden')) {
-      showWinRow();
-      $('winText').textContent = `${t('win')(state.n)} ${t('winFact')[state.n]}`;
-    }
+    if (!$('win').classList.contains('hidden')) showWinRow();
   });
 })();
