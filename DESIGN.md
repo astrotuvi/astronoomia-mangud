@@ -58,6 +58,9 @@ top in Planeetide rivi), using `@media (min-aspect-ratio: 1/1)`.
 - **Font:** Nunito, weights 600, 800 and 900, from Google Fonts. Text is
   bold (800) by default. Use 600 for longer texts such as facts and
   credits, and 900 for titles and the Play button.
+- **Text sizes** are in `rem` (or `clamp()` with a `rem` minimum), not
+  `px`, so that `common.css` can make all text a little smaller on a
+  phone.
 - **Shapes:** everything is round. Cards have a 22–28 px radius, buttons are
   pill-shaped (`border-radius: 999px`) or circles, and nothing has sharp
   corners.

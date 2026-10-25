@@ -23,6 +23,11 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
+/* a little smaller text on a phone, upright or on its side; the sizes are
+   in rem, so this scales them all */
+@media (max-width: 600px), (max-height: 500px) {
+  html { font-size: 87.5%; }
+}
 
 body {
   font-family: "Nunito", ui-rounded, "Trebuchet MS", system-ui, sans-serif;

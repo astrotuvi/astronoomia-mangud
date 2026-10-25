@@ -772,7 +772,7 @@
       ctx.moveTo(x, y0);
       ctx.lineTo(x, y1);
       ctx.stroke();
-      ctx.fillText(fmt(v, xd), x, y1 + 6);
+      ctx.fillText(fmt(Math.abs(v) < 1e-9 ? 0 : v, xd), x, y1 + 6); // not "−0"
     }
     ctx.textAlign = 'right';
     ctx.fillText(t('day'), x1, y1 + 22);
