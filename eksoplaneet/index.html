@@ -61,8 +61,16 @@
       <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
     </div>
     <div class="area play-area">
-      <div id="graphBox" class="graph-box">
-        <canvas id="graph"></canvas>
+      <div class="graph-col">
+        <div id="graphBox" class="graph-box">
+          <canvas id="graph"></canvas>
+        </div>
+        <!-- zooming in on the days, and the part of the recording shown -->
+        <div class="zoom-row">
+          <button id="zoomOutBtn" class="icon" data-t-label="zoomOut" aria-label="Vähenda">−</button>
+          <div id="pan" class="pan" data-t-label="pan" aria-label="Näidatav osa"><div id="panWin" class="pan-win"></div></div>
+          <button id="zoomInBtn" class="icon" data-t-label="zoomIn" aria-label="Suurenda">+</button>
+        </div>
       </div>
       <aside id="panel" class="panel">
         <div id="starInfo" class="star-info"></div>

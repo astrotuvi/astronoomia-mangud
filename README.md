@@ -150,6 +150,7 @@ The levels, the meteor storm, the length of the night, the place, the direction 
   3. Kaks planeeti: an orange or red dwarf with two planets whose dips differ in depth, the inner one going round three or four times for each turn of the outer one (first LHS 1140)
   4. Rahutu täht: a red dwarf with spots that make its light wobble, and flares (first Kepler-1649)
 - The telescope records the star's brightness for about 18 seconds. Tap each dip; a tap on noise, a starspot's wobble or a flare says what it is instead. At least three dips of each planet are needed.
+- − and + under the graph zoom in on the days, up to 16 times, and the strip between them shows the part of the recording on the graph: drag it or tap it to move. On the graph, a drag moves along the days (except in Kui suur?, where it moves the ruler), two fingers pinch to zoom, and the mouse wheel zooms at the pointer. 💡 moves the graph to the dip it points at.
 - One made-up star in five (but never on Kaks planeeti) has no planet passing in front of it, as is so for most real stars. Once the recording is done, 🚫 Siin pole planeeti says so: on such a star the star counts as checked and goes into the catalogue, and on a star with a planet it asks to look again.
 - Then, for each planet:
   - **Kui tihti?** The days of the dips show above them; pick how many days apart they are, which is the planet's year

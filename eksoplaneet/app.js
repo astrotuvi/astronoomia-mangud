@@ -136,6 +136,10 @@
       discovered: 'Avastasid!',
       picNote: 'Pildid näitavad, milline planeet võiks olla. Päriselt pole keegi neid nii lähedalt näinud.',
       day: 'päev',
+      zoomIn: 'Suurenda',
+      zoomTip: 'Nupuga + saad graafikut suurendada ja iga lohku eraldi mõõta.',
+      zoomOut: 'Vähenda',
+      pan: 'Näidatav osa',
       brightness: 'heledus',
       steps: ['Vaatle', 'Kui tihti?', 'Kui suur?', 'Vesi?'],
       observeTitle: '🔭 Vaatle tähte',
@@ -227,6 +231,10 @@
       discovered: 'Discovered!',
       picNote: 'The pictures show what the planets could look like. Nobody has seen them this close.',
       day: 'day',
+      zoomIn: 'Zoom in',
+      zoomTip: 'With the + button you can zoom in on the graph and measure each dip on its own.',
+      zoomOut: 'Zoom out',
+      pan: 'Part shown',
       brightness: 'brightness',
       steps: ['Watch', 'How often?', 'How big?', 'Water?'],
       observeTitle: '🔭 Watch the star',
@@ -473,7 +481,9 @@
     ruler: null,      // the depth the ruler is at
     flat: 0,          // how much of the spots' wobble is taken out, 0 to 1
     flatT0: 0,        // when the taking out started
-    hintAt: null      // { p, t, until } a dip to point at
+    hintAt: null,     // { p, t, until } a dip to point at
+    v0: 0,            // the first day shown on the graph
+    span: 0           // how many days the graph shows
   };
   if (!(state.level >= 0 && state.level < LEVELS.length)) state.level = 0;
   if (!Array.isArray(state.found)) state.found = [];
@@ -680,10 +690,42 @@
     draw();
   }
 
-  const X = (time) => M.l + (time / state.L.days) * (W - M.l - M.r);
+  const X = (time) => M.l + ((time - state.v0) / state.span) * (W - M.l - M.r);
   const Y = (f) => M.t + ((state.data.hi - f) / (state.data.hi - state.data.lo)) * (H - M.t - M.b);
   const fromY = (y) => state.data.hi - ((y - M.t) / (H - M.t - M.b)) * (state.data.hi - state.data.lo);
-  const fromX = (x) => ((x - M.l) / (W - M.l - M.r)) * state.L.days;
+  const fromX = (x) => state.v0 + ((x - M.l) / (W - M.l - M.r)) * state.span;
+
+  // ---------------------------------------------------------------------------
+  // Zooming in on the time axis, to see the narrow dips better
+  // ---------------------------------------------------------------------------
+
+  const MAX_ZOOM = 16;
+
+  // Show span days from v0, kept within the recording.
+  function setView(v0, span) {
+    const days = state.L.days;
+    state.span = clamp(span, days / MAX_ZOOM, days);
+    state.v0 = clamp(v0, 0, days - state.span);
+    const pan = $('panWin');
+    pan.style.left = (100 * state.v0) / days + '%';
+    pan.style.width = (100 * state.span) / days + '%';
+    $('zoomInBtn').classList.toggle('off', state.span <= days / MAX_ZOOM + 1e-9);
+    $('zoomOutBtn').classList.toggle('off', state.span >= days - 1e-9);
+    draw();
+  }
+
+  // Zoom by a factor, keeping the day at x (px on the graph) in its place.
+  function zoomAt(factor, x) {
+    const time = fromX(x);
+    const span = clamp(state.span / factor, state.L.days / MAX_ZOOM, state.L.days);
+    setView(time - ((x - M.l) / (W - M.l - M.r)) * span, span);
+  }
+  const zoomMiddle = (factor) => zoomAt(factor, (M.l + W - M.r) / 2);
+
+  // Bring a day into view, if it is not on the graph already.
+  function showDay(time) {
+    if (time < state.v0 || time > state.v0 + state.span) setView(time - state.span / 2, state.span);
+  }
 
   function niceStep(range, n) {
     const raw = range / n;
@@ -720,16 +762,17 @@
       ctx.stroke();
       ctx.fillText(`${fmt(v * 100, yd)} %`, x0 - 6, y);
     }
-    const xs = niceStep(L.days, Math.max(3, Math.floor((x1 - x0) / 90)));
+    const xs = niceStep(state.span, Math.max(3, Math.floor((x1 - x0) / 90)));
+    const xd = clamp(-Math.floor(Math.log10(xs) + 1e-9), 0, 2);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    for (let v = 0; v <= L.days + 1e-9; v += xs) {
+    for (let v = Math.ceil(state.v0 / xs - 1e-9) * xs; v <= state.v0 + state.span + 1e-9; v += xs) {
       const x = X(v);
       ctx.beginPath();
       ctx.moveTo(x, y0);
       ctx.lineTo(x, y1);
       ctx.stroke();
-      ctx.fillText(fmt(v, xs < 1 ? 1 : 0), x, y1 + 6);
+      ctx.fillText(fmt(v, xd), x, y1 + 6);
     }
     ctx.textAlign = 'right';
     ctx.fillText(t('day'), x1, y1 + 22);
@@ -768,10 +811,14 @@
     // the measurements, and the running average through them
     const n = D.t.findIndex((v) => v > state.shown);
     const upto = n < 0 ? D.t.length : n;
+    // only those on the graph, and one more at each side for the line
+    const step = L.days / D.t.length;
+    const from = Math.max(0, Math.floor(state.v0 / step) - 1);
+    const to = Math.min(upto, Math.ceil((state.v0 + state.span) / step) + 1);
     // with the spots' wobble taken out as much as state.flat says
     const fl = state.flat;
     ctx.fillStyle = 'rgba(159, 216, 255, 0.75)';
-    for (let i = 0; i < upto; i++) {
+    for (let i = from; i < to; i++) {
       ctx.beginPath();
       ctx.arc(X(D.t[i]), Y(D.f[i] - fl * D.spot[i]), 1.7, 0, Math.PI * 2);
       ctx.fill();
@@ -779,7 +826,7 @@
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    for (let i = 0; i < upto; i++) ctx.lineTo(X(D.t[i]), Y(D.avg[i] - fl * D.spot[i]));
+    for (let i = from; i < to; i++) ctx.lineTo(X(D.t[i]), Y(D.avg[i] - fl * D.spot[i]));
     ctx.stroke();
     ctx.lineWidth = 1;
     ctx.restore();
@@ -804,6 +851,7 @@
       p.times.forEach((tc, j) => {
         if (!state.marks[k][j]) return;
         const x = X(tc);
+        if (x < x0 - 1 || x > x1 + 1) return;
         ctx.globalAlpha = active ? 1 : 0.3;
         ctx.strokeStyle = COLORS[k];
         ctx.lineWidth = 2;
@@ -894,8 +942,11 @@
     state.flat = 0;
     state.flatT0 = 0;
     state.hintAt = null;
+    state.v0 = 0;
+    state.span = L.days;
     updateToggles();
     resize();
+    setView(0, L.days);
     updatePanel();
     animate();
   }
@@ -973,7 +1024,7 @@
       }, () => periodHint(p)));
     } else if (state.phase === 'size') {
       $('qTitle').textContent = title + t('sizeTitle');
-      $('qText').textContent = (L.spots ? t('flattened') + ' ' : '') + t('sizeText') + (L.star.R < 0.5 ? ' ' + t('smallStar') : '');
+      $('qText').textContent = (L.spots ? t('flattened') + ' ' : '') + t('sizeText') + (L.star.R < 0.5 ? ' ' + t('smallStar') : '') + ' ' + t('zoomTip');
       $('qExtra').appendChild(sizeScale());
       updateScale();
       SIZES.forEach((s, k) => {
@@ -1112,21 +1163,91 @@
     return { x: e.clientX - r.left, y: e.clientY - r.top };
   }
 
-  let dragging = false;
+  // One finger: in the size step it drags the ruler; otherwise a tap marks
+  // a dip and a drag moves along the days. Two fingers zoom and move.
+  const pointers = new Map();
+  let dragging = false; // the ruler
+  let panFrom = null;   // { x, v0, moved } a drag along the days
+  let pinch = null;     // { d, span, time } two fingers at their start
+
+  const twoFingers = () => {
+    const [a, b] = [...pointers.values()];
+    return { d: Math.max(20, Math.abs(a.x - b.x)), x: (a.x + b.x) / 2 };
+  };
+
   canvas.addEventListener('pointerdown', (e) => {
     if (!state.L) return;
     const at = local(e);
-    if (state.phase === 'observe') tapDip(at);
-    else if (state.phase === 'size') {
-      dragging = true;
-      try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* not a real pointer */ }
-      moveRuler(at);
+    pointers.set(e.pointerId, at);
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* not a real pointer */ }
+    if (pointers.size === 2) {
+      const f = twoFingers();
+      pinch = { d: f.d, span: state.span, time: fromX(f.x) };
+      dragging = false;
+      panFrom = null;
+    } else if (pointers.size === 1) {
+      if (state.phase === 'size') {
+        dragging = true;
+        moveRuler(at);
+      } else panFrom = { x: at.x, v0: state.v0, moved: false };
     }
   });
-  canvas.addEventListener('pointermove', (e) => { if (dragging) moveRuler(local(e)); });
-  const stopDrag = () => { dragging = false; };
+  canvas.addEventListener('pointermove', (e) => {
+    if (!pointers.has(e.pointerId)) return;
+    const at = local(e);
+    pointers.set(e.pointerId, at);
+    if (pinch && pointers.size === 2) {
+      const f = twoFingers();
+      const span = clamp((pinch.span * pinch.d) / f.d, state.L.days / MAX_ZOOM, state.L.days);
+      setView(pinch.time - ((f.x - M.l) / (W - M.l - M.r)) * span, span);
+    } else if (dragging) moveRuler(at);
+    else if (panFrom) {
+      if (Math.abs(at.x - panFrom.x) > 8) panFrom.moved = true;
+      if (panFrom.moved) setView(panFrom.v0 - ((at.x - panFrom.x) / (W - M.l - M.r)) * state.span, state.span);
+    }
+  });
+  const stopDrag = (e) => {
+    if (!pointers.delete(e.pointerId)) return;
+    if (e.type === 'pointerup' && panFrom && !panFrom.moved && !pinch && state.phase === 'observe') tapDip(local(e));
+    if (pointers.size < 2) pinch = null;
+    dragging = false;
+    panFrom = null;
+  };
   canvas.addEventListener('pointerup', stopDrag);
   canvas.addEventListener('pointercancel', stopDrag);
+
+  // the mouse wheel or a touchpad zooms at the pointer, and sideways moves
+  canvas.addEventListener('wheel', (e) => {
+    if (!state.L) return;
+    e.preventDefault();
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      setView(state.v0 + (e.deltaX / (W - M.l - M.r)) * state.span, state.span);
+    } else zoomAt(Math.exp(-e.deltaY * 0.004), local(e).x);
+  }, { passive: false });
+
+  $('zoomInBtn').addEventListener('click', () => { sfx.pick(); zoomMiddle(2); });
+  $('zoomOutBtn').addEventListener('click', () => { sfx.pick(); zoomMiddle(0.5); });
+
+  // The strip under the graph is the whole recording, with the part shown
+  // on it: drag that part, or tap the strip to go there.
+  let panGrab = null;
+  $('pan').addEventListener('pointerdown', (e) => {
+    if (!state.L) return;
+    const r = $('pan').getBoundingClientRect();
+    const at = ((e.clientX - r.left) / r.width) * state.L.days;
+    const inside = at >= state.v0 && at <= state.v0 + state.span;
+    panGrab = inside ? at - state.v0 : state.span / 2;
+    try { $('pan').setPointerCapture(e.pointerId); } catch (err) { /* not a real pointer */ }
+    setView(at - panGrab, state.span);
+  });
+  $('pan').addEventListener('pointermove', (e) => {
+    if (panGrab === null) return;
+    const r = $('pan').getBoundingClientRect();
+    setView(((e.clientX - r.left) / r.width) * state.L.days - panGrab, state.span);
+  });
+  const stopPan = () => { panGrab = null; };
+  $('pan').addEventListener('pointerup', stopPan);
+  $('pan').addEventListener('pointercancel', stopPan);
 
   function moveRuler(at) {
     state.ruler = clamp(1 - fromY(at.y), 0, 1 - state.data.lo);
@@ -1139,7 +1260,7 @@
     const L = state.L;
     const time = fromX(at.x);
     if (time < 0 || time > state.shown) return;
-    const reach = L.days * 0.02;
+    const reach = state.span * 0.02;
     let best = null;
     L.planets.forEach((p, k) => p.times.forEach((tc, j) => {
       const d = Math.abs(time - tc);
@@ -1171,6 +1292,7 @@
         const j = L.planets[k].times.findIndex((tc, j) => !state.marks[k][j] && tc <= state.shown);
         if (j >= 0) {
           state.hintAt = { p: L.planets[k], t: L.planets[k].times[j], until: performance.now() + 2500 };
+          showDay(state.hintAt.t);
           animate();
           return;
         }
