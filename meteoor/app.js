@@ -20,6 +20,24 @@
     stars: [[56.87, 24.11, 2.9], [57.29, 24.05, 3.6], [56.22, 24.11, 3.7], [56.46, 24.37, 3.9], [56.58, 23.95, 4.2], [56.30, 24.47, 4.3], [57.30, 24.14, 5.0]]
   };
 
+  // in the sky on both nights, as in tahtkujud/app.js
+  const PEGASUS = {
+    id: 'pegasus',
+    name: { et: 'Pegasus', en: 'Pegasus' },
+    stars: [
+      [2.10, 29.09, 2.1], [345.94, 28.08, 2.4], [346.19, 15.21, 2.5], [3.31, 15.18, 2.8], [340.37, 10.83, 3.4],
+      [332.55, 6.20, 3.5], [326.05, 9.88, 2.4], [340.75, 30.22, 2.9], [332.50, 33.18, 4.3], [342.50, 24.60, 3.5],
+      [331.75, 25.35, 3.8], [326.16, 25.65, 4.1]
+    ],
+    lines: [[0, 1, 2, 3, 0], [2, 4, 5, 6], [1, 7, 8], [1, 9, 10, 11]]
+  };
+  const ANDROMEDA = {
+    id: 'andromeda',
+    name: { et: 'Andromeeda', en: 'Andromeda' },
+    stars: [[2.10, 29.09, 2.1], [9.83, 30.86, 3.3], [17.43, 35.62, 2.1], [30.97, 42.33, 2.1], [14.19, 38.50, 3.9], [12.45, 41.08, 4.5]],
+    lines: [[0, 1, 2, 3], [2, 4, 5]]
+  };
+
   // on level 3 a meteor storm from 00:00 to 02:00 (h, with 24 for
   // midnight), with this many times more; ramp: s it takes to come and go
   const STORM = { from: 24, to: 26, ramp: 2, x: 3 };
@@ -46,14 +64,16 @@
   //     size, and at least hitMin px
   //   tail: how long the tail of a shooting star and of a fireball is, as a
   //     share of the path they fly
+  //   slow: how many times longer they take to fly it than the Perseids,
+  //     from how fast they are (59 km/s for the Perseids)
   //   figures: stars with names, as RA and Dec (J2000, degrees), magnitude
   //     and, if it is not white, colour; lines join them by index
   const NIGHTS = [
     {
       // 12 August, from 22:00 to 04:00 summer time, facing north-east,
-      // where Perseus rises, so the sky turns round the North Star.
-      // Cassiopeia and Perseus are as in tahtkujud/app.js, and the Perseids
-      // fly out of a spot between the two.
+      // where Perseus rises, so the sky turns round the North Star. The
+      // figures are as in tahtkujud/app.js, and the Perseids fly out of a
+      // spot between Cassiopeia and Perseus.
       id: 'perseids',
       bests: 'bests',
       start: 22,
@@ -68,6 +88,7 @@
       hit: 0.08,
       hitMin: 40,
       tail: [0.42, 0.5],
+      slow: 1,
       figures: [
         { id: 'polaris', name: { et: 'Põhjanael', en: 'North Star' }, stars: [[37.95, 89.26, 2.0]] },
         {
@@ -85,10 +106,71 @@
           ],
           lines: [[0, 1, 2, 3, 4, 5, 6], [2, 7, 8, 9]]
         },
-        { id: 'capella', name: { et: 'Kapella', en: 'Capella' }, stars: [[79.17, 46.00, 0.1, '255, 243, 208']] },
-        PLEIADES,
-        // Aldebaran, the orange eye of the Bull, rises after midnight
-        { id: 'aldebaran', stars: [[68.98, 16.51, 0.9, '255, 196, 136']] }
+        // without a name, which would cover the North Star's
+        {
+          id: 'littledipper',
+          stars: [
+            [37.95, 89.26, 2], [263.05, 86.59, 4.4], [251.49, 82.04, 4.2], [236.01, 77.79, 4.3], [222.68, 74.16, 2.1],
+            [230.18, 71.83, 3], [244.38, 75.76, 5]
+          ],
+          lines: [[0, 1, 2, 3, 4, 5, 6], [6, 3]]
+        },
+        {
+          id: 'bigdipper',
+          name: { et: 'Suur Vanker', en: 'Big Dipper' },
+          stars: [
+            [165.93, 61.75, 1.8], [165.46, 56.38, 2.4], [178.46, 53.69, 2.4], [183.86, 57.03, 3.3], [193.51, 55.96, 1.8],
+            [200.98, 54.93, 2.2], [206.89, 49.31, 1.9]
+          ],
+          lines: [[0, 1, 2, 3, 4, 5, 6], [3, 0]]
+        },
+        {
+          id: 'cepheus',
+          name: { et: 'Kefeus', en: 'Cepheus' },
+          stars: [
+            [319.64, 62.59, 2.5], [322.16, 70.56, 3.2], [354.84, 77.63, 3.2], [342.42, 66.20, 3.5], [332.71, 58.20, 3.4],
+            [337.29, 58.42, 4.1]
+          ],
+          lines: [[0, 1, 2, 3, 4, 5], [4, 0], [3, 1]]
+        },
+        {
+          id: 'cygnus',
+          name: { et: 'Luik', en: 'Cygnus' },
+          stars: [
+            [310.36, 45.28, 1.3], [305.56, 40.26, 2.2], [299.08, 35.08, 3.9], [292.68, 27.96, 3.1], [311.55, 33.97, 2.5],
+            [318.23, 30.23, 3.2], [296.24, 45.13, 2.9], [292.43, 51.73, 3.8], [289.28, 53.37, 3.8]
+          ],
+          lines: [[0, 1, 2, 3], [1, 4, 5], [1, 6, 7, 8]]
+        },
+        {
+          id: 'lyra',
+          name: { et: 'Lüüra', en: 'Lyra' },
+          stars: [
+            [279.23, 38.78, 0], [281.08, 39.67, 4.7], [281.19, 37.61, 4.3], [283.63, 36.90, 4.3], [284.74, 32.69, 3.3],
+            [282.52, 33.36, 3.5]
+          ],
+          lines: [[0, 1, 2, 3, 4, 5], [2, 0], [5, 2]]
+        },
+        ANDROMEDA,
+        PEGASUS,
+        {
+          id: 'auriga',
+          name: { et: 'Veomees', en: 'Auriga' },
+          stars: [
+            [79.17, 46.00, 0.1, '255, 243, 208'], [89.88, 44.95, 1.9], [89.93, 37.21, 2.6], [81.57, 28.61, 1.7], [74.25, 33.17, 2.7]
+          ],
+          lines: [[0, 1, 2, 3, 4], [4, 0]]
+        },
+        {
+          id: 'taurus',
+          name: { et: 'Sõnn', en: 'Taurus' },
+          stars: [
+            [84.41, 21.14, 3], [68.98, 16.51, 0.9, '255, 196, 136'], [64.95, 15.63, 3.7], [67.15, 19.18, 3.5], [81.57, 28.61, 1.7],
+            [60.17, 12.49, 3.4], [51.20, 9.03, 3.6], [63.88, 8.89, 4.3]
+          ],
+          lines: [[0, 1, 2, 3, 4], [2, 5, 6], [5, 7]]
+        },
+        PLEIADES
       ]
     },
     {
@@ -97,8 +179,8 @@
       // facing
       // south. The Geminids fly out of a spot by Castor, which goes from
       // the east over the top to the west, so the shooting stars come from
-      // the left, then from above, then from the right. Pegasus, Andromeda,
-      // Orion, the Twins and Leo are as in tahtkujud/app.js.
+      // the left, then from above, then from the right. Orion, the Twins and
+      // Leo are as in tahtkujud/app.js.
       // Harder to catch: the taps must be quicker and nearer.
       id: 'geminids',
       bests: 'bests-geminids',
@@ -111,9 +193,10 @@
       rise: 'sirius',
       snow: true,
       grace: 0.1,
-      hit: 0.042,
-      hitMin: 24,
+      hit: 0.032,
+      hitMin: 18,
       tail: [0.65, 0.7],
+      slow: 59 / 35,
       figures: [
         {
           id: 'orion',
@@ -136,22 +219,8 @@
         },
         // Pegasus and Andromeda are high in the south in the evening, and
         // set in the west before Orion is at its highest
-        {
-          id: 'pegasus',
-          name: { et: 'Pegasus', en: 'Pegasus' },
-          stars: [
-            [2.10, 29.09, 2.1], [345.94, 28.08, 2.4], [346.19, 15.21, 2.5], [3.31, 15.18, 2.8], [340.37, 10.83, 3.4],
-            [332.55, 6.20, 3.5], [326.05, 9.88, 2.4], [340.75, 30.22, 2.9], [332.50, 33.18, 4.3], [342.50, 24.60, 3.5],
-            [331.75, 25.35, 3.8], [326.16, 25.65, 4.1]
-          ],
-          lines: [[0, 1, 2, 3, 0], [2, 4, 5, 6], [1, 7, 8], [1, 9, 10, 11]]
-        },
-        {
-          id: 'andromeda',
-          name: { et: 'Andromeeda', en: 'Andromeda' },
-          stars: [[2.10, 29.09, 2.1], [9.83, 30.86, 3.3], [17.43, 35.62, 2.1], [30.97, 42.33, 2.1], [14.19, 38.50, 3.9], [12.45, 41.08, 4.5]],
-          lines: [[0, 1, 2, 3], [2, 4, 5]]
-        },
+        PEGASUS,
+        ANDROMEDA,
         // Leo and Arcturus rise after midnight, when Orion is setting
         {
           id: 'leo',
@@ -177,6 +246,7 @@
     return { ra: ra * DEG, sd: Math.sin(dec * DEG), cd: Math.cos(dec * DEG) };
   }
   // the places of the stars and the radiant, and how high the radiant gets
+  // (the shared figures only once)
   NIGHTS.forEach((n) => {
     n.figures.forEach((f) => { f.pts = f.pts || f.stars.map(([ra, dec]) => sphere(ra, dec)); });
     n.rad = sphere(...n.radiant);
@@ -828,7 +898,8 @@
       );
       if (room < L.u * (fireball ? 0.35 : 0.15)) continue;
       const len = Math.min(room, L.u * (fireball ? rand(0.5, 0.65) : rand(0.22, 0.36)));
-      const m = { x, y, ux, uy, len, dur: fireball ? 2.4 : rand(0.8, 1.4), age: 0, fireball, hit: false };
+      const dur = (fireball ? 2.4 : rand(0.8, 1.4)) * N.slow;
+      const m = { x, y, ux, uy, len, dur, age: 0, fireball, hit: false };
       state.meteors.push(m);
       return m;
     }
