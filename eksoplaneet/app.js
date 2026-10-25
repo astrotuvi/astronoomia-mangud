@@ -13,6 +13,9 @@
   // are made up too. R is the star's radius in Sun radii, and hz the periods
   // (days) of planets in its habitable zone, where water could be liquid.
   // The dips are drawn wider than they are (a few hours) so that they show.
+  // days is how long the star is watched and t0 the first dip; a level with
+  // dips instead is watched for that many dips of its planet, a different
+  // number each time, from a different start.
   const LEVELS = [
     {
       id: 'hd209458',
@@ -21,9 +24,9 @@
         name: 'HD 209458', R: 1.16, color: '#fff2d0', hz: [340, 750],
         about: { et: 'Päikese-sarnane täht, Päikesest veidi suurem', en: 'A star like the Sun, a little bigger' }
       },
-      days: 12, noise: 0.0008,
+      dips: [3, 4, 5], noise: 0.0008,
       planets: [{
-        name: 'HD 209458 b', P: 3.525, t0: 1.7, Re: 15.1, dur: 0.13,
+        name: 'HD 209458 b', P: 3.525, Re: 15.1, dur: 0.13,
         pic: 'jupiter', filter: 'sepia(0.5) saturate(2) hue-rotate(-20deg) brightness(1.05)',
         fact: {
           et: 'See on esimene planeet, mille möödumist oma tähe eest nähti 1999. aastal. Ta on nii kuum, et tema atmosfäär aurab kosmosesse nagu komeedi saba.',
@@ -38,9 +41,9 @@
         name: 'Kepler-22', R: 0.98, color: '#ffe9b8', hz: [250, 650],
         about: { et: 'Päikese-sarnane täht, peaaegu sama suur kui Päike', en: 'A star like the Sun, almost the same size' }
       },
-      days: 900, noise: 0.00016,
+      dips: [3, 4, 5], noise: 0.00016,
       planets: [{
-        name: 'Kepler-22 b', P: 289.9, t0: 100, Re: 2.1, dur: 0.31,
+        name: 'Kepler-22 b', P: 289.9, Re: 2.1, dur: 0.31,
         pic: 'neptune', filter: 'hue-rotate(-15deg) saturate(0.8) brightness(1.2)',
         fact: {
           et: 'See on esimene planeet, mis leiti Päikese-sarnase tähe elamiskõlblikust vööndist. Avastus tehti 2011. aastal. Keegi ei tea veel, kas planeet on kivine või ookeaniga kaetud.',
@@ -61,8 +64,8 @@
           name: 'LHS 1140 b', P: 24.74, t0: 8, Re: 1.73, dur: 0.09,
           pic: 'venus', filter: 'hue-rotate(170deg) saturate(0.9) brightness(1.05)',
           fact: {
-            et: 'Võib-olla on see ookeaniga kaetud veemaailm. Teleskoobid uurivad, kas tal on atmosfäär, mida hingata ei saaks, aga mis hoiaks soojas.',
-            en: 'It may be a water world covered by an ocean. Telescopes are checking whether it has air, which would keep it warm.'
+            et: 'Võib-olla on ta ookeaniga kaetud veemaailm. Teleskoopidega uuritakse, kas tal on atmosfäär, mis hoiaks planeedi soojas.',
+            en: 'It may be a water world covered by an ocean. Astronomers are using telescopes to find out whether it has an atmosphere that would keep the planet warm.'
           }
         },
         {
@@ -93,8 +96,8 @@
         name: 'Kepler-1649 c', P: 19.54, t0: 6, Re: 1.06, dur: 0.08,
         pic: 'mars', filter: 'hue-rotate(-10deg) saturate(1.2) brightness(0.9)',
         fact: {
-          et: 'Arvuti pidas tema lohke algul millekski muuks. Inimesed vaatasid Kepleri teleskoobi andmed uuesti läbi ja leidsid ta 2020. aastal. Ta on peaaegu Maa suurune.',
-          en: 'A computer first took its dips for something else. People went through the Kepler telescope\'s data again and found it in 2020. It is almost as big as the Earth.'
+          et: 'Arvuti pidas tema heleduse muutumist algul millekski muuks. Inimesed vaatasid Kepleri teleskoobi andmed uuesti läbi ja leidsid ta 2020. aastal. Ta on peaaegu Maa suurune.',
+          en: 'A computer first took the change in brightness it made for something else. People went through the Kepler telescope\'s data again and found it in 2020. It is almost as big as the Earth.'
         }
       }]
     }
@@ -105,6 +108,7 @@
   const OBSERVE_S = 18;           // how long the telescope takes to record (s)
   const FLATTEN_S = 1.5;          // how long the spots' wobble takes to be taken out (s)
   const COLORS = ['#ffd34d', '#5fd4ff'];
+  const GAP_COLOR = '#ff8ad8'; // the days ruler, unlike the dips marked
 
   const TEXT = {
     et: {
@@ -123,9 +127,9 @@
       madeUp: 'See täht ja tema planeedid on välja mõeldud, aga just selliseid planeete on päriselt leitud.',
       madeUpEmpty: 'See täht on välja mõeldud.',
       noPlanet: 'Siin pole planeeti',
-      noPlanetNote: 'Kui sa ei leia ühtegi lohku, mis korduks sama vahe tagant, vajuta „Siin pole planeeti“.',
-      missed: 'Vaata uuesti: siin on lohke, mis korduvad sama vahe tagant. 💡 näitab, kus.',
-      noneHint: 'Vaata hoolega: kas siin on mõni lohk, mis kordub sama vahe tagant? Müra, plekid ja loited nii ei kordu.',
+      noPlanetNote: 'Kui sa ei leia ühtegi lohku, mis korduks sama aja tagant, vajuta „Siin pole planeeti“.',
+      missed: 'Vaata uuesti: siin on lohke, mis korduvad sama aja tagant. 💡 näitab, kus.',
+      noneHint: 'Vaata hoolega: kas siin on mõni lohk, mis kordub sama aja tagant? Müra, plekid ja loited nii ei kordu.',
       checked: 'Täht kontrollitud!',
       noneRight: 'Õige! Selle tähe eest ei möödu ükski planeet. Võib-olla on tal planeete, aga nende tee ei vii tähe eest läbi. Enamiku tähtedega on just nii, ja ka see on teaduses tähtis tulemus.',
       catNone: 'Planeete ei leitud: ükski ei möödu tähe eest.',
@@ -145,16 +149,16 @@
       observeTitle: '🔭 Vaatle tähte',
       observeText: 'Teleskoop mõõdab tähe heledust. Puuduta graafikul iga lohku, kus tähe valgus korraks nõrgeneb.',
       marked: (n) => `Leitud lohke: ${n}`,
-      moreDips: 'Leia veel lohke. Planeet möödub tähe eest alati sama vahe tagant.',
+      moreDips: 'Leia veel lohke. Planeet möödub tähe eest alati sama aja tagant.',
       moreKinds: 'Vaata hoolega: kas kõik lohud on ühesugused? Leia igat sorti vähemalt kolm.',
       enoughOne: 'Tubli! Lohud korduvad ühesuguse vahega. See on planeet, mis tiirleb ümber tähe.',
       enoughTwo: 'Tubli! Lohke on kaht eri sügavust, ja kumbki kordub oma vahega. Siin on kaks planeeti!',
-      noise: 'Siin pole lohku, see on ainult müra. Planeedi lohk kordub alati sama vahe tagant.',
-      spot: 'See lai ja ümar kõikumine tuleb tähe pinnal olevatest plekkidest, kui täht pöörleb. Planeedi lohk on kitsas ja kordub täpselt sama vahe tagant.',
+      noise: 'Siin pole varjutust, see on ainult müra. Planeedi varjutus kordub alati sama aja tagant.',
+      spot: 'See lai ja ümar kõikumine tuleb tähe pinnal olevatest plekkidest, kui täht pöörleb. Planeedi lohk on kitsas ja kordub täpselt sama aja tagant.',
       flare: 'See on täheloide: täht lõi korraks heledamaks. Planeedi möödudes tähe valgus hoopis nõrgeneb.',
       planetOf: (name) => `Planeet ${name}`,
       periodTitle: '⏱️ Kui tihti?',
-      periodText: 'Lohkude kohal on päevad, millal planeet tähe eest möödus. Mitme päeva tagant see kordub?',
+      periodText: 'Mitme päeva tagant planeet tähe eest möödub? Lohista roosad jooned kahe järjestikuse lohu peale ja vaata noole kohalt, mitu päeva on nende vahel.',
       periodHint: (a, b) => `Lahuta kahe järjestikuse lohu päevad: ${b} − ${a}.`,
       periodOk: (p) => `Õige! Planeet tiirleb ümber tähe ${p} päevaga. Nii pikk on seal aasta.`,
       days: (p) => `${p} päeva`,
@@ -173,7 +177,7 @@
       zoneHint: 'Lühem aasta tähendab, et planeet on tähele lähemal ja seal on kuumem.',
       zoneNames: ['Liiga kuum', 'Paras, vesi võiks olla vedel', 'Liiga külm'],
       zoneShort: ['liiga kuum', 'elamiskõlblikus vööndis', 'liiga külm'],
-      zoneBar: ['kuum', 'vesi', 'külm'],
+      zoneBar: ['aur', 'vedel vesi', 'jää'],
       zoneOk: [
         'Õige! Planeet on tähele nii lähedal, et vesi keeks ära.',
         'Õige! See planeet on elamiskõlblikus vööndis, kus vesi võiks olla vedel.',
@@ -249,7 +253,7 @@
       flare: 'This is a flare: the star got brighter for a moment. A planet makes the star fainter.',
       planetOf: (name) => `Planet ${name}`,
       periodTitle: '⏱️ How often?',
-      periodText: 'Above the dips are the days when the planet passed in front of the star. How many days apart are they?',
+      periodText: 'How many days apart does the planet pass in front of the star? Drag the pink lines onto two dips in a row and see above the arrow how many days there are between them.',
       periodHint: (a, b) => `Subtract the days of two dips in a row: ${b} − ${a}.`,
       periodOk: (p) => `Right! The planet goes round the star in ${p} days. That is how long a year is there.`,
       days: (p) => `${p} days`,
@@ -268,7 +272,7 @@
       zoneHint: 'A shorter year means that the planet is closer to the star, where it is hotter.',
       zoneNames: ['Too hot', 'Just right, water could be liquid', 'Too cold'],
       zoneShort: ['too hot', 'in the habitable zone', 'too cold'],
-      zoneBar: ['hot', 'water', 'cold'],
+      zoneBar: ['steam', 'liquid water', 'ice'],
       zoneOk: [
         'Right! The planet is so close to its star that water would boil away.',
         'Right! This planet is in the habitable zone, where water could be liquid.',
@@ -384,6 +388,22 @@
     });
   }
 
+  // How long to watch for n dips of a planet going round in P days: from
+  // part way into a turn to part way into the turn after the last dip, so
+  // that no dip is cut at either end.
+  function watch(P, n) {
+    const t0 = rand(0.1, 0.9) * P;
+    return { t0, days: t0 + P * (n - 1 + rand(0.35, 0.85)) };
+  }
+
+  // A real level with dips, watched for a number of them.
+  function watchReal(real) {
+    const p = { ...real.planets[0] };
+    const { t0, days } = watch(p.P, pick(real.dips));
+    p.t0 = t0;
+    return prepare({ ...real, days, planets: [p] });
+  }
+
   // A new star of the same kind as level i, with planets that are new too.
   function makeLevel(i) {
     const base = LEVELS[i];
@@ -413,10 +433,10 @@
       const zoneOf = (P) => (P < star.hz[0] ? 0 : P > star.hz[1] ? 2 : 1);
       planets = [makePlanet(star, sizes[0], zoneOf(inner), inner), makePlanet(star, sizes[1], zone, outer)];
     }
-    // watch long enough for three dips of the outermost planet
+    // watch for three to five dips of the outermost planet on the first two
+    // levels, like their real stars, and three on the others
     const Po = planets[planets.length - 1].P;
-    const t0 = rand(0.1, 0.9) * Po;
-    const days = t0 + Po * rand(2.35, 2.85);
+    const { t0, days } = watch(Po, i < 2 ? pick(base.dips) : 3);
     planets[planets.length - 1].t0 = t0;
     const half = Math.max(0.1, days * 0.012) / 2;
     if (planets.length > 1) {
@@ -875,6 +895,56 @@
       });
     });
 
+    // the ruler for measuring the days between two dips: a line at each
+    // end, and an arrow between them with the days above it
+    if (state.phase === 'period' && state.gap) {
+      const xa = X(state.gap[0]);
+      const xb = X(state.gap[1]);
+      const ym = (Y(1) + y1) / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(x0, y0, x1 - x0, y1 - y0);
+      ctx.clip();
+      ctx.strokeStyle = GAP_COLOR;
+      ctx.fillStyle = GAP_COLOR;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([10, 6]);
+      for (const x of [xa, xb]) {
+        ctx.beginPath();
+        ctx.moveTo(x, y0);
+        ctx.lineTo(x, y1);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.moveTo(xa, ym);
+      ctx.lineTo(xb, ym);
+      ctx.stroke();
+      // the arrow heads, pointing out to the lines
+      const dir = Math.sign(xb - xa) || 1;
+      for (const [x, s] of [[xa, -dir], [xb, dir]]) {
+        ctx.beginPath();
+        ctx.moveTo(x, ym);
+        ctx.lineTo(x - s * 12, ym - 8);
+        ctx.lineTo(x - s * 12, ym + 8);
+        ctx.fill();
+      }
+      ctx.lineWidth = 1;
+      const label = t('days')(fmtP(Math.abs(state.gap[1] - state.gap[0])));
+      ctx.font = '900 15px Nunito, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const lw = ctx.measureText(label).width + 16;
+      const lx = clamp((xa + xb) / 2, x0 + lw / 2 + 2, x1 - lw / 2 - 2);
+      ctx.fillStyle = GAP_COLOR;
+      ctx.beginPath();
+      ctx.roundRect(lx - lw / 2, ym - 34, lw, 24, 12);
+      ctx.fill();
+      ctx.fillStyle = '#1a1440';
+      ctx.fillText(label, lx, ym - 21);
+      ctx.restore();
+    }
+
     // the ruler for measuring a dip's depth
     if (state.phase === 'size' && state.ruler !== null) {
       const y = Y(1 - state.ruler);
@@ -930,7 +1000,7 @@
     $('menu').classList.add('hidden');
     $('game').classList.remove('hidden');
     const real = LEVELS[state.level];
-    const L = state.found.includes(real.id) ? makeLevel(state.level) : real;
+    const L = state.found.includes(real.id) ? makeLevel(state.level) : real.dips ? watchReal(real) : real;
     state.L = L;
     state.data = makeData(L);
     state.marks = L.planets.map((p) => p.times.map(() => false));
@@ -939,6 +1009,7 @@
     state.shown = 0;
     state.t0 = performance.now();
     state.ruler = null;
+    state.gap = null;
     state.flat = 0;
     state.flatT0 = 0;
     state.hintAt = null;
@@ -1118,7 +1189,7 @@
     if (el) el.style.left = scalePos(state.ruler) + '%';
   }
 
-  // The zones round the star: too hot, water, too cold, with the periods
+  // The zones round the star: steam, liquid water, ice, with the periods
   // at the edges and the planet's year as a line.
   function zoneBar(L, p) {
     const el = document.createElement('div');
@@ -1145,6 +1216,12 @@
     state.phase = phase;
     setFeedback('');
     if (phase === 'size') state.ruler = 0;
+    // the days ruler from the first dip to part way to the next
+    if (phase === 'period') {
+      const p = state.L.planets[state.pi];
+      state.gap = [p.times[0], p.times[0] + p.P * 0.6];
+      showDay(p.times[0]);
+    }
     // before the first dip is measured, the spots' wobble is taken out
     if (phase === 'size' && state.L.spots && !state.flatT0) {
       state.flatT0 = performance.now();
@@ -1163,10 +1240,12 @@
     return { x: e.clientX - r.left, y: e.clientY - r.top };
   }
 
-  // One finger: in the size step it drags the ruler; otherwise a tap marks
-  // a dip and a drag moves along the days. Two fingers zoom and move.
+  // One finger: in the period and size steps it drags the ruler; otherwise
+  // a tap marks a dip and a drag moves along the days. Two fingers zoom and
+  // move.
   const pointers = new Map();
   let dragging = false; // the ruler
+  let gapEnd = 0;       // which end of the days ruler is dragged
   let panFrom = null;   // { x, v0, moved } a drag along the days
   let pinch = null;     // { d, span, time } two fingers at their start
 
@@ -1188,6 +1267,10 @@
     } else if (pointers.size === 1) {
       if (state.phase === 'size') {
         dragging = true;
+        moveRuler(at);
+      } else if (state.phase === 'period' && state.gap) {
+        dragging = true;
+        gapEnd = Math.abs(at.x - X(state.gap[0])) <= Math.abs(at.x - X(state.gap[1])) ? 0 : 1;
         moveRuler(at);
       } else panFrom = { x: at.x, v0: state.v0, moved: false };
     }
@@ -1250,8 +1333,18 @@
   $('pan').addEventListener('pointercancel', stopPan);
 
   function moveRuler(at) {
-    state.ruler = clamp(1 - fromY(at.y), 0, 1 - state.data.lo);
-    updateScale();
+    if (state.phase === 'period') {
+      // an end close to a dip of this planet snaps onto it
+      const p = state.L.planets[state.pi];
+      let time = clamp(fromX(at.x), 0, state.L.days);
+      const reach = Math.max(p.half * 1.5, (16 / (W - M.l - M.r)) * state.span);
+      const near = p.times.find((tc) => Math.abs(time - tc) < reach);
+      if (near !== undefined) time = near;
+      state.gap[gapEnd] = time;
+    } else {
+      state.ruler = clamp(1 - fromY(at.y), 0, 1 - state.data.lo);
+      updateScale();
+    }
     draw();
   }
 

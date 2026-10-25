@@ -225,8 +225,8 @@
 
 /* the zones round the star */
 .zone-bar { position: relative; margin: 6px 0 26px; color: var(--ink); }
-.zones { display: flex; height: 30px; border-radius: 999px; overflow: hidden; font-size: 0.9rem; }
-.zones span { flex: 1; display: grid; place-items: center; }
+.zones { display: flex; height: 30px; border-radius: 999px; overflow: hidden; font-size: 0.85rem; }
+.zones span { flex: 1; display: grid; place-items: center; white-space: nowrap; }
 .z-hot { background: linear-gradient(90deg, #ff5a3c, #ff9f5a); }
 .z-hz { background: #4fd08a; }
 .z-cold { background: linear-gradient(90deg, #8fd0ff, #4a7fe0); }

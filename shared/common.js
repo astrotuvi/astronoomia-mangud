@@ -246,6 +246,9 @@ window.Astro = (() => {
   }
 
   function swap(g) {
+    // not one taken off the page again before its turn came, whose colours
+    // cannot be read any more
+    if (!g.isConnected) return;
     // only gradients in the units of the shape they fill, which all the games use
     if (g.getAttribute('gradientUnits') === 'userSpaceOnUse' || g.hasAttribute('gradientTransform')) return;
     const stops = [...g.querySelectorAll('stop')];
