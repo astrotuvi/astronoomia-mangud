@@ -8,8 +8,8 @@ ones.
 ## Who the games are for
 
 - Most games are for children aged 5–6, who may not read yet. Kuu faasid and
-  Kosmoseviktoriin are for ages 8–10, and Avasta eksoplaneet for 11–12. Say
-  in the README which age a new game is for.
+  Kosmoseviktoriin are for ages 8–10, and Avasta eksoplaneet and Leia
+  asteroid for 11–12. Say in the README which age a new game is for.
 - Estonian is the default language and English the second.
 - The games work with a finger on a tablet or phone as well as with a mouse,
   in landscape and in portrait, down to a 360 px wide phone.

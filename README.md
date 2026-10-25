@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, Kuu faasid and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet for ages 11–12, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, Kuu faasid and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -14,6 +14,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
 | Avasta eksoplaneet / Discover an Exoplanet | [`eksoplaneet/`](eksoplaneet/) | Find the dips in a star's light and work out the planet's year, size and whether it could have water |
+| Leia asteroid / Find the Asteroid | [`asteroid/`](asteroid/) | Flip between pictures of the same patch of sky, find the asteroid that moves, and work out how far away it goes round the Sun |
 | Kosmoseviktoriin / Space Quiz | [`viktoriin/`](viktoriin/) | Answer questions about what the other games teach, alone or two players on one phone |
 
 The language and sound settings are shared by all games.
@@ -160,6 +161,26 @@ The levels, the meteor storm, the length of the night, the place, the direction 
 - The win screen shows the star from above, with the hot zone, the habitable zone as a green ring and the cold zone round it, and the planets going round on their orbits: the inner one faster. The orbits are on a log scale of the year, so that a planet close to the star and a zone far out both fit, and the scheme says it is not to scale. Below it is each planet found with a picture of what it could look like and a fact, with 🔭 Uus täht for another star of the same kind and ▶ Järgmine tase. Every planet found goes into **Sinu avastused** in the menu, and a 🌟 marks the kinds whose real star is found. 🗑️ Kustuta kõik avastused under the list clears them, after asking, so each level starts again with its real star.
 
 The real stars and planets are in the `LEVELS` list at the top of `eksoplaneet/app.js`, and `makeLevel` makes up the new ones. The real planets' sizes and periods and the stars' sizes are real, but the light curves are made up from them, with made-up noise, spots and flares, and the dips are drawn wider than they are (a few hours), so that they show. The habitable zones of the real stars are rough, and those of the made-up ones are worked out from the star's size and temperature. A made-up planet's year and size are always well inside one answer, so that the answers are clear. The pictures are the planets of `shared/planets.js` in other colours, and the facts of the made-up planets depend on their size and zone.
+
+## Leia asteroid
+
+- Pick one of four levels, each harder than the one before. Every time, the patch of sky and the asteroid in it are new and made up:
+  1. Selge vilgutus: two pictures, few stars and a bright asteroid
+  2. Tähtede rägastik: two pictures, many stars and a faint asteroid, with a star that changes its brightness and cosmic rays
+  3. Kolm ööd: three pictures, and then where the asteroid will be on night 4, sometimes with a satellite's streak
+  4. Kiire külaline: three pictures of an asteroid near the Earth, which moves far and leaves a short streak, with a satellite's streak
+- The telescope took a picture of the same patch of sky, 1° or two Moon widths across, on each night. ⏸️ and ▶️ stop and start flipping between them, and **Öö 1**, **Öö 2** … show one. The stars stay put and the asteroid jumps.
+- Tap the asteroid in every picture; it gets a yellow ring with the night's number. While the pictures flip, a tap counts on whichever night the asteroid is there. A tap on something else says what it is: a star, a star that changes its brightness, a cosmic ray (sharp, and in one picture only), a satellite's streak, or noise.
+- − and + at the corner of the picture zoom in up to 8 times, a drag moves the picture, two fingers pinch to zoom, and the mouse wheel zooms at the pointer. Zoomed in, the pixels show, as in a camera picture.
+- Then, depending on the level:
+  - **Ennusta** (level 3): tap where the asteroid will be on night 4. A near enough tap shows the picture of night 4 with the asteroid there. After two misses a dashed line shows where it goes on
+  - **Kui kiiresti?** (levels 2–4): drag the ends of a pink line onto the asteroid on two nights in a row; an end snaps onto a ring when close. The line shows how far it moved in Moon widths, and a scale under the question where that falls among Neptuuni taga, vöö (the asteroid belt) and Maa lähedal: the nearer it is, the faster it seems to move. Pick where it goes round the Sun
+  - **Maa lähedal?** (level 4): a picture of its path round the Sun, with the Earth's path in blue. Pick whether it crosses the Earth's path or only comes close to it. The answer says that it passes the Earth safely
+- On levels 2 and 3, one asteroid in six is a slow, faint icy world beyond Neptune, as Pluto was when Clyde Tombaugh found it by flipping between photos in 1930.
+- 💡 rings the part of the sky where the asteroid is on a night not found yet, smaller each time it is pressed, rings the place of night 4, shows on the scale where the right answer is, or explains the question again.
+- The win screen shows the asteroid going round the Sun among the planets' paths, its temporary label such as 2026 UA₁₂ (the year, a letter for the half of the month, another letter and a number), how far it moves in a night, a fact, and four names to pick from that no asteroid in the catalogue has yet. When all the names of a language are taken, they come again with II, III and so on. For half of the asteroids in the belt and near the Earth, the fact is about an asteroid named after Estonia, a place in Estonia or an Estonian, such as 2099 Öpik, 1743 Schmidt or 4227 Kaali. Every asteroid found goes into **Sinu asteroidid** in the menu, with the name picked, and a 🌟 marks each level done once. 🗑️ Kustuta kõik avastused under the list clears them, after asking.
+
+The levels are in the `LEVELS` list at the top of `asteroid/app.js`, and `makeField` makes up each patch of sky. The pictures are drawn pixel by pixel, with blurred stars and grainy noise. How far an asteroid moves in a night is roughly right for its kind (about a tenth of a degree in the asteroid belt, more near the Earth and very little beyond Neptune), but not to scale, and it moves in a straight line. The paths round the Sun are on a square-root scale of the distance, or an even one for an asteroid near the Earth, and are not to scale.
 
 ## Kosmoseviktoriin
 
