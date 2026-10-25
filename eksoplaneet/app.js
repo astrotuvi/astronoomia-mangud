@@ -155,13 +155,14 @@
       periodOk: (p) => `Õige! Planeet tiirleb ümber tähe ${p} päevaga. Nii pikk on seal aasta.`,
       days: (p) => `${p} päeva`,
       sizeTitle: '📏 Kui suur?',
-      sizeText: 'Mida suurem planeet, seda sügavam lohk. Lohista kollane joon lohu põhja ja vali, milline planeet teeb sellise lohu.',
+      sizeText: 'Mida suurem planeet, seda sügavam lohk. Lohista kollane joon lohu põhja ja vaata skaalalt, milline planeet teeb sellise lohu.',
       flattened: 'Eemaldasime plekkide muutlikkuse, nüüd saad lohu sügavust mõõta.',
       smallStar: 'Väikese tähe ees teeb sama planeet sügavama lohu, sest ta katab tähest suurema osa.',
-      ruler: (d) => `Joone kohal on tähe valgus ${d} % nõrgem.`,
-      sizeHint: (d) => `Selle planeedi lohk on umbes ${d} % sügav.`,
-      sizeNames: ['Maa-suurune', 'Maast kaks korda suurem', 'Neptuni-suurune', 'Jupiteri-suurune'],
-      sizeShort: ['Maa-suurune', 'Maast kaks korda suurem', 'Neptuni-suurune', 'Jupiteri-suurune'],
+      sizeWrong: 'Vaata, kuhu kollane kriips skaalal jääb.',
+      sizeHint: 'Hele kriips skaalal näitab, kui sügav on selle planeedi lohk.',
+      sizeNames: ['Maa-suurune', 'Super-Maa', 'Neptuuni-suurune', 'Jupiteri-suurune'],
+      sizeShort: ['Maa-suurune', 'super-Maa', 'Neptuuni-suurune', 'Jupiteri-suurune'],
+      sizeBar: ['Maa', 'super-Maa', 'Neptuun', 'Jupiter'],
       sizeOk: (s) => `Õige! Planeet on ${s}.`,
       zoneTitle: '💧 Kas seal võiks olla vett?',
       zoneText: (lo, hi, p) => `Selle tähe ümber võiks vesi olla vedel planeetidel, mis tiirlevad ${lo}–${hi} päevaga. Selle planeedi aasta on ${p} päeva.`,
@@ -190,7 +191,7 @@
           'Super-Maa: Maast suuremaid kiviplaneete pole meie Päikesesüsteemis ühtegi, aga teiste tähtede juures on neid väga palju.',
           'Külm super-Maa, mille pind on tõenäoliselt jääs.'],
         ['Kuum Neptuun: paks gaasikiht, mida tähe kuumus tasapisi ära puhub.',
-          'Neptuni-suurune planeet on enamasti gaasist ja jääst, nii et sellel pole kõva pinda, kuhu astuda.',
+          'Neptuuni-suurune planeet on enamasti gaasist ja jääst, nii et sellel pole kõva pinda, kuhu astuda.',
           'Jäine hiid nagu Uraan ja Neptuun: gaas ja jää, väga külm.'],
         ['Kuum Jupiter: hiiglaslik gaasiplaneet oma tähe kõrval. Neid leitakse kergesti, sest nende lohud on sügavad.',
           'Hiidplaneet ise on gaasist, aga kui tal on suured kuud, võiks neil olla vett.',
@@ -245,13 +246,14 @@
       periodOk: (p) => `Right! The planet goes round the star in ${p} days. That is how long a year is there.`,
       days: (p) => `${p} days`,
       sizeTitle: '📏 How big?',
-      sizeText: 'The bigger the planet, the deeper the dip. Drag the yellow line to the bottom of the dip and pick the planet that makes a dip like that.',
+      sizeText: 'The bigger the planet, the deeper the dip. Drag the yellow line to the bottom of the dip and see on the scale which planet makes a dip like that.',
       flattened: 'We took out the changes from the spots, so now you can measure the dip\'s depth.',
       smallStar: 'In front of a small star the same planet makes a deeper dip, because it covers more of the star.',
-      ruler: (d) => `At the line the star is ${d} % fainter.`,
-      sizeHint: (d) => `This planet's dip is about ${d} % deep.`,
-      sizeNames: ['Earth-sized', 'Twice the size of the Earth', 'Neptune-sized', 'Jupiter-sized'],
-      sizeShort: ['Earth-sized', 'twice the size of the Earth', 'Neptune-sized', 'Jupiter-sized'],
+      sizeWrong: 'See where the yellow mark is on the scale.',
+      sizeHint: 'The pale mark on the scale shows how deep this planet\'s dip is.',
+      sizeNames: ['Earth-sized', 'Super-Earth', 'Neptune-sized', 'Jupiter-sized'],
+      sizeShort: ['Earth-sized', 'a super-Earth', 'Neptune-sized', 'Jupiter-sized'],
+      sizeBar: ['Earth', 'super-Earth', 'Neptune', 'Jupiter'],
       sizeOk: (s) => `Right! The planet is ${s}.`,
       zoneTitle: '💧 Could there be water?',
       zoneText: (lo, hi, p) => `Round this star water could be liquid on planets that go round it in ${lo}–${hi} days. This planet's year is ${p} days.`,
@@ -450,12 +452,6 @@
 
   const fmt = (v, d) => v.toLocaleString(Astro.lang === 'et' ? 'et-EE' : 'en-GB', { minimumFractionDigits: d, maximumFractionDigits: d });
   const fmtP = (P) => fmt(P, P < 100 ? 1 : 0);
-  // a dip's depth in percent, with two significant digits
-  const fmtDepth = (d) => {
-    const pc = d * 100;
-    if (pc < 0.0005) return fmt(0, 0);
-    return fmt(pc, clamp(1 - Math.floor(Math.log10(pc)), 0, 3));
-  };
 
   // ---------------------------------------------------------------------------
   // State
@@ -978,20 +974,19 @@
     } else if (state.phase === 'size') {
       $('qTitle').textContent = title + t('sizeTitle');
       $('qText').textContent = (L.spots ? t('flattened') + ' ' : '') + t('sizeText') + (L.star.R < 0.5 ? ' ' + t('smallStar') : '');
-      $('qExtra').textContent = t('ruler')(fmtDepth(state.ruler));
+      $('qExtra').appendChild(sizeScale());
+      updateScale();
       SIZES.forEach((s, k) => {
-        const depth = ((s * EARTH_IN_SUN) / L.star.R) ** 2;
-        addOption(`${t('sizeNames')[k]}: ${fmtDepth(depth)} %`, k === p.size, () => {
+        addOption(t('sizeNames')[k], k === p.size, () => {
           setFeedback(t('sizeOk')(t('sizeShort')[k]), true);
           showNext(t('next'), () => go('zone'));
-        }, () => setFeedback(`${t('tryAgain')} ${t('sizeHint')(fmtDepth(p.depth))}`));
+        }, () => setFeedback(`${t('tryAgain')} ${t('sizeWrong')}`));
       });
     } else if (state.phase === 'zone') {
       $('qTitle').textContent = title + t('zoneTitle');
       $('qText').textContent = t('zoneText')(fmt(L.star.hz[0], 0), fmt(L.star.hz[1], 0), fmtP(p.P));
       $('qExtra').appendChild(zoneBar(L, p));
       t('zoneNames').forEach((name, k) => addOption(name, k === p.zone, () => {
-        $('qExtra').querySelector('.zone-planet').classList.remove('hidden');
         setFeedback(t('zoneOk')[k], true);
         if (state.pi + 1 < L.planets.length) {
           showNext(t('next'), () => {
@@ -1037,8 +1032,43 @@
     $('options').appendChild(b);
   }
 
+  // The planet sizes as a scale of dip depths round this star, each size in
+  // an equal part, with the yellow ruler's depth on it. The edges between
+  // the sizes are halfway between them on a log scale, as in prepare().
+  const SCALE_EDGES = [SIZES[0] / 3, ...SIZES.slice(1).map((s, k) => Math.sqrt(s * SIZES[k])), SIZES[SIZES.length - 1] * 3];
+
+  // where a dip of this depth goes on the scale, in percent
+  function scalePos(depth) {
+    const Re = (Math.sqrt(depth) * state.L.star.R) / EARTH_IN_SUN;
+    const E = SCALE_EDGES;
+    const n = E.length - 1;
+    if (Re <= E[0]) return 0;
+    for (let k = 0; k < n; k++) {
+      if (Re < E[k + 1]) return (100 * (k + Math.log(Re / E[k]) / Math.log(E[k + 1] / E[k]))) / n;
+    }
+    return 100;
+  }
+
+  // a line across the scale, in SVG so that it stays bright in dark mode
+  const markPic = (color) =>
+    `<svg viewBox="0 0 10 46" preserveAspectRatio="none" aria-hidden="true"><rect x="2" y="2" width="6" height="42" rx="3" fill="${color}" stroke="#1a1440" stroke-width="2"/></svg>`;
+
+  function sizeScale() {
+    const el = document.createElement('div');
+    el.className = 'size-scale';
+    el.innerHTML =
+      `<div class="sizes">${t('sizeBar').map((name, k) => `<span class="s${k}">${name}</span>`).join('')}</div>` +
+      `<span class="scale-hint hidden">${markPic('#ffffff')}</span><span class="scale-ruler">${markPic(COLORS[0])}</span>`;
+    return el;
+  }
+
+  function updateScale() {
+    const el = $('qExtra').querySelector('.scale-ruler');
+    if (el) el.style.left = scalePos(state.ruler) + '%';
+  }
+
   // The zones round the star: too hot, water, too cold, with the periods
-  // at the edges; the planet shows on it once answered.
+  // at the edges and the planet's year as a line.
   function zoneBar(L, p) {
     const el = document.createElement('div');
     el.className = 'zone-bar';
@@ -1053,9 +1083,9 @@
     else if (p.P > hi) pos = 66.7 + 33.3 * clamp(Math.log(p.P / hi) / Math.log(30), 0.08, 0.92);
     else pos = 33.3 + (33.3 * Math.log(p.P / lo)) / Math.log(hi / lo);
     const dot = document.createElement('span');
-    dot.className = 'zone-planet hidden';
+    dot.className = 'zone-planet';
     dot.style.left = pos + '%';
-    dot.style.background = COLORS[L.planets.indexOf(p)];
+    dot.innerHTML = markPic(COLORS[L.planets.indexOf(p)]);
     el.appendChild(dot);
     return el;
   }
@@ -1100,7 +1130,7 @@
 
   function moveRuler(at) {
     state.ruler = clamp(1 - fromY(at.y), 0, 1 - state.data.lo);
-    $('qExtra').textContent = t('ruler')(fmtDepth(state.ruler));
+    updateScale();
     draw();
   }
 
@@ -1147,7 +1177,12 @@
       }
       setFeedback(t(L.planets.length ? 'moreDips' : 'noneHint'));
     } else if (state.phase === 'period') periodHint(L.planets[state.pi]);
-    else if (state.phase === 'size') setFeedback(t('sizeHint')(fmtDepth(L.planets[state.pi].depth)));
+    else if (state.phase === 'size') {
+      const mark = $('qExtra').querySelector('.scale-hint');
+      mark.style.left = scalePos(L.planets[state.pi].depth) + '%';
+      mark.classList.remove('hidden');
+      setFeedback(t('sizeHint'));
+    }
     else if (state.phase === 'zone') setFeedback(t('zoneHint'));
   }
 
