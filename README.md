@@ -166,7 +166,7 @@ The real stars and planets are in the `LEVELS` list at the top of `eksoplaneet/a
 - Pick who plays, alone or two players, and the topic: all games together, one of the games, or Pildid (the photos of Tähepusle and Mälumäng). A round has 10 questions. With all topics, they come from each game in turn, and questions not asked lately come first.
 - Each question is first shown alone, for 5–14 seconds depending on its length. Then the answers appear and 30 seconds start to run down. Alone, **Olen valmis ▶** skips the reading time.
 - The answers are four coloured buttons with shapes (▲ ◆ ● ■), with text or pictures:
-  - photos from the puzzle, and pictures of the Earth, the Moon, Mars, Jupiter and Saturn
+  - photos from the puzzle, pictures of the Earth, the Moon, Mars, Jupiter and Saturn, and the eight planets as drawn in Planeetide rivi
   - the Moon as seen from the Earth, and the Sun, the Earth and the Moon from above the North Pole, as in Kuu faasid
   - the stars of a constellation without lines
   - short animations of a plane, a satellite and a shooting star, as in Püüa langev täht

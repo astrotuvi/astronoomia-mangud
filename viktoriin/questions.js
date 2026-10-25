@@ -16,6 +16,7 @@
 // Pictures:
 //   { photo: 'saturn' }   a photo from pusle/images/
 //   { world: 'mars' }     the Earth, the Moon, Mars, Jupiter or Saturn
+//   { planet: 'uranus' }  any of the eight planets, drawn as in Planeetide rivi
 //   { moon: 90 }          the Moon seen from the Earth, by its angle from new
 //                         moon (0 new, 90 first quarter, 180 full, 270 last quarter)
 //   { space: 90 }         the Sun, the Earth and the Moon from above the North
@@ -397,6 +398,172 @@ window.QUIZ = [
     ]
   },
   {
+    game: 'planeedid',
+    questions: [
+      {
+        q: { et: 'Milline planeet on Päikesele kõige lähem?', en: 'Which planet is closest to the Sun?' },
+        answers: [
+          { planet: 'mercury', label: { et: 'Merkuur', en: 'Mercury' } },
+          { planet: 'venus', label: { et: 'Veenus', en: 'Venus' } },
+          { planet: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { planet: 'mars', label: { et: 'Marss', en: 'Mars' } }
+        ],
+        why: { et: 'Merkuur on Päikesele kõige lähem. Ta teeb ümber Päikese tiiru vaid 88 päevaga.', en: 'Mercury is the closest. It goes round the Sun in only 88 days.' }
+      },
+      {
+        q: { et: 'Milline planeet on Päikesest kõige kaugemal?', en: 'Which planet is farthest from the Sun?' },
+        answers: [
+          { planet: 'neptune', label: { et: 'Neptuun', en: 'Neptune' } },
+          { planet: 'uranus', label: { et: 'Uraan', en: 'Uranus' } },
+          { planet: 'saturn', label: { et: 'Saturn', en: 'Saturn' } },
+          { planet: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } }
+        ],
+        why: { et: 'Neptuun on Päikesest kõige kaugem planeet. Seal puhuvad kõige tugevamad tuuled.', en: 'Neptune is the planet farthest from the Sun. It has the strongest winds.' }
+      },
+      {
+        q: { et: 'Pane kivised planeedid järjekorda, Päikesest kaugemale.', en: 'Put the rocky planets in order, from the Sun outwards.' },
+        order: [
+          { planet: 'mercury', label: { et: 'Merkuur', en: 'Mercury' } },
+          { planet: 'venus', label: { et: 'Veenus', en: 'Venus' } },
+          { planet: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { planet: 'mars', label: { et: 'Marss', en: 'Mars' } }
+        ],
+        why: { et: 'Merkuur, Veenus, Maa ja Marss on Päikesele kõige lähemad planeedid. Kõik nad on kivised.', en: 'Mercury, Venus, the Earth and Mars are the planets closest to the Sun. They are all rocky.' }
+      },
+      {
+        q: { et: 'Pane hiidplaneedid järjekorda, Päikesest kaugemale.', en: 'Put the giant planets in order, from the Sun outwards.' },
+        order: [
+          { planet: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } },
+          { planet: 'saturn', label: { et: 'Saturn', en: 'Saturn' } },
+          { planet: 'uranus', label: { et: 'Uraan', en: 'Uranus' } },
+          { planet: 'neptune', label: { et: 'Neptuun', en: 'Neptune' } }
+        ],
+        why: { et: 'Marsi taga tulevad hiidplaneedid: Jupiter, Saturn, Uraan ja viimasena Neptuun.', en: 'Beyond Mars come the giant planets: Jupiter, Saturn, Uranus and last Neptune.' }
+      },
+      {
+        q: { et: 'Pane planeedid järjekorda, väiksemast suuremaks.', en: 'Put the planets in order, from the smallest to the biggest.' },
+        order: [
+          { planet: 'mercury', label: { et: 'Merkuur', en: 'Mercury' } },
+          { planet: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { planet: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { planet: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } }
+        ],
+        why: { et: 'Merkuur on kõige väiksem planeet. Marsi läbimõõt on umbes pool Maa omast ja Jupiteri oma üksteist korda suurem kui Maal.', en: 'Mercury is the smallest planet. Mars is about half as wide as the Earth, and Jupiter eleven times as wide.' }
+      },
+      {
+        q: { et: 'Milline planeet on kõige suurem?', en: 'Which planet is the biggest?' },
+        answers: [
+          { planet: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } },
+          { planet: 'saturn', label: { et: 'Saturn', en: 'Saturn' } },
+          { planet: 'uranus', label: { et: 'Uraan', en: 'Uranus' } },
+          { planet: 'earth', label: { et: 'Maa', en: 'The Earth' } }
+        ],
+        why: { et: 'Jupiter on kõige suurem planeet. Tema läbimõõt on üksteist korda suurem kui Maal.', en: 'Jupiter is the biggest planet, eleven times as wide as the Earth.' }
+      },
+      {
+        q: { et: 'Milline planeet on kõige väiksem?', en: 'Which planet is the smallest?' },
+        answers: [
+          { planet: 'mercury', label: { et: 'Merkuur', en: 'Mercury' } },
+          { planet: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { planet: 'venus', label: { et: 'Veenus', en: 'Venus' } },
+          { planet: 'neptune', label: { et: 'Neptuun', en: 'Neptune' } }
+        ],
+        why: { et: 'Merkuur on kõige väiksem planeet. Maa läbimõõt on temast peaaegu kolm korda suurem.', en: 'Mercury is the smallest planet. The Earth is almost three times as wide.' }
+      },
+      {
+        q: { et: 'Kumb on suurem, Uraan või Neptuun?', en: 'Which is bigger, Uranus or Neptune?' },
+        answers: [
+          { planet: 'uranus', label: { et: 'Uraan', en: 'Uranus' } },
+          { planet: 'neptune', label: { et: 'Neptuun', en: 'Neptune' } }
+        ],
+        why: { et: 'Nad on peaaegu sama suured, aga Uraan on natuke suurem. Mõlema läbimõõt on umbes neli korda suurem kui Maal.', en: 'They are almost the same size, but Uranus is a little bigger. Both are about four times as wide as the Earth.' }
+      },
+      {
+        q: { et: 'Milline planeet on peaaegu sama suur kui Maa?', en: 'Which planet is almost as big as the Earth?' },
+        answers: [
+          { planet: 'venus', label: { et: 'Veenus', en: 'Venus' } },
+          { planet: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { planet: 'mercury', label: { et: 'Merkuur', en: 'Mercury' } },
+          { planet: 'saturn', label: { et: 'Saturn', en: 'Saturn' } }
+        ],
+        why: { et: 'Veenus on peaaegu sama suur kui Maa, aga seal on nii kuum, et plii sulaks.', en: 'Venus is almost as big as the Earth, but it is so hot there that lead would melt.' }
+      },
+      {
+        q: { et: 'Milline planeet on kõige kuumem?', en: 'Which planet is the hottest?' },
+        answers: [
+          { planet: 'venus', label: { et: 'Veenus', en: 'Venus' } },
+          { planet: 'mercury', label: { et: 'Merkuur', en: 'Mercury' } },
+          { planet: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { planet: 'jupiter', label: { et: 'Jupiter', en: 'Jupiter' } }
+        ],
+        why: { et: 'Merkuur on Päikesele lähemal, aga Veenuse paks pilvine õhk hoiab soojust kinni nagu tekk.', en: 'Mercury is closer to the Sun, but Venus’s thick cloudy air holds the heat in like a blanket.' }
+      },
+      {
+        q: { et: 'Milline planeet on külili ja veereb nagu pall ümber Päikese?', en: 'Which planet lies on its side and rolls round the Sun like a ball?' },
+        answers: [
+          { planet: 'uranus', label: { et: 'Uraan', en: 'Uranus' } },
+          { planet: 'saturn', label: { et: 'Saturn', en: 'Saturn' } },
+          { planet: 'neptune', label: { et: 'Neptuun', en: 'Neptune' } },
+          { planet: 'venus', label: { et: 'Veenus', en: 'Venus' } }
+        ],
+        why: { et: 'Uraan on külili. Võib-olla põrkas temaga ammu kokku mõni suur taevakeha ja lükkas ta ümber.', en: 'Uranus lies on its side. Perhaps something big crashed into it long ago and knocked it over.' }
+      },
+      {
+        q: { et: 'Millisel planeedil on kõige kõrgem mägi?', en: 'Which planet has the tallest mountain?' },
+        answers: [
+          { planet: 'mars', label: { et: 'Marss', en: 'Mars' } },
+          { planet: 'earth', label: { et: 'Maa', en: 'The Earth' } },
+          { planet: 'venus', label: { et: 'Veenus', en: 'Venus' } },
+          { planet: 'mercury', label: { et: 'Merkuur', en: 'Mercury' } }
+        ],
+        why: { et: 'Marsil on Olümpose mägi, mis on kaks ja pool korda kõrgem kui Maa kõrgeim mägi Everest.', en: 'Mars has Olympus Mons, two and a half times as tall as the Earth’s highest mountain, Everest.' }
+      },
+      {
+        q: { et: 'Millest on tehtud Saturni rõngad?', en: 'What are Saturn’s rings made of?' },
+        pic: { planet: 'saturn' },
+        answers: [
+          { et: 'Jää- ja kivitükkidest', en: 'Bits of ice and rock' },
+          { et: 'Ühest kõvast kettast', en: 'One hard disc' },
+          { et: 'Pilvedest', en: 'Clouds' },
+          { et: 'Valgusest', en: 'Light' }
+        ],
+        why: { et: 'Rõngastes on lugematu hulk jää- ja kivitükke. Mõni on liivatera suurune, mõni suur nagu maja.', en: 'The rings are countless bits of ice and rock. Some are as small as grains of sand, some as big as a house.' }
+      },
+      {
+        q: { et: 'Mitu Maad mahuks Jupiteri sisse?', en: 'How many Earths would fit inside Jupiter?' },
+        pic: { planet: 'jupiter' },
+        answers: [
+          { et: 'Üle tuhande', en: 'Over a thousand' },
+          { et: 'Umbes kümme', en: 'About ten' },
+          { et: 'Umbes sada', en: 'About a hundred' },
+          { et: 'Kaks', en: 'Two' }
+        ],
+        why: { et: 'Jupiteri läbimõõt on üksteist korda suurem kui Maal, nii et tema sisse mahuks üle tuhande Maa.', en: 'Jupiter is eleven times as wide as the Earth, so over a thousand Earths would fit inside it.' }
+      },
+      {
+        q: { et: 'Mitu planeeti tiirleb ümber Päikese?', en: 'How many planets go round the Sun?' },
+        answers: [
+          { et: 'Kaheksa', en: 'Eight' },
+          { et: 'Üheksa', en: 'Nine' },
+          { et: 'Kuus', en: 'Six' },
+          { et: 'Kümme', en: 'Ten' }
+        ],
+        why: { et: 'Merkuur, Veenus, Maa, Marss, Jupiter, Saturn, Uraan ja Neptuun. Pluuto on kääbusplaneet.', en: 'Mercury, Venus, the Earth, Mars, Jupiter, Saturn, Uranus and Neptune. Pluto is a dwarf planet.' }
+      },
+      {
+        q: { et: 'Marss on Maast suurem.', en: 'Mars is bigger than the Earth.' },
+        pic: { planet: 'mars' },
+        tf: false,
+        why: { et: 'Marss on väiksem: tema läbimõõt on umbes pool Maa omast.', en: 'Mars is smaller: it is about half as wide as the Earth.' }
+      },
+      {
+        q: { et: 'Merkuuri, Veenust, Marssi, Jupiteri ja Saturni võib taevas näha palja silmaga.', en: 'You can see Mercury, Venus, Mars, Jupiter and Saturn in the sky with your own eyes.' },
+        tf: true,
+        why: { et: 'Need planeedid paistavad heledate tähtedena. Uraani ja Neptuuni leidmiseks on vaja binoklit või pikksilma.', en: 'These planets look like bright stars. To find Uranus and Neptune, you need binoculars or a telescope.' }
+      }
+    ]
+  },
+  {
     game: 'meteoor',
     questions: [
       {
@@ -650,6 +817,163 @@ window.QUIZ = [
           { et: 'Skorpioni süda', en: 'The Scorpion’s heart' }
         ],
         why: { et: 'Kapella on Veomehe tähtkujus üks taeva heledamaid tähti. Talveõhtuti on ta peaaegu otse pea kohal.', en: 'Capella, in the Charioteer, is one of the brightest stars in the sky. On winter evenings it is almost straight overhead.' }
+      }
+    ]
+  },
+  {
+    game: 'eksoplaneet',
+    questions: [
+      {
+        q: { et: 'Mis on eksoplaneet?', en: 'What is an exoplanet?' },
+        answers: [
+          { et: 'Planeet, mis tiirleb ümber mõne muu tähe', en: 'A planet going round another star' },
+          { et: 'Väga kauge täht', en: 'A very faraway star' },
+          { et: 'Planeedi kuu', en: 'A planet’s moon' },
+          { et: 'Planeet, kus on elu', en: 'A planet with life' }
+        ],
+        why: { et: 'Eksoplaneet tiirleb ümber mõne muu tähe kui Päike. Neid on leitud juba üle 6000.', en: 'An exoplanet goes round a star other than the Sun. More than 6000 have been found.' }
+      },
+      {
+        q: { et: 'Mis juhtub tähe valgusega, kui planeet möödub tähe eest?', en: 'What happens to a star’s light when a planet passes in front of it?' },
+        answers: [
+          { et: 'See nõrgeneb natuke', en: 'It gets a little fainter' },
+          { et: 'See kustub täiesti', en: 'It goes out completely' },
+          { et: 'See muutub heledamaks', en: 'It gets brighter' },
+          { et: 'See muudab värvi', en: 'It changes colour' }
+        ],
+        why: { et: 'Planeet katab tähest väikese osa, nii et tähe heleduse graafikule tekib väike lohk.', en: 'The planet covers a little of the star, so there is a small dip in the graph of the star’s brightness.' }
+      },
+      {
+        q: { et: 'Kuidas tead, et tähe heleduse graafiku lohud tulevad planeedist?', en: 'How can you tell that the dips in the graph of a star’s brightness come from a planet?' },
+        answers: [
+          { et: 'Lohud korduvad sama aja tagant', en: 'The dips come again after the same time' },
+          { et: 'Lohk on väga lai', en: 'The dip is very wide' },
+          { et: 'Lohke on ainult üks', en: 'There is only one dip' },
+          { et: 'Täht lööb vahel heledaks', en: 'The star sometimes flares up' }
+        ],
+        why: { et: 'Planeet tiirleb ümber tähe ja möödub tähe eest alati sama aja tagant. Müra ja plekid nii ei kordu.', en: 'A planet goes round its star and passes in front of it always after the same time. Noise and spots do not repeat like that.' }
+      },
+      {
+        q: { et: 'Milline planeet teeb tähe heleduse graafikule kõige sügavama lohu?', en: 'Which planet makes the deepest dip in the graph of a star’s brightness?' },
+        answers: [
+          { et: 'Jupiteri-suurune', en: 'Jupiter-sized' },
+          { et: 'Neptuuni-suurune', en: 'Neptune-sized' },
+          { et: 'Super-Maa', en: 'Super-Earth' },
+          { et: 'Maa-suurune', en: 'Earth-sized' }
+        ],
+        why: { et: 'Mida suurem planeet, seda suurema osa tähest ta katab ja seda sügavam on lohk.', en: 'The bigger the planet, the more of the star it covers, and the deeper the dip.' }
+      },
+      {
+        q: { et: 'Planeedi varjutused on päevadel 3, 13 ja 23. Kui pikk on selle planeedi aasta?', en: 'A planet’s transits are on days 3, 13 and 23. How long is its year?' },
+        answers: [
+          { et: '10 päeva', en: '10 days' },
+          { et: '3 päeva', en: '3 days' },
+          { et: '13 päeva', en: '13 days' },
+          { et: '23 päeva', en: '23 days' }
+        ],
+        why: { et: 'Ühest varjutusest järgmiseni teeb planeet ümber tähe ühe tiiru: 13 − 3 = 10 päeva.', en: 'From one transit to the next, the planet goes once round its star: 13 − 3 = 10 days.' }
+      },
+      {
+        q: { et: 'Ühe planeedi aasta on 4 päeva, teise oma 300 päeva. Kumb on oma tähele lähemal?', en: 'One planet’s year is 4 days, another’s 300 days. Which is closer to its star?' },
+        answers: [
+          { et: 'See, mille aasta on 4 päeva', en: 'The one with a 4-day year' },
+          { et: 'See, mille aasta on 300 päeva', en: 'The one with a 300-day year' }
+        ],
+        why: { et: 'Mida lähemal planeet tähele on, seda lühem on tema tiir ja seda lühem aasta.', en: 'The closer a planet is to its star, the shorter its way round, and the shorter its year.' }
+      },
+      {
+        q: { et: 'Mis on elamiskõlblik vöönd?', en: 'What is the habitable zone?' },
+        answers: [
+          { et: 'Koht tähe ümber, kus vesi võiks olla vedel', en: 'Where water could be liquid round a star' },
+          { et: 'Tähe kõige kuumem osa', en: 'The hottest part of a star' },
+          { et: 'Planeet, kus elavad inimesed', en: 'A planet where people live' },
+          { et: 'Tähtede vahel olev tühjus', en: 'The empty space between stars' }
+        ],
+        why: { et: 'Tähele lähemal oleks vesi aur, kaugemal jää. Elamiskõlblikus vööndis võiks see olla vedel nagu Maal.', en: 'Closer to the star water would be steam, farther away ice. In the habitable zone it could be liquid, as on the Earth.' }
+      },
+      {
+        q: { et: 'Planeet tiirleb oma tähele väga lähedal. Milline oleks seal vesi?', en: 'A planet goes round very close to its star. What would water be like there?' },
+        answers: [
+          { et: 'Aur', en: 'Steam' },
+          { et: 'Vedel vesi', en: 'Liquid water' },
+          { et: 'Jää', en: 'Ice' }
+        ],
+        why: { et: 'Tähe lähedal on nii kuum, et vesi keeks ära.', en: 'Close to the star it is so hot that water would boil away.' }
+      },
+      {
+        q: { et: 'Mis on super-Maa?', en: 'What is a super-Earth?' },
+        answers: [
+          { et: 'Maast suurem kiviplaneet', en: 'A rocky planet bigger than the Earth' },
+          { et: 'Maast väiksem gaasiplaneet', en: 'A gas planet smaller than the Earth' },
+          { et: 'Maa tulevikus', en: 'The Earth in the future' },
+          { et: 'Maa-suurune täht', en: 'An Earth-sized star' }
+        ],
+        why: { et: 'Meie Päikesesüsteemis pole ühtegi super-Maad, aga teiste tähtede juures on neid väga palju.', en: 'There is no super-Earth in our Solar System, but other stars have very many.' }
+      },
+      {
+        q: { et: 'Varjutus on nii madal, et seda on müra seest vaevu näha. Milline planeet selle teeb?', en: 'An eclipse is so shallow that you can hardly see it in the noise. What planet makes it?' },
+        answers: [
+          { et: 'Maa-suurune', en: 'Earth-sized' },
+          { et: 'Super-Maa', en: 'Super-Earth' },
+          { et: 'Neptuuni-suurune', en: 'Neptune-sized' },
+          { et: 'Jupiteri-suurune', en: 'Jupiter-sized' }
+        ],
+        why: { et: 'Maa-suurune planeet katab tähest väga väikese osa, nii et tema varjutus on kõige madalam. Selliseid planeete on kõige raskem leida.', en: 'An Earth-sized planet covers very little of its star, so its eclipse is the shallowest. Such planets are the hardest to find.' }
+      },
+      {
+        q: { et: 'Neptuuni-suurusel planeedil on kõva pind, kuhu astuda.', en: 'A Neptune-sized planet has hard ground to stand on.' },
+        tf: false,
+        why: { et: 'Neptuuni-suurune planeet on enamasti gaasist ja jääst, nii et sellel pole kõva pinda.', en: 'A Neptune-sized planet is mostly gas and ice, so it has no hard ground.' }
+      },
+      {
+        q: { et: 'Milliseid planeete otsivad teadlased kõige rohkem?', en: 'Which planets do scientists most want to find?' },
+        answers: [
+          { et: 'Maa-suurusi elamiskõlblikus vööndis', en: 'Earth-sized ones in the habitable zone' },
+          { et: 'Jupiteri-suurusi tähe kõrval', en: 'Jupiter-sized ones next to their star' },
+          { et: 'Neptuuni-suurusi, kus vesi on jää', en: 'Neptune-sized ones where water is ice' },
+          { et: 'Super-Maid, kus vesi keeks ära', en: 'Super-Earths where water would boil away' }
+        ],
+        why: { et: 'Maa-suurusel planeedil elamiskõlblikus vööndis võiks olla kivine pind ja vedel vesi nagu Maal.', en: 'An Earth-sized planet in the habitable zone could have rocky ground and liquid water, like the Earth.' }
+      },
+      {
+        q: { et: 'Mis on kuum Jupiter?', en: 'What is a hot Jupiter?' },
+        answers: [
+          { et: 'Hiidplaneet oma tähe kõrval', en: 'A giant planet right next to its star' },
+          { et: 'Jupiter suvel', en: 'Jupiter in summer' },
+          { et: 'Väga kuum täht', en: 'A very hot star' },
+          { et: 'Jupiteri punane laik', en: 'Jupiter’s red spot' }
+        ],
+        why: { et: 'Kuumi Jupitere leitakse kergesti, sest nende varjutused on sügavad ja korduvad tihti.', en: 'Hot Jupiters are easy to find, because their eclipses are deep and come often.' }
+      },
+      {
+        q: { et: 'Täht lööb korraks heledamaks. Mis see on?', en: 'A star suddenly gets brighter for a moment. What is it?' },
+        answers: [
+          { et: 'Täheloide', en: 'A flare' },
+          { et: 'Planeet möödub tähe eest', en: 'A planet passing in front' },
+          { et: 'Planeedi kuu', en: 'A planet’s moon' },
+          { et: 'Täht kustub', en: 'The star going out' }
+        ],
+        why: { et: 'Täheloide on võimas plahvatus tähe pinnal. Planeedi möödudes tähe valgus hoopis nõrgeneb.', en: 'A flare is a powerful burst on the star’s surface. When a planet passes, the star’s light gets fainter instead.' }
+      },
+      {
+        q: { et: 'Tähe heledus kõigub aeglaselt üles ja alla. Mis seda teeb?', en: 'A star’s brightness slowly goes up and down. What makes it do that?' },
+        answers: [
+          { et: 'Plekid pöörleva tähe pinnal', en: 'Spots on the turning star' },
+          { et: 'Kaks planeeti korraga', en: 'Two planets at once' },
+          { et: 'Tähe kuu', en: 'The star’s moon' },
+          { et: 'Täht kasvab ja kahaneb', en: 'The star grows and shrinks' }
+        ],
+        why: { et: 'Plekid on tähe pinnal tumedamad. Kui täht pöörleb, tulevad need nähtavale ja kaovad jälle.', en: 'Spots are darker parts of the star’s surface. As the star turns, they come into view and go again.' }
+      },
+      {
+        q: { et: 'Sama planeet põhjustab väikese tähe ees sügavama varjutuse kui suure tähe ees.', en: 'The same planet causes a deeper eclipse in front of a small star than in front of a big one.' },
+        tf: true,
+        why: { et: 'Väikese tähe ees katab planeet tähest suurema osa, nii et valgus nõrgeneb rohkem.', en: 'In front of a small star the planet covers more of it, so the light gets fainter.' }
+      },
+      {
+        q: { et: 'Iga tähe eest möödub mõni planeet, nii et igal tähel näeb varjutusi.', en: 'A planet passes in front of every star, so every star shows eclipses.' },
+        tf: false,
+        why: { et: 'Ka siis, kui tähel on planeete, ei pruugi nende tee meie poolt vaadates tähe eest läbi viia. Enamiku tähtedega on just nii.', en: 'Even when a star has planets, their paths may not take them in front of it as we see it. That is so for most stars.' }
       }
     ]
   },

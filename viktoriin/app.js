@@ -16,8 +16,10 @@
     { id: 'kuufaasid', emoji: '🌙', name: { et: 'Kuu faasid', en: 'Moon Phases' }, href: '../kuufaasid/index.html' },
     { id: 'hupe', emoji: '🦘', name: { et: 'Hüppa planeedil', en: 'Planet Jump' }, href: '../hupe/index.html' },
     { id: 'rakett', emoji: '🚀', name: { et: 'Kosmoserakett', en: 'Space Rocket' }, href: '../rakett/index.html' },
+    { id: 'planeedid', emoji: '🪐', name: { et: 'Planeetide rivi', en: 'Line Up the Planets' }, href: '../planeedid/index.html' },
     { id: 'meteoor', emoji: '🌠', name: { et: 'Püüa langev täht', en: 'Catch a Shooting Star' }, href: '../meteoor/index.html' },
     { id: 'tahtkujud', emoji: '✨', name: { et: 'Tähtkujud', en: 'Constellations' }, href: '../tahtkujud/index.html' },
+    { id: 'eksoplaneet', emoji: '🔭', name: { et: 'Avasta eksoplaneet', en: 'Discover an Exoplanet' }, href: '../eksoplaneet/index.html' },
     { id: 'pildid', emoji: '🖼️', name: { et: 'Pildid', en: 'Pictures' }, href: '../malumang/index.html', game: { et: 'Mälumäng', en: 'Memory' } }
   ];
 
@@ -192,6 +194,18 @@
     document.querySelectorAll('img.earth').forEach((img) => { img.src = url; });
   }), 50);
 
+  // The eight planets as drawn in Planeetide rivi, each drawn the first time
+  // a round needs it; the pictures already shown get it then.
+  const planets = {};
+  function needPlanet(id) {
+    if (id in planets) return;
+    planets[id] = '';
+    AstroPlanets.drawPlanet(id, 240, (pic) => {
+      planets[id] = pic.url;
+      document.querySelectorAll(`img[data-planet="${id}"]`).forEach((img) => { img.src = pic.url; });
+    });
+  }
+
   let uid = 0;
 
   // The Moon from the Earth, `a` degrees after new moon: lit from the right
@@ -282,6 +296,7 @@
   function picHTML(p) {
     let inner = '';
     if (p.photo) inner = `<img src="${PHOTO(p.photo)}" alt="">`;
+    else if (p.planet) { needPlanet(p.planet); inner = `<img class="world" data-planet="${p.planet}" src="${planets[p.planet]}" alt="">`; }
     else if (p.world) inner = `<img class="${p.world === 'earth' ? 'earth ' : ''}world" src="${worlds[p.world]}" alt="">`;
     else if (p.moon !== undefined) inner = moonSVG(p.moon);
     else if (p.space !== undefined) inner = spaceSVG(p.space);
@@ -398,6 +413,10 @@
       shuffle(round);
     } else {
       round = fresh(ALL.filter((q) => q.game === state.topic)).slice(0, ROUND);
+    }
+    // start drawing the planets the round shows
+    for (const q of round) {
+      for (const p of [q.pic, ...(q.answers || []), ...(q.order || [])]) if (p && p.planet) needPlanet(p.planet);
     }
     state.seen = state.seen.filter((id) => !round.some((q) => q.id === id)).concat(round.map((q) => q.id)).slice(-SEEN_MAX);
     store.set('seen', state.seen);
