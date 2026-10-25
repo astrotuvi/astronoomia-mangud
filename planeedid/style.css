@@ -90,7 +90,18 @@
 .slot .ghost { opacity: 0; transition: opacity 0.3s; }
 .area.hint .slot:not(.filled) .ghost { opacity: 0.3; }
 .slot.filled { pointer-events: none; }
-.slot.filled svg > g:first-child { display: none; }
+/* an empty place: the same ring for every planet */
+.slot:not(.filled)::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2.5px dashed rgba(255, 255, 255, 0.55);
+}
 .slot.wiggle { animation: wiggle-slot 0.45s; }
 @keyframes wiggle-slot {
   25% { transform: translate(calc(-50% - 6px), -50%); }
@@ -130,6 +141,9 @@
   transition: transform 0.25s;
   pointer-events: none;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+  /* a layer of its own: the pictures and the shadow reach past the box, and
+     without it Chrome leaves trails of them behind a planet being dragged */
+  will-change: transform;
 }
 .piece.dragging { transition: none; z-index: 5; cursor: grabbing; }
 .piece.selected svg { filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 18px rgba(255, 211, 77, 0.6)); }

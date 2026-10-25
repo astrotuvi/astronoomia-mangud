@@ -106,7 +106,7 @@ The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. 
 - The Sun is at the left (at the top on a tall screen) with an empty place for each planet on its orbit, numbered 1, 2, 3 … The planets wait mixed up in a tray beside them.
 - Drag a planet to its place, or tap it and then tap the place. Picking one up shows its name.
 - In the right place it stays, its name appears under it and a short fact is shown. In a wrong place it goes back to the tray, and the message says whether it is farther from the Sun or closer. After two misses with the same planet, its place pulses.
-- The places are the size of their planets, so they hint at which planet goes where. 👁️ shows faint pictures of the planets in the empty places.
+- The empty places are all alike, a small dashed ring evenly spaced along the row, so they do not give away which planet goes where. 👁️ shows faint pictures of the planets in them.
 - The win screen shows the whole row with names.
 
 The planets are drawn pixel by pixel in `shared/planets.js` rather than taken from photos: the Earth and Mars are the ones from Kosmoserakett, and the others are in the `LOOKS` list there, with Saturn's and Uranus's rings. Their sizes in the game, in the `PLANETS` list at the top of `planeedid/app.js`, are not to scale (Jupiter would be 28 times as wide as Mercury), but they are bigger and smaller in the right order.

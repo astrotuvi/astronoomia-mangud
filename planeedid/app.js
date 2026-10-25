@@ -10,8 +10,7 @@
   // The planets in order from the Sun, drawn by shared/planets.js. Until a
   // picture is ready the planet is a plain ball of its `base` colour. r is
   // the size in the game: not to scale (Jupiter would be 28 times as wide as
-  // Mercury), but bigger and smaller in the right order, so the empty places
-  // hint at which planet goes where. wf and hf are how much wider and taller
+  // Mercury), but bigger and smaller in the right order. wf and hf are how much wider and taller
   // than the ball the picture is with the rings. big is said when the planet
   // is put in its place in the game by size.
   const PLANETS = [
@@ -156,6 +155,7 @@
   const SUN = 1.2;    // how much of the Sun shows at the edge
   const TOP = 56;     // room at the top of the play area for the messages
   const PAD = 10;
+  const RING = 13;    // half the size of the ring of an empty place, in px (style.css)
   const MIN_HIT = 54; // even Mercury is this easy to grab (px)
 
   // ---------------------------------------------------------------------------
@@ -218,16 +218,13 @@
     return `<g class="pic-${p.id}">${PICS[p.id] ? picture(p) : `<circle r="50" fill="${p.base}" />`}</g>`;
   }
 
-  // An <svg> of one planet, or of its dashed outline for an empty place.
-  function planetSVG(p, outline) {
+  // An <svg> of one planet, or for an empty place its faint picture, which only
+  // the hint shows. The place itself is a ring of the same size for every
+  // planet (style.css), so that it does not give away which planet goes there.
+  function planetSVG(p, empty) {
     const w = 50 * p.wf;
     const h = 50 * p.hf;
-    const inner = outline
-      ? '<g fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-dasharray="6 6">' +
-        '<circle r="50" vector-effect="non-scaling-stroke" />' +
-        (p.id === 'saturn' ? '<ellipse rx="97" ry="21" vector-effect="non-scaling-stroke" />' : '') +
-        `</g><g class="ghost">${planetArt(p)}</g>`
-      : planetArt(p);
+    const inner = empty ? `<g class="ghost">${planetArt(p)}</g>` : planetArt(p);
     return `<svg viewBox="${-w} ${-h} ${2 * w} ${2 * h}" overflow="visible" aria-hidden="true">${inner}</svg>`;
   }
 
@@ -396,7 +393,13 @@
     const LB = hor ? 46 : 84; // room for the names
     const band = Math.max(...ps.map(across));
     const sumAlong = ps.reduce((a, p) => a + along(p), 0);
-    const units = sunK + sumAlong + GAP * (n + 1);
+    // The places are evenly spaced, so that the gaps between them do not give
+    // the sizes away: step is room enough for the two biggest neighbours, and
+    // end the room before the first place and after the last.
+    const step = Math.max(0, ...ps.slice(1).map((p, i) => (along(ps[i]) + along(p)) / 2));
+    const end = Math.max(step, along(ps[0]), along(ps[n - 1])) / 2;
+    const rowLen = 2 * end + (n - 1) * step;
+    const units = sunK + rowLen + GAP * (n + 1);
     const s = Math.max(10, Math.min(
       (crossLen - LB - PAD * 3) / (band * (1 + TRAY)),
       (mainLen - PAD * 2) / units,
@@ -404,7 +407,7 @@
     // spread the places out when there is room to spare
     const extra = Math.max(0, mainLen - PAD * 2 - s * units);
     const gap = GAP * s + Math.min(extra / (n + 1), s);
-    const trayGap = gap + ((1 - TRAY) * sumAlong * s) / n;
+    const trayGap = gap + ((rowLen - TRAY * sumAlong) * s) / Math.max(1, n - 1);
 
     const used = band * s * (1 + TRAY) + LB + PAD * 3;
     const off = Math.max(0, (crossLen - used) / 2);
@@ -421,10 +424,10 @@
       left: sun.x - sunR + 'px', top: sun.y - sunR + 'px', width: 2 * sunR + 'px', height: 2 * sunR + 'px'
     });
 
-    let u = u0 + gap;
+    let u = u0 + gap + end * s;
     for (const slot of state.slots) {
       const p = slot.p;
-      Object.assign(slot, at(u + (along(p) * s) / 2, v1));
+      Object.assign(slot, at(u, v1));
       slot.w = 2 * p.r * p.wf * s;
       slot.h = 2 * p.r * p.hf * s;
       Object.assign(slot.el.style, {
@@ -434,7 +437,9 @@
       // the name just past the edge of the place
       const edge = v1 + (across(p) * s) / 2;
       slot.labelAt = hor ? { x: slot.x, y: edge + 4 } : { x: edge + 8, y: slot.y };
-      u += along(p) * s + gap;
+      // the number of an empty place just past its ring, the same for every place
+      slot.numberAt = hor ? { x: slot.x, y: v1 + RING + 4 } : { x: v1 + RING + 8, y: slot.y };
+      u += step * s + gap;
     }
 
     // the orbits: circles round the Sun through each place
@@ -498,7 +503,7 @@
     let right = [-Infinity, -Infinity];
     for (const slot of state.slots) {
       const el = slot.label;
-      const at = slot.labelAt;
+      const at = slot.filled ? slot.labelAt : slot.numberAt;
       if (!at) continue;
       el.classList.toggle('side', !hor);
       let line = 0;
