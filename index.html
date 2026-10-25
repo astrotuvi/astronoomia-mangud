@@ -240,29 +240,27 @@
           <!-- shooting stars over the treeline, and a jar with the caught ones -->
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <defs>
-              <linearGradient id="meteorTail" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#a0c8ff" stop-opacity="0" />
-                <stop offset="1" stop-color="#fff" />
-              </linearGradient>
-              <radialGradient id="jarLight" cx="0.5" cy="0.55" r="0.5">
-                <stop offset="0" stop-color="#ffe680" stop-opacity="0.7" />
-                <stop offset="1" stop-color="#ffd34d" stop-opacity="0" />
-              </radialGradient>
+              <filter id="jarGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" /></filter>
             </defs>
             <g fill="#fff">
               <circle cx="10" cy="12" r="0.7" opacity="0.7" /><circle cx="40" cy="8" r="0.5" opacity="0.6" />
               <circle cx="88" cy="16" r="0.6" opacity="0.6" /><circle cx="70" cy="40" r="0.5" opacity="0.5" />
               <circle cx="8" cy="50" r="0.6" opacity="0.6" /><circle cx="92" cy="58" r="0.5" opacity="0.6" />
             </g>
-            <g stroke="url(#meteorTail)" stroke-linecap="round">
-              <line x1="20" y1="10" x2="46" y2="34" stroke-width="1.6" />
-              <line x1="54" y1="6" x2="84" y2="28" stroke-width="1.2" />
-              <line x1="12" y1="34" x2="28" y2="50" stroke-width="1" />
+            <!-- tapering tails, fainter at the far end: flat shapes, as phones in dark mode
+                 turn small pictures of see-through gradients white -->
+            <g fill="#dbe9ff">
+              <polygon points="20,10 45.46,34.59 46.54,33.41" opacity="0.35" />
+              <polygon points="33,22 45.46,34.59 46.54,33.41" opacity="0.8" />
+              <polygon points="54,6 83.65,28.48 84.35,27.52" opacity="0.35" />
+              <polygon points="69,17 83.65,28.48 84.35,27.52" opacity="0.8" />
+              <polygon points="12,34 27.65,50.35 28.35,49.65" opacity="0.35" />
+              <polygon points="20,42 27.65,50.35 28.35,49.65" opacity="0.8" />
             </g>
             <circle cx="46" cy="34" r="1.6" fill="#fff" />
             <circle cx="84" cy="28" r="1.2" fill="#fff" />
             <path d="M0 82L4 74L8 82L12 70L16 82L22 72L26 82L72 82L76 70L80 82L84 74L88 82L94 68L98 82L100 82V100H0Z" fill="#03050f" />
-            <ellipse cx="50" cy="80" rx="24" ry="22" fill="url(#jarLight)" />
+            <ellipse cx="50" cy="81" rx="15" ry="13" fill="#ffe680" opacity="0.5" filter="url(#jarGlow)" />
             <g transform="translate(36 62) scale(0.28)">
               <path d="M30 24C30 30 12 32 12 46V106C12 113 17 116 24 116H76C83 116 88 113 88 106V46C88 32 70 30 70 24Z" fill="#0a1030" fill-opacity="0.6" stroke="#dff2ff" stroke-opacity="0.8" stroke-width="3" />
               <g fill="#ffd34d">
@@ -287,16 +285,13 @@
                 <stop offset="0.6" stop-color="#ffd98a" />
                 <stop offset="1" stop-color="#ff9f40" />
               </radialGradient>
-              <radialGradient id="exoGlow">
-                <stop offset="0.6" stop-color="#ffb84d" stop-opacity="0.45" />
-                <stop offset="1" stop-color="#ffb84d" stop-opacity="0" />
-              </radialGradient>
+              <filter id="exoGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" /></filter>
             </defs>
             <g fill="#fff">
               <circle cx="10" cy="10" r="0.6" opacity="0.6" /><circle cx="88" cy="14" r="0.7" opacity="0.6" />
               <circle cx="20" cy="44" r="0.5" opacity="0.5" /><circle cx="84" cy="42" r="0.6" opacity="0.5" />
             </g>
-            <circle cx="50" cy="28" r="26" fill="url(#exoGlow)" />
+            <circle cx="50" cy="28" r="21" fill="#ffb84d" opacity="0.45" filter="url(#exoGlow)" />
             <circle cx="50" cy="28" r="17" fill="url(#exoStar)" />
             <circle cx="44" cy="31" r="3.6" fill="#0b1238" />
             <path d="M24 31H38" stroke="#fff" stroke-width="0.6" stroke-dasharray="1.2 1.6" opacity="0.6" />

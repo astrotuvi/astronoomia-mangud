@@ -189,6 +189,11 @@ What the recolouring does:
      Kosmoserakett) must have the `data-live` attribute, or the game
      cannot find its stops. Such a gradient is darkened in dark mode, so use
      it only for things that may go darker, such as a sky.
+   - A gradient that fades to see-through (a glow, a tail) on a shape under
+     80 px on a phone becomes a small, mostly see-through picture, which
+     phones turn white. Draw such things as flat shapes with `opacity` and
+     a blur `filter` instead, as the glows and the shooting-star tails on
+     the start page do.
 4. Show photos at 80 px or larger. If one must be smaller, draw it at twice
    the size and shrink it with `transform: scale(0.5)` (in SVG,
    `transform="scale(0.5)"`), as the Saturn photos on the start page do.
