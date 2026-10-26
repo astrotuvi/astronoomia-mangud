@@ -150,9 +150,14 @@ rivi, Avasta eksoplaneet and Leia asteroid.
 
 ## Teenagers and adults
 
-38. **Kosmiline võrk (cosmic web):** find the threads of galaxies and the
-    empty voids between them on a 3D map. The cosmic web was found by Jaan
-    Einasto's group in Tartu.
+38. **Kosmiline võrk (cosmic web):** galaxies lie along filaments and walls
+    that meet in clusters, with huge empty voids between them. The player
+    finds this pattern in real SDSS galaxy data, as astronomers did, by
+    adding distances to the dots and tracing the filaments and voids, and
+    then builds a universe where gravity and dark matter make the web.
+    The web was found by Jaan Einasto's group in Tartu in the 1970s. See
+    [IDEAS-cosmicweb.md](IDEAS-cosmicweb.md) for the levels and what the
+    game needs.
 39. **Dokkimine (docking):** dock with the space station. To catch up with
     it, first slow down, as a lower orbit is faster. It could reuse the
     Kepler orbits from Kosmoserakett.
