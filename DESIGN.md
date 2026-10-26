@@ -65,8 +65,9 @@ top in Planeetide rivi), using `@media (min-aspect-ratio: 1/1)`.
   pill-shaped (`border-radius: 999px`) or circles, and nothing has sharp
   corners.
 - **Choices in the menu:** picture cards (`.pictures` > `.pic`) or number
-  buttons (`.counts` > `.count`). The chosen one gets a yellow border or
-  fill, grows a little and glows (`.selected`). A numbered blue circle
+  buttons (`.counts` > `.count`). The chosen one gets a yellow border,
+  grows a little and glows (`.selected`). A yellow fill would hide yellow
+  emoji and pictures, such as 🧑, ✨ and 🌠. A numbered blue circle
   (`.step`) in front of an `h2` shows the order when there are several
   choices to make. A 🌟 marks a level that is done.
 - **Buttons to press** have a coloured "edge" under them (a

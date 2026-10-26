@@ -50,8 +50,8 @@
 .topic:hover { background: var(--card-hover); }
 .topic b { font-size: 1.8rem; line-height: 1; }
 .topic.selected {
-  background: var(--accent);
-  color: var(--ink);
+  background: rgba(255, 211, 77, 0.16);
+  border-color: var(--accent);
   transform: scale(1.04);
   box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
 }

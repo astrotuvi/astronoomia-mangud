@@ -12,7 +12,7 @@
 /* the order: from the Sun or by size, up or down */
 .count.order { width: 150px; height: auto; min-height: 108px; padding: 10px 8px; gap: 6px; }
 .count.order b { font-size: 2.2rem; height: 2.6rem; display: grid; place-items: center; color: var(--sky); }
-.count.order.selected b { color: var(--ink); }
+.count.order.selected b { color: var(--accent); }
 .count.order svg { display: block; width: 62px; height: 28px; }
 .count.order span { font-size: 1rem; line-height: 1.2; text-align: center; }
 
