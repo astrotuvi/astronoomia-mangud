@@ -239,7 +239,7 @@
       fieldSize: 'Kogu pilt on kahe Kuu läbimõõdu laiune.',
       moonWidths: (v) => `${v} Kuu läbimõõtu`,
       speedNames: ['Neptuunist kaugemal: liigub väga aeglaselt', 'Asteroidide vöös Marsi ja Jupiteri vahel', 'Maa lähedal: liigub kiiresti'],
-      speedBar: ['Neptuuni taga', 'vöö', 'Maa lähedal'],
+      speedBar: ['Neptuuni taga', 'Asteroidide vöös', 'Maa lähedal'],
       speedWrong: 'Vaata, kuhu roosa kriips skaalal jääb.',
       speedHint: 'Pane roosa joone otsad 1. ja 2. öö asteroidi peale. Hele kriips skaalal näitab õiget kohta.',
       speedOk: [
@@ -336,7 +336,7 @@
       fieldSize: 'The whole picture is two Moon widths across.',
       moonWidths: (v) => `${v} Moon widths`,
       speedNames: ['Beyond Neptune: it moves very slowly', 'In the asteroid belt between Mars and Jupiter', 'Near the Earth: it moves fast'],
-      speedBar: ['beyond Neptune', 'belt', 'near the Earth'],
+      speedBar: ['beyond Neptune', 'in the asteroid belt', 'near the Earth'],
       speedWrong: 'See where the pink mark is on the scale.',
       speedHint: 'Put the ends of the pink line on the asteroid of nights 1 and 2. The pale mark on the scale shows the right place.',
       speedOk: [

@@ -70,7 +70,7 @@
 .reset:hover { background: var(--card-hover); }
 
 /* the button to Eesti asteroidid */
-.est-row { display: flex; justify-content: center; margin: 16px 0 10px; }
+.est-row { display: flex; justify-content: center; margin: 44px 0 10px; }
 .est-open {
   padding: 10px 22px;
   border-radius: 999px;
@@ -222,8 +222,23 @@
 /* how fast it moves, as a scale of where it goes round the Sun, with the
    pink ruler on it */
 .speed-scale { position: relative; margin: 10px 0 14px; color: var(--ink); }
-.speeds { display: flex; height: 30px; border-radius: 999px; overflow: hidden; font-size: 0.85rem; }
-.speeds span { flex: 1; display: grid; place-items: center; white-space: nowrap; }
+/* the three parts stay a third each; a long name wraps onto two lines */
+.speeds {
+  display: flex;
+  min-height: 30px;
+  border-radius: 999px;
+  overflow: hidden;
+  font-size: 0.85rem;
+  line-height: 1.1;
+}
+.speeds span {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  padding: 2px 4px;
+  text-align: center;
+}
 .k0 { background: #a9d8ff; }
 .k1 { background: #d8c6a8; }
 .k2 { background: #ffab7a; }
@@ -231,7 +246,7 @@
   position: absolute;
   top: -8px;
   width: 10px;
-  height: 46px;
+  height: calc(100% + 16px);
   margin-left: -5px;
 }
 .scale-ruler svg, .scale-hint svg { display: block; width: 100%; height: 100%; }
