@@ -37,13 +37,19 @@ window.Astro = (() => {
   let lang = settings.get('lang', 'et');
   if (!LANGS.includes(lang)) lang = 'et';
 
-  // Fill every [data-t] element from TEXT[lang] and wire up the .lang buttons.
-  // onChange runs after each change, for texts the game sets itself.
+  // Texts that are the same in all games.
+  const SHARED = {
+    et: { author: 'Autor: Taavi Tuvikene' },
+    en: { author: 'Author: Taavi Tuvikene' }
+  };
+
+  // Fill every [data-t] element from TEXT[lang] (or SHARED) and wire up the
+  // .lang buttons. onChange runs after each change, for texts the game sets itself.
   function setupLanguage(TEXT, onChange) {
     function apply() {
       document.documentElement.lang = lang;
       if (TEXT[lang].title) document.title = TEXT[lang].title;
-      document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = TEXT[lang][el.dataset.t]; });
+      document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = TEXT[lang][el.dataset.t] ?? SHARED[lang][el.dataset.t]; });
       document.querySelectorAll('[data-t-label]').forEach((el) => { el.setAttribute('aria-label', TEXT[lang][el.dataset.tLabel]); });
       document.querySelectorAll('.lang button').forEach((b) => b.classList.toggle('active', b.dataset.lang === lang));
       if (onChange) onChange(lang);

@@ -75,6 +75,22 @@
       background: radial-gradient(circle at 50% 40%, #3550b8, #1a2366 70%);
       border: 3px solid rgba(255, 211, 77, 0.75);
     }
+    /* the QR code and address of the published games */
+    .share {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 30px;
+    }
+    .share img {
+      width: 132px;
+      height: 132px;
+      border-radius: 12px;
+      display: block;
+    }
+    .share a { color: var(--muted); font-weight: 800; text-decoration: none; }
+    .share a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -357,7 +373,15 @@
         </a>
       </div>
 
-      <footer class="credit" data-t="credit"></footer>
+      <div class="share">
+        <img src="shared/qr.svg" alt="">
+        <a href="https://astrotuvi.github.io/astronoomia-mangud/">astrotuvi.github.io/astronoomia-mangud</a>
+      </div>
+
+      <footer class="credit">
+        <div data-t="credit"></div>
+        <div data-t="author"></div>
+      </footer>
     </div>
   </main>
 
