@@ -219,6 +219,7 @@ The levels are in the `LEVELS` list at the top of `asteroid/app.js`, and `makeFi
   - the Moon as seen from the Earth, and the Sun, the Earth and the Moon from above the North Pole, as in Kuu faasid
   - the stars of a constellation without lines
   - short animations of a plane, a satellite and a shooting star, as in Püüa langev täht
+  - shooting-star trails on a photo, and the same photo with a yellow ring in one of four places, to find the radiant as in Uuri meteoore
   - true or false
   - putting 4 pictures in order, by tapping them into numbered places (alone only)
 - A right answer gets 1000 points at once, down to 500 at the last moment. From the third right answer in a row on, each gets 🔥 200 more.

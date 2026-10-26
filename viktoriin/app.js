@@ -18,6 +18,7 @@
     { id: 'rakett', emoji: '🚀', name: { et: 'Kosmoserakett', en: 'Space Rocket' }, href: '../rakett/index.html' },
     { id: 'planeedid', emoji: '🪐', name: { et: 'Planeetide rivi', en: 'Line Up the Planets' }, href: '../planeedid/index.html' },
     { id: 'meteoor', emoji: '🌠', name: { et: 'Püüa langev täht', en: 'Catch a Shooting Star' }, href: '../meteoor/index.html' },
+    { id: 'radiant', emoji: '🔍', name: { et: 'Uuri meteoore', en: 'Meteor Detective' }, href: '../radiant/index.html' },
     { id: 'tahtkujud', emoji: '✨', name: { et: 'Tähtkujud', en: 'Constellations' }, href: '../tahtkujud/index.html' },
     { id: 'eksoplaneet', emoji: '🔭', name: { et: 'Avasta eksoplaneet', en: 'Discover an Exoplanet' }, href: '../eksoplaneet/index.html' },
     { id: 'asteroid', emoji: '🪨', name: { et: 'Leia asteroid', en: 'Find the Asteroid' }, href: '../asteroid/index.html' },
@@ -44,7 +45,36 @@
     scorpius: [[247.35, -26.43, 1.0], [245.30, -25.59, 2.9], [240.08, -22.62, 2.3], [241.36, -19.81, 2.6], [239.71, -26.11, 2.9],
       [248.97, -28.22, 2.8], [252.54, -34.29, 2.3], [252.97, -38.05, 3.0], [253.65, -42.36, 3.6], [258.04, -43.24, 3.3],
       [264.33, -43.00, 1.9], [266.90, -40.13, 3.0], [265.62, -39.03, 2.4], [263.40, -37.10, 1.6]],
-    crux: [[187.79, -57.11, 1.6], [186.65, -63.10, 0.8], [191.93, -59.69, 1.3], [183.79, -58.75, 2.8]]
+    crux: [[187.79, -57.11, 1.6], [186.65, -63.10, 0.8], [191.93, -59.69, 1.3], [183.79, -58.75, 2.8]],
+    perseus: [[42.67, 55.90, 3.8], [46.20, 53.51, 2.9], [51.08, 49.86, 1.8], [55.73, 47.79, 3.0], [59.46, 40.01, 2.9],
+      [59.74, 35.79, 4.0], [58.53, 31.88, 2.9], [47.37, 44.86, 3.8], [47.04, 40.96, 2.1], [46.29, 38.84, 3.4]],
+    gemini: [[113.65, 31.89, 1.6], [107.78, 30.25, 4.4], [100.98, 25.13, 3.0], [95.74, 22.51, 2.9], [93.72, 22.51, 3.3],
+      [97.24, 20.21, 4.1], [111.43, 27.80, 3.8], [113.98, 26.90, 4.1], [116.33, 28.03, 1.1], [110.03, 21.98, 3.5],
+      [106.03, 20.57, 3.9], [99.43, 16.40, 1.9], [109.52, 16.54, 3.6], [101.32, 12.90, 3.4]],
+    draco: [[269.15, 51.49, 2.2], [262.61, 52.30, 2.8], [263.07, 55.17, 4.9], [268.38, 56.87, 3.8], [288.14, 67.66, 3.1],
+      [297.04, 70.27, 3.8], [275.26, 72.73, 3.6], [257.20, 65.71, 3.2], [245.99, 61.51, 2.7], [240.47, 58.57, 4.0],
+      [231.23, 58.97, 3.3], [211.10, 64.38, 3.7], [188.37, 69.79, 3.9], [172.85, 69.33, 3.8]]
+  };
+
+  // Shooting-star trails on a long-exposure photo, as in Uuri meteoore, in
+  // a 100 × 100 picture. The trails of the shower fly out of the radiant:
+  // each is [direction (degrees, clockwise from right), how far from the
+  // radiant it begins, how long it is]. Strays are [x, y of where they
+  // began, x, y of the head]. rings: where a yellow ring may be put in the
+  // answers, the radiant first.
+  const TRAILS = {
+    a: {
+      radiant: [40, 44],
+      trails: [[12, 14, 18], [62, 18, 16], [112, 13, 15], [160, 16, 14], [208, 12, 13], [262, 20, 14], [318, 15, 17]],
+      strays: [],
+      rings: [[40, 44], [66, 28], [26, 72], [74, 70]]
+    },
+    b: {
+      radiant: [62, 36],
+      trails: [[20, 12, 13], [75, 16, 16], [125, 20, 18], [170, 15, 17], [215, 18, 12], [300, 13, 11]],
+      strays: [[14, 80, 34, 88]],
+      rings: [[62, 36], [36, 52], [70, 76], [36, 18]]
+    }
   };
 
   const TEXT = {
@@ -294,6 +324,33 @@
     return `<svg viewBox="0 0 100 100" class="anim" aria-hidden="true"><rect width="100" height="100" fill="#050a24" data-ink />${bg}${fg}</svg>`;
   }
 
+  // the trails of a set in TRAILS, faint where they began and bright at the
+  // head, and a yellow ring at rings[ring], if given
+  function trailsSVG(id, ring) {
+    const T = TRAILS[id];
+    const [rx, ry] = T.radiant;
+    const segs = T.trails.map(([a, d, l]) => {
+      const c = Math.cos(a * DEG);
+      const s = Math.sin(a * DEG);
+      return [rx + c * d, ry + s * d, rx + c * (d + l), ry + s * (d + l)];
+    }).concat(T.strays);
+    const trail = ([x0, y0, x1, y1]) => {
+      const l = Math.hypot(x1 - x0, y1 - y0);
+      const nx = (-(y1 - y0) / l) * 0.8;
+      const ny = ((x1 - x0) / l) * 0.8;
+      const mx = x0 + (x1 - x0) * 0.6;
+      const my = y0 + (y1 - y0) * 0.6;
+      const f = (v) => v.toFixed(1);
+      return `<polygon points="${f(x0)},${f(y0)} ${f(mx + nx * 0.6)},${f(my + ny * 0.6)} ${f(x1 + nx)},${f(y1 + ny)} ${f(x1 - nx)},${f(y1 - ny)} ${f(mx - nx * 0.6)},${f(my - ny * 0.6)}" fill="#e6f0ff" opacity="0.75" />` +
+        `<circle cx="${f(x1)}" cy="${f(y1)}" r="2" fill="#e6f0ff" opacity="0.3" /><circle cx="${f(x1)}" cy="${f(y1)}" r="1.1" fill="#fff" />`;
+    };
+    const stars = '<g fill="#fff" opacity="0.6"><circle cx="8" cy="12" r="0.6" /><circle cx="88" cy="8" r="0.7" /><circle cx="52" cy="90" r="0.6" />' +
+      '<circle cx="92" cy="48" r="0.5" /><circle cx="20" cy="40" r="0.5" /><circle cx="80" cy="92" r="0.6" /><circle cx="50" cy="64" r="0.5" /></g>';
+    const ringSVG = ring === undefined ? '' :
+      `<circle cx="${T.rings[ring][0]}" cy="${T.rings[ring][1]}" r="7" fill="none" stroke="#ffd34d" stroke-width="2.5" />`;
+    return `<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#050a24" />${stars}${segs.map(trail).join('')}${ringSVG}</svg>`;
+  }
+
   function picHTML(p) {
     let inner = '';
     if (p.photo) inner = `<img src="${PHOTO(p.photo)}" alt="">`;
@@ -303,6 +360,7 @@
     else if (p.space !== undefined) inner = spaceSVG(p.space);
     else if (p.con) inner = conSVG(p.con);
     else if (p.anim) inner = animSVG(p.anim);
+    else if (p.trails) inner = trailsSVG(p.trails, p.ring);
     return `<span class="pic-box">${inner}</span>`;
   }
 
@@ -572,7 +630,8 @@
     const box = $('answers');
     box.querySelectorAll('.slot').forEach((b, s) => {
       const k = state.order[s];
-      b.innerHTML = k === undefined ? `<i>${s + 1}</i>` : `<i>${s + 1}</i>${picHTML(state.opts[k].pic)}`;
+      const pic = k !== undefined && state.opts[k].pic;
+      b.innerHTML = `<i>${s + 1}</i>` + (pic ? picHTML(pic) + (pic.label ? `<span class="txt">${L(pic.label)}</span>` : '') : '');
       b.classList.toggle('filled', k !== undefined);
     });
     box.querySelectorAll('.item').forEach((b) => b.classList.toggle('used', state.order.includes(+b.dataset.k)));

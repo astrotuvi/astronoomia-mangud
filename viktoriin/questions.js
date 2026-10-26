@@ -24,6 +24,9 @@
 //                         Pole, the Moon at that angle, as in Kuu faasid
 //   { con: 'orion' }      the stars of a constellation without lines
 //   { anim: 'plane' }     a short animation of a plane, a satellite or a shooting star
+//   { trails: 'a' }       shooting-star trails on a photo, as in Uuri meteoore,
+//                         and with ring: k a yellow ring at the k-th of its
+//                         rings (0 at the radiant); see TRAILS in app.js
 // A picture may have a label: { photo: 'saturn', label: { et, en } }.
 window.QUIZ = [
   {
@@ -693,6 +696,120 @@ window.QUIZ = [
           { et: 'Maa tiirleb ümber Päikese', en: 'The Earth goes round the Sun' }
         ],
         why: { et: 'Tegelikult ei pöörle taevas, vaid Maa – nagu karussell. Seepärast tõusevad tähed idas ja loojuvad läänes.', en: 'The sky does not really turn, the Earth does, like a merry-go-round. That is why stars rise in the east and set in the west.' }
+      }
+    ]
+  },
+  {
+    game: 'radiant',
+    questions: [
+      {
+        q: { et: 'Langevad tähed jätsid fotole jäljed. Kus on radiant?', en: 'The shooting stars left trails on the photo. Where is the radiant?' },
+        pic: { trails: 'a' },
+        answers: [{ trails: 'a', ring: 0 }, { trails: 'a', ring: 1 }, { trails: 'a', ring: 2 }, { trails: 'a', ring: 3 }],
+        why: { et: 'Kui pikendad iga jälge heledast peast tagasi, saavad kõik jooned kokku ühes kohas. See ongi radiant.', en: 'If you draw each trail back from its bright head, all the lines meet in one spot. That is the radiant.' }
+      },
+      {
+        q: { et: 'Üks jälg ei kuulu meteoorivoolu. Kus on voolu radiant?', en: 'One trail does not belong to the shower. Where is the shower’s radiant?' },
+        pic: { trails: 'b' },
+        answers: [{ trails: 'b', ring: 0 }, { trails: 'b', ring: 1 }, { trails: 'b', ring: 2 }, { trails: 'b', ring: 3 }],
+        why: { et: 'Kuus jälge saavad kokku samas kohas. Jälg all vasakul on juhuslik langev täht, mis ei kuulu ühtegi voolu.', en: 'Six trails meet in the same spot. The trail at the bottom left is a stray shooting star that belongs to no shower.' }
+      },
+      {
+        q: { et: 'Mis on radiant?', en: 'What is the radiant?' },
+        answers: [
+          { et: 'Koht taevas, kust voolu langevad tähed paistavad tulevat', en: 'The spot in the sky the shower’s shooting stars seem to come from' },
+          { et: 'Kõige heledam langev täht', en: 'The brightest shooting star' },
+          { et: 'Täht, mille ümber langevad tähed tiirlevad', en: 'A star the shooting stars go round' },
+          { et: 'Koht, kuhu langevad tähed maha kukuvad', en: 'The place where shooting stars land' }
+        ],
+        why: { et: 'Ühe meteoorivoolu langevad tähed paistavad kõik lendavat välja ühest kohast taevas. Seda kohta nimetatakse radiandiks.', en: 'The shooting stars of one meteor shower all seem to fly out of one spot in the sky. That spot is called the radiant.' }
+      },
+      {
+        q: { et: 'Miks paistavad ühe voolu langevad tähed tulevat ühest kohast?', en: 'Why do the shooting stars of one shower seem to come from one spot?' },
+        answers: [
+          { et: 'Nad lendavad rööbiti, aga kaugel paistavad kokku saavat', en: 'They fly side by side, but seem to meet far away' },
+          { et: 'Nad tulevad kõik ühest tähest', en: 'They all come from one star' },
+          { et: 'Seal on taevas auk', en: 'There is a hole in the sky there' },
+          { et: 'Üks täht tõmbab neid enda poole', en: 'A star pulls them towards it' }
+        ],
+        why: { et: 'Langevad tähed lendavad kõik ühes suunas, rööbiti. Ühest kohast tulevad nad ainult näiliselt, nagu pikad raudteerööpad, mis kaugel justkui kokku saavad.', en: 'Shooting stars all fly the same way, side by side. They only seem to come from one spot, as long railway lines seem to meet far away.' }
+      },
+      {
+        q: { et: 'Meteoorivoolu radiant on Lõvi tähtkujus. Kuidas seda voolu nimetatakse?', en: 'A meteor shower’s radiant is in the constellation Leo, the Lion. What is the shower called?' },
+        pic: { con: 'leo' },
+        answers: [
+          { et: 'Leoniidid', en: 'The Leonids' },
+          { et: 'Perseiidid', en: 'The Perseids' },
+          { et: 'Geminiidid', en: 'The Geminids' },
+          { et: 'Lüüriidid', en: 'The Lyrids' }
+        ],
+        why: { et: 'Lõvi on ladina keeles Leo. Meteoorivool saab nime tähtkuju järgi, kus on tema radiant.', en: 'A meteor shower is named after the constellation its radiant is in, and the Lion is Leo in Latin.' }
+      },
+      {
+        q: { et: 'Meteoorivoolu radiant on Lohe tähtkujus. Kuidas seda voolu nimetatakse?', en: 'A meteor shower’s radiant is in the constellation Draco, the Dragon. What is the shower called?' },
+        pic: { con: 'draco' },
+        answers: [
+          { et: 'Drakoniidid', en: 'The Draconids' },
+          { et: 'Leoniidid', en: 'The Leonids' },
+          { et: 'Ursiidid', en: 'The Ursids' },
+          { et: 'Kvadrantiidid', en: 'The Quadrantids' }
+        ],
+        why: { et: 'Lohe on ladina keeles Draco. Drakoniide näeb 8. oktoobri paiku, kõige paremini õhtul.', en: 'The Dragon is Draco in Latin. The Draconids come around 8 October and are best seen in the evening.' }
+      },
+      {
+        q: { et: 'Kust on kvadrantiidid saanud oma nime?', en: 'Where does the name of the Quadrantids come from?' },
+        answers: [
+          { et: 'Vanast tähtkujust, mida enam pole', en: 'An old constellation that is gone' },
+          { et: 'Teadlasest, kes nad avastas', en: 'The scientist who found them' },
+          { et: 'Neljast heledast langevast tähest', en: 'Four bright shooting stars' },
+          { et: 'Kraatrist Kuu peal', en: 'A crater on the Moon' }
+        ],
+        why: { et: 'Nende radiant on seal, kus oli varem tähtkuju Müürikvadrant. Tänapäeva tähekaartidel seda enam pole, aga vool kannab tema nime edasi.', en: 'Their radiant is where the constellation the Mural Quadrant used to be. It is no longer on star maps, but the shower keeps its name alive.' }
+      },
+      {
+        q: { et: 'Mõni jälg ei lähe radiandi poole. Mis see on?', en: 'Some trails don’t point back to the radiant. What are they?' },
+        answers: [
+          { et: 'Juhuslikud langevad tähed', en: 'Stray shooting stars' },
+          { et: 'Lennukid', en: 'Planes' },
+          { et: 'Teise galaktika tähed', en: 'Stars of another galaxy' },
+          { et: 'Vead fotol', en: 'Mistakes on the photo' }
+        ],
+        why: { et: 'Igal pimedal ööl lendab tunnis mõni juhuslik langev täht, mis ei kuulu ühtegi voolu. Nende jäljed ei lähe radiandi poole.', en: 'On every dark night a few stray shooting stars an hour fly that belong to no shower. Their trails don’t point back to the radiant.' }
+      },
+      {
+        q: { et: 'Miks tuleb meteoorivool igal aastal samal ajal?', en: 'Why does a meteor shower come at the same time every year?' },
+        answers: [
+          { et: 'Maa läbib siis kivikeste juga', en: 'The Earth passes through a stream of stones' },
+          { et: 'Komeet tuleb siis tagasi', en: 'A comet comes back then' },
+          { et: 'Siis on ööd kõige pimedamad', en: 'The nights are darkest then' },
+          { et: 'Siis on Kuu kõige kaugemal', en: 'The Moon is farthest away then' }
+        ],
+        why: { et: 'Komeet või asteroid on jätnud oma teele kivikesi. Maa läbib seda kivikeste juga igal aastal samal ajal.', en: 'A comet or an asteroid has left little stones along its path. The Earth reaches that stream of stones at the same time every year.' }
+      },
+      {
+        q: { et: 'Kust on pärit geminiidide kivikesed?', en: 'Where do the little stones of the Geminids come from?' },
+        answers: [
+          { et: 'Asteroidilt Phaethon', en: 'The asteroid Phaethon' },
+          { et: 'Kaksikute tähtedelt', en: 'The stars of Gemini' },
+          { et: 'Kuult', en: 'The Moon' },
+          { et: 'Marsilt', en: 'Mars' }
+        ],
+        why: { et: 'Enamik meteoorivooludest on pärit komeetidelt, aga geminiidid asteroidilt Phaethon. Kaksikute tähtedega pole neil midagi pistmist, sealt paistavad nad ainult tulevat.', en: 'Most meteor showers come from comets, but the Geminids come from the asteroid Phaethon. They have nothing to do with the stars of Gemini: they only seem to come from there.' }
+      },
+      {
+        q: { et: 'Mida kõrgemal on radiant taevas, seda rohkem langevaid tähti näeb.', en: 'The higher the radiant is in the sky, the more shooting stars you see.' },
+        tf: true,
+        why: { et: 'Kui radiant on madalal või silmapiiri all, jõuab vähem langevaid tähti meie taevasse. Seepärast on enamikku voolusid kõige parem vaadata pärast südaööd.', en: 'When the radiant is low or below the horizon, fewer shooting stars reach our sky. That is why most showers are best after midnight.' }
+      },
+      {
+        q: { et: 'Pane meteoorivoolud aasta järjekorda, alates augustist.', en: 'Put the meteor showers in order through the year, starting from August.' },
+        order: [
+          { con: 'perseus', label: { et: 'Perseiidid', en: 'Perseids' } },
+          { con: 'draco', label: { et: 'Drakoniidid', en: 'Draconids' } },
+          { con: 'leo', label: { et: 'Leoniidid', en: 'Leonids' } },
+          { con: 'gemini', label: { et: 'Geminiidid', en: 'Geminids' } }
+        ],
+        why: { et: 'Perseiidid on augustis, drakoniidid oktoobris, leoniidid novembris ja geminiidid detsembris.', en: 'The Perseids come in August, the Draconids in October, the Leonids in November and the Geminids in December.' }
       }
     ]
   },
