@@ -20,6 +20,7 @@
     { id: 'meteoor', emoji: '🌠', name: { et: 'Püüa langev täht', en: 'Catch a Shooting Star' }, href: '../meteoor/index.html' },
     { id: 'tahtkujud', emoji: '✨', name: { et: 'Tähtkujud', en: 'Constellations' }, href: '../tahtkujud/index.html' },
     { id: 'eksoplaneet', emoji: '🔭', name: { et: 'Avasta eksoplaneet', en: 'Discover an Exoplanet' }, href: '../eksoplaneet/index.html' },
+    { id: 'asteroid', emoji: '🪨', name: { et: 'Leia asteroid', en: 'Find the Asteroid' }, href: '../asteroid/index.html' },
     { id: 'pildid', emoji: '🖼️', name: { et: 'Pildid', en: 'Pictures' }, href: '../malumang/index.html', game: { et: 'Mälumäng', en: 'Memory' } }
   ];
 
@@ -65,9 +66,9 @@
       wrong: 'Vale',
       qNum: (i, n) => `${i} / ${n}`,
       points: (p) => `${p} p`,
-      gotRight: (p) => `✅ Õige! +${p}`,
+      gotRight: (p) => `✅ Õige vastus! +${p}`,
       streak: '🔥',
-      gotWrong: '❌ Vale',
+      gotWrong: '❌ Vale vastus',
       timeUp: '⏰ Aeg sai otsa',
       answered: '✔',
       rotate: 'Keera telefon külili, et mõlemal oleks oma pool.',
@@ -107,9 +108,9 @@
       wrong: 'False',
       qNum: (i, n) => `${i} / ${n}`,
       points: (p) => `${p} pts`,
-      gotRight: (p) => `✅ Right! +${p}`,
+      gotRight: (p) => `✅ Right answer! +${p}`,
       streak: '🔥',
-      gotWrong: '❌ Wrong',
+      gotWrong: '❌ Wrong answer',
       timeUp: '⏰ Time is up',
       answered: '✔',
       rotate: 'Turn the phone sideways, so that each of you has a half.',

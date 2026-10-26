@@ -978,6 +978,184 @@ window.QUIZ = [
     ]
   },
   {
+    game: 'asteroid',
+    questions: [
+      {
+        q: { et: 'Mis on asteroid?', en: 'What is an asteroid?' },
+        answers: [
+          { et: 'Kivimürakas, mis tiirleb ümber Päikese', en: 'A lump of rock going round the Sun' },
+          { et: 'Väike täht', en: 'A small star' },
+          { et: 'Planeedi kuu', en: 'A planet’s moon' },
+          { et: 'Langev täht', en: 'A shooting star' }
+        ],
+        why: { et: 'Asteroidid tiirlevad ümber Päikese nagu planeedid, aga on palju väiksemad. Teleskoobis paistavad nad täpselt nagu tähed.', en: 'Asteroids go round the Sun like the planets, but are much smaller. Through a telescope they look just like stars.' }
+      },
+      {
+        q: { et: 'Kuidas leida pildilt asteroid, kui see paistab täpselt nagu täht?', en: 'How do you find an asteroid in a picture, when it looks just like a star?' },
+        answers: [
+          { et: 'Otsi täppi, mis liigub', en: 'Look for a dot that moves' },
+          { et: 'Otsi kõige heledamat täppi', en: 'Look for the brightest dot' },
+          { et: 'Otsi sabaga täppi', en: 'Look for a dot with a tail' },
+          { et: 'Otsi punast täppi', en: 'Look for a red dot' }
+        ],
+        why: { et: 'Teleskoop pildistab sama taevalaiku mitmel ööl. Tähed püsivad paigal, aga asteroid hüppab paigast paika.', en: 'The telescope takes pictures of the same patch of sky on several nights. The stars stay put, but the asteroid jumps from place to place.' }
+      },
+      {
+        q: { et: 'Miks paistavad tähed piltidel paigal, kuigi asteroid liigub?', en: 'Why do the stars seem to stand still in the pictures, though the asteroid moves?' },
+        answers: [
+          { et: 'Tähed on palju kaugemal', en: 'The stars are much farther away' },
+          { et: 'Tähed on kinni taevas', en: 'The stars are fixed to the sky' },
+          { et: 'Tähed on suuremad', en: 'The stars are bigger' },
+          { et: 'Tähed magavad öösel', en: 'The stars sleep at night' }
+        ],
+        why: { et: 'Ka tähed liiguvad, aga nad on nii kaugel, et paari ööga ei näe me nende liikumist.', en: 'The stars move too, but they are so far away that we cannot see them move in a few nights.' }
+      },
+      {
+        q: { et: 'Kus tiirleb enamik asteroide?', en: 'Where do most asteroids go round the Sun?' },
+        answers: [
+          { et: 'Marsi ja Jupiteri vahel', en: 'Between Mars and Jupiter' },
+          { et: 'Maa ja Kuu vahel', en: 'Between the Earth and the Moon' },
+          { et: 'Päikese ja Merkuuri vahel', en: 'Between the Sun and Mercury' },
+          { et: 'Saturni rõngastes', en: 'In Saturn’s rings' }
+        ],
+        why: { et: 'Marsi ja Jupiteri vahel on asteroidide vöö. Asteroide on leitud üle miljoni, ja enamik neist tiirleb seal.', en: 'Between Mars and Jupiter is the asteroid belt. More than a million asteroids have been found, and most of them go round there.' }
+      },
+      {
+        q: { et: 'Milline asteroid liigub tähtede vahel kõige kiiremini?', en: 'Which asteroid moves fastest among the stars?' },
+        answers: [
+          { et: 'See, mis on Maa lähedal', en: 'One near the Earth' },
+          { et: 'See, mis on asteroidide vöös', en: 'One in the asteroid belt' },
+          { et: 'See, mis on Neptuunist kaugemal', en: 'One beyond Neptune' }
+        ],
+        why: { et: 'Mida lähemal asteroid on, seda kiiremini paistab ta tähtede vahel liikuvat.', en: 'The nearer an asteroid is, the faster it seems to move among the stars.' }
+      },
+      {
+        q: { et: 'Teleskoobi piltidel on väga nõrk asteroid, mis liigub tähtede vahel väga aeglaselt. Kus ta tiirleb?', en: 'In a telescope’s pictures, a very faint asteroid moves very slowly among the stars. Where does it go round the Sun?' },
+        answers: [
+          { et: 'Neptuunist kaugemal', en: 'Beyond Neptune' },
+          { et: 'Asteroidide vöös', en: 'In the asteroid belt' },
+          { et: 'Maa lähedal', en: 'Near the Earth' }
+        ],
+        why: { et: 'Neptuunist kaugemal on Päikese valgus nõrk ja kõik on jääs. Nii kaugel liigub keha tähtede vahel väga aeglaselt.', en: 'Beyond Neptune the sunlight is weak and everything is ice. So far away, a body moves very slowly among the stars.' }
+      },
+      {
+        q: { et: 'Asteroid liikus 1. ööst 2. ööni natuke edasi. Kus on ta 3. ööl?', en: 'An asteroid moved on a little from night 1 to night 2. Where is it on night 3?' },
+        answers: [
+          { et: 'Sama palju edasi samas suunas', en: 'As far on again, the same way' },
+          { et: 'Tagasi 1. öö kohas', en: 'Back where it was on night 1' },
+          { et: 'Samas kohas kui 2. ööl', en: 'In the same place as on night 2' },
+          { et: 'Ükskõik kus', en: 'Anywhere at all' }
+        ],
+        why: { et: 'Asteroid liigub iga ööga sama palju ja samas suunas. Nii arvutavad astronoomid ette, kus ta järgmisel ööl on, ja leiavad ta uuesti.', en: 'An asteroid moves the same distance in the same direction every night. So astronomers work out where it will be the next night, and find it again.' }
+      },
+      {
+        q: { et: 'Teleskoop pildistas sama taevalaiku mitmel ööl. Üks täpp on ainult ühe öö pildil ja on tähtedest teravam. Mis see on?', en: 'A telescope took pictures of the same patch of sky on several nights. One dot is in the picture of only one night, and is sharper than the stars. What is it?' },
+        answers: [
+          { et: 'Kosmilise kiire jälg', en: 'The track of a cosmic ray' },
+          { et: 'Asteroid', en: 'An asteroid' },
+          { et: 'Täht, mis muudab heledust', en: 'A star that changes its brightness' },
+          { et: 'Satelliit', en: 'A satellite' }
+        ],
+        why: { et: 'Kosmiline kiir tabab kaamerat ainult korra. Asteroid on igal pildil, aga iga kord eri kohas.', en: 'A cosmic ray hits the camera only once. An asteroid is in every picture, but in a different place each time.' }
+      },
+      {
+        q: { et: 'Teleskoobi pildil taevast on pikk hele triip. Mis selle jättis?', en: 'A telescope’s picture of the sky has a long bright streak across it. What left it?' },
+        answers: [
+          { et: 'Satelliit', en: 'A satellite' },
+          { et: 'Asteroidide vöö asteroid', en: 'An asteroid in the belt' },
+          { et: 'Täht, mis muudab heledust', en: 'A star that changes its brightness' },
+          { et: 'Kosmiline kiir', en: 'A cosmic ray' }
+        ],
+        why: { et: 'Satelliit lendab nii kiiresti, et jõuab pildistamise ajal üle taeva ja jätab triibu. Asteroid on täpp, mitte triip.', en: 'A satellite flies so fast that it crosses the sky while the picture is taken and leaves a streak. An asteroid is a dot, not a streak.' }
+      },
+      {
+        q: { et: 'Teleskoop pildistab sama taevalaiku mitmel ööl. Täht, mis muudab heledust, on igal pildil samas kohas.', en: 'A telescope takes pictures of the same patch of sky on several nights. A star that changes its brightness is in the same place in each picture.' },
+        tf: true,
+        why: { et: 'Selline täht muudab heledust, aga ei liigu paigast. Igal pildil eri kohas on hoopis asteroid.', en: 'Such a star changes its brightness, but does not move. It is the asteroid that is in a different place in each picture.' }
+      },
+      {
+        q: { et: 'Kes leidis 1930. aastal Pluuto, vilgutades kahte eri ööl tehtud fotot?', en: 'Who found Pluto in 1930 by flipping between two photos from different nights?' },
+        answers: [
+          { et: 'Clyde Tombaugh', en: 'Clyde Tombaugh' },
+          { et: 'Galileo Galilei', en: 'Galileo Galilei' },
+          { et: 'Giuseppe Piazzi', en: 'Giuseppe Piazzi' },
+          { et: 'Ernst Öpik', en: 'Ernst Öpik' }
+        ],
+        why: { et: 'Clyde Tombaugh otsis täppi, mis liigub, täpselt nagu sina Leia asteroidi mängus.', en: 'Clyde Tombaugh looked for a dot that moves, just as you do in Find the Asteroid.' }
+      },
+      {
+        q: { et: 'Mis on Pluuto ja Eris?', en: 'What are Pluto and Eris?' },
+        answers: [
+          { et: 'Kääbusplaneedid Neptuunist kaugemal', en: 'Dwarf planets beyond Neptune' },
+          { et: 'Asteroidid Marsi ja Jupiteri vahel', en: 'Asteroids between Mars and Jupiter' },
+          { et: 'Jupiteri kuud', en: 'Moons of Jupiter' },
+          { et: 'Tähed', en: 'Stars' }
+        ],
+        why: { et: 'Neptuunist kaugemal tiirleb tuhandeid jäiseid kehi. Mõned neist, näiteks Pluuto ja Eris, on kääbusplaneedid.', en: 'Thousands of icy bodies go round the Sun beyond Neptune. Some of them, such as Pluto and Eris, are dwarf planets.' }
+      },
+      {
+        q: { et: 'Mis oli esimene asteroid, mis leiti?', en: 'What was the first asteroid to be found?' },
+        answers: [
+          { et: 'Ceres', en: 'Ceres' },
+          { et: 'Pluuto', en: 'Pluto' },
+          { et: 'Estonia', en: 'Estonia' },
+          { et: 'Dimorphos', en: 'Dimorphos' }
+        ],
+        why: { et: 'Cerese leidis Giuseppe Piazzi 1801. aastal. Nüüd peetakse Cerest kääbusplaneediks.', en: 'Ceres was found by Giuseppe Piazzi in 1801. Now Ceres is counted as a dwarf planet.' }
+      },
+      {
+        q: { et: 'Asteroidid on tükid, mis jäid üle, kui planeedid tekkisid.', en: 'Asteroids are pieces left over from when the planets formed.' },
+        tf: true,
+        why: { et: 'Planeedid tekkisid 4,6 miljardit aastat tagasi. Asteroidid on sellest ajast üle jäänud tükid.', en: 'The planets formed 4.6 billion years ago. Asteroids are pieces left over from that time.' }
+      },
+      {
+        q: { et: 'Mis on 2026 UA₁₂?', en: 'What is 2026 UA₁₂?' },
+        answers: [
+          { et: 'Asteroidi ajutine tähis', en: 'An asteroid’s temporary label' },
+          { et: 'Asteroidi kaugus Päikesest', en: 'How far an asteroid is from the Sun' },
+          { et: 'Teleskoobi nimi', en: 'The name of a telescope' },
+          { et: 'Kosmosesondi nimi', en: 'The name of a space probe' }
+        ],
+        why: { et: 'Tähises on aasta, poolkuu täht ja järjekord. Hiljem pakub avastaja asteroidile nime.', en: 'The label has the year, a letter for the half of the month, and the order. Later the discoverer suggests a name for the asteroid.' }
+      },
+      {
+        q: { et: 'Kui asteroidi tee ristub Maa teega, kukub ta kindlasti Maale.', en: 'If an asteroid’s path crosses the Earth’s path, it will surely fall on the Earth.' },
+        tf: false,
+        why: { et: 'Maa ja asteroid on väga harva samal ajal samas kohas. Astronoomid arvutavad asteroidide teed aastateks ette, ja praegu pole teada ühtki suurt asteroidi, mis lähema saja aasta jooksul Maale kukuks.', en: 'The Earth and an asteroid are very rarely in the same place at the same time. Astronomers work out asteroids’ paths years ahead, and no big asteroid is known that would fall on the Earth in the next hundred years.' }
+      },
+      {
+        q: { et: 'Mida tegi kosmosesond DART 2022. aastal?', en: 'What did the DART space probe do in 2022?' },
+        answers: [
+          { et: 'Muutis asteroidi teed', en: 'Changed an asteroid’s path' },
+          { et: 'Maandus Marsil', en: 'Landed on Mars' },
+          { et: 'Tõi Kuult kive', en: 'Brought rocks from the Moon' },
+          { et: 'Pildistas Pluutot', en: 'Took pictures of Pluto' }
+        ],
+        why: { et: 'DART põrkas asteroidi Dimorphos vastu ja muutis tema teed. Nii katsetati, kuidas asteroidi vajaduse korral eemale lükata.', en: 'DART crashed into the asteroid Dimorphos and changed its path. It tested how an asteroid could be pushed away if needed.' }
+      },
+      {
+        q: { et: 'Asteroid 4227 Kaali on nime saanud Saaremaa kraatri järgi. Mis selle kraatri tekitas?', en: 'The asteroid 4227 Kaali is named after a crater on Saaremaa. What made the crater?' },
+        answers: [
+          { et: 'Meteoriit', en: 'A meteorite' },
+          { et: 'Vulkaan', en: 'A volcano' },
+          { et: 'Jõgi', en: 'A river' },
+          { et: 'Inimesed kaevasid selle', en: 'People dug it' }
+        ],
+        why: { et: 'Meteoriit kukkus Kaali umbes 3500 aastat tagasi. Asteroidi 4227 Kaali leidis Soome astronoom Liisi Oterma.', en: 'A meteorite fell at Kaali about 3500 years ago. The asteroid 4227 Kaali was found by the Finnish astronomer Liisi Oterma.' }
+      },
+      {
+        q: { et: 'Kelle järgi on nime saanud asteroid 2099 Öpik?', en: 'Who is the asteroid 2099 Öpik named after?' },
+        answers: [
+          { et: 'Eesti astronoomi järgi', en: 'An Estonian astronomer' },
+          { et: 'Eesti laulja järgi', en: 'An Estonian singer' },
+          { et: 'Eesti saare järgi', en: 'An Estonian island' },
+          { et: 'Eesti helilooja järgi', en: 'An Estonian composer' }
+        ],
+        why: { et: 'Ernst Öpik töötas Tartus ja uuris meteoore, komeete ja asteroide. Oma asteroidi on saanud ka laulja Georg Ots ja helilooja Arvo Pärt.', en: 'Ernst Öpik worked in Tartu and studied meteors, comets and asteroids. The singer Georg Ots and the composer Arvo Pärt have asteroids of their own too.' }
+      }
+    ]
+  },
+  {
     game: 'pildid',
     questions: [
       {
