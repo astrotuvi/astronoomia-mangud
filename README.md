@@ -242,3 +242,5 @@ The files in `pusle/images/` are square crops, scaled to 1200×1200 px, and are 
 | `triangulum.jpg` | Triangulum Galaxy (M33) | <https://www.astrobin.com/yvvd54/> |
 | `bode.jpg` | Bode’s and Cigar Galaxies (M81, M82) | <https://www.astrobin.com/xcthwy/> |
 | `triplet.jpg` | Leo Triplet (M65, M66, NGC 3628) | <https://www.astrobin.com/3frqwu/> |
+| `sombrero.jpg` | Sombrero Galaxy (M104) | <https://www.astrobin.com/yle81q/> |
+| `needle.jpg` | Needle Galaxy (NGC 4565) | <https://www.astrobin.com/7mcpat/> |

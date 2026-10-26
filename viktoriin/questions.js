@@ -1330,6 +1330,28 @@ window.QUIZ = [
         pic: { photo: 'dumbbell' },
         tf: true,
         why: { et: 'Hantli udu tekkis, kui üks Päikese-sarnane täht oma välimised kihid minema heitis. Päikesega juhtub see alles miljardite aastate pärast.', en: 'The Dumbbell Nebula formed when a star like the Sun threw off its outer layers. This will happen to the Sun only billions of years from now.' }
+      },
+      {
+        q: { et: 'Miks on see galaktika nii peenike?', en: 'Why is this galaxy so thin?' },
+        pic: { photo: 'needle' },
+        answers: [
+          { et: 'Me näeme seda küljelt', en: 'We see it from the side' },
+          { et: 'See on väga väike', en: 'It is very small' },
+          { et: 'Selles on vähe tähti', en: 'It has few stars' },
+          { et: 'See on väga kaugel', en: 'It is very far away' }
+        ],
+        why: { et: 'Nõela galaktika on lapik nagu pannkook ja me näeme seda täpselt küljelt. Küljelt vaadates näeks meie Linnutee välja umbes samasugune.', en: 'The Needle Galaxy is flat like a pancake, and we see it exactly from the side. Seen from the side, our Milky Way would look much the same.' }
+      },
+      {
+        q: { et: 'Millise asja järgi on see galaktika nime saanud?', en: 'What is this galaxy named after?' },
+        pic: { photo: 'sombrero' },
+        answers: [
+          { et: 'Kübar', en: 'A hat' },
+          { et: 'Taldrik', en: 'A plate' },
+          { et: 'Silm', en: 'An eye' },
+          { et: 'Lendav taldrik', en: 'A flying saucer' }
+        ],
+        why: { et: 'Sombreero on laia äärega Mehhiko kübar. Tume triip galaktika keskel on tolm.', en: 'A sombrero is a Mexican hat with a wide brim. The dark stripe across the galaxy is dust.' }
       }
     ]
   }

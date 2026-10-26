@@ -259,6 +259,24 @@
         et: 'Siin on korraga kolm galaktikat! Need on Lõvi tähtkujus üksteise naabrid.',
         en: 'Here are three galaxies at once! They are neighbours in the constellation Leo.'
       }
+    },
+    {
+      file: 'images/sombrero.jpg',
+      astrobin: 'yle81q',
+      name: { et: 'Sombreero galaktika', en: 'Sombrero Galaxy' },
+      fact: {
+        et: 'See galaktika näeb välja nagu laia äärega Mehhiko kübar sombreero. Tume triip selle keskel on tolm.',
+        en: 'This galaxy looks like a sombrero, a Mexican hat with a wide brim. The dark stripe across it is dust.'
+      }
+    },
+    {
+      file: 'images/needle.jpg',
+      astrobin: '7mcpat',
+      name: { et: 'Nõela galaktika', en: 'Needle Galaxy' },
+      fact: {
+        et: 'See on spiraalgalaktika, mida me näeme täpselt küljelt, nii et see paistab peenike nagu nõel. Küljelt vaadates näeks meie Linnutee välja umbes samasugune.',
+        en: 'This is a spiral galaxy that we see exactly from the side, so it looks as thin as a needle. Seen from the side, our Milky Way would look much the same.'
+      }
     }
   ];
 

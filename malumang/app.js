@@ -36,7 +36,9 @@
     { file: '../pusle/images/pinwheel.jpg', name: { et: 'Tuuleveski galaktika', en: 'Pinwheel Galaxy' } },
     { file: '../pusle/images/triangulum.jpg', name: { et: 'Kolmnurga galaktika', en: 'Triangulum Galaxy' } },
     { file: '../pusle/images/bode.jpg', name: { et: 'Bode ja Sigari galaktika', en: 'Bode’s and Cigar Galaxies' } },
-    { file: '../pusle/images/triplet.jpg', name: { et: 'Lõvi kolmik', en: 'Leo Triplet' } }
+    { file: '../pusle/images/triplet.jpg', name: { et: 'Lõvi kolmik', en: 'Leo Triplet' } },
+    { file: '../pusle/images/sombrero.jpg', name: { et: 'Sombreero galaktika', en: 'Sombrero Galaxy' } },
+    { file: '../pusle/images/needle.jpg', name: { et: 'Nõela galaktika', en: 'Needle Galaxy' } }
   ];
 
   // Number of pairs offered, with the columns of the little grid picture.
