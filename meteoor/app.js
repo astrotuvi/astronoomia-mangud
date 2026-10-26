@@ -38,9 +38,17 @@
     lines: [[0, 1, 2, 3], [2, 4, 5]]
   };
 
-  // on level 3 a meteor storm from 00:00 to 02:00 (h, with 24 for
-  // midnight), with this many times more; ramp: s it takes to come and go
-  const STORM = { from: 24, to: 26, ramp: 2, x: 3 };
+  // on level 3 a meteor storm from midnight (h, with 24 for midnight) for
+  // as many hours as the night's storm says, with this many times more;
+  // ramp: s it takes to come and go
+  const STORM = { from: 24, ramp: 2, x: 3 };
+
+  // On a night with clouds they drift from the west, and take this many s
+  // to cross the view
+  const WIND = 16;
+  // s when the overcast at the start of the night has cleared low down,
+  // and s more until it has cleared at the top of the view
+  const OVERCAST = [7, 16];
 
   const DEG = Math.PI / 180;
   const LAT = 58 * DEG;   // Tõrva
@@ -57,7 +65,11 @@
   //   sunAz: where the Sun is below the horizon at dawn
   //   radiant: RA and Dec (degrees) of the spot the shooting stars fly out of
   //   rise: the figure whose rising from behind the trees gets a caption
+  //   storm: h, how long the meteor storm on level 3 lasts
   //   snow: snow on the ground
+  //   clouds: the night starts overcast, clears up, and clouds come back
+  //     a few times; they hide the stars, and what flies behind them can't
+  //     be caught
   //   How near a tap must be to catch a shooting star:
   //   grace: s it can still be caught after it fades
   //   hit: how far from its tail a tap may land, as a share of the sky's
@@ -83,6 +95,7 @@
       sunAz: 45,
       radiant: [48, 58],
       rise: 'pleiades',
+      storm: 2,
       snow: false,
       grace: 0.25,
       hit: 0.08,
@@ -181,7 +194,8 @@
       // the east over the top to the west, so the shooting stars come from
       // the left, then from above, then from the right. Orion, the Twins and
       // Leo are as in tahtkujud/app.js.
-      // Harder to catch: the taps must be quicker and nearer.
+      // Harder to catch: the taps must be quicker and nearer, and clouds
+      // come and go.
       id: 'geminids',
       bests: 'bests-geminids',
       start: 18,
@@ -191,7 +205,9 @@
       sunAz: 135,
       radiant: [112, 33],
       rise: 'sirius',
+      storm: 1,
       snow: true,
+      clouds: true,
       grace: 0.1,
       hit: 0.032,
       hitMin: 18,
@@ -300,7 +316,7 @@
       perseids: 'perseiidid',
       geminids: 'geminiidid',
       level: 'Vali tase',
-      stormTip: '🌠 Kesköö järel tuleb kaheks tunniks tähesadu!',
+      stormTip: (h) => `🌠 Kesköö järel tuleb ${h === 1 ? 'üheks tunniks' : 'kaheks tunniks'} tähesadu!`,
       shower: (name) => `🌠 Täna öösel on päris meteoorivool – ${name}! Mine pimedas õue ja vaata taevasse.`,
       captions: {
         start: ['Püüa langevaid tähti!', 'Puuduta tähte, kui see lendab'],
@@ -334,6 +350,8 @@
           captions: {
             fact2: ['Kas teadsid?', 'Geminiidid lendavad 35 km sekundis. Tartust Tallinna jõuaksid nad 5 sekundiga!'],
             rise: ['Siirius tõuseb!', 'See on kõige heledam täht kogu öötaevas'],
+            clouds: ['Taevas on pilves', 'Oota natuke, küll pilved liiguvad eest ära!'],
+            cloudsAgain: ['Jälle pilved!', 'Püüa tähti pilvede vahelt'],
             midnight: ['Kas teadsid?', 'Pärast südaööd näeb kõige rohkem langevaid tähti, sest Kaksikud on siis kõige kõrgemal.'],
             turning: ['Kas teadsid?', 'Tähed liiguvad üle taeva vasakult paremale, nagu Päike päeval. Tegelikult ei liigu tähed, vaid Maa pöörleb – nagu karussell.']
           },
@@ -359,7 +377,7 @@
       perseids: 'the Perseids',
       geminids: 'the Geminids',
       level: 'Choose a level',
-      stormTip: '🌠 After midnight comes a meteor storm for two hours!',
+      stormTip: (h) => `🌠 After midnight comes a meteor storm for ${h === 1 ? 'an hour' : 'two hours'}!`,
       shower: (name) => `🌠 Tonight there is a real meteor shower, ${name}! Go out after dark and look up at the sky.`,
       captions: {
         start: ['Catch the shooting stars!', 'Tap a star while it flies'],
@@ -392,6 +410,8 @@
           captions: {
             fact2: ['Did you know?', 'The Geminids fly 35 km every second. That is over 1000 times faster than a car!'],
             rise: ['Sirius is rising!', 'It is the brightest star in the whole night sky'],
+            clouds: ['The sky is cloudy', 'Wait a little, the clouds will soon move away!'],
+            cloudsAgain: ['Clouds again!', 'Catch the stars between the clouds'],
             midnight: ['Did you know?', 'After midnight you see the most shooting stars, because the Twins are highest in the sky then.'],
             turning: ['Did you know?', 'The stars move across the sky from left to right, like the Sun in the day. It is not really the stars that move, but the Earth that turns, like a merry-go-round.']
           },
@@ -432,6 +452,7 @@
     seen: {},        // the plane and the satellite are explained only once
     caption: null,   // { key, until }
     hinted: null,    // the shooting star the hand points at
+    weather: [],     // [from, to, how cloudy, how low] of the cloudy spells, see cover()
     clearArmed: false, // the record is cleared on the next tap of 🗑️
     clearTimer: 0,
     raf: 0,
@@ -582,6 +603,7 @@
     [...$('nights').children].forEach((b) => b.classList.toggle('selected', b.dataset.night === state.night));
     [...$('levels').children].forEach((b, i) => b.classList.toggle('selected', LEVELS[i] === state.level));
     $('stormTip').classList.toggle('hidden', state.level !== 3);
+    $('stormTip').textContent = t('stormTip')(nightNow().storm);
     const best = bestNow();
     $('menuJar').innerHTML = jarSVG(Math.min(best, JAR_MAX));
     $('best').textContent = best ? t('best')(best) : t('noBest');
@@ -643,6 +665,17 @@
     state.facts = [[at(9), 'fact1', 6], [up, 'rise', 4.5], [at(27), 'midnight', 6], [at(35), 'fact2', 6],
       [at(42), 'turning', 6], [night() - DAWN, 'dawn', 5]];
     if (state.level === 3) state.facts.push([atHour(STORM.from), 'storm', 5]);
+    // overcast at first, clearing from low down to high up; then a cloudy
+    // spell in the evening and two after the hours round midnight, kept
+    // clear for the meteor storm, each different every night and only in
+    // the upper part of the sky
+    state.weather = [];
+    if (N.clouds) {
+      const spell = (from, long, most) => [from, from + long, most, rand(0.3, 0.5)];
+      state.weather = [spell(rand(28, 33), rand(6, 9), rand(0.6, 0.9)),
+        spell(rand(82, 92), rand(8, 14), rand(0.7, 1)), spell(rand(110, 122), rand(6, 12), rand(0.5, 1))];
+      state.facts.push([3.6, 'clouds', 5], [state.weather[0][0] + 4, 'cloudsAgain', 4]);
+    }
     state.facts.sort((a, b) => a[0] - b[0]);
     // one fireball for each level, spread over the night
     const n = state.level;
@@ -701,6 +734,15 @@
     turnSky();
     Object.assign($('jar').style, { left: jar.x + 'px', top: jar.y + 'px', width: jw + 'px', height: jh + 'px' });
     L.sky = drawSky(L);
+    // the clouds are worked out on a coarse grid, and drawn smoothed out
+    const cell = Math.max(6, Math.ceil(W / 120));
+    const cols = Math.ceil(W / cell) + 1;
+    const rows = Math.ceil(H / cell) + 1;
+    const cc = document.createElement('canvas');
+    cc.width = cols;
+    cc.height = rows;
+    const cg = cc.getContext('2d');
+    L.cloud = { c: cc, g: cg, img: cg.createImageData(cols, rows), cell, cols, rows };
     L.ground = drawGround(L);
     // things in flight would be in the wrong place now
     state.meteors = [];
@@ -876,6 +918,104 @@
   }
 
   // ---------------------------------------------------------------------------
+  // Clouds
+  // ---------------------------------------------------------------------------
+
+  // smooth random hills between 0 and 1, repeating every 64
+  const NOISE = (() => {
+    const r = seeded(23);
+    return Float32Array.from({ length: 64 * 64 }, r);
+  })();
+  function noise(x, y) {
+    const i = Math.floor(x);
+    const j = Math.floor(y);
+    let fx = x - i;
+    let fy = y - j;
+    fx = fx * fx * (3 - 2 * fx);
+    fy = fy * fy * (3 - 2 * fy);
+    const at = (a, b) => NOISE[((b & 63) << 6) | (a & 63)];
+    const top = at(i, j) + (at(i + 1, j) - at(i, j)) * fx;
+    const bottom = at(i, j + 1) + (at(i + 1, j + 1) - at(i, j + 1)) * fx;
+    return top + (bottom - top) * fy;
+  }
+
+  const smooth = (q) => q * q * (3 - 2 * q);
+
+  // how cloudy the overcast at the start is at time T and height h (0 at
+  // the horizon, 1 at the top of the view), from 0 for clear to 1 for
+  // overcast; it clears in 5 s at each height
+  function overcast(T, h) {
+    return smooth(clamp((OVERCAST[0] + OVERCAST[1] * h - T) / 5, 0, 1));
+  }
+
+  // how cloudy the spells are at time T where the clouds come in from, at
+  // the right edge, and height h; each spell comes and goes in 5 s, and
+  // reaches down only to its height
+  function cover(T, h) {
+    let c = 0;
+    for (const [from, to, most, low] of state.weather) {
+      const up = clamp((T - from) / 5, 0, 1) * clamp((to - T) / 5, 0, 1);
+      c = Math.max(c, most * smooth(up) * smooth(clamp((h - low) / 0.25, 0, 1)));
+    }
+    return c;
+  }
+
+  // how thick the cloud is at a point at time T, from 0 to 1: the clouds
+  // drift to the left, so the air at x left the right edge a while ago
+  function cloud(x, y, T) {
+    if (!N.clouds) return 0;
+    const L = state.L;
+    const v = L.W / WIND;
+    const h = (L.hy - y) / (L.hy - L.box.y0);
+    const c = Math.max(overcast(T, h), cover(T - (L.W - x) / v, h));
+    if (c <= 0) return 0;
+    // wider than tall, and changing shape a little as they go
+    const S = L.u * 0.4;
+    const X = (x + v * T) / S;
+    const Y = y / (S * 0.6);
+    const f = 0.55 * noise(X, Y) + 0.3 * noise(2 * X + 0.05 * T + 17, 2 * Y + 5) +
+      0.15 * noise(4 * X + 31, 4 * Y - 0.04 * T + 11);
+    const q = clamp(((f - 0.5) * 1.8 + (c - 0.5) * 1.6 + 0.08) / 0.16, 0, 1);
+    return smooth(q);
+  }
+
+  // dark grey clouds, a little lighter low down from the lights of the
+  // towns, and lit up at dawn
+  function drawClouds(T, dawn) {
+    if (!N.clouds) return;
+    let any = T < OVERCAST[0] + OVERCAST[1] * 1.5 + 5;
+    for (let s = 0; s <= WIND && !any; s += 0.5) any = cover(T - s, 2) > 0;
+    if (!any) return;
+    const L = state.L;
+    const C = L.cloud;
+    const d = C.img.data;
+    // lighter and darker parts, drifting with the clouds
+    const v = L.W / WIND;
+    const S = L.u * 0.25;
+    for (let j = 0; j < C.rows; j++) {
+      const y = j * C.cell;
+      const k = clamp(y / L.H, 0, 1);
+      const r = 26 + 30 * k + (130 - 26 - 30 * k) * dawn;
+      const g = 30 + 28 * k + (120 - 30 - 28 * k) * dawn;
+      const b = 58 + 34 * k + (160 - 58 - 34 * k) * dawn;
+      for (let i = 0; i < C.cols; i++) {
+        const x = i * C.cell;
+        const a = cloud(x, y, T);
+        const o = (j * C.cols + i) * 4;
+        d[o + 3] = 247 * a;
+        if (!a) continue;
+        const light = 0.8 + 0.45 * noise((x + v * T) / S + 40, y / (S * 0.6) + 40);
+        d[o] = r * light;
+        d[o + 1] = g * light;
+        d[o + 2] = b * light;
+      }
+    }
+    C.g.putImageData(C.img, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(C.c, 0, 0, C.cols * C.cell, C.rows * C.cell);
+  }
+
+  // ---------------------------------------------------------------------------
   // Shooting stars, planes and satellites
   // ---------------------------------------------------------------------------
 
@@ -1013,7 +1153,9 @@
     const T = state.t;
     if (T >= state.nextMeteor && T < night() - 1.2) {
       const m = spawnMeteor(false);
-      if (m && state.idle * 1000 >= HINT_MS && !state.hinted) state.hinted = m;
+      // the hand points only at one that can be seen
+      if (m && state.idle * 1000 >= HINT_MS && !state.hinted &&
+        cloud(m.x + (m.ux * m.len) / 2, m.y + (m.uy * m.len) / 2, T) < 0.3) state.hinted = m;
       if (state.burst > 0) state.burst--;
       else if (Math.random() < 0.15) state.burst = 2;
       // on level 1 one every 1.2 s when the radiant is highest (at dawn in
@@ -1034,7 +1176,7 @@
   // how many times more shooting stars the storm brings at time T
   function storm(T) {
     if (state.level !== 3) return 1;
-    const up = clamp((T - atHour(STORM.from)) / STORM.ramp, 0, 1) * clamp((atHour(STORM.to) - T) / STORM.ramp, 0, 1);
+    const up = clamp((T - atHour(STORM.from)) / STORM.ramp, 0, 1) * clamp((atHour(STORM.from + N.storm) - T) / STORM.ramp, 0, 1);
     return 1 + (STORM.x - 1) * up * up * (3 - 2 * up);
   }
 
@@ -1065,6 +1207,7 @@
     }
     for (const c of state.crafts) drawCraft(c);
     for (const m of state.meteors) drawMeteor(m);
+    drawClouds(T, dawn);
     ctx.drawImage(L.ground, 0, 0, L.W, L.H);
     for (const s of state.sparks) {
       const a = 1 - s.age / s.life;
@@ -1222,6 +1365,8 @@
 
   function tap(x, y) {
     if (state.over || !state.L) return;
+    // nothing can be seen through a thick cloud
+    if (cloud(x, y, state.t) > 0.5) return;
     const R = state.L.hitR;
     let best = null;
     let bestD = R;
