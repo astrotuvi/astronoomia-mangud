@@ -7,10 +7,9 @@
   // Content
   // ---------------------------------------------------------------------------
 
-  const HOUR = 10;        // s that an hour of the night lasts, on every night
   const DAWN = 10;        // s at the end of the night when the sky gets light
   const HINT_MS = 5000;   // time with nothing caught before the hand shows a star
-  const JAR_MAX = 44;     // stars that fit in the jar; more are counted but not drawn
+  const JAR_MAX = 85;     // stars that fit in the jar; more are counted but not drawn
   // how many times more shooting stars and fireballs than on level 1
   const LEVELS = [1, 2, 3];
   const PLEIADES = {
@@ -57,7 +56,8 @@
   // index.html. Each is the real sky above Tõrva on the best night of a
   // shower:
   //   bests: the key its records are kept under
-  //   start: h, when the night begins; hours: how long it is
+  //   start: h, when the night begins; hours: how long it is; hour: s
+  //     that an hour lasts
   //   lst0: degrees, the sidereal time at start
   //   view: where the view looks (azimuth from north towards east, and
   //     height above the horizon), and how much it shows at least to each
@@ -90,6 +90,7 @@
       bests: 'bests',
       start: 22,
       hours: 6,
+      hour: 10,
       lst0: 272.4,
       view: { az: 55, alt: 35, half: 50, top: 72 },
       sunAz: 45,
@@ -200,6 +201,7 @@
       bests: 'bests-geminids',
       start: 18,
       hours: 15,
+      hour: 8,
       lst0: 348.3,
       view: { az: 180, alt: 35, half: 55, top: 72 },
       sunAz: 135,
@@ -267,7 +269,7 @@
     n.figures.forEach((f) => { f.pts = f.pts || f.stars.map(([ra, dec]) => sphere(ra, dec)); });
     n.rad = sphere(...n.radiant);
     n.radTop = 0;
-    for (let t = 0; t <= n.hours * HOUR; t++) n.radTop = Math.max(n.radTop, horizon(n.rad, lst(t, n))[2]);
+    for (let t = 0; t <= n.hours * n.hour; t++) n.radTop = Math.max(n.radTop, horizon(n.rad, lst(t, n))[2]);
   });
   // the night being played
   let N = NIGHTS[0];
@@ -504,15 +506,16 @@
   // The jar: a 100 × 120 picture, filled from the bottom up
   // ---------------------------------------------------------------------------
 
+  const STAR_R = 4;   // how big a star in the jar is
   const slots = (() => {
     const r = seeded(7);
     const out = [];
     for (let row = 0; out.length < JAR_MAX; row++) {
-      const n = row % 2 ? 5 : 6;
+      const n = row % 2 ? 8 : 9;
       for (let c = 0; c < n && out.length < JAR_MAX; c++) {
         out.push([
-          (row % 2 ? 28.5 : 23.5) + c * 10.6 + (r() - 0.5) * 3,
-          106 - row * 9.4 + (r() - 0.5) * 3,
+          (row % 2 ? 22.5 : 18.5) + c * 7.9 + (r() - 0.5) * 2,
+          107 - row * 6.8 + (r() - 0.5) * 2,
           r() * 72
         ]);
       }
@@ -522,10 +525,10 @@
 
   function jarSVG(n) {
     const stars = slots.slice(0, n).map(([x, y, a]) =>
-      `<path d="${starPath(x, y, 5.6)}" transform="rotate(${a.toFixed(0)} ${x.toFixed(2)} ${y.toFixed(2)})"/>`).join('');
+      `<path d="${starPath(x, y, STAR_R)}" transform="rotate(${a.toFixed(0)} ${x.toFixed(2)} ${y.toFixed(2)})"/>`).join('');
     const body = 'M30 24C30 30 12 32 12 46V106C12 113 17 116 24 116H76C83 116 88 113 88 106V46C88 32 70 30 70 24Z';
-    return `<ellipse cx="50" cy="72" rx="60" ry="62" fill="url(#jarGlow)" opacity="${(0.15 + 0.85 * clamp(n / 30, 0, 1)).toFixed(2)}"/>` +
-      `<path d="${body}" fill="#0a1030" fill-opacity="0.6" data-dark/><path d="${body}" fill="url(#glass)"/>` +
+    return `<ellipse cx="50" cy="72" rx="60" ry="62" fill="url(#jarGlow)" opacity="${(0.15 + 0.85 * clamp(n / 55, 0, 1)).toFixed(2)}"/>` +
+      `<path d="${body}" fill="#0a1030" fill-opacity="0.6"/><path d="${body}" fill="url(#glass)"/>` +
       `<g fill="#ffd34d" filter="url(#starGlow)">${stars}</g>` +
       `<path d="${body}" fill="none" stroke="#dff2ff" stroke-opacity="0.75" stroke-width="2.4" stroke-linejoin="round"/>` +
       '<path d="M19 50V100" stroke="#fff" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round"/>' +
@@ -537,7 +540,7 @@
   function slotXY(k) {
     const J = state.L.jar;
     const [x, y] = slots[Math.min(k, JAR_MAX - 1)];
-    return { x: J.x + (x / 100) * J.w, y: J.y + (y / 120) * J.h, r: (5.6 / 100) * J.w };
+    return { x: J.x + (x / 100) * J.w, y: J.y + (y / 120) * J.h, r: (STAR_R / 100) * J.w };
   }
 
   // ---------------------------------------------------------------------------
@@ -665,14 +668,19 @@
     state.facts = [[at(9), 'fact1', 6], [up, 'rise', 4.5], [at(27), 'midnight', 6], [at(35), 'fact2', 6],
       [at(42), 'turning', 6], [night() - DAWN, 'dawn', 5]];
     if (state.level === 3) state.facts.push([atHour(STORM.from), 'storm', 5]);
-    // overcast at first, clearing from low down to high up; then a cloudy
-    // spell in the evening and two after the hours round midnight, kept
-    // clear for the meteor storm, each different every night
+    // overcast at first, clearing from low down to high up; then cloudy
+    // spells all through the night, each different every night, at s for
+    // the December night's 8 s hours (midnight at 48). On level 3 the sky
+    // is kept clear for the meteor storm, so the spell before it has left
+    // the top of the view when it comes, and the spells before midnight
+    // come only on the other levels.
     state.weather = [];
     if (N.clouds) {
       const spell = (from, long, most) => [from, from + long, most];
-      state.weather = [spell(rand(28, 33), rand(6, 9), rand(0.6, 0.9)),
-        spell(rand(82, 92), rand(8, 14), rand(0.7, 1)), spell(rand(110, 122), rand(6, 12), rand(0.5, 1))];
+      state.weather = [spell(rand(22, 24), rand(4, 6), rand(0.6, 0.9)),
+        spell(rand(61, 64), rand(6, 9), rand(0.7, 1)), spell(rand(76, 80), rand(6, 10), rand(0.6, 1)),
+        spell(rand(91, 95), rand(6, 10), rand(0.7, 1)), spell(rand(104, 107), rand(5, 8), rand(0.5, 0.9))];
+      if (state.level !== 3) state.weather.push(spell(rand(32, 35), rand(5, 8), rand(0.6, 1)), spell(rand(41, 44), rand(6, 9), rand(0.6, 1)));
       state.facts.push([3.6, 'clouds', 5], [state.weather[0][0] + 4, 'cloudsAgain', 4]);
     }
     state.facts.sort((a, b) => a[0] - b[0]);
@@ -753,17 +761,17 @@
 
   // the sidereal time t seconds into the night, radians
   function lst(t, n = N) {
-    return (n.lst0 + (15.041 * t) / HOUR) * DEG;
+    return (n.lst0 + (15.041 * t) / n.hour) * DEG;
   }
 
   // s, how long the night lasts
   function night() {
-    return N.hours * HOUR;
+    return N.hours * N.hour;
   }
 
   // s into the night at a time of day (h, with 24 for midnight)
   function atHour(h) {
-    return (h - N.start) * HOUR;
+    return (h - N.start) * N.hour;
   }
 
   // Where a star is seen from Tõrva: x to the east, y to the north, z up.
@@ -1488,7 +1496,7 @@
 
   // the time of night, in steps of 10 minutes, with a clock face to match
   function clockText() {
-    const m = Math.floor((N.start * 60 + (60 * state.t) / HOUR) / 10) * 10;
+    const m = Math.floor((N.start * 60 + (60 * state.t) / N.hour) / 10) * 10;
     const h = Math.floor(m / 60) % 24;
     const face = (m % 60 >= 30 ? HALF_CLOCKS : CLOCKS)[h % 12];
     return `${face} ${t('time')(h, String(m % 60).padStart(2, '0'))}`;

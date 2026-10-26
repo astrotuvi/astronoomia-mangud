@@ -223,7 +223,7 @@ window.Astro = (() => {
 // flames. Pictures are left alone, so each gradient is swapped for a pattern
 // of the same name holding a picture of it. Gradients added later by the games
 // are swapped as they come. A gradient whose colours change as the game goes
-// is marked data-live and kept. Dark shapes are kept dark with a filter.
+// is marked data-live and kept. Shapes are kept in their colours with a filter.
 (() => {
   const SIZE = 256;
   const cache = {};
@@ -292,15 +292,23 @@ window.Astro = (() => {
     g.replaceWith(pat);
   }
 
-  // Some phones turn dark SVG shapes light, whatever their colour or
-  // opacity. A shape marked data-dark gets its colour from a filter instead,
-  // which sets every pixel to the colour of its fill and keeps only how see-
-  // through it is, so it stays dark however the fill is recoloured.
+  // Samsung Internet in dark mode recolours SVG shapes whatever their
+  // colour or opacity: it lightens dark ones and dims light ones, so that
+  // the pictures lose their contrast. Each shape in a picture marked
+  // data-ink, or a shape marked so itself, gets its colour from a filter
+  // instead, which sets every pixel to the shape's own colour and keeps only
+  // how see-through it is. A shape with both a fill and a stroke is split in
+  // two, as each needs its own colour, and a blur filter on it is kept.
+  // Shapes added to such a picture later are inked too, but a colour the
+  // game changes later is not followed.
+  const INKED = 'path, circle, ellipse, rect, polygon, polyline, line, text';
   let inks = null;
-  function keepDark(el) {
-    const fill = el.getAttribute('fill');
-    if (!/^#[0-9a-f]{6}$/i.test(fill || '')) return;
-    const id = 'dark-' + fill.slice(1).toLowerCase();
+  const rgbOf = (c) => {
+    const m = /^rgb\((\d+), (\d+), (\d+)\)$/.exec(c);
+    return m ? m.slice(1).map(Number) : null;
+  };
+  function inkFilter(rgb, blur) {
+    const id = 'ink-' + rgb.join('-') + (blur ? '-' + blur : '');
     if (!document.getElementById(id)) {
       if (!inks) {
         inks = document.createElementNS(NS, 'svg');
@@ -308,21 +316,50 @@ window.Astro = (() => {
         inks.setAttribute('style', 'position:absolute;width:0;height:0;overflow:hidden');
         (document.body || document.documentElement).appendChild(inks);
       }
-      const n = parseInt(fill.slice(1), 16);
-      const [r, g, b] = [n >> 16, (n >> 8) & 255, n & 255].map((v) => (v / 255).toFixed(4));
-      inks.insertAdjacentHTML('beforeend', `<filter id="${id}" color-interpolation-filters="sRGB">` +
+      const [r, g, b] = rgb.map((v) => (v / 255).toFixed(4));
+      inks.insertAdjacentHTML('beforeend', `<filter id="${id}" color-interpolation-filters="sRGB"` +
+        (blur ? ` x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${blur}"/>` : '>') +
         `<feColorMatrix type="matrix" values="0 0 0 0 ${r} 0 0 0 0 ${g} 0 0 0 0 ${b} 0 0 0 1 0"/></filter>`);
     }
-    el.setAttribute('filter', `url(#${id})`);
+    return `url(#${id})`;
   }
+  function ink(el) {
+    if (el.hasAttribute('data-inked') || el.closest('defs, mask, clipPath, pattern, symbol, marker')) return;
+    el.setAttribute('data-inked', '');
+    if (el.localName === 'text' && /\p{Extended_Pictographic}/u.test(el.textContent)) return;
+    // a blur already on it is done in the same filter; any other filter is left alone
+    let blur = 0;
+    const f = /^url\(#(.+)\)$/.exec(el.getAttribute('filter') || '');
+    if (el.hasAttribute('filter')) {
+      const fe = f && document.getElementById(f[1]);
+      if (!fe || fe.children.length !== 1 || fe.firstElementChild.localName !== 'feGaussianBlur') return;
+      blur = fe.firstElementChild.getAttribute('stdDeviation');
+    }
+    const st = getComputedStyle(el);
+    const fill = rgbOf(st.fill);
+    const stroke = st.stroke !== 'none' && parseFloat(st.strokeWidth) > 0 ? rgbOf(st.stroke) : null;
+    if (stroke && st.fill !== 'none') {
+      const line = el.cloneNode(true);
+      line.removeAttribute('id');
+      line.style.fill = 'none';
+      line.setAttribute('filter', inkFilter(stroke, blur));
+      el.style.stroke = 'none';
+      el.after(line);
+    } else if (stroke) el.setAttribute('filter', inkFilter(stroke, blur));
+    if (fill) el.setAttribute('filter', inkFilter(fill, blur));
+  }
+  const inkAll = (el) => {
+    if (el.matches(INKED)) ink(el);
+    el.querySelectorAll(INKED).forEach(ink);
+  };
 
   const SEL = 'radialGradient[id]:not([data-live]), linearGradient[id]:not([data-live])';
   const swapIn = (el) => {
     if (el.nodeType !== 1) return;
     if (el.matches(SEL)) swap(el);
     else el.querySelectorAll(SEL).forEach(swap);
-    if (el.matches('[data-dark]')) keepDark(el);
-    else el.querySelectorAll('[data-dark]').forEach(keepDark);
+    if (el.closest('[data-ink]')) inkAll(el);
+    else el.querySelectorAll('[data-ink]').forEach(inkAll);
   };
   swapIn(document.documentElement);
   new MutationObserver((list) => list.forEach((m) => m.addedNodes.forEach(swapIn)))

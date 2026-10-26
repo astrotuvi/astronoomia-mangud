@@ -165,7 +165,8 @@ What the recolouring does:
 | CSS background colours, gradients, borders, shadows | darkened: yellow turns brown |
 | SVG gradients (`radialGradient`, `linearGradient`) | lightness flipped: a bright centre turns dark |
 | SVG shapes with a flat `fill` or `stroke`, also with `opacity` or a blur `filter` | kept |
-| SVG shapes with a flat near-black `fill`, also with `opacity` | turned light in Samsung Internet |
+| SVG shapes with a flat `fill` or `stroke`, in Samsung Internet | dark ones lightened and light ones dimmed, also with `opacity` |
+| SVG pictures shown with `<img>`, in Samsung Internet | dimmed: a QR code turns grey |
 | Text and emoji | kept |
 | `<canvas>` | kept |
 | PNG or JPEG pictures 80 px or larger | kept |
@@ -179,11 +180,16 @@ What the recolouring does:
    bright in SVG, a canvas or a picture, never with a CSS `background`,
    `radial-gradient` or `box-shadow`. CSS colours are fine for the menu,
    buttons and cards, which are darkened in the same way in every game.
-   - Mark a near-black SVG shape with `data-dark`, as the treelines, the
-     exoplanet and the dark side of the Moon are. `shared/common.js` then
-     gives it a filter that paints it in the colour of its `fill`, so it
-     stays dark however the browser recolours the fill. Its `opacity`
-     still works. Shapes the game adds later are handled too.
+   - Mark an SVG picture, or a single shape, with `data-ink`, as the
+     pictures on the start page, the jar and the night pictures of Püüa
+     langev täht, and the dark side of the Moon and the shadows in Kuu
+     faasid are. `shared/common.js` then gives each shape in it a filter
+     that paints it in its own colour, so that it keeps its colour however
+     the browser recolours it. A shape with both a fill and a stroke is
+     split in two, and a blur filter on it is kept. `opacity` still works,
+     and shapes added later are handled too, but a colour the game changes
+     later is not followed, so don't use it on those.
+   - Show a picture such as the QR code as a PNG, not as an SVG file.
 3. SVG gradients may be used freely. `shared/common.js` swaps each one for a
    `<pattern>` of the same id holding a PNG picture of it, so shapes that use
    `fill="url(#id)"` keep their look. Gradients the game adds later, e.g.

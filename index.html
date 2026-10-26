@@ -114,7 +114,7 @@
         </a>
         <a class="game-card" href="tahtkujud/index.html">
           <!-- the Big Dipper, from the same star positions as in the game -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <g fill="none" stroke="#ffd34d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="84,31 90,47 68,61 58,51 40,53 26,54 10,69" />
               <line x1="58" y1="51" x2="84" y2="31" />
@@ -142,7 +142,7 @@
         </a>
         <a class="game-card" href="rakett/index.html">
           <!-- a rocket like the ones built in the game, flying to Saturn -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <!-- drawn twice as big and scaled down: phones in dark mode turn small dark pictures white -->
             <image href="pusle/images/saturn.jpg" x="96" y="8" width="96" height="96" transform="scale(0.5)" style="mix-blend-mode: screen" />
             <g fill="#fff">
@@ -171,7 +171,7 @@
         </a>
         <a class="game-card" href="hupe/index.html">
           <!-- the bunny from the game jumping high on the Moon, with the Earth in the sky -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <g fill="#fff">
               <circle cx="12" cy="14" r="0.7" opacity="0.7" /><circle cx="34" cy="8" r="0.5" opacity="0.6" />
               <circle cx="58" cy="20" r="0.6" opacity="0.5" /><circle cx="8" cy="46" r="0.6" opacity="0.6" />
@@ -197,7 +197,7 @@
         <a class="game-card" href="planeedid/index.html">
           <!-- the first three planets in their places, Mars lifted from the tray towards its place;
                the planets are drawn by shared/planets.js, as in the game -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <defs>
               <radialGradient id="riviSun">
                 <stop offset="0" stop-color="#fffbe0" />
@@ -232,7 +232,7 @@
         </a>
         <a class="game-card" href="kuufaasid/index.html">
           <!-- a waxing crescent from the Moon photo, the rest faintly lit by the Earth -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <defs>
               <clipPath id="moonDisc"><circle cx="50" cy="50" r="36" /></clipPath>
               <filter id="moonGrey"><feColorMatrix type="saturate" values="0.45" /></filter>
@@ -254,7 +254,7 @@
         </a>
         <a class="game-card" href="meteoor/index.html">
           <!-- shooting stars over the treeline, and a jar with the caught ones -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <defs>
               <filter id="jarGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" /></filter>
             </defs>
@@ -275,10 +275,10 @@
             </g>
             <circle cx="46" cy="34" r="1.6" fill="#fff" />
             <circle cx="84" cy="28" r="1.2" fill="#fff" />
-            <path d="M0 82L4 74L8 82L12 70L16 82L22 72L26 82L72 82L76 70L80 82L84 74L88 82L94 68L98 82L100 82V100H0Z" fill="#03050f" data-dark />
+            <path d="M0 82L4 74L8 82L12 70L16 82L22 72L26 82L72 82L76 70L80 82L84 74L88 82L94 68L98 82L100 82V100H0Z" fill="#03050f" />
             <ellipse cx="50" cy="81" rx="15" ry="13" fill="#ffe680" opacity="0.5" filter="url(#jarGlow)" />
             <g transform="translate(36 62) scale(0.28)">
-              <path d="M30 24C30 30 12 32 12 46V106C12 113 17 116 24 116H76C83 116 88 113 88 106V46C88 32 70 30 70 24Z" fill="#0a1030" fill-opacity="0.6" data-dark stroke="#dff2ff" stroke-opacity="0.8" stroke-width="3" />
+              <path d="M30 24C30 30 12 32 12 46V106C12 113 17 116 24 116H76C83 116 88 113 88 106V46C88 32 70 30 70 24Z" fill="#0a1030" fill-opacity="0.6" stroke="#dff2ff" stroke-opacity="0.8" stroke-width="3" />
               <g fill="#ffd34d">
                 <path d="M30 96l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z" />
                 <path d="M50 92l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z" />
@@ -294,7 +294,7 @@
         </a>
         <a class="game-card" href="eksoplaneet/index.html">
           <!-- a planet passing in front of its star, and the dips it makes in the star's light -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <defs>
               <radialGradient id="exoStar" cx="0.42" cy="0.4" r="0.6">
                 <stop offset="0" stop-color="#fffbe8" />
@@ -309,9 +309,9 @@
             </g>
             <circle cx="50" cy="28" r="21" fill="#ffb84d" opacity="0.45" filter="url(#exoGlow)" />
             <circle cx="50" cy="28" r="17" fill="url(#exoStar)" />
-            <circle cx="44" cy="31" r="3.6" fill="#0b1238" data-dark />
+            <circle cx="44" cy="31" r="3.6" fill="#0b1238" />
             <path d="M24 31H38" stroke="#fff" stroke-width="0.6" stroke-dasharray="1.2 1.6" opacity="0.6" />
-            <rect x="8" y="56" width="84" height="36" rx="3" fill="#050820" opacity="0.7" data-dark />
+            <rect x="8" y="56" width="84" height="36" rx="3" fill="#050820" opacity="0.7" />
             <path d="M12 66H88" stroke="#fff" stroke-width="0.4" stroke-dasharray="1.5 1.5" opacity="0.35" />
             <polyline fill="none" stroke="#fff" stroke-width="0.9" stroke-linejoin="round"
               points="12,66 15,65.4 18,66.6 21,65.8 24,66.3 26,66 27,72 28,84 30,84.4 31,72 32,66 35,65.6 38,66.5 41,65.7 44,66.4 47,65.9 50,66.3 52,66 53,72 54,84 56,84.2 57,72 58,66 61,66.4 64,65.6 67,66.3 70,65.9 73,66.5 76,65.8 78,66.1 79,72 80,84 82,84.3 83,72 84,66 88,66.2" />
@@ -328,8 +328,8 @@
         </a>
         <a class="game-card" href="asteroid/index.html">
           <!-- a patch of night sky with the asteroid ringed on three nights -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="8" y="8" width="84" height="84" rx="6" fill="#050820" opacity="0.75" data-dark />
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
+            <rect x="8" y="8" width="84" height="84" rx="6" fill="#050820" opacity="0.75" />
             <g fill="#fff">
               <circle cx="18" cy="20" r="1.4" /><circle cx="40" cy="16" r="0.7" opacity="0.7" /><circle cx="66" cy="22" r="1" />
               <circle cx="84" cy="18" r="0.6" opacity="0.6" /><circle cx="28" cy="40" r="0.8" opacity="0.8" /><circle cx="56" cy="34" r="0.6" opacity="0.6" />
@@ -352,7 +352,7 @@
         </a>
         <a class="game-card" href="viktoriin/index.html">
           <!-- a question about the Moon and four answer buttons, as in the quiz -->
-          <svg viewBox="0 0 100 100" aria-hidden="true">
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <g fill="#fff">
               <circle cx="10" cy="10" r="0.7" opacity="0.7" /><circle cx="90" cy="12" r="0.6" opacity="0.6" />
               <circle cx="8" cy="44" r="0.5" opacity="0.6" /><circle cx="93" cy="40" r="0.6" opacity="0.5" />
@@ -374,7 +374,8 @@
       </div>
 
       <div class="share">
-        <img src="shared/qr.svg" alt="">
+        <!-- a PNG, as phones in dark mode dim SVG pictures -->
+        <img src="shared/qr.png" alt="">
         <a href="https://astrotuvi.github.io/astronoomia-mangud/">astrotuvi.github.io/astronoomia-mangud</a>
       </div>
 
