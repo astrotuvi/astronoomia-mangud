@@ -223,7 +223,7 @@ window.Astro = (() => {
 // flames. Pictures are left alone, so each gradient is swapped for a pattern
 // of the same name holding a picture of it. Gradients added later by the games
 // are swapped as they come. A gradient whose colours change as the game goes
-// is marked data-live and kept.
+// is marked data-live and kept. Dark shapes are kept dark with a filter.
 (() => {
   const SIZE = 256;
   const cache = {};
@@ -292,11 +292,37 @@ window.Astro = (() => {
     g.replaceWith(pat);
   }
 
+  // Some phones turn dark SVG shapes light, whatever their colour or
+  // opacity. A shape marked data-dark gets its colour from a filter instead,
+  // which sets every pixel to the colour of its fill and keeps only how see-
+  // through it is, so it stays dark however the fill is recoloured.
+  let inks = null;
+  function keepDark(el) {
+    const fill = el.getAttribute('fill');
+    if (!/^#[0-9a-f]{6}$/i.test(fill || '')) return;
+    const id = 'dark-' + fill.slice(1).toLowerCase();
+    if (!document.getElementById(id)) {
+      if (!inks) {
+        inks = document.createElementNS(NS, 'svg');
+        inks.setAttribute('aria-hidden', 'true');
+        inks.setAttribute('style', 'position:absolute;width:0;height:0;overflow:hidden');
+        (document.body || document.documentElement).appendChild(inks);
+      }
+      const n = parseInt(fill.slice(1), 16);
+      const [r, g, b] = [n >> 16, (n >> 8) & 255, n & 255].map((v) => (v / 255).toFixed(4));
+      inks.insertAdjacentHTML('beforeend', `<filter id="${id}" color-interpolation-filters="sRGB">` +
+        `<feColorMatrix type="matrix" values="0 0 0 0 ${r} 0 0 0 0 ${g} 0 0 0 0 ${b} 0 0 0 1 0"/></filter>`);
+    }
+    el.setAttribute('filter', `url(#${id})`);
+  }
+
   const SEL = 'radialGradient[id]:not([data-live]), linearGradient[id]:not([data-live])';
   const swapIn = (el) => {
     if (el.nodeType !== 1) return;
     if (el.matches(SEL)) swap(el);
     else el.querySelectorAll(SEL).forEach(swap);
+    if (el.matches('[data-dark]')) keepDark(el);
+    else el.querySelectorAll('[data-dark]').forEach(keepDark);
   };
   swapIn(document.documentElement);
   new MutationObserver((list) => list.forEach((m) => m.addedNodes.forEach(swapIn)))

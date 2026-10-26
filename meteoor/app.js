@@ -525,7 +525,7 @@
       `<path d="${starPath(x, y, 5.6)}" transform="rotate(${a.toFixed(0)} ${x.toFixed(2)} ${y.toFixed(2)})"/>`).join('');
     const body = 'M30 24C30 30 12 32 12 46V106C12 113 17 116 24 116H76C83 116 88 113 88 106V46C88 32 70 30 70 24Z';
     return `<ellipse cx="50" cy="72" rx="60" ry="62" fill="url(#jarGlow)" opacity="${(0.15 + 0.85 * clamp(n / 30, 0, 1)).toFixed(2)}"/>` +
-      `<path d="${body}" fill="#0a1030" fill-opacity="0.6"/><path d="${body}" fill="url(#glass)"/>` +
+      `<path d="${body}" fill="#0a1030" fill-opacity="0.6" data-dark/><path d="${body}" fill="url(#glass)"/>` +
       `<g fill="#ffd34d" filter="url(#starGlow)">${stars}</g>` +
       `<path d="${body}" fill="none" stroke="#dff2ff" stroke-opacity="0.75" stroke-width="2.4" stroke-linejoin="round"/>` +
       '<path d="M19 50V100" stroke="#fff" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round"/>' +

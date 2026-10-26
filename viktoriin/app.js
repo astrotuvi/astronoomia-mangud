@@ -291,7 +291,7 @@
         '<stop offset="1" stop-color="#fff" /></linearGradient></defs>' +
         '<path class="anim-meteor" d="M22 16L70 58" stroke="url(#tail)" stroke-width="2" stroke-linecap="round" />'
     }[kind];
-    return `<svg viewBox="0 0 100 100" class="anim" aria-hidden="true"><rect width="100" height="100" fill="#050a24" />${bg}${fg}</svg>`;
+    return `<svg viewBox="0 0 100 100" class="anim" aria-hidden="true"><rect width="100" height="100" fill="#050a24" data-dark />${bg}${fg}</svg>`;
   }
 
   function picHTML(p) {

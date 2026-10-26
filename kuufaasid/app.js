@@ -277,7 +277,7 @@
         <radialGradient id="${id}k"><stop offset="0.4" stop-color="#fff" stop-opacity="0.9"/><stop offset="0.55" stop-color="#cfe6ff" stop-opacity="0.45"/><stop offset="1" stop-color="#cfe6ff" stop-opacity="0"/></radialGradient>
       </defs>
       ${sky ? `<g class="sun"><circle class="corona" r="${R * 2}" fill="url(#${id}k)"/><circle r="${R}" fill="url(#${id}s)"/></g>` : ''}
-      <circle r="${R}" fill="#06070f"/>
+      <circle r="${R}" fill="#06070f" data-dark/>
       <g clip-path="url(#${id}c)">
         ${img} class="earthshine" filter="url(#${id}g)"/>
         ${img} mask="url(#${id}m)" filter="url(#${id}g)"/>
@@ -356,7 +356,7 @@
     el('path', { d: 'M9 -15C14 -11 17 -4 17 3C13 4 11 -2 8 -6C6 -9 6 -12 9 -15Z', fill: '#5a9e46' }, earth);
     el('path', { d: 'M-6 16C-2 12 4 11 9 13C6 16 1 18 -6 16Z', fill: '#5a9e46' }, earth);
     el('path', { d: 'M-4 -4C-1 -6 3 -5 4 -2C6 1 3 4 0 4C-3 5 -6 2 -4 -4Z', fill: '#f4f8ff', opacity: 0.9 }, earth);
-    el('path', { d: `M0 ${-EARTH}A${EARTH} ${EARTH} 0 0 0 0 ${EARTH}Z`, fill: '#020414', opacity: 0.62 }, earth);
+    el('path', { d: `M0 ${-EARTH}A${EARTH} ${EARTH} 0 0 0 0 ${EARTH}Z`, fill: '#020414', opacity: 0.62, 'data-dark': '' }, earth);
     sp.you = el('circle', { class: 'you', r: 2.6 }, space);
 
     sp.moon = el('g', { class: 'moon' }, space);
@@ -422,7 +422,7 @@
         <defs><radialGradient id="${id}"><stop offset="0.45" stop-color="#fff" stop-opacity="0.95"/><stop offset="0.6" stop-color="#cfe6ff" stop-opacity="0.5"/><stop offset="1" stop-color="#cfe6ff" stop-opacity="0"/></radialGradient></defs>
         <circle r="100" fill="url(#${id})"/>
         <circle r="56" fill="#ffc24a"/>
-        <circle cx="8" cy="-5" r="56" fill="#06070f"/>`;
+        <circle cx="8" cy="-5" r="56" fill="#06070f" data-dark/>`;
       return;
     }
     moonView(svg, false)(task.eclipse === 'lunar' ? 180 : a);

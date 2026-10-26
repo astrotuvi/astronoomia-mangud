@@ -165,7 +165,7 @@ What the recolouring does:
 | CSS background colours, gradients, borders, shadows | darkened: yellow turns brown |
 | SVG gradients (`radialGradient`, `linearGradient`) | lightness flipped: a bright centre turns dark |
 | SVG shapes with a flat `fill` or `stroke`, also with `opacity` or a blur `filter` | kept |
-| SVG shapes with a flat, fully opaque, near-black `fill` | turned light in Samsung Internet |
+| SVG shapes with a flat near-black `fill`, also with `opacity` | turned light in Samsung Internet |
 | Text and emoji | kept |
 | `<canvas>` | kept |
 | PNG or JPEG pictures 80 px or larger | kept |
@@ -179,10 +179,11 @@ What the recolouring does:
    bright in SVG, a canvas or a picture, never with a CSS `background`,
    `radial-gradient` or `box-shadow`. CSS colours are fine for the menu,
    buttons and cards, which are darkened in the same way in every game.
-   - Give a near-black SVG shape a little `opacity`, such as `0.95`, as
-     the treelines and the exoplanet on the start page and on the menu of
-     Püüa langev täht have. Samsung Internet keeps such shapes dark, but
-     turns fully opaque ones light.
+   - Mark a near-black SVG shape with `data-dark`, as the treelines, the
+     exoplanet and the dark side of the Moon are. `shared/common.js` then
+     gives it a filter that paints it in the colour of its `fill`, so it
+     stays dark however the browser recolours the fill. Its `opacity`
+     still works. Shapes the game adds later are handled too.
 3. SVG gradients may be used freely. `shared/common.js` swaps each one for a
    `<pattern>` of the same id holding a PNG picture of it, so shapes that use
    `fill="url(#id)"` keep their look. Gradients the game adds later, e.g.
