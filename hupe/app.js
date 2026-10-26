@@ -221,7 +221,7 @@
     who: WHOS.find((w) => w.id === store.get('who', '')) || WHOS[0],
     world: WORLDS[0],
     caught: [],     // the worlds whose star is caught
-    best: {},       // the highest jump on each world, m
+    best: {},       // the highest jump on each world, m, marked when its star is caught
     air: false,
     t: 0,           // time since the jump began, s
     y: 0,           // height of the feet above the ground, m
@@ -509,14 +509,15 @@
     drawMarks();
   }
 
-  // the highest jump on each world, as a little picture of the world beside the pole
-  function drawMarks() {
+  // the highest jump on each world, as a little picture of the world beside
+  // the pole; the one just marked (fresh) pops in
+  function drawMarks(fresh) {
     const { G, k, px } = state.L;
     const s = clamp(0.16 * k, 18, 30);
     scene.querySelector('#marks').innerHTML = WORLDS.filter((w) => state.best[w.id]).map((w) => {
       const y = G - state.best[w.id] * k;
-      return `<line x1="${px}" y1="${y}" x2="${px + 14}" y2="${y}" stroke="${w.color}" stroke-width="3"/>` +
-        ballSVG(w, `x="${px + 14}" y="${y - s / 2}" width="${s}" height="${s}"`);
+      return `<g class="mark${w === fresh ? ' fresh' : ''}"><line x1="${px}" y1="${y}" x2="${px + 14}" y2="${y}" stroke="${w.color}" stroke-width="3"/>` +
+        ballSVG(w, `x="${px + 14}" y="${y - s / 2}" width="${s}" height="${s}"`) + '</g>';
     }).join('');
   }
 
@@ -606,7 +607,6 @@
         state.y = SPEED * state.t - (w.g * state.t * state.t) / 2;
         state.vy = SPEED - w.g * state.t;
       }
-      if (state.y > (state.best[w.id] || 0)) state.best[w.id] = state.y;
       const head = state.y + BODY;
       if (!state.caught.includes(w.id) && head >= starHeight(w) - (0.6 * state.L.star) / state.L.k) catchStar();
       // the view follows the jumper's head up
@@ -636,7 +636,6 @@
       const side = i % 2 ? 1 : -1;
       state.parts.push({ x: side * rand(0.1, 0.35), y: 0.01, vx: side * rand(0.3, 1.1), vy: rand(0.5, 1.5), r: rand(0.015, 0.035), c: w.dust });
     }
-    drawMarks();
     // what was learnt, once the jumper is back on the ground
     if (state.factDue) {
       state.factDue = false;
@@ -653,6 +652,9 @@
     const w = state.world;
     state.caught.push(w.id);
     sfx.snap();
+    // every jump is as high, so the top of this one is marked at once
+    state.best[w.id] = height(w);
+    drawMarks(w);
     for (let i = 0; i < 16; i++) {
       const a = (i / 16) * Math.PI * 2;
       const v = rand(0.8, 1.6);

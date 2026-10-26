@@ -95,7 +95,7 @@ The destinations are in the `DESTS` list at the top of `rakett/app.js`, and the 
   - on Jupiter 14 cm in a fifth of a second
   - on Ceres, the dwarf planet in the asteroid belt, 12 m (35 times higher) in almost 20 seconds; the pole is taller there
 - A star hangs just within reach on each world. When it is caught, a short fact is shown after landing, with a button to fly to the next world. The round pictures at the bottom go to any world, and a ⭐ marks the worlds whose star is caught. Once every star is caught, a 🏆 on the ground beside the jumper goes to the win screen, also after the fact is gone.
-- A pole beside the jumper, with the metres written on it, fills up during the jump, and the highest jump on each world is marked on it with a small picture of that world.
+- A pole beside the jumper, with the metres written on it, fills up during the jump. When the star is caught, the top of the jump is marked on it with a small picture of that world, which pops in as the sound plays.
 - Landing raises a puff of dust, which flies far on the Moon and Ceres and hardly at all on Jupiter. If nothing happens for a few seconds, a 👆 shows where to tap.
 - The win screen shows the five jumps side by side at the same scale, with the jumpers drawn bigger, so that they can be seen beside the high jump on Ceres. Above each jump is how many times higher than on the Earth it is (the Earth 1, the Moon 6, Mars 2.6, Jupiter 0.4, Ceres 35), and below it the world's name.
 
