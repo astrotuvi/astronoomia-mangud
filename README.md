@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, Kuu faasid and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, Kuu faasid, Uuri meteoore and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -13,6 +13,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Planeetide rivi / Line Up the Planets | [`planeedid/`](planeedid/) | Drag the planets into order from the Sun outwards, or by size, smallest or biggest first |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
+| Uuri meteoore / Meteor Detective | [`radiant/`](radiant/) | Draw lines back along shooting-star trails to the radiant they fly out of, and name the meteor shower after the constellation it is in |
 | Avasta eksoplaneet / Discover an Exoplanet | [`eksoplaneet/`](eksoplaneet/) | Find the dips in a star's light and work out the planet's year, size and whether it could have water |
 | Leia asteroid / Find the Asteroid | [`asteroid/`](asteroid/) | Flip between pictures of the same patch of sky, find the asteroid that moves, and work out how far away it goes round the Sun |
 | Kosmoseviktoriin / Space Quiz | [`viktoriin/`](viktoriin/) | Answer questions about what the other games teach, alone or two players on one phone |
@@ -148,6 +149,27 @@ The phases and their names are in the `PHASES` list at the top of `kuufaasid/app
 - Near the best night of a real meteor shower, the menu says that there is one tonight: within a day of the Quadrantids (3 January), and within three days of the Perseids (12 August) or the Geminids (14 December). The Quadrantids get only a day, as they are strong for just a few hours.
 
 The levels, the meteor storm, the wind and the overcast at the start, and the other timings are at the top of `meteoor/app.js`. The nights are in `NIGHTS` there: for each, the time and length of the night, how long its storm lasts, whether it has clouds, the direction of the view, the radiant, the named stars and their positions, and how near a tap must be to catch a star. The sky is drawn with a stereographic projection, which keeps the shapes of the figures.
+
+## Uuri meteoore
+
+- Pick one of six levels. Each is the real radiant of a meteor shower on its best night, with new made-up trails every time:
+  1. August: the Perseids
+  2. December: the Geminids
+  3. November: the Leonids, with two stray trails that belong to no shower
+  4. October: the Draconids, with three stray trails
+  5. January: the Quadrantids, with three stray trails, whose radiant is where the old constellation Müürikvadrant (Mural Quadrant) was
+  6. Kaks voolu: the Geminids and the Ursids on the same December night, with two stray trails
+  
+  Until a level is solved its card shows only the month, so that the name of the shower does not give the answer away. Solved levels get a 🌟 and the name of their shower.
+- The sky is like a long-exposure photo with the constellations and their names on it. The shooting stars flash one after another and leave their trails. Each trail is faint where it began and brightest at its head, where the shooting star burnt out.
+- Press the bright head of a trail and drag back along it to draw a line: solid from the head to the finger, then dashed on to the edge of the picture. The line is blue while it goes along the trail (within 8°) and orange when it is off. The line stays where the finger is lifted, so it only meets the others well if it is drawn carefully. A blue line counts and plays a note, and an orange one stays to be fixed. The dot at the end of a line drags it again, and pressing the head starts it anew. A press on the middle of a trail rings its head and says to start there.
+- Once two lines are drawn along their trails, tap where the lines meet. Near enough to the radiant, a yellow ring marks it, and all the trails of that shower turn gold, with gold lines back to the ring. A tap beside it plays a soft sound, leaves a red ring that fades, and says that the lines don't meet there. After two misses the part of the sky with the radiant gets a dashed ring.
+- Then pick the constellation the radiant is in from four names. A wrong one is greyed out, and after two wrong ones the right one pulses. The answer shows how the shower got its name, e.g. "Kaksikud → Geminiidid", with a fact about the shower, and the shower's name is written under the ring. On the Quadrantids, both Müürikvadrant and Karjane (Boötes) are right, with a different fact for each, as the spot is now at the edge of Boötes. At the end, the stray trails turn grey.
+- On Kaks voolu, the first radiant found and named turns its trails gold, and the white ones left lead to the second.
+- 💡 shows a 👆 that presses a trail's head and slides back along it, a trail with an orange line first, then a dashed ring round the part of the sky with the radiant, smaller each time it is pressed, and in the question it lights up the right constellation for a moment. If nothing happens for a few seconds before two lines are drawn, the 👆 shows by itself.
+- The win screen shows the whole sky with the radiants found and their names, and a fact about meteor showers.
+
+The levels and their showers are in the `LEVELS` list at the top of `radiant/app.js`, and the constellations in `FIGURES`, from `tahtkujud/app.js`. The radiants are real (from the International Meteor Organization's list), and the trails fly along great circles out of them. The sky is drawn with the gnomonic projection, in which every great circle is a straight line, so the lines drawn back along the trails meet exactly at the radiant. It is drawn as a sky chart with north up and east to the left, except on Kaks voolu, where the picture is turned so that both radiants lie along the longer side of the screen. Trails nearer the radiant are shorter, as they are seen more end on, but none is too short to tap.
 
 ## Avasta eksoplaneet
 

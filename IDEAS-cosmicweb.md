@@ -1,6 +1,6 @@
 # Kosmiline võrk (cosmic web)
 
-A game idea for teenagers and adults, idea 38 in [IDEAS.md](IDEAS.md). For
+A game idea for teenagers and adults, idea 37 in [IDEAS.md](IDEAS.md). For
 how a new game should look and work, see [DESIGN.md](DESIGN.md).
 
 Galaxies are not spread evenly but lie along filaments and walls that meet

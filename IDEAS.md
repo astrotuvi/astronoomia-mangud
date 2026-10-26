@@ -5,7 +5,7 @@ work, see [DESIGN.md](DESIGN.md).
 
 These ideas have already become games: Tähtkujud, Mälumäng, Kosmoserakett,
 Kuu faasid, Hüppa planeedil, Püüa langev täht, Kosmoseviktoriin, Planeetide
-rivi, Avasta eksoplaneet and Leia asteroid.
+rivi, Avasta eksoplaneet, Leia asteroid and Uuri meteoore.
 
 ## Ages 5–6
 
@@ -77,80 +77,69 @@ rivi, Avasta eksoplaneet and Leia asteroid.
 20. **Raketi ehitaja 2 (rocket builder 2):** a harder Kosmoserakett, with a
     budget and a choice of engines and tanks. The rocket must carry enough
     fuel without getting too heavy.
-21. **Uuri meteoore (meteor detective):** meteor trails stay on the sky as
-    in a long-exposure photo. Trace each one back from its tail, find
-    where the lines meet, the radiant, and the constellation there gives
-    the shower its name: Perseus the Perseids, Kaksikud the Geminids,
-    Lõvi the Leonids, Lüüra the Lyrids. Later levels add stray meteors
-    that don't fit, and two showers at once whose trails must be sorted.
-    The Quadrantids are named after a constellation that no longer
-    exists. It reuses the radiants from Püüa langev täht and the star
-    figures from Tähtkujud. The sky should be drawn with the gnomonic
-    projection, in which the trails are straight lines that meet exactly
-    at the radiant.
-22. **Virmalised (northern lights):** guide particles from the Sun along
+21. **Virmalised (northern lights):** guide particles from the Sun along
     the Earth's magnetic field to the poles. Low ones glow green and high
     ones red. Auroras were often seen from Estonia in 2024–2025.
-23. **Pime taevas (dark sky):** a town at night under a sky washed out by
+22. **Pime taevas (dark sky):** a town at night under a sky washed out by
     street lights. Shield or switch off the lamps, and more and more stars
     appear, until the Milky Way comes out.
-24. **Tähejäljed (star trails):** in a long-exposure photo the stars draw
+23. **Tähejäljed (star trails):** in a long-exposure photo the stars draw
     arcs. Find Põhjanael at their centre, then set how long the camera
     was open to get a quarter or a half circle. It goes well with Uuri
     meteoore.
-25. **Rahvapärased tähenimed (folk star names):** match old Estonian names
+24. **Rahvapärased tähenimed (folk star names):** match old Estonian names
     to the sky, such as Sõel, Kolm kuningat (Orion's belt) and Linnutee,
     the birds' road, with a short tale for each. It reuses the star
     positions from Tähtkujud.
-26. **ESTCube:** assemble Estonia's first satellite, launch it and unfold
+25. **ESTCube:** assemble Estonia's first satellite, launch it and unfold
     its electric solar sail, and then follow ESTCube-2.
-27. **Asteroidi kaitse (planetary defence):** push an asteroid off course,
+26. **Asteroidi kaitse (planetary defence):** push an asteroid off course,
     as NASA's DART did. A small push years ahead is enough, a push at the
     last moment is too late. It follows on from Leia asteroid.
 
 ## Ages 11–12
 
-28. **Kui kaugel on täht? (how far is the star?):** find a pulsating star's
+27. **Kui kaugel on täht? (how far is the star?):** find a pulsating star's
     (a Cepheid's) period from its light curve, read its true brightness
     off a period–brightness line, and compare it with how bright it looks
     to get its distance. Harder levels use a Cepheid in another galaxy. It
     reuses the graph, zoom and ruler from Avasta eksoplaneet.
-29. **Kaksiktähed (binary stars):** a light curve with two dips of
+28. **Kaksiktähed (binary stars):** a light curve with two dips of
     different depths, where two stars eclipse each other. The player works
     out which star is hotter, which is bigger, and the period, and learns
     to tell such a curve from a planet's.
-30. **Tähe spekter (a star's spectrum):** match absorption lines to the
+29. **Tähe spekter (a star's spectrum):** match absorption lines to the
     "barcodes" of hydrogen, helium, sodium and iron to find what a star is
     made of. Then use the lines' wobble to find a planet, and end with a
     galaxy whose lines are all shifted red, leading to the Hubble law.
-31. **Kaalu planeeti (weigh a planet):** find Jupiter's moons as dots that
+30. **Kaalu planeeti (weigh a planet):** find Jupiter's moons as dots that
     change sides from night to night, as Galileo did, time them and
     measure their orbits. A bigger orbit means a longer year (Kepler's
     third law), which is used to compare the planets' masses.
-32. **Lend planeedile (plan the flight):** pick the launch date so that the
+31. **Lend planeedile (plan the flight):** pick the launch date so that the
     planet is in the right place when the rocket arrives, with a fuel
     limit. Harder levels swing past Jupiter for a gravity assist to reach
     Saturn.
-33. **Tähe elu (life of a star):** place stars on a colour–brightness
+32. **Tähe elu (life of a star):** place stars on a colour–brightness
     diagram (the HR diagram), then pick a star's mass and predict whether
     it ends as a white dwarf, a neutron star or a black hole.
-34. **Parallaks (parallax):** look at a thumb with one eye and then the
+33. **Parallaks (parallax):** look at a thumb with one eye and then the
     other, then at a nearby star from the two sides of the Earth's orbit,
     half a year apart, and work out how far it is. It leads into Kui
     kaugel on täht?.
-35. **Maa mõõtmine (measuring the Earth):** find the Earth's size from noon
+34. **Maa mõõtmine (measuring the Earth):** find the Earth's size from noon
     shadows in two towns, as Eratosthenes did, and then follow the Struve
     Geodetic Arc, which crosses Estonia and is a UNESCO site.
-36. **Ehita teleskoop (build a telescope):** place two lenses so that the
+35. **Ehita teleskoop (build a telescope):** place two lenses so that the
     light comes to a focus, and see how their focal lengths set the
     magnification. Galileo's and Newton's telescopes could be levels.
-37. **Elamiskõlblik vöönd (habitable zone):** place a planet round a red,
+36. **Elamiskõlblik vöönd (habitable zone):** place a planet round a red,
     yellow or blue star where its water is liquid, not ice or steam. It
     goes well with Avasta eksoplaneet.
 
 ## Teenagers and adults
 
-38. **Kosmiline võrk (cosmic web):** galaxies lie along filaments and walls
+37. **Kosmiline võrk (cosmic web):** galaxies lie along filaments and walls
     that meet in clusters, with huge empty voids between them. The player
     finds this pattern in real SDSS galaxy data, as astronomers did, by
     adding distances to the dots and tracing the filaments and voids, and
@@ -158,10 +147,10 @@ rivi, Avasta eksoplaneet and Leia asteroid.
     The web was found by Jaan Einasto's group in Tartu in the 1970s. See
     [IDEAS-cosmicweb.md](IDEAS-cosmicweb.md) for the levels and what the
     game needs.
-39. **Dokkimine (docking):** dock with the space station. To catch up with
+38. **Dokkimine (docking):** dock with the space station. To catch up with
     it, first slow down, as a lower orbit is faster. It could reuse the
     Kepler orbits from Kosmoserakett.
-40. **Must auk (black hole):** send light and things past a black hole and
+39. **Must auk (black hole):** send light and things past a black hole and
     watch the light bend, time slow down and things get stretched.
 
 ## New nights for Püüa langev täht
