@@ -64,31 +64,42 @@ rivi, Avasta eksoplaneet and Leia asteroid.
 16. **Raketi ehitaja 2 (rocket builder 2):** a harder Kosmoserakett, with a
     budget and a choice of engines and tanks. The rocket must carry enough
     fuel without getting too heavy.
+17. **Uuri meteoore (meteor detective):** meteor trails stay on the sky as
+    in a long-exposure photo. Trace each one back from its tail, find
+    where the lines meet, the radiant, and the constellation there gives
+    the shower its name: Perseus the Perseids, Kaksikud the Geminids,
+    Lõvi the Leonids, Lüüra the Lyrids. Later levels add stray meteors
+    that don't fit, and two showers at once whose trails must be sorted.
+    The Quadrantids are named after a constellation that no longer
+    exists. It reuses the radiants from Püüa langev täht and the star
+    figures from Tähtkujud. The sky should be drawn with the gnomonic
+    projection, in which the trails are straight lines that meet exactly
+    at the radiant.
 
 ## Ages 11–12 and harder
 
-17. **Kui kaugel on täht? (how far is the star?):** find a pulsating star's
+18. **Kui kaugel on täht? (how far is the star?):** find a pulsating star's
     (a Cepheid's) period from its light curve, read its true brightness
     off a period–brightness line, and compare it with how bright it looks
     to get its distance. Harder levels use a Cepheid in another galaxy. It
     reuses the graph, zoom and ruler from Avasta eksoplaneet.
-18. **Kaksiktähed (binary stars):** a light curve with two dips of
+19. **Kaksiktähed (binary stars):** a light curve with two dips of
     different depths, where two stars eclipse each other. The player works
     out which star is hotter, which is bigger, and the period, and learns
     to tell such a curve from a planet's.
-19. **Tähe spekter (a star's spectrum):** match absorption lines to the
+20. **Tähe spekter (a star's spectrum):** match absorption lines to the
     "barcodes" of hydrogen, helium, sodium and iron to find what a star is
     made of. Then use the lines' wobble to find a planet, and end with a
     galaxy whose lines are all shifted red, leading to the Hubble law.
-20. **Kaalu planeeti (weigh a planet):** find Jupiter's moons as dots that
+21. **Kaalu planeeti (weigh a planet):** find Jupiter's moons as dots that
     change sides from night to night, as Galileo did, time them and
     measure their orbits. A bigger orbit means a longer year (Kepler's
     third law), which is used to compare the planets' masses.
-21. **Lend planeedile (plan the flight):** pick the launch date so that the
+22. **Lend planeedile (plan the flight):** pick the launch date so that the
     planet is in the right place when the rocket arrives, with a fuel
     limit. Harder levels swing past Jupiter for a gravity assist to reach
     Saturn.
-22. **Tähe elu (life of a star):** place stars on a colour–brightness
+23. **Tähe elu (life of a star):** place stars on a colour–brightness
     diagram (the HR diagram), then pick a star's mass and predict whether
     it ends as a white dwarf, a neutron star or a black hole.
 
