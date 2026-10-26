@@ -34,6 +34,30 @@
 }
 .jumper svg { display: block; width: 100%; height: 100%; }
 
+/* the metres beside the pole */
+#scene .metre {
+  fill: #fff;
+  stroke: rgba(20, 28, 80, 0.55);
+  stroke-width: 3px;
+  paint-order: stroke;
+  font-weight: 800;
+}
+
+/* after the last star: a cup on the ground, to the win screen; placed
+   from app.js */
+.cup {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 1;
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  animation: breathe 2.2s ease-in-out infinite;
+}
+
 .tap {
   position: absolute;
   left: 0;
@@ -101,15 +125,6 @@
   font-size: clamp(16px, 3.4vmin, 22px);
 }
 
-/* after the last star: to the win screen */
-.world-btn.finish {
-  background: rgba(20, 28, 80, 0.94);
-  box-shadow: 0 0 0 4px var(--accent), 0 4px 10px rgba(0, 0, 0, 0.4);
-  font-size: clamp(26px, 5.5vmin, 40px);
-  line-height: 1;
-  animation: breathe 2.2s ease-in-out infinite;
-}
-
 /* what was learnt, after the star is caught */
 .fact {
   position: absolute;
@@ -136,3 +151,6 @@
 /* ---------- Win screen: how high each jump was ---------- */
 
 .win-pic svg { width: 100%; height: 100%; }
+#winChart text { font-family: inherit; font-weight: 900; }
+#winChart .times { font-size: 30px; fill: var(--accent); }
+#winChart .name { font-size: 18px; font-weight: 800; fill: #fff; }

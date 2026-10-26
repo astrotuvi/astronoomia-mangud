@@ -281,18 +281,6 @@
       b.addEventListener('pointerdown', (e) => e.stopPropagation());
       $('worlds').appendChild(b);
     });
-    // once every star is caught, the win screen can be seen again from here
-    const f = document.createElement('button');
-    f.id = 'finishBtn';
-    f.className = 'world-btn finish hidden';
-    f.textContent = '🏆';
-    f.addEventListener('click', (e) => {
-      e.stopPropagation();
-      sfx.pick();
-      win();
-    });
-    f.addEventListener('pointerdown', (e) => e.stopPropagation());
-    $('worlds').appendChild(f);
   }
 
   function updateMenu() {
@@ -371,8 +359,10 @@
     const top = 70;  // room for the caption
     const k = Math.max(30, (G - top) / VIEW);
     const cx = W / 2;
-    const px = Math.max(26, cx - 1.3 * k);
-    state.L = { W, H, G, k, cx, px, star: clamp(0.13 * k, 14, 40) };
+    const px = Math.max(58, cx - 1.3 * k);
+    const cup = clamp(0.42 * k, 44, 84);
+    state.L = { W, H, G, k, cx, px, cup, star: clamp(0.13 * k, 14, 40) };
+    $('finishBtn').style.fontSize = cup + 'px';
     drawScene();
     place();
   }
@@ -496,8 +486,13 @@
     // the pole, with a mark every half metre
     const top = poleOf(w);
     let pole = `<line x1="${px}" y1="${G}" x2="${px}" y2="${G - top * k}" stroke="rgba(255,255,255,0.55)" stroke-width="8" stroke-linecap="round"/>`;
+    // and the metres written beside it
+    const fs = clamp(0.09 * k, 12, 18);
     for (let m = 0.5; m <= top; m += 0.5) {
       pole += `<line x1="${px - 7}" y1="${G - m * k}" x2="${px + 7}" y2="${G - m * k}" stroke="rgba(255,255,255,0.55)" stroke-width="2"/>`;
+      if (m % 1 === 0) {
+        pole += `<text x="${px - 12}" y="${G - m * k + fs * 0.35}" font-size="${fs}" text-anchor="end" class="metre">${m} m</text>`;
+      }
     }
     scene.setAttribute('viewBox', `0 0 ${W} ${H}`);
     scene.innerHTML =
@@ -567,6 +562,9 @@
     jumper.style.transform = `translate(${cx - s * 0.6}px, ${Y(state.y + BODY)}px) scale(${sx}, ${sy})`;
     const tap = $('tap');
     tap.style.transform = `translate(${cx + s * 0.45}px, ${G - s * 0.3}px)`;
+    // the cup stands on the ground beside the jumper, within the screen
+    const cupX = Math.min(cx + s * 0.85, L.W - 1.2 * L.cup - 6);
+    $('finishBtn').style.transform = `translate(${cupX}px, ${Y(0) + 0.04 * k}px) translate(0, -100%)`;
 
     $('partsL').innerHTML = state.parts.map((p) =>
       `<circle cx="${(cx + p.x * k).toFixed(1)}" cy="${(G - p.y * k).toFixed(1)}" r="${Math.max(2, p.r * k).toFixed(1)}" fill="${p.c}"/>`
@@ -707,6 +705,7 @@
       b.classList.toggle('done', state.caught.includes(w.id));
       b.setAttribute('aria-label', w.name[Astro.lang]);
     });
+    // once every star is caught, a cup by the jumper goes to the win screen
     $('finishBtn').classList.toggle('hidden', n < WORLDS.length);
     $('finishBtn').setAttribute('aria-label', t('finish'));
   }
@@ -720,17 +719,28 @@
   // Winning
   // ---------------------------------------------------------------------------
 
-  // The jumps side by side, at the same scale. The jumpers are drawn
-  // bigger than that, or they would be tiny beside the high jump on Ceres.
+  // How many times higher than on the Earth the jump is: whole numbers
+  // from 5 up, otherwise with one decimal ("2,6" in Estonian).
+  function timesEarth(w) {
+    const r = WORLDS[0].g / w.g;
+    return (r >= 5 ? Math.round(r) : Math.round(r * 10) / 10).toLocaleString(Astro.lang);
+  }
+
+  // The jumps side by side, at the same scale, with how many times higher
+  // than on the Earth each is above it and the world's name below. The
+  // jumpers are drawn bigger than the scale, or they would be tiny beside
+  // the high jump on Ceres.
   function drawChart() {
-    const G = 430;
+    const G = 440;
     const size = 60;
-    const k = (G - size - 6) / Math.max(...WORLDS.map(height));
-    $('winChart').setAttribute('viewBox', `0 0 ${WORLDS.length * 100} 500`);
+    const k = (G - size - 40) / Math.max(...WORLDS.map(height));
+    $('winChart').setAttribute('viewBox', `0 0 ${WORLDS.length * 100} 540`);
     $('winChart').innerHTML = WORLDS.map((w, i) => {
       const x = 50 + i * 100;
       const y = G - height(w) * k;
-      return `<rect x="${x - 46}" y="${G}" width="92" height="8" rx="4" fill="${w.color}"/>` +
+      return `<text x="${x}" y="${y - size - 10}" text-anchor="middle" class="times">${timesEarth(w)}</text>` +
+        `<text x="${x}" y="${G + 90}" text-anchor="middle" class="name">${w.name[Astro.lang]}</text>` +
+        `<rect x="${x - 46}" y="${G}" width="92" height="8" rx="4" fill="${w.color}"/>` +
         `<line x1="${x}" y1="${G}" x2="${x}" y2="${y}" stroke="${w.color}" stroke-width="3" stroke-dasharray="4 5"/>` +
         `<ellipse cx="${x}" cy="${G + 2}" rx="${size * 0.3}" ry="4" fill="#000" opacity="0.4"/>` +
         figure(state.who, `x="${x - size * 0.6}" y="${y - size}" width="${size * 1.2}" height="${size}"`) +
@@ -756,7 +766,7 @@
   }).observe(area);
 
   area.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('.fact, .worlds')) return;
+    if (e.target.closest('.fact, .worlds, .cup')) return;
     jump();
   });
   document.addEventListener('keydown', (e) => {
@@ -770,6 +780,10 @@
     $('fact').classList.add('hidden');
     if (next) goTo(next);
     else win();
+  });
+  $('finishBtn').addEventListener('click', () => {
+    sfx.pick();
+    win();
   });
   $('playBtn').addEventListener('click', startGame);
   $('againBtn').addEventListener('click', startGame);
@@ -797,6 +811,9 @@
       updateTexts();
       updateBar();
     }
-    if (!$('win').classList.contains('hidden')) $('winText').textContent = TEXT[Astro.lang].winText(state.who);
+    if (!$('win').classList.contains('hidden')) {
+      $('winText').textContent = TEXT[Astro.lang].winText(state.who);
+      drawChart();
+    }
   });
 })();
