@@ -43,12 +43,12 @@
   // ramp: s it takes to come and go
   const STORM = { from: 24, ramp: 2, x: 3 };
 
-  // On a night with clouds they drift from the west, and take this many s
-  // to cross the view
+  // On a night with clouds they come up from the horizon where the view
+  // looks, and take this many s to reach the top of the view
   const WIND = 16;
-  // s when the overcast at the start of the night has cleared low down,
-  // and s more until it has cleared at the top of the view
-  const OVERCAST = [7, 16];
+  // s when the overcast at the start of the night has cleared at the
+  // horizon; then the clear sky comes up with the wind
+  const OVERCAST = 7;
 
   const DEG = Math.PI / 180;
   const LAT = 58 * DEG;   // Tõrva
@@ -452,7 +452,7 @@
     seen: {},        // the plane and the satellite are explained only once
     caption: null,   // { key, until }
     hinted: null,    // the shooting star the hand points at
-    weather: [],     // [from, to, how cloudy, how low] of the cloudy spells, see cover()
+    weather: [],     // [from, to, how cloudy] of the cloudy spells, see cover()
     clearArmed: false, // the record is cleared on the next tap of 🗑️
     clearTimer: 0,
     raf: 0,
@@ -667,11 +667,10 @@
     if (state.level === 3) state.facts.push([atHour(STORM.from), 'storm', 5]);
     // overcast at first, clearing from low down to high up; then a cloudy
     // spell in the evening and two after the hours round midnight, kept
-    // clear for the meteor storm, each different every night and only in
-    // the upper part of the sky
+    // clear for the meteor storm, each different every night
     state.weather = [];
     if (N.clouds) {
-      const spell = (from, long, most) => [from, from + long, most, rand(0.3, 0.5)];
+      const spell = (from, long, most) => [from, from + long, most];
       state.weather = [spell(rand(28, 33), rand(6, 9), rand(0.6, 0.9)),
         spell(rand(82, 92), rand(8, 14), rand(0.7, 1)), spell(rand(110, 122), rand(6, 12), rand(0.5, 1))];
       state.facts.push([3.6, 'clouds', 5], [state.weather[0][0] + 4, 'cloudsAgain', 4]);
@@ -941,38 +940,54 @@
 
   const smooth = (q) => q * q * (3 - 2 * q);
 
-  // how cloudy the overcast at the start is at time T and height h (0 at
-  // the horizon, 1 at the top of the view), from 0 for clear to 1 for
-  // overcast; it clears in 5 s at each height
-  function overcast(T, h) {
-    return smooth(clamp((OVERCAST[0] + OVERCAST[1] * h - T) / 5, 0, 1));
+  // The clouds are a flat layer high up, which the wind blows towards us:
+  // they come up from the horizon, and grow wider and taller as they come
+  // nearer and higher. The layer at height h above the horizon (1 at the
+  // top of the view) is this far away
+  const far = (h) => 1 / (Math.max(h, -0.3) + 0.6);
+  // and comes this much nearer in a second
+  const NEAR = (far(0) - far(1)) / WIND;
+
+  // where in the layer a point of the screen is at time T, in px as they
+  // are halfway up the view, and how many s ago the air there was at the
+  // horizon
+  function inLayer(x, y, T) {
+    const L = state.L;
+    const sky = L.hy - L.box.y0;
+    const d = far((L.hy - y) / sky);
+    const m = far(0.5);
+    return { X: ((x - L.W / 2) * d) / m, Y: ((d + NEAR * T) * sky) / (m * m), ago: (far(0) - d) / NEAR };
   }
 
-  // how cloudy the spells are at time T where the clouds come in from, at
-  // the right edge, and height h; each spell comes and goes in 5 s, and
-  // reaches down only to its height
-  function cover(T, h) {
+  // how cloudy the overcast at the start is at time T at the horizon, from
+  // 0 for clear to 1 for overcast; it clears in 5 s
+  function overcast(T) {
+    return smooth(clamp((OVERCAST - T) / 5, 0, 1));
+  }
+
+  // how cloudy the spells are at time T at the horizon; each spell comes
+  // and goes in 5 s
+  function cover(T) {
     let c = 0;
-    for (const [from, to, most, low] of state.weather) {
+    for (const [from, to, most] of state.weather) {
       const up = clamp((T - from) / 5, 0, 1) * clamp((to - T) / 5, 0, 1);
-      c = Math.max(c, most * smooth(up) * smooth(clamp((h - low) / 0.25, 0, 1)));
+      c = Math.max(c, most * smooth(up));
     }
     return c;
   }
 
-  // how thick the cloud is at a point at time T, from 0 to 1: the clouds
-  // drift to the left, so the air at x left the right edge a while ago
+  // how thick the cloud is at a point at time T, from 0 to 1: the air
+  // there came up from the horizon a while ago
   function cloud(x, y, T) {
     if (!N.clouds) return 0;
     const L = state.L;
-    const v = L.W / WIND;
-    const h = (L.hy - y) / (L.hy - L.box.y0);
-    const c = Math.max(overcast(T, h), cover(T - (L.W - x) / v, h));
+    const P = inLayer(x, y, T);
+    const c = Math.max(overcast(T - P.ago), cover(T - P.ago));
     if (c <= 0) return 0;
     // wider than tall, and changing shape a little as they go
     const S = L.u * 0.4;
-    const X = (x + v * T) / S;
-    const Y = y / (S * 0.6);
+    const X = P.X / S;
+    const Y = P.Y / (S * 0.6);
     const f = 0.55 * noise(X, Y) + 0.3 * noise(2 * X + 0.05 * T + 17, 2 * Y + 5) +
       0.15 * noise(4 * X + 31, 4 * Y - 0.04 * T + 11);
     const q = clamp(((f - 0.5) * 1.8 + (c - 0.5) * 1.6 + 0.08) / 0.16, 0, 1);
@@ -983,14 +998,13 @@
   // towns, and lit up at dawn
   function drawClouds(T, dawn) {
     if (!N.clouds) return;
-    let any = T < OVERCAST[0] + OVERCAST[1] * 1.5 + 5;
-    for (let s = 0; s <= WIND && !any; s += 0.5) any = cover(T - s, 2) > 0;
+    let any = T < OVERCAST + WIND * 2 + 5;
+    for (let s = 0; s <= WIND * 2 && !any; s += 0.5) any = cover(T - s) > 0;
     if (!any) return;
     const L = state.L;
     const C = L.cloud;
     const d = C.img.data;
-    // lighter and darker parts, drifting with the clouds
-    const v = L.W / WIND;
+    // lighter and darker parts, moving with the clouds
     const S = L.u * 0.25;
     for (let j = 0; j < C.rows; j++) {
       const y = j * C.cell;
@@ -1004,7 +1018,8 @@
         const o = (j * C.cols + i) * 4;
         d[o + 3] = 247 * a;
         if (!a) continue;
-        const light = 0.8 + 0.45 * noise((x + v * T) / S + 40, y / (S * 0.6) + 40);
+        const P = inLayer(x, y, T);
+        const light = 0.8 + 0.45 * noise(P.X / S + 40, P.Y / (S * 0.6) + 40);
         d[o] = r * light;
         d[o + 1] = g * light;
         d[o + 2] = b * light;
