@@ -35,6 +35,10 @@
         <stop offset="0.6" stop-color="#5a3d36" />
         <stop offset="1" stop-color="#c9a77c" />
       </linearGradient>
+      <linearGradient id="sky-ceres" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#000" />
+        <stop offset="1" stop-color="#0d0d14" />
+      </linearGradient>
       <radialGradient id="sunGrad" cx="0.42" cy="0.4" r="0.6">
         <stop offset="0" stop-color="#fffbe0" />
         <stop offset="0.5" stop-color="#ffd34d" />
@@ -49,6 +53,7 @@
       <clipPath id="clip-moon"><circle cx="50" cy="50" r="44.5" /></clipPath>
       <clipPath id="clip-mars"><circle cx="50" cy="50" r="40" /></clipPath>
       <clipPath id="clip-jupiter"><circle cx="50" cy="50" r="40" /></clipPath>
+      <clipPath id="clip-ceres"><circle cx="50" cy="50" r="49.5" /></clipPath>
     </defs>
   </svg>
 
@@ -109,7 +114,7 @@
   <!-- Win overlay -->
   <div id="win" class="overlay hidden">
     <canvas id="confetti"></canvas>
-    <div class="win-pic"><svg id="winChart" viewBox="0 0 400 290" aria-hidden="true"></svg></div>
+    <div class="win-pic"><svg id="winChart" viewBox="0 0 500 500" aria-hidden="true"></svg></div>
     <div class="win-card">
       <h2><span data-t="wellDone"></span> 🎉</h2>
       <p id="winText" class="win-fact"></p>

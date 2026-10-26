@@ -9,7 +9,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Tähtkujud / Constellations | [`tahtkujud/`](tahtkujud/) | Join the stars of a constellation in order 1, 2, 3 … |
 | Mälumäng / Memory | [`malumang/`](malumang/) | Turn cards over and find the pairs of astronomy photos |
 | Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
-| Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars and Jupiter and catch a star on each |
+| Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars, Jupiter and the dwarf planet Ceres and catch a star on each |
 | Planeetide rivi / Line Up the Planets | [`planeedid/`](planeedid/) | Drag the planets into order from the Sun outwards, or by size, smallest or biggest first |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
@@ -30,7 +30,7 @@ python3 -m http.server
 ## Layout
 
 - `index.html`: the start page with links to the games, and at the bottom the address of the published games, https://astrotuvi.github.io/astronoomia-mangud/, with its QR code (`shared/qr.png`)
-- `shared/`: the theme, menu, top bar and win screen (`common.css`), settings, language, the author line shown in every menu, sounds and star confetti (`common.js`), and the drawn pictures of the planets, among them Mars and the Earth seen from space (`planets.js`)
+- `shared/`: the theme, menu, top bar and win screen (`common.css`), settings, language, the author line shown in every menu, sounds and star confetti (`common.js`), and the drawn pictures of the planets and of Ceres, among them Mars and the Earth seen from space (`planets.js`)
 - one folder per game, each with its own `index.html`, `app.js` and `style.css`
 
 To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`. Follow [DESIGN.md](DESIGN.md), so that it looks and works like the other games, also on phones in dark mode.
@@ -93,12 +93,13 @@ The destinations are in the `DESTS` list at the top of `rakett/app.js`, and the 
   - on the Moon 2.1 m (six times higher) in more than three seconds; the view follows the jumper up
   - on Mars 91 cm
   - on Jupiter 14 cm in a fifth of a second
-- A star hangs just within reach on each world. When it is caught, a short fact is shown after landing, with a button to fly to the next world. The round pictures at the bottom go to any world, and a ⭐ marks the worlds whose star is caught.
+  - on Ceres, the dwarf planet in the asteroid belt, 12 m (35 times higher) in almost 20 seconds; the pole is taller there
+- A star hangs just within reach on each world. When it is caught, a short fact is shown after landing, with a button to fly to the next world. The round pictures at the bottom go to any world, and a ⭐ marks the worlds whose star is caught. Once every star is caught, a 🏆 after them goes to the win screen, also after the fact is gone.
 - A pole beside the jumper fills up during the jump, and the highest jump on each world is marked on it with a small picture of that world.
-- Landing raises a puff of dust, which flies far on the Moon and hardly at all on Jupiter. If nothing happens for a few seconds, a 👆 shows where to tap.
-- The win screen shows the four jumps side by side at the same scale.
+- Landing raises a puff of dust, which flies far on the Moon and Ceres and hardly at all on Jupiter. If nothing happens for a few seconds, a 👆 shows where to tap.
+- The win screen shows the five jumps side by side at the same scale, with the jumpers drawn bigger, so that they can be seen beside the high jump on Ceres.
 
-The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. Jupiter has no ground, so the game stands on its cloud tops, as the fact says.
+The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. Jupiter has no ground, so the game stands on its cloud tops, as the fact says. Ceres has no photo, so it is drawn in `shared/planets.js`, dark and cratered, with the bright salt spots of the crater Occator.
 
 ## Planeetide rivi
 

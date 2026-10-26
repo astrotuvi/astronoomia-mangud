@@ -2,7 +2,7 @@
 
 (() => {
   const { $, rand, clamp, sfx } = Astro;
-  const { drawMars, drawEarth } = AstroPlanets;
+  const { drawMars, drawEarth, drawPlanet } = AstroPlanets;
 
   // ---------------------------------------------------------------------------
   // Content
@@ -11,7 +11,8 @@
   // Where to jump. g is how strongly the world pulls (m/s², on Jupiter at
   // the top of the clouds), pic its picture and fill how much of the picture
   // the planet fills (as in the clip paths in index.html). Photos by Tõrva
-  // Astronoomiaklubi (AstroBin, CC BY-NC-SA); Mars and the Earth are drawn.
+  // Astronoomiaklubi (AstroBin, CC BY-NC-SA); Mars, the Earth and Ceres are
+  // drawn.
   const WORLDS = [
     {
       id: 'earth',
@@ -67,6 +68,20 @@
       fact: {
         et: 'Jupiter on Maast palju suurem ja tõmbab üle kahe korra tugevamalt. Seal saad vaevu hüpata! Päriselt pole Jupiteril maapinda, ainult pilved, nii et seal seista ei saaks.',
         en: 'Jupiter is much bigger than the Earth and pulls more than twice as strongly. There you can hardly jump at all! In fact Jupiter has no ground, only clouds, so you could not really stand there.'
+      }
+    },
+    {
+      id: 'ceres',
+      g: 0.28,
+      pic: null,
+      fill: 0.99,
+      color: '#8f8a84',
+      dust: '#77726c',
+      name: { et: 'Ceres', en: 'Ceres' },
+      to: { et: 'Ceresele', en: 'Ceres' },
+      fact: {
+        et: 'Ceres on kääbusplaneet asteroidide vöös, Marsi ja Jupiteri vahel. See on Maast nii palju väiksem, et tõmbab 35 korda nõrgemalt. Seal hüppad kõrgemale kui maja ja oled õhus peaaegu 20 sekundit!',
+        en: 'Ceres is a dwarf planet in the asteroid belt, between Mars and Jupiter. It is so much smaller than the Earth that it pulls 35 times more weakly. There you jump higher than a house and stay in the air for almost 20 seconds!'
       }
     }
   ];
@@ -147,7 +162,7 @@
   const TEXT = {
     et: {
       title: 'Hüppa planeedil',
-      intro: 'Kui kõrgele saad hüpata Kuul, Marsil või Jupiteril? Hüppa ja püüa igal taevakehal täht kinni!',
+      intro: 'Kui kõrgele saad hüpata Kuul, Marsil, Jupiteril või kääbusplaneedil Ceresel? Hüppa ja püüa igal taevakehal täht kinni!',
       chooseWho: 'Kes hüppab?',
       play: 'Hüppa',
       catchIt: 'Hüppa ja püüa täht!',
@@ -155,7 +170,7 @@
       flyTo: (to) => `🚀 Lenda ${to}`,
       finish: '🏆 Vaata, kui kõrgele hüppasid',
       wellDone: 'Tubli!',
-      winText: (who) => `${who.name.et} hüppas Kuul kuus korda kõrgemale kui Maal! Mida nõrgemalt taevakeha sind enda poole tõmbab, seda kõrgemale saad hüpata.`,
+      winText: (who) => `${who.name.et} hüppas Kuul kuus korda ja Ceresel 35 korda kõrgemale kui Maal! Mida nõrgemalt taevakeha sind enda poole tõmbab, seda kõrgemale saad hüpata.`,
       again: 'Uuesti',
       menu: 'Menüü',
       allGames: 'Kõik mängud',
@@ -164,7 +179,7 @@
     },
     en: {
       title: 'Planet Jump',
-      intro: 'How high can you jump on the Moon, Mars or Jupiter? Jump and catch the star on every world!',
+      intro: 'How high can you jump on the Moon, Mars, Jupiter or the dwarf planet Ceres? Jump and catch the star on every world!',
       chooseWho: 'Who is jumping?',
       play: 'Jump',
       catchIt: 'Jump and catch the star!',
@@ -172,7 +187,7 @@
       flyTo: (to) => `🚀 Fly to ${to}`,
       finish: '🏆 See how high you jumped',
       wellDone: 'Well done!',
-      winText: (who) => `${who.name.en} jumped six times higher on the Moon than on the Earth! The more weakly a world pulls you towards it, the higher you can jump.`,
+      winText: (who) => `${who.name.en} jumped six times higher on the Moon than on the Earth, and 35 times higher on Ceres! The more weakly a world pulls you towards it, the higher you can jump.`,
       again: 'Again',
       menu: 'Menu',
       allGames: 'All games',
@@ -183,14 +198,16 @@
 
   // The jumper leaves the ground equally fast everywhere, so only the pull
   // of the world changes how high and how long the jump is: on the Earth
-  // 0.34 m in half a second, on the Moon 2.1 m in more than three seconds.
+  // 0.34 m in half a second, on the Moon 2.1 m in more than three seconds,
+  // on Ceres 12 m in almost 20 seconds.
   const SPEED = 2.6;      // m/s
   const BODY = 0.9;       // m, how tall the jumper is
   const VIEW = 2.2;       // m of sky above the ground, before the view follows the jumper up
-  const POLE = 2.6;       // m, how tall the measuring pole is
+  const POLE = 2.6;       // m, how tall the measuring pole is, unless the jump is higher
   const HINT_MS = 4000;   // idle time before the hand shows where to tap
 
   const height = (w) => (SPEED * SPEED) / (2 * w.g);
+  const poleOf = (w) => (height(w) > POLE ? Math.ceil(height(w) + 0.5) : POLE);
   // where the star hangs: just below the top of the jumper's head at the
   // highest point
   const starHeight = (w) => BODY + 0.95 * height(w);
@@ -224,9 +241,9 @@
   const scene = $('scene');
   const t = (key) => TEXT[Astro.lang][key];
 
-  // The pictures of the worlds. Mars is drawn at once, the Earth in the
-  // background, so it shows up a moment later.
-  const pics = { moon: WORLDS[1].pic, jupiter: WORLDS[3].pic, mars: drawMars(300), earth: '' };
+  // The pictures of the worlds. Mars is drawn at once, the Earth and Ceres
+  // in the background, so they show up a moment later.
+  const pics = { moon: WORLDS[1].pic, jupiter: WORLDS[3].pic, mars: drawMars(300), earth: '', ceres: '' };
 
   // A world as a ball: a 100-unit picture cropped round, for inside an svg.
   function ballSVG(w, attrs = '') {
@@ -264,6 +281,18 @@
       b.addEventListener('pointerdown', (e) => e.stopPropagation());
       $('worlds').appendChild(b);
     });
+    // once every star is caught, the win screen can be seen again from here
+    const f = document.createElement('button');
+    f.id = 'finishBtn';
+    f.className = 'world-btn finish hidden';
+    f.textContent = '🏆';
+    f.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sfx.pick();
+      win();
+    });
+    f.addEventListener('pointerdown', (e) => e.stopPropagation());
+    $('worlds').appendChild(f);
   }
 
   function updateMenu() {
@@ -378,11 +407,17 @@
         s += `<g fill="#fff" opacity="0.9"><ellipse cx="${W * x}" cy="${H * y}" rx="${c * 2.2}" ry="${c}"/>` +
           `<circle cx="${W * x - c * 0.7}" cy="${H * y - c * 0.5}" r="${c}"/><circle cx="${W * x + c * 0.6}" cy="${H * y - c * 0.7}" r="${c * 1.2}"/></g>`;
       });
-    } else if (id === 'moon' || id === 'jupiter') {
-      for (let i = 0; i < 70; i++) {
-        s += `<circle cx="${(rnd() * W).toFixed(1)}" cy="${(rnd() * G * 0.85).toFixed(1)}" r="${(0.6 + rnd() * 1.1).toFixed(1)}" fill="#fff" opacity="${(0.3 + rnd() * 0.6).toFixed(2)}"/>`;
+    } else if (id === 'moon' || id === 'jupiter' || id === 'ceres') {
+      // on Ceres the view goes far up, so the stars reach above the screen
+      const above = id === 'ceres' ? H * 0.7 : 0;
+      for (let i = 0; i < (id === 'ceres' ? 120 : 70); i++) {
+        s += `<circle cx="${(rnd() * W).toFixed(1)}" cy="${(rnd() * (G * 0.85 + above) - above).toFixed(1)}" r="${(0.6 + rnd() * 1.1).toFixed(1)}" fill="#fff" opacity="${(0.3 + rnd() * 0.6).toFixed(2)}"/>`;
       }
-      if (id === 'moon') {
+      if (id === 'ceres') {
+        // a small Sun, as Ceres is almost three times farther from it than the Earth
+        s += `<circle cx="${W * 0.8}" cy="${H * 0.16}" r="${m * 0.05}" fill="url(#sunGlow)" opacity="0.6"/>` +
+          `<circle cx="${W * 0.8}" cy="${H * 0.16}" r="${m * 0.02}" fill="#fff8e0"/>`;
+      } else if (id === 'moon') {
         // the Earth in the Moon's sky
         s += `<g transform="translate(${W * 0.82} ${H * 0.2})">${ballSVG(WORLDS[0], `x="${-m * 0.07}" y="${-m * 0.07}" width="${m * 0.14}" height="${m * 0.14}"`)}</g>`;
       } else {
@@ -424,6 +459,16 @@
         const rx = 8 + rnd() * 34 * ((y - G) / (H - G) + 0.4);
         s += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${(rx * 0.28).toFixed(1)}" fill="#76767d" stroke="#b5b5bb" stroke-width="2"/>`;
       }
+    } else if (id === 'ceres') {
+      // dark ground with craters, and bright salt in some of them
+      s += `<path d="${wavy(G + 2, H * 0.05, 3)}" fill="#57534f"/><rect y="${G}" width="${W}" height="3" fill="#7d7873"/>`;
+      for (let i = 0; i < 12; i++) {
+        const x = rnd() * W;
+        const y = G + 10 + rnd() * (H - G - 14);
+        const rx = 8 + rnd() * 34 * ((y - G) / (H - G) + 0.4);
+        s += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${rx.toFixed(1)}" ry="${(rx * 0.28).toFixed(1)}" fill="#46433f" stroke="#76716c" stroke-width="2"/>`;
+        if (i % 4 === 1) s += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${(rx * 0.35).toFixed(1)}" ry="${(rx * 0.1).toFixed(1)}" fill="#f2f2ea"/>`;
+      }
     } else if (id === 'mars') {
       s += `<path d="${wavy(G - H * 0.03, H * 0.1, 2)}" fill="#a5532f"/>`;
       s += `<rect y="${G}" width="${W}" height="${D}" fill="#b85a2e"/><rect y="${G}" width="${W}" height="3" fill="#d27848"/>`;
@@ -449,8 +494,9 @@
     const { W, H, G, k, px } = state.L;
     const w = state.world;
     // the pole, with a mark every half metre
-    let pole = `<line x1="${px}" y1="${G}" x2="${px}" y2="${G - POLE * k}" stroke="rgba(255,255,255,0.55)" stroke-width="8" stroke-linecap="round"/>`;
-    for (let m = 0.5; m <= POLE; m += 0.5) {
+    const top = poleOf(w);
+    let pole = `<line x1="${px}" y1="${G}" x2="${px}" y2="${G - top * k}" stroke="rgba(255,255,255,0.55)" stroke-width="8" stroke-linecap="round"/>`;
+    for (let m = 0.5; m <= top; m += 0.5) {
       pole += `<line x1="${px - 7}" y1="${G - m * k}" x2="${px + 7}" y2="${G - m * k}" stroke="rgba(255,255,255,0.55)" stroke-width="2"/>`;
     }
     scene.setAttribute('viewBox', `0 0 ${W} ${H}`);
@@ -488,7 +534,7 @@
     const Y = (m) => G - (m - state.cam) * k;   // height in metres to screen pixels
     scene.querySelector('#near').setAttribute('transform', `translate(0 ${state.cam * k})`);
     scene.querySelector('#far').setAttribute('transform', `translate(0 ${state.cam * k * 0.15})`);
-    scene.querySelector('#poleFill').setAttribute('y2', G - Math.min(state.y, POLE) * k);
+    scene.querySelector('#poleFill').setAttribute('y2', G - Math.min(state.y, poleOf(w)) * k);
 
     const sh = 1 / (1 + 1.2 * state.y);
     const shadow = scene.querySelector('#shadow');
@@ -655,12 +701,14 @@
     const n = state.caught.length;
     $('progressFill').style.width = (100 * n) / WORLDS.length + '%';
     $('progressText').textContent = `⭐ ${n} / ${WORLDS.length}`;
-    [...$('worlds').children].forEach((b, i) => {
-      const w = WORLDS[i];
+    WORLDS.forEach((w, i) => {
+      const b = $('worlds').children[i];
       b.classList.toggle('now', w === state.world);
       b.classList.toggle('done', state.caught.includes(w.id));
       b.setAttribute('aria-label', w.name[Astro.lang]);
     });
+    $('finishBtn').classList.toggle('hidden', n < WORLDS.length);
+    $('finishBtn').setAttribute('aria-label', t('finish'));
   }
 
   function updateToggles() {
@@ -672,12 +720,13 @@
   // Winning
   // ---------------------------------------------------------------------------
 
-  // The four jumps side by side, at the same scale.
+  // The jumps side by side, at the same scale. The jumpers are drawn
+  // bigger than that, or they would be tiny beside the high jump on Ceres.
   function drawChart() {
-    const G = 222;
-    const top = Math.max(...WORLDS.map(height)) + BODY;
-    const k = (G - 16) / top;
-    const size = BODY * k;
+    const G = 430;
+    const size = 60;
+    const k = (G - size - 6) / Math.max(...WORLDS.map(height));
+    $('winChart').setAttribute('viewBox', `0 0 ${WORLDS.length * 100} 500`);
     $('winChart').innerHTML = WORLDS.map((w, i) => {
       const x = 50 + i * 100;
       const y = G - height(w) * k;
@@ -734,9 +783,13 @@
 
   buildMenu();
   updateToggles();
+  const show = (id, url) => {
+    pics[id] = url;
+    document.querySelectorAll(`image.pic-${id}`).forEach((im) => im.setAttribute('href', url));
+  };
   setTimeout(() => drawEarth(400, (url) => {
-    pics.earth = url;
-    document.querySelectorAll('image.pic-earth').forEach((im) => im.setAttribute('href', url));
+    show('earth', url);
+    drawPlanet('ceres', 300, ({ url }) => show('ceres', url));
   }), 100);
   Astro.setupLanguage(TEXT, () => {
     updateMenu();

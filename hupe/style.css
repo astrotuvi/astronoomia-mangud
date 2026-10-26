@@ -44,7 +44,7 @@
 }
 @keyframes tap { 50% { translate: 0 -14px; } }
 
-/* the star is above the screen (on the Moon) */
+/* the star is above the screen (on the Moon and Ceres) */
 .star-up {
   position: absolute;
   top: 70px;
@@ -99,6 +99,15 @@
   right: -6px;
   bottom: -6px;
   font-size: clamp(16px, 3.4vmin, 22px);
+}
+
+/* after the last star: to the win screen */
+.world-btn.finish {
+  background: rgba(20, 28, 80, 0.94);
+  box-shadow: 0 0 0 4px var(--accent), 0 4px 10px rgba(0, 0, 0, 0.4);
+  font-size: clamp(26px, 5.5vmin, 40px);
+  line-height: 1;
+  animation: breathe 2.2s ease-in-out infinite;
 }
 
 /* what was learnt, after the star is caught */

@@ -16,7 +16,8 @@
 // Pictures:
 //   { photo: 'saturn' }   a photo from pusle/images/
 //   { world: 'mars' }     the Earth, the Moon, Mars, Jupiter or Saturn
-//   { planet: 'uranus' }  any of the eight planets, drawn as in Planeetide rivi
+//   { planet: 'uranus' }  any of the eight planets, or Ceres, drawn as in
+//                         Planeetide rivi
 //   { moon: 90 }          the Moon seen from the Earth, by its angle from new
 //                         moon (0 new, 90 first quarter, 180 full, 270 last quarter)
 //   { space: 90 }         the Sun, the Earth and the Moon from above the North
@@ -197,6 +198,35 @@ window.QUIZ = [
           { et: '1 meeter', en: '1 metre' }
         ],
         why: { et: 'Marss tõmbab peaaegu kolm korda nõrgemalt kui Maa, nii et hüpe on peaaegu kolm korda kõrgem: peaaegu 30 cm.', en: 'Mars pulls nearly three times more weakly than the Earth, so the jump is nearly three times higher: nearly 30 cm.' }
+      },
+      {
+        q: { et: 'Kass hüppab Maal 10 cm kõrgusele. Kui kõrgele hüppab ta Ceresel?', en: 'A cat jumps 10 cm high on the Earth. How high does it jump on Ceres?' },
+        answers: [
+          { et: '3,5 meetrit', en: '3.5 metres' },
+          { et: '60 cm', en: '60 cm' },
+          { et: '10 cm', en: '10 cm' },
+          { et: 'Ta lendab kosmosesse', en: 'It flies off into space' }
+        ],
+        why: { et: 'Ceres tõmbab 35 korda nõrgemalt kui Maa, nii et hüpe on 35 korda kõrgem: 35 × 10 cm = 350 cm. Ceres tõmbab kassi siiski tagasi.', en: 'Ceres pulls 35 times more weakly than the Earth, so the jump is 35 times higher: 35 × 10 cm = 350 cm. Ceres still pulls the cat back down.' }
+      },
+      {
+        q: { et: 'Kus hüppad kõrgemale: Ceresel või Kuul?', en: 'Where do you jump higher: on Ceres or on the Moon?' },
+        answers: [
+          { planet: 'ceres', label: { et: 'Ceres', en: 'Ceres' } },
+          { world: 'moon', label: { et: 'Kuu', en: 'The Moon' } }
+        ],
+        why: { et: 'Ceres on Kuust palju väiksem ja tõmbab peaaegu kuus korda nõrgemalt. Seal hüppad 35 korda kõrgemale kui Maal.', en: 'Ceres is much smaller than the Moon and pulls almost six times more weakly. There you jump 35 times higher than on the Earth.' }
+      },
+      {
+        q: { et: 'Mis on Ceres?', en: 'What is Ceres?' },
+        pic: { planet: 'ceres' },
+        answers: [
+          { et: 'Kääbusplaneet asteroidide vöös', en: 'A dwarf planet in the asteroid belt' },
+          { et: 'Jupiteri kuu', en: 'A moon of Jupiter' },
+          { et: 'Komeet', en: 'A comet' },
+          { et: 'Täht', en: 'A star' }
+        ],
+        why: { et: 'Ceres tiirleb ümber Päikese Marsi ja Jupiteri vahel, asteroidide seas. See on nii suur ja ümar, et seda peetakse kääbusplaneediks.', en: 'Ceres goes round the Sun between Mars and Jupiter, among the asteroids. It is so big and round that it is counted as a dwarf planet.' }
       },
       {
         q: { et: 'Miks hüppad Kuul kõrgemale kui Maal?', en: 'Why do you jump higher on the Moon than on the Earth?' },

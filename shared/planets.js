@@ -1,7 +1,8 @@
 'use strict';
 
 // Planets drawn pixel by pixel: Mars and the Earth seen from space for
-// Kosmoserakett and Hüppa planeedil, and all eight for Planeetide rivi.
+// Kosmoserakett and Hüppa planeedil, all eight for Planeetide rivi, and
+// Ceres for Hüppa planeedil.
 window.AstroPlanets = (() => {
   const { clamp } = Astro;
 
@@ -339,7 +340,8 @@ window.AstroPlanets = (() => {
     return 1 - sstep(0.6, 1, e);
   }
 
-  // Mercury's craters: where they are and how big (in radians), always the same.
+  // Mercury's craters, also used for Ceres: where they are and how big (in
+  // radians), always the same.
   const CRATERS = (() => {
     let seed = 11;
     const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -351,6 +353,20 @@ window.AstroPlanets = (() => {
     });
   })();
 
+  // How the craters darken and lighten a point on the ball: a darker floor,
+  // a bright rim and a pale splash round each one.
+  function craters(x, y, z) {
+    let k = 1;
+    for (const cr of CRATERS) {
+      const dot = x * cr.c[0] + y * cr.c[1] + z * cr.c[2];
+      const t = Math.sqrt(Math.max(0, 2 - 2 * dot)) / cr.r;
+      if (t > 1.7) continue;
+      k *= 1 - 0.16 * (1 - sstep(0.65, 0.85, t)) + 0.2 * Math.exp(-(((t - 0.95) / 0.1) ** 2)) +
+        0.08 * sstep(0.95, 1.1, t) * (1 - sstep(1.1, 1.7, t));
+    }
+    return k;
+  }
+
   // How each planet looks. surface(x, y, z, lat, lon) gives the colour at a
   // point on the planet, with y towards its north pole. tilt leans the north
   // pole towards us, roll turns the whole planet in the picture (Uranus lies
@@ -361,16 +377,19 @@ window.AstroPlanets = (() => {
     mercury: {
       tilt: 0.1,
       surface(x, y, z) {
-        let k = 0.78 + 0.4 * fbm(x * 3 + 2, y * 3, z * 3) + 0.12 * (fbm(x * 12, y * 12 + 5, z * 12, 4) - 0.5);
-        for (const cr of CRATERS) {
-          const dot = x * cr.c[0] + y * cr.c[1] + z * cr.c[2];
-          const t = Math.sqrt(Math.max(0, 2 - 2 * dot)) / cr.r;
-          if (t > 1.7) continue;
-          // a darker floor, a bright rim and a pale splash round it
-          k *= 1 - 0.16 * (1 - sstep(0.65, 0.85, t)) + 0.2 * Math.exp(-(((t - 0.95) / 0.1) ** 2)) +
-            0.08 * sstep(0.95, 1.1, t) * (1 - sstep(1.1, 1.7, t));
-        }
+        const k = (0.78 + 0.4 * fbm(x * 3 + 2, y * 3, z * 3) + 0.12 * (fbm(x * 12, y * 12 + 5, z * 12, 4) - 0.5)) * craters(x, y, z);
         return [158 * k, 148 * k, 138 * k];
+      }
+    },
+    // the dwarf planet in the asteroid belt, darker than Mercury, with the
+    // bright salt spots in the crater Occator; the same craters, turned
+    // another way
+    ceres: {
+      tilt: 0.15,
+      surface(x, y, z, lat, lon) {
+        const k = (0.8 + 0.3 * fbm(x * 3 + 7, y * 3, z * 3) + 0.1 * (fbm(x * 12, y * 12 + 3, z * 12, 4) - 0.5)) * craters(z, x, y);
+        const salt = Math.max(spot(lat, lon, 0.35, 0.2, 0.035, 0.05), 0.7 * spot(lat, lon, 0.37, 0.29, 0.02, 0.03));
+        return mix([118 * k, 114 * k, 110 * k], [245, 245, 238], salt);
       }
     },
     venus: {
@@ -580,9 +599,9 @@ window.AstroPlanets = (() => {
     })();
   }
 
-  // Any of the eight planets as a picture on a clear background, size pixels
-  // across the ball. done() gets { url, w, h }, with w and h in the units of
-  // a ball of radius 50.
+  // Any of the eight planets, or Ceres, as a picture on a clear background,
+  // size pixels across the ball. done() gets { url, w, h }, with w and h in
+  // the units of a ball of radius 50.
   function drawPlanet(id, size, done) {
     if (id === 'mars') {
       setTimeout(() => done({ url: drawMars(size, true), w: (size / (size / 2 - 1)) * 50, h: (size / (size / 2 - 1)) * 50 }), 0);
