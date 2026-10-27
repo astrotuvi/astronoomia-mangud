@@ -411,7 +411,7 @@ window.QUIZ = [
         why: { et: 'Mida kaugemale lendad, seda rohkem kütust on vaja.', en: 'The farther you fly, the more fuel you need.' }
       },
       {
-        q: { et: 'Pane järjekorda Maale kõige lähemast kõige kaugemani.', en: 'Put them in order from the nearest to the Earth to the farthest.' },
+        q: { et: 'Pane taevakehad järjekorda Maale kõige lähemast kõige kaugemani.', en: 'Put them in order from the nearest to the Earth to the farthest.' },
         order: [
           { world: 'moon', label: { et: 'Kuu', en: 'The Moon' } },
           { world: 'mars', label: { et: 'Marss', en: 'Mars' } },
