@@ -15,7 +15,7 @@
 <body>
   <div class="sky" aria-hidden="true"></div>
 
-  <!-- Menu: pick the task to start from -->
+  <!-- Menu: pick a task; each opens when the one before it is solved -->
   <main id="menu" class="screen menu">
     <div class="menu-inner">
       <header class="menu-head">
@@ -35,6 +35,9 @@
 
       <div class="play-row">
         <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+      <div class="reset-row">
+        <button id="resetBtn" class="reset hidden" data-t="reset"></button>
       </div>
 
       <footer class="credit">
@@ -67,7 +70,10 @@
         </label>
       </div>
       <div class="panels">
-        <div class="panel space"><canvas id="orbit"></canvas></div>
+        <div class="panel space">
+          <canvas id="orbit"></canvas>
+          <button id="cupBtn" class="cup hidden" aria-label="Lõpeta">🏆</button>
+        </div>
         <div id="yards" class="panel yards"></div>
       </div>
     </div>
@@ -77,7 +83,10 @@
   <div id="fact" class="fact hidden">
     <div class="fact-card">
       <p id="factText"></p>
-      <button id="nextBtn" class="btn"></button>
+      <div class="fact-buttons">
+        <button id="nextBtn" class="btn"></button>
+        <button id="factMenuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
+      </div>
     </div>
   </div>
 

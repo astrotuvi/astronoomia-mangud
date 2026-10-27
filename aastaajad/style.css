@@ -10,7 +10,7 @@
   color: var(--muted);
 }
 
-/* the tasks to start from */
+/* the tasks: each opens when the one before it is solved */
 .levels {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -33,11 +33,25 @@
   transform: scale(1.03);
   box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
 }
+.level.locked { opacity: 0.5; cursor: default; }
+.level.locked:hover { background: var(--card); }
 .level-icon { flex: none; font-size: 2.2rem; line-height: 1; }
 .level-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .level-name { font-size: 1.15rem; }
 .level-about { font-size: 0.95rem; color: var(--muted); }
 .done-badge { flex: none; font-size: 1.4rem; }
+
+/* locks the tasks again; small and quiet, so that it is not tapped by mistake */
+.reset-row { display: flex; justify-content: center; margin-bottom: 10px; }
+.reset {
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.reset:hover { background: var(--card-hover); }
 
 /* ---------- Game ---------- */
 
@@ -110,6 +124,21 @@
   cursor: pointer;
 }
 
+/* after the last task: a cup in the corner of the path, to the win screen */
+.cup {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: clamp(3rem, 10vmin, 4.6rem);
+  line-height: 1;
+  cursor: pointer;
+  transform-origin: 50% 100%;
+  animation: breathe 2.2s ease-in-out infinite;
+}
+
 /* the yard in Estonia, and on Austraalia the one in Sydney too: one above
    the other, or side by side when there is room (.row, set by app.js) */
 .yards { display: flex; flex-direction: column; gap: 8px; padding: 0 10px 8px; }
@@ -161,6 +190,7 @@
   animation: pop 0.4s cubic-bezier(0.2, 1.6, 0.4, 1);
 }
 .fact-card p { margin: 0 0 14px; font-size: 1.1rem; font-weight: 600; line-height: 1.45; text-align: left; }
+.fact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .fact-card .btn { font-size: 1.15rem; padding: 10px 24px; }
 
 /* ---------- Win screen: the Earth's path with the four seasons ---------- */

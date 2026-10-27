@@ -46,6 +46,9 @@
       intro1: 'Maa tiirleb ümber Päikese ja tema telg on kaldu. Liiguta Maad ja vaata, kui kõrgele tõuseb Päike Eestis ja kui pikk on päev.',
       intro2: 'Nii saad teada, miks on Eestis suvi soe ja talv külm.',
       chooseTask: 'Vali ülesanne',
+      locked: 'Lahenda enne eelmine ülesanne',
+      reset: 'Alusta otsast peale',
+      resetAsk: 'Kas alustada otsast peale? Kõik 🌟 kaovad ja ülesanded lukustuvad uuesti.',
       play: 'Mängi',
       tasks: {
         midsummer: {
@@ -110,7 +113,10 @@
       farthestAt: '152 mln km',
       tilt: (deg) => `Telje kalle ${deg}°`,
       next: 'Edasi ▶',
-      finish: 'Valmis! 🎉',
+      playOn: 'Mängi edasi ▶',
+      freeTitle: 'Mängi Maa telje kaldega',
+      freeTip: 'Liiguta liugurit ja Maad ning vaata, mis õues juhtub. Kui oled valmis, vajuta 🏆.',
+      cup: 'Lõpeta',
       winTitle: 'Tubli!',
       winName: 'Nüüd tead, kuidas tekivad aastaajad',
       winFact: 'Maa telg on kaldu. Kui põhjapoolkera on Päikese poole kaldu, tõuseb Päike Eestis kõrgele ja päev on pikk - siis on suvi. Kui põhjapoolkera on suunatud Päikesest eemale, paistab Päike madalalt ja päev on lühike - siis on talv.',
@@ -125,6 +131,9 @@
       intro1: 'The Earth goes round the Sun, and its axis is tilted. Move the Earth and see how high the Sun climbs in Estonia and how long the day is.',
       intro2: 'So you find out why summer in Estonia is warm and winter cold.',
       chooseTask: 'Choose a task',
+      locked: 'Solve the task before it first',
+      reset: 'Start over',
+      resetAsk: 'Start over? All the 🌟 go, and the tasks lock again.',
       play: 'Play',
       tasks: {
         midsummer: {
@@ -189,7 +198,10 @@
       farthestAt: '152 mln km',
       tilt: (deg) => `Tilt of the axis ${deg}°`,
       next: 'Go on ▶',
-      finish: 'Done! 🎉',
+      playOn: 'Keep playing ▶',
+      freeTitle: 'Play with the tilt of the Earth\'s axis',
+      freeTip: 'Move the slider and the Earth and see what happens in the yard. When you are done, tap 🏆.',
+      cup: 'Finish',
       winTitle: 'Well done!',
       winName: 'Now you know what causes the seasons',
       winFact: 'The Earth\'s axis is tilted. When the northern hemisphere leans towards the Sun, the Sun climbs high over Estonia and the day is long - then it is summer. When the northern hemisphere points away from the Sun, the Sun shines low and the day is short - then it is winter.',
@@ -279,19 +291,19 @@
 
   const store = Astro.makeStore('aastaajad.');
   const done = new Set((store.get('done', []) || []).filter((id) => TASKS.some((k) => k.id === id)));
+  // a task opens when the one before it is solved
+  const open = (i) => i === 0 || done.has(TASKS[i - 1].id);
   const state = {
     task: clamp(Number(store.get('task', 0)) || 0, 0, TASKS.length - 1),
-    first: 0,          // the task this game started from
     day: 0,            // where the Earth is, in days from 1 January
     tilt: TILT,
-    phase: 'play',     // 'play', 'solved' or 'over'
+    phase: 'play',     // 'play', 'solved', 'free' (after the last task, until 🏆) or 'over'
     found: [],         // the days of `at` found so far
-    misses: 0,
     hintOn: false,     // the right part of the path glows
     tip: null,         // a message in place of the task's tip
     go: null,          // { from, to, t, dur, check }: the Earth sliding to a day
     drag: false,
-    turned: 0,         // days the Earth went round with the axis upright
+    turned: 0,         // days the Earth went round with the axis upright, + anticlockwise
     L: null,
     map: null,         // the Earth's map, from AstroPlanets
     globe: null,       // { key, cv }: the last globe drawn
@@ -325,6 +337,7 @@
       b.innerHTML = `<span class="level-icon">${k.icon}</span><span class="level-text"><b class="level-name"></b>` +
         '<span class="level-about"></span></span><span class="done-badge"></span>';
       b.addEventListener('click', () => {
+        if (!open(i)) return;
         state.task = i;
         store.set('task', i);
         sfx.pick();
@@ -335,20 +348,25 @@
   }
 
   function updateMenu() {
+    if (!open(state.task)) state.task = 0;
     [...$('levels').children].forEach((b, i) => {
       const k = TASKS[i];
       const tx = t('tasks')[k.id];
+      b.disabled = !open(i);
+      b.classList.toggle('locked', !open(i));
       b.classList.toggle('selected', i === state.task);
       b.querySelector('.level-name').textContent = `${i + 1}.\u00a0${tx.name}`;
-      b.querySelector('.level-about').textContent = tx.about;
-      b.querySelector('.done-badge').textContent = done.has(k.id) ? '🌟' : '';
+      b.querySelector('.level-about').textContent = open(i) ? tx.about : t('locked');
+      b.querySelector('.done-badge').textContent = done.has(k.id) ? '🌟' : open(i) ? '' : '🔒';
     });
+    $('resetBtn').classList.toggle('hidden', !done.size);
   }
 
   function stopAll() {
     state.gen++;
     cancelAnimationFrame(state.raf);
     state.raf = 0;
+    $('cupBtn').classList.add('hidden');
     Astro.stopConfetti($('confetti'));
   }
 
@@ -375,7 +393,6 @@
     $('win').classList.add('hidden');
     $('menu').classList.add('hidden');
     $('game').classList.remove('hidden');
-    state.first = state.task;
     startTask(state.task);
     state.last = performance.now();
     state.raf = requestAnimationFrame(frame);
@@ -386,7 +403,7 @@
     state.task = i;
     const k = taskNow();
     Object.assign(state, {
-      day: k.start, tilt: TILT, phase: 'play', found: [], misses: 0, hintOn: false,
+      day: k.start, tilt: TILT, phase: 'play', found: [], hintOn: false,
       tip: null, go: null, drag: false, turned: 0, yardKey: ''
     });
     $('fact').classList.add('hidden');
@@ -433,6 +450,12 @@
   }
 
   function renderTask() {
+    if (state.phase === 'free') {
+      $('taskTitle').textContent = t('freeTitle');
+      $('taskTip').textContent = t('freeTip');
+      $('tiltText').textContent = t('tilt')(Math.round(state.tilt));
+      return;
+    }
     $('taskTitle').textContent = tt('title');
     let tip = state.tip ? state.tip() : tt('tip');
     if (taskNow().kind === 'tilt' && !state.tip && state.tilt === 0) tip = tt('go');
@@ -447,7 +470,7 @@
   }
 
   function updateBar() {
-    const n = state.task + (state.phase === 'play' ? 0 : 1);
+    const n = done.size;
     $('progressFill').style.width = (100 * n) / TASKS.length + '%';
     $('progressText').textContent = `${n} / ${TASKS.length}`;
   }
@@ -1427,55 +1450,81 @@
     }
   }
 
-  // a kangaroo h tall standing at x, y
+  // a kangaroo h tall standing at x, y, facing left, with a joey in its pouch
   function drawKangaroo(g, x, y, h) {
     const s = h / 100;
-    const fur = '#b8743a';
-    g.fillStyle = fur;
-    g.strokeStyle = fur;
-    g.lineCap = 'round';
-    // the tail and the big feet
-    g.lineWidth = 9 * s;
-    g.beginPath();
-    g.moveTo(x + 10 * s, y - 20 * s);
-    g.quadraticCurveTo(x + 34 * s, y - 6 * s, x + 46 * s, y - 2 * s);
-    g.stroke();
-    g.lineWidth = 7 * s;
-    g.beginPath();
-    g.moveTo(x - 4 * s, y - 3 * s);
-    g.lineTo(x - 22 * s, y - 3 * s);
-    g.stroke();
-    // the body, the head and the ears
-    g.beginPath();
-    g.ellipse(x, y - 34 * s, 17 * s, 30 * s, -0.2, 0, 2 * Math.PI);
-    g.fill();
-    g.beginPath();
-    g.ellipse(x - 10 * s, y - 72 * s, 10 * s, 12 * s, -0.4, 0, 2 * Math.PI);
-    g.fill();
-    g.beginPath();
-    g.ellipse(x - 20 * s, y - 68 * s, 8 * s, 5 * s, -0.2, 0, 2 * Math.PI);
-    g.fill();
-    for (const [ex, ang] of [[-12, -0.25], [-4, 0.15]]) {
+    const P = (px, py) => [x + px * s, y - py * s];
+    const fur = g.createLinearGradient(x, y - 95 * s, x + 20 * s, y);
+    fur.addColorStop(0, '#c98a4b');
+    fur.addColorStop(1, '#9c5c2a');
+    const dark = '#7a4520';
+    const cream = '#ecd2a8';
+    const blob = (px, py, rx, ry, a, fill) => {
+      const [bx, by] = P(px, py);
+      g.fillStyle = fill;
       g.beginPath();
-      g.ellipse(x + ex * s, y - 88 * s, 3.5 * s, 9 * s, ang, 0, 2 * Math.PI);
+      g.ellipse(bx, by, rx * s, ry * s, a, 0, 2 * Math.PI);
       g.fill();
-    }
-    g.fillStyle = '#e8c49a';
+    };
+    const line = (pts, w, col) => {
+      g.strokeStyle = col;
+      g.lineWidth = w * s;
+      g.lineCap = 'round';
+      g.lineJoin = 'round';
+      g.beginPath();
+      pts.forEach(([px, py], i) => (i ? g.lineTo : g.moveTo).call(g, ...P(px, py)));
+      g.stroke();
+    };
+    g.save();
+    // the far ear, the long tail and the big foot
+    blob(-3, 89, 3.5, 9, 0.35, dark);
+    g.fillStyle = fur;
     g.beginPath();
-    g.ellipse(x - 4 * s, y - 30 * s, 9 * s, 18 * s, -0.2, 0, 2 * Math.PI);
+    g.moveTo(...P(8, 32));
+    g.quadraticCurveTo(...P(30, 16), ...P(54, 3));
+    g.quadraticCurveTo(...P(55, 0), ...P(52, 1));
+    g.quadraticCurveTo(...P(28, 4), ...P(6, 12));
     g.fill();
-    g.fillStyle = '#1a1440';
     g.beginPath();
-    g.arc(x - 13 * s, y - 75 * s, 1.8 * s, 0, 2 * Math.PI);
-    g.arc(x - 27 * s, y - 68 * s, 1.8 * s, 0, 2 * Math.PI);
+    g.moveTo(...P(10, 9));
+    g.quadraticCurveTo(...P(10, 0), ...P(2, 0));
+    g.lineTo(...P(-27, 0));
+    g.quadraticCurveTo(...P(-30, 3), ...P(-24, 5));
+    g.lineTo(...P(-2, 9));
     g.fill();
-    // the little arms
-    g.strokeStyle = fur;
-    g.lineWidth = 4 * s;
+    line([[-27, 1], [-22, 1]], 1.6, dark);
+    // the body leaning forward, the strong thigh and the pale belly
+    blob(-3, 48, 14, 27, -0.3, fur);
+    blob(5, 22, 16, 19, 0.35, fur);
+    g.strokeStyle = dark;
+    g.lineWidth = 1.4 * s;
     g.beginPath();
-    g.moveTo(x - 10 * s, y - 50 * s);
-    g.lineTo(x - 20 * s, y - 42 * s);
+    g.ellipse(...P(5, 22), 14 * s, 17 * s, 0.35, Math.PI * 0.95, Math.PI * 1.75);
     g.stroke();
+    blob(-10, 44, 7.5, 19, -0.3, cream);
+    // the pouch, with the joey's head peeping out
+    blob(-14, 41, 3.8, 4.5, -0.3, fur);
+    blob(-18, 40, 3.5, 2.2, -0.2, fur);
+    blob(-12, 46, 1.5, 3.5, 0.2, dark);
+    blob(-15, 42, 0.9, 0.9, 0, '#1a1440');
+    blob(-21, 40, 0.9, 0.7, 0, '#1a1440');
+    line([[-19, 37], [-12, 35.5], [-5, 37]], 1.6, dark);
+    // the short arms with their paws
+    line([[-12, 60], [-19, 54], [-22, 50]], 4, '#a8672f');
+    line([[-22, 50], [-24, 49]], 2.4, dark);
+    // the head, the long snout and the near ear
+    blob(-9, 71, 5.5, 8, -0.2, fur);
+    blob(-12, 77, 9, 9.5, -0.2, fur);
+    blob(-22, 73, 9, 5.5, -0.25, fur);
+    blob(-23, 70.5, 6, 2.6, -0.25, cream);
+    blob(-6, 90, 3.8, 10, 0.1, fur);
+    blob(-6, 89, 1.7, 6.5, 0.1, '#e7a3a0');
+    // the eye with its shine, the nose and the mouth
+    blob(-16, 79, 2.1, 2.3, 0, '#1a1440');
+    blob(-16.6, 79.8, 0.7, 0.7, 0, '#ffffff');
+    blob(-30, 74.5, 2.4, 1.8, -0.2, '#2a1c14');
+    line([[-29, 70], [-26, 69.5]], 1.2, dark);
+    g.restore();
   }
 
   function drawSnowman(g, x, y, h) {
@@ -1580,7 +1629,8 @@
   function moveTo(d) {
     const before = state.day;
     if (dateOf(before)[1] !== dateOf(d)[1]) sfx.note(dateOf(d)[1] % 7);
-    if (state.tilt === 0) state.turned += Math.abs(dayDiff(d, before));
+    // signed, so that going back undoes going forward
+    if (state.tilt === 0) state.turned += dayDiff(d, before);
     state.day = d;
     if (taskNow().kind === 'tilt') checkTilt();
   }
@@ -1602,13 +1652,10 @@
       if (state.found.length === k.at.length) solved();
       else {
         state.hintOn = false;
-        state.misses = 0;
         say(() => tt('one'));
       }
       return;
     }
-    state.misses++;
-    if (state.misses >= 2) state.hintOn = true;
     const p = PLACES.estonia;
     const day = state.day;
     say(() => {
@@ -1635,8 +1682,6 @@
     b.classList.remove('wrong');
     void b.offsetWidth;
     b.classList.add('wrong');
-    state.misses++;
-    if (state.misses >= 2) pulseRight();
     say(() => tt('miss'));
   }
 
@@ -1648,7 +1693,7 @@
 
   function checkTilt() {
     if (state.phase !== 'play') return;
-    if (state.tilt === 0 && state.turned >= YEAR / 3) solved();
+    if (state.tilt === 0 && Math.abs(state.turned) >= YEAR - 1) solved();
   }
 
   function solved() {
@@ -1660,7 +1705,8 @@
     const last = state.task >= TASKS.length - 1;
     later(900, () => {
       $('factText').textContent = tt('fact');
-      $('nextBtn').textContent = last ? t('finish') : t('next');
+      $('nextBtn').textContent = last ? t('playOn') : t('next');
+      $('factMenuBtn').classList.toggle('hidden', last);
       $('fact').classList.remove('hidden');
     });
   }
@@ -1668,11 +1714,21 @@
   function next() {
     sfx.pick();
     $('fact').classList.add('hidden');
-    if (state.task >= TASKS.length - 1) win();
+    if (state.task >= TASKS.length - 1) playFree();
     else {
       startTask(state.task + 1);
       store.set('task', state.task);
     }
+  }
+
+  // after the last task: the slider and the Earth stay free to play with,
+  // and a cup goes to the win screen when the player wants
+  function playFree() {
+    state.phase = 'free';
+    state.tip = null;
+    renderTask();
+    $('cupBtn').setAttribute('aria-label', t('cup'));
+    $('cupBtn').classList.remove('hidden');
   }
 
   function hint() {
@@ -1700,7 +1756,6 @@
   function win() {
     stopAll();
     state.phase = 'over';
-    store.set('task', 0);
     state.task = TASKS.length - 1;
     sfx.win();
     $('win').classList.remove('hidden');
@@ -1758,7 +1813,7 @@
   // slides it to the nearest place on the path.
   cv.addEventListener('pointerdown', (e) => {
     const L = state.L;
-    if (!L || state.phase !== 'play') return;
+    if (!L || (state.phase !== 'play' && state.phase !== 'free')) return;
     const [x, y] = pos(e);
     const at = earthAt(L, state.day);
     if (Math.hypot(x - at.x, y - at.y) < L.re + 18) {
@@ -1802,12 +1857,33 @@
   $('playBtn').addEventListener('click', startGame);
   $('againBtn').addEventListener('click', () => {
     state.task = 0;
+    store.set('task', 0);
     startGame();
+  });
+  $('resetBtn').addEventListener('click', () => {
+    if (!window.confirm(t('resetAsk'))) return;
+    done.clear();
+    store.set('done', []);
+    state.task = 0;
+    store.set('task', 0);
+    updateMenu();
+  });
+  $('factMenuBtn').addEventListener('click', () => {
+    sfx.pick();
+    if (state.task < TASKS.length - 1) {
+      state.task++;
+      store.set('task', state.task);
+    }
+    showMenu();
   });
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
   $('hintBtn').addEventListener('click', hint);
   $('nextBtn').addEventListener('click', next);
+  $('cupBtn').addEventListener('click', () => {
+    sfx.pick();
+    win();
+  });
   $('soundBtn').addEventListener('click', () => {
     sfx.on = !sfx.on;
     updateToggles();
@@ -1821,10 +1897,11 @@
     if (!$('game').classList.contains('hidden')) {
       renderTask();
       fillOptions();
+      $('cupBtn').setAttribute('aria-label', t('cup'));
       state.yardKey = '';
       if (!$('fact').classList.contains('hidden')) {
         $('factText').textContent = tt('fact');
-        $('nextBtn').textContent = state.task >= TASKS.length - 1 ? t('finish') : t('next');
+        $('nextBtn').textContent = state.task >= TASKS.length - 1 ? t('playOn') : t('next');
       }
     }
     if (!$('win').classList.contains('hidden')) drawWin();
