@@ -57,21 +57,28 @@
 
 .area { display: flex; flex-direction: column; }
 
-/* the task, with its answers or the slider, above the two views */
+/* the task, with its answers or the slider under it, above the two views */
 .task {
   flex: none;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px 16px;
   padding: 2px 12px 8px;
   text-align: center;
 }
-.task-text { flex: 1 1 320px; max-width: 720px; }
+.task-text { max-width: 720px; }
 .task-text b { display: block; font-size: clamp(1.1rem, 3.4vmin, 1.5rem); font-weight: 900; color: var(--accent); line-height: 1.25; }
 .task-text small { display: block; margin-top: 2px; font-size: clamp(0.92rem, 2.5vmin, 1.1rem); font-weight: 600; line-height: 1.35; color: var(--text); }
-.options { flex: 1 1 300px; max-width: 520px; display: flex; justify-content: center; gap: 8px; }
+.options { width: 100%; max-width: 520px; display: flex; justify-content: center; gap: 8px; }
+/* a low screen, as a phone on its side: the answers beside the task, to
+   leave room for the views */
+@media (max-height: 500px) and (min-aspect-ratio: 1/1) {
+  .task { flex-direction: row; flex-wrap: wrap; }
+  .task-text { flex: 1 1 320px; }
+  .options { flex: 1 1 300px; width: auto; }
+}
 .options:empty { display: none; }
 .option {
   flex: 1 1 0;

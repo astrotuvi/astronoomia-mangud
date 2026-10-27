@@ -63,7 +63,7 @@
           title: 'Vii Maa sinna, kus ta on jõulude ajal',
           tip: 'Vaata, kui kõrgele tõuseb Päike Eestis ja kui pikk on päev.',
           miss: 'Jõulud on talve alguses, kui päevad on kõige lühemad.',
-          fact: 'Talvel on põhjapoolne ots Päikesest eemale kaldu. Keskpäeval tõuseb Päike Tartus vaid 8 kraadi kõrgusele ja päev kestab natuke üle 6 tunni.'
+          fact: 'Talvel on Maa telje põhjapoolne ots Päikesest eemale kaldu. Keskpäeval tõuseb Päike Eestis vaid 8 kraadi kõrgusele ja päev kestab natuke üle 6 tunni.'
         },
         equinox: {
           name: 'Päev ja öö', about: 'Kevad ja sügis',
@@ -85,14 +85,14 @@
           title: 'Maa on Päikesele kõige lähemal jaanuaris. Mis aastaaeg on siis Eestis?',
           tip: 'Siis on Maa kollase täpi juures, Päikesest 147 miljoni km kaugusel. Kõige kaugemal on ta juulis, 152 miljoni km kaugusel. Vaata Eesti ilma.',
           miss: 'Vaata Eesti ilma: kas Päike on kõrgel või madalal ja kas maas on lund?',
-          fact: 'Maa on Päikesele kõige lähemal jaanuari alguses, kui Eestis on talv. Kaugus Päikesest muutub aasta jooksul vaid umbes 5 miljonit kilomeetrit. Nii väike muutus aastaaegu ei too.'
+          fact: 'Maa on Päikesele kõige lähemal jaanuari alguses, kui Eestis on talv. Kaugus Päikesest muutub aasta jooksul vaid umbes 5 miljonit kilomeetrit. Nii väike muutus aastaaegu ei põhjusta.'
         },
         upright: {
           name: 'Püstine Maa', about: 'Kui telg poleks kaldu',
           title: 'Keera Maa telg püsti ja vii Maa ümber Päikese',
           tip: 'Lükka liugur vasakule, kuni kalle on 0°.',
           go: 'Nüüd lohista Maad ümber Päikese ja vaata õue. Mis juhtub?',
-          fact: 'Ilma kaldeta poleks aastaaegu: päev ja öö oleksid kogu aasta umbes 12 tundi pikad ja Päike tõuseks iga päev sama kõrgele. Maa telg on kaldu umbes 23 kraadi.'
+          fact: 'Ilma kaldeta poleks aastaaegu: päev ja öö oleksid kogu aasta umbes 12 tundi pikad ja Päike tõuseks iga päev sama kõrgele.'
         }
       },
       answers: { warm: 'Soe ☀️', cold: 'Külm ❄️', spring: 'Kevad 🌸', summer: 'Suvi ☀️', autumn: 'Sügis 🍂', winter: 'Talv ❄️' },
@@ -150,7 +150,7 @@
           title: 'Move the Earth to where it is at Christmas',
           tip: 'See how high the Sun climbs in Estonia and how long the day is.',
           miss: 'Christmas is at the start of winter, when the days are shortest.',
-          fact: 'In winter, the north end leans away from the Sun. At noon the Sun climbs only 8 degrees over Tartu, and the day lasts just over 6 hours.'
+          fact: 'In winter, the north end of the Earth\'s axis leans away from the Sun. At noon the Sun climbs only 8 degrees over Estonia, and the day lasts just over 6 hours.'
         },
         equinox: {
           name: 'Day and night', about: 'Spring and autumn',
@@ -172,14 +172,14 @@
           title: 'The Earth is closest to the Sun in January. What season is it in Estonia then?',
           tip: 'Then the Earth is at the yellow dot, 147 million km from the Sun. It is farthest in July, 152 million km away. Look at the weather in Estonia.',
           miss: 'Look at the weather in Estonia: is the Sun high or low, and is there snow on the ground?',
-          fact: 'The Earth is closest to the Sun in early January, when it is winter in Estonia. The distance from the Sun changes by only about 5 million kilometres in a year. Such a small change does not bring the seasons.'
+          fact: 'The Earth is closest to the Sun in early January, when it is winter in Estonia. The distance from the Sun changes by only about 5 million kilometres in a year. Such a small change does not cause the seasons.'
         },
         upright: {
           name: 'An upright Earth', about: 'If the axis were not tilted',
           title: 'Stand the Earth\'s axis upright and move the Earth round the Sun',
           tip: 'Slide the slider to the left until the tilt is 0°.',
           go: 'Now drag the Earth round the Sun and watch the yard. What happens?',
-          fact: 'Without the tilt there would be no seasons: day and night would be about 12 hours long all year, and the Sun would climb just as high every day. The Earth\'s axis is tilted by about 23 degrees.'
+          fact: 'Without the tilt there would be no seasons: day and night would be about 12 hours long all year, and the Sun would climb just as high every day.'
         }
       },
       answers: { warm: 'Warm ☀️', cold: 'Cold ❄️', spring: 'Spring 🌸', summer: 'Summer ☀️', autumn: 'Autumn 🍂', winter: 'Winter ❄️' },
