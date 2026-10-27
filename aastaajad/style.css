@@ -162,7 +162,8 @@
   text-overflow: ellipsis;
 }
 .yard-head { color: var(--sky); }
-.yard-info { padding-top: 2px; padding-bottom: 6px; font-weight: 600; color: var(--muted); white-space: normal; }
+.yards.row .yard-head { white-space: pre; }
+.yard-info { padding-top: 2px; padding-bottom: 6px; font-weight: 600; color: var(--muted); white-space: pre-line; }
 .yard canvas { flex: 1; min-height: 0; width: 100%; display: block; }
 
 /* what was learnt, in the middle of the screen over the dimmed game */

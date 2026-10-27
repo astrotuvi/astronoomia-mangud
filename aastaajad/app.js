@@ -104,7 +104,9 @@
       months: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
       monthsShort: ['jaan', 'veebr', 'märts', 'apr', 'mai', 'juuni', 'juuli', 'aug', 'sept', 'okt', 'nov', 'dets'],
       date: (n, m) => `${n}. ${TEXT.et.months[m]}`,
+      dateShort: (n, m) => `${n}. ${TEXT.et.monthsShort[m]}`,
       hm: (h, m) => `${h} ${h === 1 ? 'tund' : 'tundi'} ${m} min`,
+      hmShort: (h, m) => `${h} t ${m} min`,
       info: (day, night) => `Päev ${day} · öö ${night}`,
       noSet: 'Päike ei looju',
       noRise: 'Päike ei tõuse',
@@ -189,7 +191,9 @@
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       date: (n, m) => `${n} ${TEXT.en.months[m]}`,
+      dateShort: (n, m) => `${n} ${TEXT.en.monthsShort[m]}`,
       hm: (h, m) => `${h} h ${m} min`,
+      hmShort: (h, m) => `${h} h ${m} min`,
       info: (day, night) => `Day ${day} · night ${night}`,
       noSet: 'The Sun does not set',
       noRise: 'The Sun does not rise',
@@ -280,9 +284,10 @@
   }
   const monthStart = (m) => MONTH_DAYS.slice(0, m).reduce((a, b) => a + b, 0);
 
-  function hm(hours) {
+  // short: with two yards side by side (Austraalia), "t" for the hours
+  function hm(hours, short) {
     let mins = Math.round(hours * 60);
-    return t('hm')(Math.floor(mins / 60), mins % 60);
+    return t(short ? 'hmShort' : 'hm')(Math.floor(mins / 60), mins % 60);
   }
 
   // ---------------------------------------------------------------------------
@@ -903,9 +908,16 @@
       drawYard(c, id, state.day, state.tilt);
       const [n, m] = dateOf(state.day);
       const wx = weather(p, state.day, state.tilt);
-      y.querySelector('.yard-head').textContent = `${t('places')[id]}, ${t('date')(n, m)} · ${t('seasons')[wx.season]}`;
+      // two yards side by side: the place on a line of its own, and a shorter date
+      y.querySelector('.yard-head').textContent = $('yards').classList.contains('row')
+        ? `${t('places')[id]}\n${t('dateShort')(n, m)} · ${t('seasons')[wx.season]}`
+        : `${t('places')[id]}, ${t('date')(n, m)} · ${t('seasons')[wx.season]}`;
       const len = dayLength(p.lat, decl(state.day, state.tilt));
-      y.querySelector('.yard-info').textContent = len >= 24 ? t('noSet') : len <= 0 ? t('noRise') : t('info')(hm(len), hm(24 - len));
+      const short = taskNow().id === 'australia';
+      let info = len >= 24 ? t('noSet') : len <= 0 ? t('noRise') : t('info')(hm(len, short), hm(24 - len, short));
+      // two yards side by side: the day and the night on lines of their own
+      if ($('yards').classList.contains('row')) info = info.replace(' · ', '\n');
+      y.querySelector('.yard-info').textContent = info;
     }
   }
 
