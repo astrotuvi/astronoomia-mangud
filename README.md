@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, Kuu faasid, Uuri meteoore and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, Kuu faasid, Kuidas tekivad aastaajad?, Uuri meteoore and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -12,6 +12,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars, Jupiter and the dwarf planet Ceres and catch a star on each |
 | Planeetide rivi / Line Up the Planets | [`planeedid/`](planeedid/) | Drag the planets into order from the Sun outwards, or by size, smallest or biggest first |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
+| Kuidas tekivad aastaajad? / What Causes the Seasons? | [`aastaajad/`](aastaajad/) | Move the Earth round the Sun and see how high the Sun climbs in Estonia and how long the day is |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
 | Uuri meteoore / Meteor Detective | [`radiant/`](radiant/) | Draw lines back along shooting-star trails to the radiant they fly out of, and name the meteor shower after the constellation it is in |
 | Avasta eksoplaneet / Discover an Exoplanet | [`eksoplaneet/`](eksoplaneet/) | Find the dips in a star's light and work out the planet's year, size and whether it could have water |
@@ -31,7 +32,7 @@ python3 -m http.server
 ## Layout
 
 - `index.html`: the start page with links to the games, and at the bottom the address of the published games, https://astrotuvi.github.io/astronoomia-mangud/, with its QR code (`shared/qr.png`)
-- `shared/`: the theme, menu, top bar and win screen (`common.css`), settings, language, the author line shown in every menu, sounds and star confetti (`common.js`), and the drawn pictures of the planets and of Ceres, among them Mars and the Earth seen from space (`planets.js`)
+- `shared/`: the theme, menu, top bar and win screen (`common.css`), settings, language, the author line shown in every menu, sounds and star confetti (`common.js`), and the drawn pictures of the planets and of Ceres, among them Mars and the Earth seen from space, and a flat map of the Earth (`planets.js`)
 - one folder per game, each with its own `index.html`, `app.js` and `style.css`
 
 To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`. Follow [DESIGN.md](DESIGN.md), so that it looks and works like the other games, also on phones in dark mode.
@@ -129,6 +130,24 @@ The planets are drawn pixel by pixel in `shared/planets.js` rather than taken fr
 - Near new moon the Sun appears behind the Moon. Usually the Moon passes above or below it, but in eclipse season it covers the Sun partly or completely. Near full moon the Earth's shadow likewise passes above or below the Moon, or in eclipse season crosses it and turns it copper red.
 
 The phases and their names are in the `PHASES` list at the top of `kuufaasid/app.js`, and the tasks in the `TASKS` list. The sizes and distances are not to scale.
+
+## Kuidas tekivad aastaajad?
+
+- Two views side by side (or one above the other on a tall screen):
+  - **the Earth's path** round the Sun, seen from a little above, with the months along it. The Earth's axis always leans the same way, so that on 21 June (at the left) its north end leans towards the Sun and on 21 December (at the right) away from it. The globe is lit on the half towards the Sun, and a ring shows the circle Estonia goes round in a day: yellow where it is day there, so that the yellow part is long in summer and short in winter. A flag marks Estonia.
+  - **the yard** in Estonia (Tartu, 58.4° N) on that day: the Sun's path from sunrise to sunset, dotted, with the Sun at noon and its height, e.g. 55° on Midsummer Day and 8° at Christmas. The child and the tree cast noon shadows, long when the Sun is low. The tree has blossom in spring, green leaves in summer, yellow and orange in autumn and none in winter, with snow and a snowman then. The weather follows the Sun about 20 days later, as the ground warms up slowly. Under it, a bar shows the day (yellow) and the night in 24 hours, and the date, the season and the length of the day and the night are written above and below.
+- Drag the Earth along its path, or tap a place on it and the Earth slides there. Each new month plays a note.
+- Six tasks, played in order. The menu shows them, and a task can be picked to start from. A 🌟 marks the ones done.
+  1. **Jaanipäev:** move the Earth to Midsummer Day
+  2. **Jõulud:** move it to Christmas
+  3. **Päev ja öö:** find both places where the day and the night are the same length (in March and September)
+  4. **Austraalia:** a second yard, in Sydney with a kangaroo, looking north, and a red flag on the globe. Is it warm or cold there at Christmas?
+  5. **Lähemal või kaugemal?:** the Sun is drawn nearer the place where the Earth is closest to it (147 million km on 3 January) than to the farthest one (152 million km on 4 July). What season is it in Estonia when the Earth is closest?
+  6. **Püstine Maa:** a slider tilts the axis from 0° to 40°. With the axis upright, every day is the same, with about 12 hours of day and the Sun at the same height; with it tilted more, the summers and winters are stronger, and at 40° the Sun does not rise in Tartu in midwinter. The task is solved when the Earth has gone a third of the way round with the axis upright.
+- A place that is not right is no mistake: the tip says what season it is there, or how long the day and the night are. After two misses, or with 💡, the right part of the path glows yellow. In tasks with answers, a wrong answer wiggles, and after two the right one pulses (💡 makes it pulse too; on Austraalia 💡 makes Christmas glow on the path instead).
+- Each solved task shows a short fact. The win screen shows the path with the Earth in each season and the length of Estonia's day then.
+
+The tasks are in the `TASKS` list at the top of `aastaajad/app.js`, the places in `PLACES`, and the texts in `TEXT`. The Sun's height and the length of the day are worked out from the date and the latitude, counting the bending of the light in the air, so they are the real ones to within a few minutes. The globe is drawn pixel by pixel from the flat map in `shared/planets.js`, with Europe facing us (on Austraalia, Asia, so that both flags show). The sizes and distances are not to scale, and on Lähemal või kaugemal? the difference between the nearest and the farthest distance is drawn much bigger than it is.
 
 ## Püüa langev täht
 

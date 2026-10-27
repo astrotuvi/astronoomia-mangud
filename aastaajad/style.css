@@ -1,0 +1,173 @@
+/* Kuidas tekivad aastaajad?: the tasks, the Earth's path and the yards.
+   The rest is in shared/common.css. */
+
+.intro {
+  margin: 10px 0 0;
+  max-width: 760px;
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* the tasks to start from */
+.levels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+}
+.level {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 22px;
+  background: var(--card);
+  border: 5px solid transparent;
+  text-align: left;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s;
+}
+.level:hover { background: var(--card-hover); }
+.level.selected {
+  border-color: var(--accent);
+  transform: scale(1.03);
+  box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
+}
+.level-icon { flex: none; font-size: 2.2rem; line-height: 1; }
+.level-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.level-name { font-size: 1.15rem; }
+.level-about { font-size: 0.95rem; color: var(--muted); }
+.done-badge { flex: none; font-size: 1.4rem; }
+
+/* ---------- Game ---------- */
+
+.area { display: flex; flex-direction: column; }
+
+/* the task, with its answers or the slider, above the two views */
+.task {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 16px;
+  padding: 2px 12px 8px;
+  text-align: center;
+}
+.task-text { flex: 1 1 320px; max-width: 720px; }
+.task-text b { display: block; font-size: clamp(1.1rem, 3.4vmin, 1.5rem); font-weight: 900; color: var(--accent); line-height: 1.25; }
+.task-text small { display: block; margin-top: 2px; font-size: clamp(0.92rem, 2.5vmin, 1.1rem); font-weight: 600; line-height: 1.35; color: var(--text); }
+.options { flex: 1 1 300px; max-width: 520px; display: flex; justify-content: center; gap: 8px; }
+.options:empty { display: none; }
+.option {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 160px;
+  min-height: 52px;
+  padding: 8px 6px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 3px solid transparent;
+  font-size: clamp(0.9rem, 3.6vw, 1.05rem);
+  white-space: nowrap;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+  transition: background 0.15s;
+}
+.option:hover { background: var(--card-hover); }
+.option:active { transform: translateY(3px); box-shadow: none; }
+.option.wrong { opacity: 0.45; border-color: #ff5a5f; animation: shake 0.4s; }
+.option.pulse { border-color: var(--accent); animation: pulse 1s ease-in-out infinite; }
+.option.right { border-color: var(--go); background: rgba(60, 207, 126, 0.25); }
+@keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@keyframes pulse { 50% { scale: 1.07; } }
+
+/* the tilt of the axis, on Püstine Maa */
+.tilt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 4px 18px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 3px solid transparent;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+.tilt.pulse { border-color: var(--accent); animation: pulse 1s ease-in-out infinite; }
+.tilt input { width: min(220px, 40vw); height: 36px; accent-color: var(--accent); cursor: pointer; }
+
+.panels { flex: 1; min-height: 0; display: flex; }
+@media (max-aspect-ratio: 1/1) { .panels { flex-direction: column; } }
+.panel { position: relative; flex: 1 1 0; min-width: 0; min-height: 0; overflow: hidden; }
+
+#orbit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: pointer;
+}
+
+/* the yard in Estonia, and on Austraalia the one in Sydney too: one above
+   the other, or side by side when there is room (.row, set by app.js) */
+.yards { display: flex; flex-direction: column; gap: 8px; padding: 0 10px 8px; }
+.yards.row { flex-direction: row; }
+.yard {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(2, 4, 20, 0.45);
+}
+.yard-head, .yard-info {
+  flex: none;
+  padding: 4px 12px;
+  font-size: clamp(0.9rem, 2.5vmin, 1.1rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.yard-head { color: var(--sky); }
+.yard-info { padding-top: 2px; padding-bottom: 6px; font-weight: 600; color: var(--muted); white-space: normal; }
+.yard canvas { flex: 1; min-height: 0; width: 100%; display: block; }
+
+/* what was learnt, in the middle of the screen over the dimmed game */
+.fact {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(5, 8, 30, 0.6);
+}
+.fact-card {
+  width: 100%;
+  max-width: 480px;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 16px 20px 18px;
+  background: rgba(20, 28, 80, 0.97);
+  border: 4px solid var(--accent);
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5);
+  animation: pop 0.4s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+.fact-card p { margin: 0 0 14px; font-size: 1.1rem; font-weight: 600; line-height: 1.45; text-align: left; }
+.fact-card .btn { font-size: 1.15rem; padding: 10px 24px; }
+
+/* ---------- Win screen: the Earth's path with the four seasons ---------- */
+
+.win-pic canvas { display: block; width: 100%; height: 100%; }
+#win .win-card { max-height: 100%; overflow-y: auto; }
+@media (max-height: 600px) {
+  #win .win-card h2 { font-size: 2rem; }
+  #win .win-name { font-size: 1.1rem; }
+}

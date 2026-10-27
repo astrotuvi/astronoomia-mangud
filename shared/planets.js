@@ -1,8 +1,9 @@
 'use strict';
 
 // Planets drawn pixel by pixel: Mars and the Earth seen from space for
-// Kosmoserakett and Hüppa planeedil, all eight for Planeetide rivi, and
-// Ceres for Hüppa planeedil.
+// Kosmoserakett and Hüppa planeedil, all eight for Planeetide rivi, Ceres
+// for Hüppa planeedil, and a flat map of the Earth for Kuidas tekivad
+// aastaajad?
 window.AstroPlanets = (() => {
   const { clamp } = Astro;
 
@@ -181,10 +182,12 @@ window.AstroPlanets = (() => {
   const DRY = [[10, 23, 24, 8, 1.3], [45, 22, 11, 7, 1.1], [60, 33, 15, 7, 0.8], [100, 42, 18, 6, 0.9], [18, -24, 8, 6, 0.8],
     [133, -25, 14, 8, 1.1], [-110, 33, 9, 6, 0.8], [-69, -25, 3, 10, 0.8], [-68, -45, 5, 5, 0.6]];
 
-  // The Earth as seen from space, with Europe and Africa facing us, drawn
-  // pixel by pixel in small parts so the page does not stop; done() gets it.
-  function drawEarth(size, done) {
-    const D = Math.PI / 180;
+  // The colour of the Earth's ground, seas and clouds at a point P on the
+  // globe (a unit vector, with the North Pole at z), at latD and lonD in
+  // degrees. It is made once, the first time it is needed.
+  let surface = null;
+  function earthSurface() {
+    if (surface) return surface;
     // the continents on a flat map
     const mw = 1024;
     const mh = 512;
@@ -242,6 +245,41 @@ window.AstroPlanets = (() => {
     const DEEP = [8, 30, 84];
     const SHALLOW = [30, 96, 146];
 
+    surface = (P, latD, lonD) => {
+      const aLat = Math.abs(latD);
+      // ragged coasts
+      const w1 = fbm(P[0] * 18, P[1] * 18, P[2] * 18, 4);
+      const w2 = fbm(P[0] * 18 + 9, P[1] * 18, P[2] * 18, 4);
+      const isLand = sstep(0.4, 0.6, sample(land, lonD + 6 * (w1 - 0.5), latD + 6 * (w2 - 0.5)));
+      // green, grassy or sandy, with tundra and ice towards the poles
+      const dryHere = dryness(lonD, latD);
+      const dry = dryHere * (0.6 + 0.8 * fbm(P[0] * 5 + 3, P[1] * 5, P[2] * 5, 4)) +
+        0.5 * (fbm(P[0] * 7 + 7, P[1] * 7, P[2] * 7, 4) - 0.5) + 0.3 * gauss(aLat, 15, 7);
+      let ground = mixc(FOREST, GRASS, sstep(0.2, 0.5, dry));
+      ground = mixc(ground, DESERT, sstep(0.55, 0.85, dry));
+      ground = mixc(ground, TUNDRA, sstep(52, 66, aLat) * 0.8);
+      const ice = latD < -62 || (latD > 59 && lonD > -75 && lonD < -25) || (latD > 69 && lonD < -15) ? 1 : sstep(72, 78, latD);
+      ground = mixc(ground, ICE, ice);
+      ground = ground.map((v) => v * (0.8 + 0.4 * w1));
+      const near = coast ? sample(coast, lonD, latD) : 0;
+      let sea = mixc(DEEP, SHALLOW, sstep(0.05, 0.5, near) * 0.7);
+      sea = mixc(sea, ICE, sstep(76, 82, aLat) * 0.8);
+      const col = mixc(sea, ground, isLand);
+
+      // swirling clouds, more of them near the equator and far north and south
+      const q = fbm(P[0] * 2.2 + 3, P[1] * 2.2 + 1, P[2] * 2.2, 4);
+      const cl = fbm(P[0] * 3 + 2 * q, P[1] * 3 + 2 * q, P[2] * 3 + 2 * q, 5);
+      const cloud = sstep(0.56, 0.84, cl + 0.18 * gauss(latD, 6, 6) + 0.12 * sstep(40, 60, aLat) - 0.35 * Math.min(1, dryHere));
+      return { col, isLand, cloud };
+    };
+    return surface;
+  }
+
+  // The Earth as seen from space, with Europe and Africa facing us, drawn
+  // pixel by pixel in small parts so the page does not stop; done() gets it.
+  function drawEarth(size, done) {
+    const D = Math.PI / 180;
+    const colourAt = earthSurface();
     const cv = document.createElement('canvas');
     cv.width = cv.height = size;
     const g = cv.getContext('2d');
@@ -265,34 +303,8 @@ window.AstroPlanets = (() => {
       const lat = Math.asin(clamp(z * Math.sin(lat0) - yd * Math.cos(lat0), -1, 1));
       const lon = lon0 + Math.atan2(x, z * Math.cos(lat0) + yd * Math.sin(lat0));
       const P = [Math.cos(lat) * Math.cos(lon), Math.cos(lat) * Math.sin(lon), Math.sin(lat)];
-      const latD = lat / D;
-      const lonD = lon / D;
-      const aLat = Math.abs(latD);
-
-      // ragged coasts
-      const w1 = fbm(P[0] * 18, P[1] * 18, P[2] * 18, 4);
-      const w2 = fbm(P[0] * 18 + 9, P[1] * 18, P[2] * 18, 4);
-      const isLand = sstep(0.4, 0.6, sample(land, lonD + 6 * (w1 - 0.5), latD + 6 * (w2 - 0.5)));
-      // green, grassy or sandy, with tundra and ice towards the poles
-      const dryHere = dryness(lonD, latD);
-      const dry = dryHere * (0.6 + 0.8 * fbm(P[0] * 5 + 3, P[1] * 5, P[2] * 5, 4)) +
-        0.5 * (fbm(P[0] * 7 + 7, P[1] * 7, P[2] * 7, 4) - 0.5) + 0.3 * gauss(aLat, 15, 7);
-      let ground = mixc(FOREST, GRASS, sstep(0.2, 0.5, dry));
-      ground = mixc(ground, DESERT, sstep(0.55, 0.85, dry));
-      ground = mixc(ground, TUNDRA, sstep(52, 66, aLat) * 0.8);
-      const ice = latD < -62 || (latD > 59 && lonD > -75 && lonD < -25) || (latD > 69 && lonD < -15) ? 1 : sstep(72, 78, latD);
-      ground = mixc(ground, ICE, ice);
-      ground = ground.map((v) => v * (0.8 + 0.4 * w1));
-      const near = coast ? sample(coast, lonD, latD) : 0;
-      let sea = mixc(DEEP, SHALLOW, sstep(0.05, 0.5, near) * 0.7);
-      sea = mixc(sea, ICE, sstep(76, 82, aLat) * 0.8);
-      let col = mixc(sea, ground, isLand);
-
-      // swirling clouds, more of them near the equator and far north and south
-      const q = fbm(P[0] * 2.2 + 3, P[1] * 2.2 + 1, P[2] * 2.2, 4);
-      const cl = fbm(P[0] * 3 + 2 * q, P[1] * 3 + 2 * q, P[2] * 3 + 2 * q, 5);
-      const cloud = sstep(0.56, 0.84, cl + 0.18 * gauss(latD, 6, 6) + 0.12 * sstep(40, 60, aLat) - 0.35 * Math.min(1, dryHere));
-      col = mixc(col, [250, 252, 255], cloud * 0.92);
+      const { col: ground, isLand, cloud } = colourAt(P, lat / D, lon / D);
+      const col = mix(ground, [250, 252, 255], cloud * 0.92);
 
       // sunlight, its glint on the sea, and the blue air at the edge
       const n = [x, yd, z];
@@ -317,6 +329,42 @@ window.AstroPlanets = (() => {
       }
       g.putImageData(img, 0, 0);
       done(cv.toDataURL('image/png'));
+    })();
+  }
+
+  // The Earth's ground and seas, with thin clouds, on a flat map w × h
+  // pixels, from longitude -180 at the left and latitude 90 at the top,
+  // for games that wrap it round a globe of their own. It is drawn in
+  // small parts so the page does not stop, and done() gets its pixels as
+  // { d, w, h }, as from getImageData.
+  function drawEarthMap(w, h, done) {
+    const D = Math.PI / 180;
+    const colourAt = earthSurface();
+    const d = new Uint8ClampedArray(w * h * 4);
+    let j = 0;
+    (function rows() {
+      const stop = Math.min(h, j + 16);
+      for (; j < stop; j++) {
+        const latD = 90 - ((j + 0.5) / h) * 180;
+        const lat = latD * D;
+        for (let i = 0; i < w; i++) {
+          const lonD = ((i + 0.5) / w) * 360 - 180;
+          const lon = lonD * D;
+          const P = [Math.cos(lat) * Math.cos(lon), Math.cos(lat) * Math.sin(lon), Math.sin(lat)];
+          const { col, cloud } = colourAt(P, latD, lonD);
+          const c = mix(col, [250, 252, 255], cloud * 0.5);
+          const o = (j * w + i) * 4;
+          d[o] = c[0];
+          d[o + 1] = c[1];
+          d[o + 2] = c[2];
+          d[o + 3] = 255;
+        }
+      }
+      if (j < h) {
+        setTimeout(rows, 0);
+        return;
+      }
+      done({ d, w, h });
     })();
   }
 
@@ -612,5 +660,5 @@ window.AstroPlanets = (() => {
     }
   }
 
-  return { drawMars, drawEarth, drawPlanet };
+  return { drawMars, drawEarth, drawEarthMap, drawPlanet };
 })();

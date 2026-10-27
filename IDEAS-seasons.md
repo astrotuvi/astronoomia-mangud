@@ -1,8 +1,9 @@
 # Kuidas tekivad aastaajad? (What causes the seasons?)
 
-A game idea for ages 8–10, idea 15 in [IDEAS.md](IDEAS.md). It goes well
-with Kuu faasid. For how a new game should look and work, see
-[DESIGN.md](DESIGN.md).
+A game idea for ages 8–10, which is now the game in `aastaajad/`, described
+in the [README](README.md#kuidas-tekivad-aastaajad). The extras and the
+simpler version below are not made yet. It goes well with Kuu faasid. For
+how a new game should look and work, see [DESIGN.md](DESIGN.md).
 
 Many children, and many adults, think it is summer when the Earth is closer
 to the Sun. In fact the Earth is closest in early January. The seasons come
@@ -105,7 +106,8 @@ in all four.
   42 years of light and then 42 years of darkness. Mars is tilted about
   25° and has seasons like ours, and Jupiter, at 3°, has almost none.
 - **Kell (the clock):** in the yard, the player could also drag the Sun
-  along the arc and read the time, which leads to idea 16, Päikesekell.
+  along the arc and read the time, which leads to idea 15, Päikesekell, in
+  [IDEAS.md](IDEAS.md).
 
 ## A simpler version for ages 5–6
 
