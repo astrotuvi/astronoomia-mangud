@@ -1693,7 +1693,7 @@
 
   function checkTilt() {
     if (state.phase !== 'play') return;
-    if (state.tilt === 0 && Math.abs(state.turned) >= YEAR - 1) solved();
+    if (state.tilt === 0 && Math.abs(state.turned) >= YEAR * 0.75) solved();
   }
 
   function solved() {
