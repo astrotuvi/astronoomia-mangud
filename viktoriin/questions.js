@@ -27,6 +27,10 @@
 //   { trails: 'a' }       shooting-star trails on a photo, as in Uuri meteoore,
 //                         and with ring: k a yellow ring at the k-th of its
 //                         rings (0 at the radiant); see TRAILS in app.js
+//   { orbit: 174 }        the Earth's path round the Sun with the Earth on that
+//                         day (0 is 1 January), as in Kuidas tekivad aastaajad?
+//   { yard: 55 }          a child at noon, with the Sun that many degrees high
+//                         and the child's shadow
 // A picture may have a label: { photo: 'saturn', label: { et, en } }.
 window.QUIZ = [
   {
@@ -156,6 +160,113 @@ window.QUIZ = [
         q: { et: 'Pane Kuu kujud järjekorda, alates noorkuust.', en: 'Put the Moon’s shapes in order, starting from new moon.' },
         order: [{ moon: 45 }, { moon: 90 }, { moon: 135 }, { moon: 180 }],
         why: { et: 'Pärast noorkuud valgustatud osa kasvab: sirp, esimene veerand, kasvav kuu ja lõpuks täiskuu.', en: 'After new moon the lit part grows: a crescent, the first quarter, a gibbous moon and at last the full moon.' }
+      }
+    ]
+  },
+  {
+    game: 'aastaajad',
+    questions: [
+      {
+        q: { et: 'Kus on Maa jaanipäeval?', en: 'Where is the Earth on Midsummer Day?' },
+        answers: [{ orbit: 174 }, { orbit: 357 }, { orbit: 80 }, { orbit: 263 }],
+        why: { et: 'Jaanipäeval on Maa telje põhjapoolne ots Päikese poole kaldu. Päike tõuseb Eestis kõrgele ja päev kestab üle 18 tunni.', en: 'On Midsummer Day, the north end of the Earth’s axis leans towards the Sun. The Sun climbs high over Estonia and the day lasts over 18 hours.' }
+      },
+      {
+        q: { et: 'Maa on siin. Mis aastaaeg on Eestis?', en: 'The Earth is here. What season is it in Estonia?' },
+        pic: { orbit: 357 },
+        answers: [
+          { et: 'Talv', en: 'Winter' },
+          { et: 'Suvi', en: 'Summer' },
+          { et: 'Kevad', en: 'Spring' },
+          { et: 'Sügis', en: 'Autumn' }
+        ],
+        why: { et: 'Maa telje põhjapoolne ots on Päikesest eemale kaldu. Päike paistab Eestis madalalt ja päev on lühike, nii et on talv.', en: 'The north end of the Earth’s axis leans away from the Sun. The Sun shines low over Estonia and the day is short, so it is winter.' }
+      },
+      {
+        q: { et: 'Miks on Eestis suvi ja talv?', en: 'Why are there summer and winter in Estonia?' },
+        answers: [
+          { et: 'Maa telg on kaldu', en: 'The Earth’s axis is tilted' },
+          { et: 'Maa on suvel Päikesele lähemal', en: 'The Earth is closer to the Sun in summer' },
+          { et: 'Päike on suvel kuumem', en: 'The Sun is hotter in summer' },
+          { et: 'Talvel on rohkem pilvi', en: 'There are more clouds in winter' }
+        ],
+        why: { et: 'Maa telg on kaldu. Kui põhjapoolkera on Päikese poole kaldu, tõuseb Päike Eestis kõrgele ja päev on pikk. Pool aastat hiljem on põhjapoolkera Päikesest eemale kaldu ja on talv.', en: 'The Earth’s axis is tilted. When the northern hemisphere leans towards the Sun, the Sun climbs high over Estonia and the day is long. Half a year later the northern hemisphere leans away from the Sun, and it is winter.' }
+      },
+      {
+        q: { et: 'Eestis on suvi, sest Maa on siis Päikesele kõige lähemal.', en: 'It is summer in Estonia because the Earth is closest to the Sun then.' },
+        tf: false,
+        why: { et: 'Maa on Päikesele kõige lähemal hoopis jaanuari alguses, kui Eestis on talv. Aastaajad tulevad telje kaldest.', en: 'The Earth is in fact closest to the Sun in early January, when it is winter in Estonia. The seasons come from the tilt of the axis.' }
+      },
+      {
+        q: { et: 'Millal on Maa Päikesele kõige lähemal?', en: 'When is the Earth closest to the Sun?' },
+        answers: [
+          { et: 'Jaanuari alguses', en: 'In early January' },
+          { et: 'Juuli alguses', en: 'In early July' },
+          { et: 'Märtsi lõpus', en: 'In late March' },
+          { et: 'Septembri lõpus', en: 'In late September' }
+        ],
+        why: { et: 'Maa on Päikesele kõige lähemal jaanuari alguses ja kõige kaugemal juuli alguses. Kaugus muutub vaid umbes 5 miljonit kilomeetrit. Nii väike muutus aastaaegu ei põhjusta.', en: 'The Earth is closest to the Sun in early January and farthest in early July. The distance changes by only about 5 million kilometres. Such a small change does not cause the seasons.' }
+      },
+      {
+        q: { et: 'Kui pikk on päev Eestis jaanipäeval?', en: 'How long is the day in Estonia on Midsummer Day?' },
+        answers: [
+          { et: 'Üle 18 tunni', en: 'Over 18 hours' },
+          { et: '12 tundi', en: '12 hours' },
+          { et: 'Natuke üle 6 tunni', en: 'Just over 6 hours' },
+          { et: '24 tundi', en: '24 hours' }
+        ],
+        why: { et: 'Jaanipäeval kestab päev Tartus 18 tundi ja 20 minutit. Jõulude ajal on see natuke üle 6 tunni.', en: 'On Midsummer Day the day lasts 18 hours and 20 minutes in Tartu. At Christmas it is just over 6 hours.' }
+      },
+      {
+        q: { et: 'Milline on keskpäev Eestis jõulude ajal?', en: 'What is noon like in Estonia at Christmas?' },
+        answers: [{ yard: 8 }, { yard: 32 }, { yard: 55 }, { yard: 80 }],
+        why: { et: 'Jõulude ajal tõuseb Päike keskpäeval Tartus vaid 8 kraadi kõrgusele. Siis on varjud väga pikad.', en: 'At Christmas the Sun climbs only 8 degrees over Tartu at noon. Then the shadows are very long.' }
+      },
+      {
+        q: { et: 'Keskpäeval tõuseb Päike Tartus nii kõrgele. Mis aastaaeg on?', en: 'At noon the Sun climbs this high over Tartu. What season is it?' },
+        pic: { yard: 55 },
+        answers: [
+          { et: 'Suvi', en: 'Summer' },
+          { et: 'Talv', en: 'Winter' },
+          { et: 'Kevad', en: 'Spring' },
+          { et: 'Sügis', en: 'Autumn' }
+        ],
+        why: { et: 'Jaanipäeval tõuseb Päike Tartus 55 kraadi kõrgusele. Eestis ei ole Päike kunagi kõrgemal ja varjud on siis kõige lühemad.', en: 'On Midsummer Day the Sun climbs 55 degrees over Tartu. It never gets higher in Estonia, and the shadows are shortest then.' }
+      },
+      {
+        q: { et: 'Millal on päev ja öö ühepikkused?', en: 'When are day and night the same length?' },
+        answers: [
+          { et: 'Märtsis ja septembris', en: 'In March and September' },
+          { et: 'Juunis ja detsembris', en: 'In June and December' },
+          { et: 'Jaanuaris ja juulis', en: 'In January and July' },
+          { et: 'Iga kuu esimesel päeval', en: 'On the first day of every month' }
+        ],
+        why: { et: 'Märtsis ja septembris ei ole telg kaldu Päikese poole ega sellest eemale. Siis on päev ja öö kogu Maal umbes 12 tundi pikad.', en: 'In March and September the axis leans neither towards the Sun nor away from it. Then day and night are about 12 hours long all over the Earth.' }
+      },
+      {
+        q: { et: 'Mis aastaaeg on Austraalias jõulude ajal?', en: 'What season is it in Australia at Christmas?' },
+        answers: [
+          { et: 'Suvi', en: 'Summer' },
+          { et: 'Talv', en: 'Winter' },
+          { et: 'Kevad', en: 'Spring' },
+          { et: 'Sügis', en: 'Autumn' }
+        ],
+        why: { et: 'Jõulude ajal on lõunapoolkera Päikese poole kaldu ja põhjapoolkera Päikesest eemale. Siis on Austraalias suvi ja Eestis talv.', en: 'At Christmas the southern hemisphere leans towards the Sun and the northern hemisphere away from it. Then it is summer in Australia and winter in Estonia.' }
+      },
+      {
+        q: { et: 'Mis juhtuks, kui Maa telg oleks püsti?', en: 'What would happen if the Earth’s axis stood upright?' },
+        answers: [
+          { et: 'Aastaaegu ei oleks', en: 'There would be no seasons' },
+          { et: 'Oleks kogu aeg suvi', en: 'It would always be summer' },
+          { et: 'Oleks kogu aeg talv', en: 'It would always be winter' },
+          { et: 'Suved oleksid veel soojemad', en: 'Summers would be even warmer' }
+        ],
+        why: { et: 'Ilma kaldeta poleks aastaaegu: päev ja öö oleksid kogu aasta umbes 12 tundi pikad ja Päike tõuseks iga päev sama kõrgele.', en: 'Without the tilt there would be no seasons: day and night would be about 12 hours long all year, and the Sun would climb just as high every day.' }
+      },
+      {
+        q: { et: 'Pane keskpäevad aasta järjekorda, jaanipäevast jõuludeni.', en: 'Put the noons in order through the year, from Midsummer Day to Christmas.' },
+        order: [{ yard: 55 }, { yard: 44 }, { yard: 21 }, { yard: 8 }],
+        why: { et: 'Jaanipäevast jõuludeni tõuseb Päike keskpäeval iga päevaga natuke madalamale: juunis 55, augustis 44, oktoobris 21 ja detsembris 8 kraadi kõrgusele.', en: 'From Midsummer Day to Christmas the Sun climbs a little lower at noon each day: 55 degrees in June, 44 in August, 21 in October and 8 in December.' }
       }
     ]
   },

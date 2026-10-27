@@ -14,6 +14,7 @@
   const TOPICS = [
     { id: 'all', emoji: '🌌', name: { et: 'Kõik teemad', en: 'All topics' } },
     { id: 'kuufaasid', emoji: '🌙', name: { et: 'Kuu faasid', en: 'Moon Phases' }, href: '../kuufaasid/index.html' },
+    { id: 'aastaajad', emoji: '🌍', name: { et: 'Kuidas tekivad aastaajad?', en: 'What Causes the Seasons?' }, href: '../aastaajad/index.html' },
     { id: 'hupe', emoji: '🦘', name: { et: 'Hüppa planeedil', en: 'Planet Jump' }, href: '../hupe/index.html' },
     { id: 'rakett', emoji: '🚀', name: { et: 'Kosmoserakett', en: 'Space Rocket' }, href: '../rakett/index.html' },
     { id: 'planeedid', emoji: '🪐', name: { et: 'Planeetide rivi', en: 'Line Up the Planets' }, href: '../planeedid/index.html' },
@@ -351,6 +352,57 @@
     return `<svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#050a24" />${stars}${segs.map(trail).join('')}${ringSVG}</svg>`;
   }
 
+  // The Earth's path round the Sun on day d (0 is 1 January), seen from a
+  // little above, as in Kuidas tekivad aastaajad?: 21 June at the left,
+  // anticlockwise from above, the axis always leaning to the right and the
+  // half towards the Sun lit.
+  function orbitSVG(d) {
+    const id = 'o' + uid++;
+    const v = 28 * DEG;
+    const tilt = 23.44 * DEG;
+    const r = 7.5;
+    const th = Math.PI + (2 * Math.PI * (d - 171)) / 365;
+    const ex = 50 + 40 * Math.cos(th);
+    const ey = 50 - 40 * Math.sin(v) * Math.sin(th);
+    // the way to the Sun on the screen, and how much it points towards us
+    const rot = (Math.atan2(Math.sin(th) * Math.sin(v), -Math.cos(th)) * 180) / Math.PI;
+    const k = -Math.sin(th) * Math.cos(v);
+    const lit = k > 0.999 ? '' :
+      `<path d="M0 ${-r}A${r} ${r} 0 0 1 0 ${r}A${(Math.abs(k) * r).toFixed(2)} ${r} 0 0 ${k > 0 ? 0 : 1} 0 ${-r}Z" fill="#4c9be8" transform="rotate(${rot.toFixed(1)})" />`;
+    const ax = 1.7 * r * Math.sin(tilt);
+    const ay = 1.7 * r * Math.cos(tilt) * Math.cos(v);
+    const f = (x) => x.toFixed(1);
+    const earth = `<g transform="translate(${f(ex)} ${f(ey)})"><line x1="${f(-ax)}" y1="${f(ay)}" x2="${f(ax)}" y2="${f(-ay)}" stroke="#fff" stroke-width="1.2" stroke-linecap="round" />` +
+      `<circle r="${r}" fill="#13306b" />${lit}</g>`;
+    const sun = `<circle cx="50" cy="50" r="10" fill="#ffb84d" opacity="0.5" filter="url(#${id})" /><circle cx="50" cy="50" r="7" fill="#ffd34d" />`;
+    const stars = '<g fill="#fff" opacity="0.6"><circle cx="10" cy="12" r="0.7" /><circle cx="40" cy="8" r="0.5" /><circle cx="86" cy="14" r="0.6" />' +
+      '<circle cx="66" cy="22" r="0.5" /><circle cx="20" cy="88" r="0.6" /><circle cx="78" cy="90" r="0.5" /></g>';
+    // behind the Sun, the Earth is drawn first
+    return `<svg viewBox="0 0 100 100" aria-hidden="true" data-ink>` +
+      `<defs><filter id="${id}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" /></filter></defs>${stars}` +
+      `<ellipse cx="50" cy="50" rx="40" ry="${f(40 * Math.sin(v))}" fill="none" stroke="#fff" stroke-width="0.7" opacity="0.45" />` +
+      (Math.sin(th) > 0 ? earth + sun : sun + earth) + '</svg>';
+  }
+
+  // A yard at noon, seen from the side: a child, the Sun `h` degrees above
+  // the horizon on the left, and the child's shadow on the right.
+  function yardSVG(h) {
+    const a = h * DEG;
+    const x = 64;
+    const g = 76;
+    const tall = 16;
+    const f = (v) => v.toFixed(1);
+    const sx = x - 54 * Math.cos(a);
+    const sy = g - 54 * Math.sin(a);
+    const shadow = Math.min(x + tall / Math.tan(a), 104);
+    return `<svg viewBox="0 0 100 100" aria-hidden="true" data-ink><rect width="100" height="${g}" fill="#7cc4ee" />` +
+      `<rect y="${g}" width="100" height="${100 - g}" fill="#7f9468" />` +
+      `<circle cx="${f(sx)}" cy="${f(sy)}" r="10" fill="#fff3b0" opacity="0.5" /><circle cx="${f(sx)}" cy="${f(sy)}" r="6.5" fill="#ffd34d" />` +
+      `<path d="M${x} ${g}L${f(shadow)} ${g}L${f(shadow)} ${g + 2.2}L${x} ${g + 2.2}Z" fill="#3c4a33" opacity="0.8" />` +
+      `<g stroke="#2a2f5a" stroke-width="2" stroke-linecap="round" fill="none"><path d="M${x - 2.5} ${g}L${x} ${g - 6}L${x + 2.5} ${g}M${x} ${g - 6}V${g - tall + 5}M${x - 3.5} ${g - 9.5}L${x} ${g - 11.5}L${x + 3.5} ${g - 9.5}" /></g>` +
+      `<circle cx="${x}" cy="${g - tall + 2.6}" r="2.6" fill="#2a2f5a" /></svg>`;
+  }
+
   function picHTML(p) {
     let inner = '';
     if (p.photo) inner = `<img src="${PHOTO(p.photo)}" alt="">`;
@@ -361,6 +413,8 @@
     else if (p.con) inner = conSVG(p.con);
     else if (p.anim) inner = animSVG(p.anim);
     else if (p.trails) inner = trailsSVG(p.trails, p.ring);
+    else if (p.orbit !== undefined) inner = orbitSVG(p.orbit);
+    else if (p.yard !== undefined) inner = yardSVG(p.yard);
     return `<span class="pic-box">${inner}</span>`;
   }
 
