@@ -141,7 +141,7 @@ The phases and their names are in the `PHASES` list at the top of `kuufaasid/app
   1. **Jaanipäev:** move the Earth to Midsummer Day
   2. **Jõulud:** move it to Christmas
   3. **Päev ja öö:** find both places where the day and the night are the same length (in March and September)
-  4. **Austraalia:** a second yard, in Sydney with a kangaroo, looking north, and a red flag on the globe. Is it warm or cold there at Christmas?
+  4. **Austraalia:** a second yard, in Sydney with a kangaroo, looking north, and its flag on the globe. Is it warm or cold there at Christmas?
   5. **Lähemal või kaugemal?:** the Sun is drawn nearer the place where the Earth is closest to it (147 million km on 3 January) than to the farthest one (152 million km on 4 July). What season is it in Estonia when the Earth is closest?
   6. **Püstine Maa:** a slider tilts the axis from 0° to 40°. With the axis upright, every day is the same, with about 12 hours of day and the Sun at the same height; with it tilted more, the summers and winters are stronger, and at 40° the Sun does not rise in Tartu in midwinter. The task is solved when the Earth has gone a third of the way round with the axis upright.
 - A place that is not right is no mistake: the tip says what season it is there, or how long the day and the night are. After two misses, or with 💡, the right part of the path glows yellow. In tasks with answers, a wrong answer wiggles, and after two the right one pulses (💡 makes it pulse too; on Austraalia 💡 makes Christmas glow on the path instead).

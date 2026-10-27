@@ -51,7 +51,7 @@
         midsummer: {
           name: 'Jaanipäev', about: 'Suvi Eestis',
           title: 'Vii Maa sinna, kus ta on jaanipäeval',
-          tip: 'Lohista Maad mööda tema teed ümber Päikese ja vaata, kuidas Eesti õu muutub.',
+          tip: 'Lohista Maad mööda tema teed ümber Päikese ja vaata, kuidas Eesti ilm muutub.',
           miss: 'Jaanipäev on suve alguses, kui päevad on kõige pikemad.',
           fact: 'Jaanipäeva paiku on Maa telje põhjapoolne ots Päikese poole kaldu. Päike tõuseb Eestis kõrgele ja päev kestab üle 18 tunni.'
         },
@@ -73,16 +73,16 @@
         australia: {
           name: 'Austraalia', about: 'Teisel pool Maad',
           title: 'Kas Austraalias on jõulude ajal soe või külm?',
-          tip: 'Vii Maa jõulude kohale ja vaata Austraalia õue.',
-          miss: 'Vaata Austraalia õue jõulude ajal: kui kõrgel on seal Päike ja kui pikk on päev?',
-          fact: 'Kui põhjapoolne ots on Päikese poole kaldu, on lõunapoolne sellest eemale. Austraalias on jõulude ajal suvi ja jaanipäeval talv.'
+          tip: 'Vii Maa jõulude kohale ja vaata Austraalia ilma.',
+          miss: 'Vaata Austraalia ilma jõulude ajal: kui kõrgel on seal Päike ja kui pikk on päev?',
+          fact: 'Jõulude ajal on lõunapoolkera Päikese poole kaldu ja põhjapoolkera Päikesest eemale. Siis on Austraalias suvi ja Eestis talv. Jaanipäeval on vastupidi.'
         },
         closest: {
           name: 'Lähemal või kaugemal?', about: 'Kas kaugus toob aastaajad?',
-          title: 'Siin on Maa Päikesele kõige lähemal. Mis aastaaeg on siis Eestis?',
-          tip: 'Siin on Päike 147 miljoni km kaugusel, juulis kõige kaugemal, 152 miljoni km kaugusel. Vaata Eesti õue.',
-          miss: 'Vaata Eesti õue: kas Päike on kõrgel või madalal ja kas maas on lund?',
-          fact: 'Maa on Päikesele kõige lähemal jaanuari alguses, kui Eestis on talv. Kaugus muutub aasta jooksul vaid umbes 5 miljonit kilomeetrit ja see ei too aastaaegu.'
+          title: 'Maa on Päikesele kõige lähemal jaanuaris. Mis aastaaeg on siis Eestis?',
+          tip: 'Siis on Maa kollase täpi juures, Päikesest 147 miljoni km kaugusel. Kõige kaugemal on ta juulis, 152 miljoni km kaugusel. Vaata Eesti ilma.',
+          miss: 'Vaata Eesti ilma: kas Päike on kõrgel või madalal ja kas maas on lund?',
+          fact: 'Maa on Päikesele kõige lähemal jaanuari alguses, kui Eestis on talv. Kaugus Päikesest muutub aasta jooksul vaid umbes 5 miljonit kilomeetrit. Nii väike muutus aastaaegu ei too.'
         },
         upright: {
           name: 'Püstine Maa', about: 'Kui telg poleks kaldu',
@@ -130,7 +130,7 @@
         midsummer: {
           name: 'Midsummer', about: 'Summer in Estonia',
           title: 'Move the Earth to where it is on Midsummer Day',
-          tip: 'Drag the Earth along its path round the Sun and see how the yard in Estonia changes.',
+          tip: 'Drag the Earth along its path round the Sun and see how the weather in Estonia changes.',
           miss: 'Midsummer Day is at the start of summer, when the days are longest.',
           fact: 'Around Midsummer Day, the north end of the Earth\'s axis leans towards the Sun. The Sun climbs high over Estonia and the day lasts over 18 hours.'
         },
@@ -152,16 +152,16 @@
         australia: {
           name: 'Australia', about: 'The other side of the Earth',
           title: 'Is it warm or cold in Australia at Christmas?',
-          tip: 'Move the Earth to Christmas and look at the yard in Australia.',
-          miss: 'Look at the yard in Australia at Christmas: how high is the Sun there, and how long is the day?',
-          fact: 'When the north end leans towards the Sun, the south end leans away. In Australia it is summer at Christmas and winter at Midsummer.'
+          tip: 'Move the Earth to Christmas and look at the weather in Australia.',
+          miss: 'Look at the weather in Australia at Christmas: how high is the Sun there, and how long is the day?',
+          fact: 'At Christmas the southern hemisphere leans towards the Sun and the northern hemisphere away from it. Then it is summer in Australia and winter in Estonia. At Midsummer it is the other way round.'
         },
         closest: {
           name: 'Closer or farther?', about: 'Does distance bring the seasons?',
-          title: 'Here the Earth is closest to the Sun. What season is it in Estonia then?',
-          tip: 'Here the Sun is 147 million km away, and in July at its farthest, 152 million km away. Look at the yard in Estonia.',
-          miss: 'Look at the yard in Estonia: is the Sun high or low, and is there snow on the ground?',
-          fact: 'The Earth is closest to the Sun in early January, when it is winter in Estonia. The distance changes by only about 5 million kilometres in a year, and that does not bring the seasons.'
+          title: 'The Earth is closest to the Sun in January. What season is it in Estonia then?',
+          tip: 'Then the Earth is at the yellow dot, 147 million km from the Sun. It is farthest in July, 152 million km away. Look at the weather in Estonia.',
+          miss: 'Look at the weather in Estonia: is the Sun high or low, and is there snow on the ground?',
+          fact: 'The Earth is closest to the Sun in early January, when it is winter in Estonia. The distance from the Sun changes by only about 5 million kilometres in a year. Such a small change does not bring the seasons.'
         },
         upright: {
           name: 'An upright Earth', about: 'If the axis were not tilted',
@@ -648,10 +648,7 @@
           g.fillStyle = c;
           g.fillRect(fx, top + (i * fh) / 3, w, fh / 3 + 0.3);
         });
-      } else {
-        g.fillStyle = '#ff5a5f';
-        g.fillRect(fx, top, w, fh);
-      }
+      } else drawAustralianFlag(g, fx, top, w, fh);
       g.strokeStyle = 'rgba(255, 255, 255, 0.8)';
       g.lineWidth = 1;
       g.strokeRect(fx, top, w, fh);
@@ -666,6 +663,49 @@
         shadowText(g, name, right ? fx + w + 4 : fx - 4, top + fh / 2, '#fff');
       }
     }
+  }
+
+  // the flag of Australia, simplified: blue, with the Union Jack in the
+  // corner, a big white star under it and the Southern Cross at the right
+  function drawAustralianFlag(g, x, y, w, h) {
+    g.fillStyle = '#012169';
+    g.fillRect(x, y, w, h);
+    const cw = w / 2;
+    const ch = h / 2;
+    g.save();
+    g.beginPath();
+    g.rect(x, y, cw, ch);
+    g.clip();
+    g.lineCap = 'butt';
+    g.strokeStyle = '#fff';
+    g.lineWidth = ch * 0.3;
+    g.beginPath();
+    g.moveTo(x, y);
+    g.lineTo(x + cw, y + ch);
+    g.moveTo(x + cw, y);
+    g.lineTo(x, y + ch);
+    g.stroke();
+    g.strokeStyle = '#c8102e';
+    g.lineWidth = ch * 0.12;
+    g.stroke();
+    g.fillStyle = '#fff';
+    g.fillRect(x + cw / 2 - ch * 0.17, y, ch * 0.34, ch);
+    g.fillRect(x, y + ch / 2 - ch * 0.17, cw, ch * 0.34);
+    g.fillStyle = '#c8102e';
+    g.fillRect(x + cw / 2 - ch * 0.1, y, ch * 0.2, ch);
+    g.fillRect(x, y + ch / 2 - ch * 0.1, cw, ch * 0.2);
+    g.restore();
+    g.fillStyle = '#fff';
+    const dot = (px, py, r) => {
+      g.beginPath();
+      g.arc(x + px * w, y + py * h, Math.max(0.6, r * h), 0, 2 * Math.PI);
+      g.fill();
+    };
+    dot(0.25, 0.75, 0.11);
+    dot(0.75, 0.2, 0.06);
+    dot(0.62, 0.45, 0.06);
+    dot(0.88, 0.4, 0.06);
+    dot(0.75, 0.82, 0.07);
   }
 
   function shadowText(g, text, x, y, color) {
@@ -800,9 +840,11 @@
     const fs = Math.round(clamp(L.rx * 0.075, 10, 15));
     g.font = `800 ${fs}px Nunito, sans-serif`;
     g.textBaseline = 'middle';
-    [[CLOSEST, 'closestAt'], [FARTHEST, 'farthestAt']].forEach(([d, key]) => {
+    // the closest place yellow, as the task asks about it, and the
+    // farthest white
+    [[CLOSEST, 'closestAt', [255, 211, 77], 6], [FARTHEST, 'farthestAt', [235, 240, 255], 4]].forEach(([d, key, c, r]) => {
       const [x, y] = pathPoint(L, d, 0);
-      g.strokeStyle = 'rgba(255, 211, 77, 0.7)';
+      g.strokeStyle = rgb(c, 0.7);
       g.lineWidth = 1.5;
       g.setLineDash([4, 5]);
       g.beginPath();
@@ -810,16 +852,16 @@
       g.lineTo(x, y);
       g.stroke();
       g.setLineDash([]);
-      g.fillStyle = '#ffd34d';
+      g.fillStyle = rgb(c);
       g.beginPath();
-      g.arc(x, y, 4, 0, 2 * Math.PI);
+      g.arc(x, y, r, 0, 2 * Math.PI);
       g.fill();
       // under the line, nearer the Sun than the Earth
       const text = t(key);
       g.textAlign = 'center';
       const w = g.measureText(text).width;
       const tx = clamp(sun.x + (x - sun.x) * 0.5, w / 2 + 4, L.W - w / 2 - 4);
-      shadowText(g, text, tx, sun.y + (y - sun.y) * 0.5 + fs, '#ffd34d');
+      shadowText(g, text, tx, sun.y + (y - sun.y) * 0.5 + fs, rgb(c));
     });
   }
 
@@ -948,30 +990,45 @@
     const dirs = t('dirs');
     [[-90, 'e'], [south ? 0 : 180, south ? 's' : 'n'], [90, 'w']].forEach(([az, k]) => g.fillText(dirs[k], xOf(az * DEG), bottom - 2));
 
-    // the noon shadows fall towards us, longer the lower the Sun
-    // with a narrow stem and a round end, for a body and a head, or a
-    // trunk and a crown
-    const shadow = (x, y, h, stem, end) => {
+    // The noon shadows fall away from the Sun, along the ground on the
+    // line from where the Sun is on the horizon through the foot of what
+    // casts them, as in a photo, and are longer the lower the Sun is. Each
+    // has a narrow stem and a round end at `at` of its length, for a body
+    // and a head, or a trunk and a crown.
+    const sunX = xOf(noon.az);
+    const flat = 0.4;                    // how much the ground is flattened
+    const shadow = (x, y, h, stem, end, at) => {
       if (alt0 <= 0) return;
-      const l = Math.min((h / Math.tan(alt0)) * 0.35, H * 2);
+      // the direction on the ground, before it is flattened
+      let ux = x - sunX;
+      let uy = (y - yH) / flat;
+      const n = Math.hypot(ux, uy) || 1;
+      ux /= n;
+      uy /= n;
+      const l = Math.min((h / Math.tan(alt0)) * 0.8, W * 3);
+      const px = -uy;
+      const py = ux;
       g.save();
       g.beginPath();
       g.rect(0, yH, W, gh);
       g.clip();
+      g.translate(x, y);
+      g.scale(1, flat);
       const dark = snow > 0.5 ? [60, 80, 140] : [10, 20, 40];
-      const fade = g.createLinearGradient(0, y, 0, y + l);
-      fade.addColorStop(0, rgb(dark, 0.3));
-      fade.addColorStop(1, rgb(dark, 0.12));
+      const fade = g.createLinearGradient(0, 0, ux * l, uy * l);
+      fade.addColorStop(0, rgb(dark, 0.32));
+      fade.addColorStop(1, rgb(dark, 0.14));
       g.fillStyle = fade;
       g.beginPath();
-      g.moveTo(x - stem / 2, y);
-      g.lineTo(x + stem / 2, y);
-      g.lineTo(x + stem * 0.4, y + l * 0.8);
-      g.lineTo(x - stem * 0.4, y + l * 0.8);
+      g.moveTo((px * stem) / 2, (py * stem) / 2);
+      g.lineTo((-px * stem) / 2, (-py * stem) / 2);
+      g.lineTo(ux * l * at - px * stem * 0.4, uy * l * at - py * stem * 0.4);
+      g.lineTo(ux * l * at + px * stem * 0.4, uy * l * at + py * stem * 0.4);
       g.fill();
       if (end > 0) {
+        // a ball's shadow is longer the lower the Sun
         g.beginPath();
-        g.ellipse(x, y + l * 0.88, end, clamp((end * 0.35) / Math.sin(alt0), end * 0.35, end * 2.5), 0, 0, 2 * Math.PI);
+        g.ellipse(ux * l * at, uy * l * at, Math.min(end / Math.sin(alt0), end * 4), end, Math.atan2(uy, ux), 0, 2 * Math.PI);
         g.fill();
       }
       g.restore();
@@ -979,11 +1036,11 @@
 
     const u = Math.min(W, H);
     // the tree
-    const tx = W * 0.84;
+    const tx = W * 0.8;
     const ty = yH + gh * 0.3;
     const th = Math.min(H * 0.4, W * 0.32, (ty - top) * 0.7);
     const leaves = id === 'australia' ? { w: 1, trend: 0 } : wx;
-    shadow(tx, ty, th * 0.85, th * 0.1, leafAmount(leaves) > 0.3 ? th * 0.28 : 0);
+    shadow(tx, ty, th, th * 0.1, leafAmount(leaves) > 0.3 ? th * 0.3 : 0, 0.6);
     drawTree(g, tx, ty, th, leaves, snow);
 
     // the snowman, when there is snow
@@ -993,7 +1050,7 @@
     const cx = W * 0.3;
     const cy = yH + gh * 0.62;
     const ch = Math.min(H * 0.3, (cy - top) * 0.7);
-    shadow(cx, cy, ch, ch * 0.3, ch * 0.12);
+    shadow(cx, cy, ch, ch * 0.3, ch * 0.12, 0.85);
     if (id === 'australia') drawKangaroo(g, cx, cy, ch);
     else drawChild(g, cx, cy, ch, wx.season === 'winter' || snow > 0.3);
 
@@ -1022,141 +1079,351 @@
     g.closePath();
   }
 
-  // how many leaves a tree has (0 to 1), their colour, and how much blossom
+  // how many leaves a tree has (0 to 1), their colour, how much blossom,
+  // and whether they are turning in autumn
   function leavesOf(wx) {
     if (wx.trend === 0 && wx.w >= -0.1 && wx.w < 0.95) return { amount: 0.85, col: [96, 170, 70], blossom: 0 };
     if (wx.w > 0.3 || (wx.trend === 0 && wx.w >= 0.95)) return { amount: 1, col: [44, 128, 56], blossom: 0 };
     if (wx.trend > 0) {
       return {
         amount: smooth(-0.3, 0.3, wx.w),
-        col: [130, 200, 90],
+        col: [120, 190, 80],
         blossom: smooth(-0.3, 0, wx.w) * (1 - smooth(0.15, 0.3, wx.w))
       };
     }
-    return { amount: smooth(-0.45, 0, wx.w), col: mix([214, 96, 40], [226, 176, 50], smooth(-0.3, 0.3, wx.w)), blossom: 0 };
+    return { amount: smooth(-0.45, 0, wx.w), col: mix([214, 96, 40], [226, 176, 50], smooth(-0.3, 0.3, wx.w)), blossom: 0, autumn: true };
   }
   const leafAmount = (wx) => leavesOf(wx).amount;
+
+  // A broadleaf tree made once, in units of its height from its foot, up
+  // and to the right. The trunk forks into a few limbs; each branch grows
+  // on and puts out side branches, to the left and right in turn, thinner
+  // and shorter each time, until it reaches the edge of a rounded crown.
+  // Clusters of leaves fill the crown, each with its own random numbers,
+  // so that the leaves fall and come back one cluster at a time.
+  const TREE = (() => {
+    let seed = 11;
+    const rnd = () => {
+      seed = (seed * 16807) % 2147483647;
+      return seed / 2147483647;
+    };
+    const fork = 0.34;                        // where the trunk splits
+    const crown = { x: 0, y: 0.66, rx: 0.4, ry: 0.3 };
+    const outside = (x, y) => ((x - crown.x) / crown.rx) ** 2 + ((y - crown.y) / crown.ry) ** 2;
+    const branches = [];
+    const grow = (x, y, ang, len, w, depth, side) => {
+      // a little bent towards the light above, and a little crooked
+      const a = ang + (Math.PI / 2 - ang) * 0.08 + (rnd() - 0.5) * 0.3;
+      const x1 = x + Math.cos(a) * len;
+      const y1 = y + Math.sin(a) * len;
+      const w1 = w * 0.78;
+      branches.push({ x, y, x1, y1, w0: w, w1, depth, a });
+      if (depth >= 7 || len < 0.018 || (depth > 1 && outside(x1, y1) > 1)) return;
+      grow(x1, y1, a + (rnd() - 0.5) * 0.4, len * (0.78 + 0.1 * rnd()), w1, depth + 1, -side);
+      if (rnd() < (depth === 0 ? 1 : 0.85)) {
+        grow(x1, y1, a + side * (0.55 + 0.4 * rnd()), len * (0.6 + 0.15 * rnd()), w1 * 0.7, depth + 1, side);
+      }
+    };
+    grow(0, fork, Math.PI / 2 + 0.6, 0.15, 0.034, 0, 1);
+    grow(0, fork, Math.PI / 2 + 0.05, 0.17, 0.038, 0, -1);
+    grow(0, fork, Math.PI / 2 - 0.6, 0.15, 0.034, 0, -1);
+    // the clusters, spread over the crown and not too close to each other
+    const clusters = [];
+    for (let tries = 0; tries < 3000 && clusters.length < 46; tries++) {
+      const a = rnd() * 2 * Math.PI;
+      const d = Math.sqrt(rnd());
+      const x = crown.x + Math.cos(a) * d * crown.rx;
+      const y = crown.y + Math.sin(a) * d * crown.ry;
+      if (clusters.some((c) => Math.hypot(c.x - x, c.y - y) < 0.075)) continue;
+      const subs = Array.from({ length: 7 }, () => {
+        const b = rnd() * 2 * Math.PI;
+        const e = Math.sqrt(rnd()) * 0.6;
+        return [Math.cos(b) * e, Math.sin(b) * e, 0.35 + 0.2 * rnd(), rnd()];
+      });
+      clusters.push({ x, y, r: 0.1 + 0.04 * rnd(), a: rnd(), b: rnd(), c: rnd(), subs });
+    }
+    // the top ones first, so that the lower ones, in shade, lie over them
+    clusters.sort((p, q) => q.y - p.y);
+    const top = crown.y + crown.ry + 0.12;
+    const fit = (o, keys) => keys.forEach((k) => { o[k] /= top; });
+    branches.forEach((o) => fit(o, ['x', 'y', 'x1', 'y1', 'w0', 'w1']));
+    clusters.forEach((o) => fit(o, ['x', 'y', 'r']));
+    return { fork: fork / top, branches, clusters };
+  })();
 
   // a tree h high standing at x, y: green in summer, with blossom in
   // spring, yellow and orange in autumn, and bare in winter
   function drawTree(g, x, y, h, wx, snow) {
-    const trunk = '#6b4426';
-    g.fillStyle = trunk;
-    g.beginPath();
-    g.moveTo(x - h * 0.05, y);
-    g.lineTo(x - h * 0.03, y - h * 0.6);
-    g.lineTo(x + h * 0.03, y - h * 0.6);
-    g.lineTo(x + h * 0.05, y);
-    g.fill();
-    // the branches, which show when the leaves are few
-    g.strokeStyle = trunk;
+    const { amount, col, blossom, autumn } = leavesOf(wx);
+    const at = (px, py) => [x + px * h, y - py * h];
     g.lineCap = 'round';
-    g.lineWidth = Math.max(1.5, h * 0.025);
-    const branches = [[-0.22, 0.85, -0.5], [0.24, 0.82, -0.45], [-0.12, 0.98, -0.62], [0.1, 1, -0.66], [0, 0.9, -0.55]];
-    for (const [bx, by, from] of branches) {
+    // fallen leaves under it in autumn
+    if (autumn && amount < 0.9) {
+      const fallen = 1 - amount;
+      TREE.clusters.forEach((c, i) => {
+        if (c.b > fallen) return;
+        const fx = x + (c.a - 0.5) * h * 0.9;
+        const fy = y + (c.c - 0.3) * h * 0.08;
+        g.fillStyle = rgb(mix([200, 80, 30], [230, 180, 60], c.c), 0.85 * (1 - snow));
+        g.beginPath();
+        g.ellipse(fx, fy, h * 0.018, h * 0.009, i, 0, 2 * Math.PI);
+        g.fill();
+      });
+    }
+    const bark = '#5a3c25';
+    // The branches, each narrowing along its length. The thin outer ones
+    // reach out past the leaves, and so show only as the leaves fall.
+    const twigs = clamp(1 - amount * 1.3, 0, 1);
+    const piece = (b, w0, w1, lift) => {
+      const [x0, y0] = at(b.x, b.y);
+      const [x1, y1] = at(b.x1, b.y1);
+      const nx = -Math.sin(b.a);
+      const ny = -Math.cos(b.a);
+      const a0 = (w0 * h) / 2;
+      const a1 = (w1 * h) / 2;
       g.beginPath();
-      g.moveTo(x, y + from * h);
-      g.lineTo(x + bx * h, y - by * h);
-      g.stroke();
-    }
-    if (snow > 0.5) {
-      g.strokeStyle = 'rgba(240, 246, 255, 0.9)';
-      g.lineWidth = Math.max(1, h * 0.012);
-      for (const [bx, by] of branches) {
-        g.beginPath();
-        g.moveTo(x + bx * h * 0.6, y - by * h * 0.8 - 1);
-        g.lineTo(x + bx * h, y - by * h - 1);
-        g.stroke();
+      g.moveTo(x0 + nx * a0, y0 + ny * a0 - lift);
+      g.lineTo(x1 + nx * a1, y1 + ny * a1 - lift);
+      g.lineTo(x1 - nx * a1, y1 - ny * a1 - lift);
+      g.lineTo(x0 - nx * a0, y0 - ny * a0 - lift);
+      g.fill();
+      g.beginPath();
+      g.arc(x1, y1 - lift, Math.max(0.3, a1), 0, 2 * Math.PI);
+      g.fill();
+    };
+    for (const b of TREE.branches) {
+      const alpha = b.depth >= 3 ? twigs : 1;
+      if (alpha <= 0.02) continue;
+      g.fillStyle = rgb(b.depth < 2 ? [90, 60, 37] : [110, 76, 50], alpha);
+      piece(b, Math.max(b.w0, 0.9 / h), Math.max(b.w1, 0.7 / h), 0);
+      // snow lying on the thicker branches that are not too steep
+      if (snow > 0.5 && b.depth <= 4 && Math.abs(Math.cos(b.a)) > 0.6) {
+        g.fillStyle = rgb([244, 248, 255], 0.95);
+        piece(b, b.w0 * 0.5, b.w1 * 0.5, (b.w0 * h) / 2);
       }
     }
-    const { amount, col, blossom } = leavesOf(wx);
-    if (amount > 0.02) {
-      const blobs = [[0, 0.82, 0.3], [-0.2, 0.7, 0.22], [0.2, 0.7, 0.22], [-0.1, 0.95, 0.2], [0.12, 0.93, 0.2]];
-      g.fillStyle = rgb(col, 0.35 + 0.65 * amount);
-      for (const [bx, by, r] of blobs) {
+    const f = TREE.fork;
+    g.fillStyle = bark;
+    g.beginPath();
+    g.moveTo(x - h * 0.075, y);
+    g.quadraticCurveTo(x - h * 0.035, y - h * 0.04, x - h * 0.035, y - h * 0.12);
+    g.lineTo(x - h * 0.025, y - h * (f + 0.02));
+    g.lineTo(x + h * 0.025, y - h * (f + 0.02));
+    g.lineTo(x + h * 0.035, y - h * 0.12);
+    g.quadraticCurveTo(x + h * 0.035, y - h * 0.04, x + h * 0.075, y);
+    g.closePath();
+    g.fill();
+    // light on the left of the trunk
+    g.fillStyle = 'rgba(255, 230, 200, 0.16)';
+    g.fillRect(x - h * 0.03, y - h * f, h * 0.018, h * (f - 0.02));
+    // the leaves: first a darker layer under all the clusters, then the
+    // small blobs of each, lighter on top where the Sun shines on them
+    if (amount > 0.01) {
+      const shown = TREE.clusters.filter((c) => c.b <= amount);
+      const scale = h * (0.75 + 0.25 * amount);
+      const colourOf = (c, v) => {
+        let base = col;
+        if (autumn) base = mix(base, v < 0.5 ? [200, 70, 30] : [235, 190, 60], 0.45);
+        return base.map((q) => q * (0.85 + 0.3 * c.c));
+      };
+      for (const c of shown) {
+        const [cx, cy] = at(c.x, c.y);
+        g.fillStyle = rgb(colourOf(c, c.a).map((q) => q * 0.6));
         g.beginPath();
-        g.arc(x + bx * h, y - by * h, r * h * (0.55 + 0.45 * amount), 0, 2 * Math.PI);
+        g.arc(cx, cy + c.r * scale * 0.1, c.r * scale * 0.95, 0, 2 * Math.PI);
         g.fill();
       }
-    }
-    if (blossom > 0.05) {
-      g.fillStyle = rgb([255, 214, 230], blossom);
-      for (let i = 0; i < 14; i++) {
-        const a = i * 2.4;
-        const r = 0.28 * h * Math.sqrt((i + 0.5) / 14);
-        g.beginPath();
-        g.arc(x + r * Math.cos(a), y - 0.82 * h + r * Math.sin(a) * 0.8, Math.max(1.5, h * 0.025), 0, 2 * Math.PI);
-        g.fill();
+      for (const c of shown) {
+        const [cx, cy] = at(c.x, c.y);
+        const r = c.r * scale;
+        for (const [dx, dy, rr, v] of c.subs) {
+          // lighter towards the top of the cluster and of the crown
+          const light = 0.8 + 0.25 * v - 0.3 * dy + 0.15 * (c.y - 0.6);
+          g.fillStyle = rgb(colourOf(c, v).map((q) => Math.min(255, q * light)));
+          g.beginPath();
+          g.arc(cx + dx * r, cy + dy * r, rr * r, 0, 2 * Math.PI);
+          g.fill();
+        }
+        if (blossom > 0.05) {
+          g.fillStyle = rgb([255, 220, 235], blossom);
+          for (let k = 0; k < 3; k++) {
+            const a = (c.a + k / 3) * 2 * Math.PI;
+            g.beginPath();
+            g.arc(cx + Math.cos(a) * r * 0.55, cy + Math.sin(a) * r * 0.5, Math.max(1.2, r * 0.16), 0, 2 * Math.PI);
+            g.fill();
+          }
+        }
       }
     }
   }
 
-  // a child h tall standing at x, y, in a warm coat and hat in winter
+  // a child h tall standing at x, y: in a T-shirt in summer, and in a
+  // jacket, mittens, boots, a bobble hat and a scarf in winter
   function drawChild(g, x, y, h, winter) {
     const s = h / 100;
-    g.lineCap = 'round';
-    // legs
-    g.strokeStyle = '#2b3566';
-    g.lineWidth = 9 * s;
-    g.beginPath();
-    g.moveTo(x - 7 * s, y - 32 * s);
-    g.lineTo(x - 8 * s, y - 4 * s);
-    g.moveTo(x + 7 * s, y - 32 * s);
-    g.lineTo(x + 8 * s, y - 4 * s);
-    g.stroke();
-    // body and arms
-    const coat = winter ? '#3d6fd1' : '#ff6b5e';
-    g.strokeStyle = coat;
-    g.lineWidth = 8 * s;
-    g.beginPath();
-    g.moveTo(x - 14 * s, y - 62 * s);
-    g.lineTo(x - 24 * s, y - 40 * s);
-    g.moveTo(x + 14 * s, y - 62 * s);
-    g.lineTo(x + 24 * s, y - 40 * s);
-    g.stroke();
-    g.fillStyle = coat;
-    roundRect(g, x - 16 * s, y - 68 * s, 32 * s, (winter ? 42 : 36) * s, 10 * s);
-    g.fill();
-    // hands, head and face
-    g.fillStyle = winter ? '#ffd34d' : '#f2c49b';
-    for (const sx of [-1, 1]) {
+    const P = (px, py) => [x + px * s, y - py * s];
+    const fill = (c) => { g.fillStyle = c; };
+    const circle = (px, py, r) => {
+      const [cx, cy] = P(px, py);
       g.beginPath();
-      g.arc(x + sx * 25 * s, y - 38 * s, 4.5 * s, 0, 2 * Math.PI);
+      g.arc(cx, cy, r * s, 0, 2 * Math.PI);
       g.fill();
-    }
-    g.fillStyle = '#f2c49b';
-    g.beginPath();
-    g.arc(x, y - 80 * s, 13 * s, 0, 2 * Math.PI);
-    g.fill();
-    g.fillStyle = '#1a1440';
-    for (const sx of [-1, 1]) {
+    };
+    const box = (px, py, w, hh, r) => {
+      const [bx, by] = P(px, py);
+      roundRect(g, bx, by, w * s, hh * s, r * s);
+      g.fill();
+    };
+    const line = (pts, w, c) => {
+      g.strokeStyle = c;
+      g.lineWidth = w * s;
+      g.lineCap = 'round';
+      g.lineJoin = 'round';
       g.beginPath();
-      g.arc(x + sx * 4.5 * s, y - 81 * s, 1.6 * s, 0, 2 * Math.PI);
-      g.fill();
-    }
-    g.strokeStyle = '#1a1440';
-    g.lineWidth = 1.6 * s;
-    g.beginPath();
-    g.arc(x, y - 78 * s, 5 * s, 0.2 * Math.PI, 0.8 * Math.PI);
-    g.stroke();
+      pts.forEach(([px, py], k) => {
+        const [lx, ly] = P(px, py);
+        if (k) g.lineTo(lx, ly);
+        else g.moveTo(lx, ly);
+      });
+      g.stroke();
+    };
+    const skin = '#f2c49b';
+    const top = winter ? '#3d6fd1' : '#ff6b5e';
+    const topDark = winter ? '#2c55a8' : '#d9473c';
+
+    // legs and shoes or boots
+    const trousers = winter ? '#2b3566' : '#3a4a8a';
+    fill(trousers);
+    box(-12, 36, 10, 32, 4);
+    box(2, 36, 10, 32, 4);
+    fill('rgba(0, 0, 0, 0.12)');
+    box(2, 36, 5, 32, 3);
     if (winter) {
-      // a hat with a bobble, and a scarf
-      g.fillStyle = '#e8455a';
-      g.beginPath();
-      g.arc(x, y - 84 * s, 13.5 * s, Math.PI, 2 * Math.PI);
-      g.fill();
-      g.fillStyle = '#fff';
-      g.beginPath();
-      g.arc(x, y - 99 * s, 4.5 * s, 0, 2 * Math.PI);
-      g.fill();
-      g.fillStyle = '#e8455a';
-      roundRect(g, x - 13 * s, y - 70 * s, 26 * s, 7 * s, 3 * s);
-      g.fill();
+      fill('#5a3a24');
+      box(-14, 10, 13, 11, 4);
+      box(1, 10, 13, 11, 4);
+      fill('#efe6d8');
+      box(-14, 12, 13, 3, 1.5);
+      box(1, 12, 13, 3, 1.5);
     } else {
-      g.fillStyle = '#7a4a22';
+      fill('#ffffff');
+      box(-14, 6, 13, 7, 3.5);
+      box(1, 6, 13, 7, 3.5);
+      fill('#4a90d9');
+      box(-14, 3, 13, 3, 1.5);
+      box(1, 3, 13, 3, 1.5);
+    }
+
+    // arms, sleeves and hands or mittens
+    if (winter) {
+      line([[-15, 64], [-23, 50], [-25, 40]], 8, topDark);
+      line([[15, 64], [23, 50], [25, 40]], 8, topDark);
+    } else {
+      // short sleeves
+      line([[-21, 54], [-25, 40]], 6, skin);
+      line([[21, 54], [25, 40]], 6, skin);
+      line([[-15, 64], [-21, 54]], 9, topDark);
+      line([[15, 64], [21, 54]], 9, topDark);
+    }
+    fill(winter ? '#ffd34d' : skin);
+    circle(-25, 38, 5);
+    circle(25, 38, 5);
+    if (winter) {
+      fill('#e8455a');
+      box(-30, 41, 10, 3, 1.5);
+      box(20, 41, 10, 3, 1.5);
+    }
+
+    // the body: a jacket with a zip and pockets, or a T-shirt with a star
+    fill(top);
+    box(-17, 70, 34, winter ? 38 : 34, 10);
+    fill(topDark);
+    box(3, 70, 14, winter ? 38 : 34, 8);
+    fill(top);
+    box(-17, 70, 30, winter ? 38 : 34, 10);
+    if (winter) {
+      line([[0, 68], [0, 34]], 1.4, '#c9d6f2');
+      fill('rgba(0, 0, 0, 0.18)');
+      box(-13, 48, 8, 6, 2);
+      box(5, 48, 8, 6, 2);
+    } else {
+      // Saturn: the back of its ring, the ball, and the front of the ring
+      const [sx, sy] = P(0, 55);
+      const tilt = -0.35;
+      g.strokeStyle = '#fff1c4';
+      g.lineWidth = 1.8 * s;
       g.beginPath();
-      g.arc(x, y - 84 * s, 13.5 * s, Math.PI * 1.05, Math.PI * 1.95);
+      g.ellipse(sx, sy, 11 * s, 3.4 * s, tilt, Math.PI, 2 * Math.PI);
+      g.stroke();
+      fill('#f2c46b');
+      circle(0, 55, 6);
+      fill('#d9a24a');
+      box(-5.6, 56.5, 11.2, 1.6, 0.8);
+      g.beginPath();
+      g.ellipse(sx, sy, 11 * s, 3.4 * s, tilt, 0, Math.PI);
+      g.stroke();
+      fill(topDark);
+      box(-6, 70, 12, 3, 1.5);
+    }
+
+    // neck, ears and head
+    fill(skin);
+    box(-4, 72, 8, 6, 2);
+    circle(-13, 81, 3.2);
+    circle(13, 81, 3.2);
+    circle(0, 81, 13);
+    // cheeks, eyes and mouth
+    fill('rgba(255, 120, 120, 0.45)');
+    circle(-7, 77, 2.6);
+    circle(7, 77, 2.6);
+    fill('#fff');
+    circle(-4.8, 83, 2.6);
+    circle(4.8, 83, 2.6);
+    fill('#1a1440');
+    circle(-4.4, 83, 1.5);
+    circle(5.2, 83, 1.5);
+    fill('#fff');
+    circle(-4, 83.6, 0.5);
+    circle(5.6, 83.6, 0.5);
+    g.strokeStyle = '#9a3b3b';
+    g.lineWidth = 1.5 * s;
+    const [mx, my] = P(0, 79.5);
+    g.beginPath();
+    g.arc(mx, my, 4.5 * s, 0.2 * Math.PI, 0.8 * Math.PI);
+    g.stroke();
+
+    if (winter) {
+      // a striped bobble hat, and a scarf with its ends hanging down
+      fill('#e8455a');
+      const [hx, hy] = P(0, 90);
+      g.beginPath();
+      g.arc(hx, hy, 14 * s, Math.PI, 2 * Math.PI);
       g.fill();
+      fill('#fff');
+      box(-14, 96, 28, 3, 1.5);
+      fill('#c9324a');
+      box(-14.5, 91.5, 29, 5, 2.5);
+      fill('#fff');
+      circle(0, 106, 4.8);
+      fill('#e8455a');
+      box(-13, 72, 26, 7, 3);
+      box(4, 68, 7, 18, 3);
+      fill('#fff');
+      box(4, 54, 7, 2, 1);
+      box(4, 58, 7, 2, 1);
+    } else {
+      // hair with a fringe
+      // the top of the head, above the eyes, with a wavy edge
+      fill('#7a4a22');
+      const [hx, hy] = P(0, 81);
+      g.save();
+      g.beginPath();
+      g.arc(hx, hy, 14.2 * s, 0, 2 * Math.PI);
+      g.clip();
+      const [ex, ey] = P(-15, 87.5);
+      g.fillRect(ex, ey - 12 * s, 30 * s, 12 * s);
+      for (const fx of [-9, -3, 3, 9]) circle(fx, 88, 3.4);
+      g.restore();
     }
   }
 
@@ -1213,27 +1480,77 @@
 
   function drawSnowman(g, x, y, h) {
     const s = h / 100;
-    g.fillStyle = '#f4f8ff';
-    g.strokeStyle = 'rgba(150, 170, 210, 0.9)';
-    g.lineWidth = 1.5;
-    for (const [cy, r] of [[-22, 22], [-58, 16], [-84, 11]]) {
+    const P = (px, py) => [x + px * s, y - py * s];
+    // three snowballs, shaded on the side away from the Sun
+    for (const [cy, r] of [[22, 22], [58, 16], [86, 11]]) {
+      const [bx, by] = P(0, cy);
+      const grad = g.createRadialGradient(bx - r * s * 0.35, by - r * s * 0.4, r * s * 0.1, bx, by, r * s);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.7, '#e8eefa');
+      grad.addColorStop(1, '#b8c6e2');
+      g.fillStyle = grad;
       g.beginPath();
-      g.arc(x, y + cy * s, r * s, 0, 2 * Math.PI);
+      g.arc(bx, by, r * s, 0, 2 * Math.PI);
       g.fill();
+    }
+    // stick arms with twigs
+    g.strokeStyle = '#6b4426';
+    g.lineCap = 'round';
+    g.lineWidth = Math.max(1, 2.2 * s);
+    const stick = (pts) => {
+      g.beginPath();
+      pts.forEach(([px, py], k) => {
+        const [lx, ly] = P(px, py);
+        if (k) g.lineTo(lx, ly);
+        else g.moveTo(lx, ly);
+      });
       g.stroke();
-    }
-    g.fillStyle = '#1a1440';
-    for (const sx of [-1, 1]) {
+    };
+    stick([[-13, 60], [-36, 72]]);
+    stick([[-29, 68], [-34, 78]]);
+    stick([[13, 60], [36, 70]]);
+    stick([[30, 67], [38, 62]]);
+    // coal buttons, eyes and mouth, and a carrot nose
+    g.fillStyle = '#1a1a24';
+    const dot = (px, py, r) => {
+      const [dx, dy] = P(px, py);
       g.beginPath();
-      g.arc(x + sx * 4 * s, y - 87 * s, 1.6 * s, 0, 2 * Math.PI);
+      g.arc(dx, dy, Math.max(0.8, r * s), 0, 2 * Math.PI);
       g.fill();
-    }
+    };
+    dot(0, 64, 2.2);
+    dot(0, 54, 2.2);
+    dot(0, 32, 2.6);
+    dot(0, 20, 2.6);
+    dot(-4, 90, 1.7);
+    dot(4, 90, 1.7);
+    for (const [mx, my] of [[-5, 82.5], [-2.5, 81], [0, 80.5], [2.5, 81], [5, 82.5]]) dot(mx, my, 0.9);
     g.fillStyle = '#ff8a2a';
+    const [nx, ny] = P(0, 86.5);
     g.beginPath();
-    g.moveTo(x, y - 84 * s);
-    g.lineTo(x + 12 * s, y - 82 * s);
-    g.lineTo(x, y - 80 * s);
+    g.moveTo(nx, ny - 2 * s);
+    g.lineTo(nx + 13 * s, ny + 1 * s);
+    g.lineTo(nx, ny + 2 * s);
     g.fill();
+    // a scarf
+    g.fillStyle = '#3cb371';
+    const [sx, sy] = P(-11, 76);
+    roundRect(g, sx, sy, 22 * s, 5 * s, 2.5 * s);
+    g.fill();
+    const [ex, ey] = P(5, 74);
+    roundRect(g, ex, ey, 5 * s, 14 * s, 2 * s);
+    g.fill();
+    // a black hat with a red band
+    g.fillStyle = '#22222e';
+    const [rx, ry] = P(-12, 96);
+    roundRect(g, rx, ry, 24 * s, 3 * s, 1.5 * s);
+    g.fill();
+    const [tx, ty] = P(-8, 112);
+    roundRect(g, tx, ty, 16 * s, 16 * s, 2 * s);
+    g.fill();
+    g.fillStyle = '#e8455a';
+    const [bx2, by2] = P(-8, 101);
+    g.fillRect(bx2, by2, 16 * s, 3 * s);
   }
 
   // ---------------------------------------------------------------------------
