@@ -60,7 +60,9 @@ rivi, Avasta eksoplaneet, Leia asteroid and Uuri meteoore.
     Earth with Estonia marked on it, and move it round the Sun through the
     year. Tasks: "Make it noon in Estonia", "Find the shortest day", "Find
     where the Sun doesn't set". It shows why it's dark at 15:30 in December
-    and light at midnight in June, and goes well with Kuu faasid.
+    and light at midnight in June, and goes well with Kuu faasid. See
+    [IDEAS-seasons.md](IDEAS-seasons.md) for the levels, titled "Kuidas
+    tekivad aastaajad?", and what the game needs.
 16. **Päikesekell (shadows and sundial):** drag the Sun across the sky over
     a stick, a tree or a child, and watch the shadow turn and change
     length. Tasks ask for the shortest shadow (noon) or one pointing east,
