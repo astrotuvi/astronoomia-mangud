@@ -1408,13 +1408,14 @@
     $('caption').classList.add('hidden');
   }
 
-  // the steps: tracing all the trails, then finding and naming each radiant
+  // While the lines are drawn, it counts the trails with a line; then
+  // the steps: all the lines, and finding and naming each radiant.
   function updateBar() {
-    const n = state.showers.length;
-    const steps = (allTraced() ? 1 : 0) +
-      state.showers.filter((s) => s.found).length + state.showers.filter((s) => s.named).length;
-    $('progressFill').style.width = (100 * steps) / (1 + 2 * n) + '%';
-    $('progressText').textContent = `${steps} / ${1 + 2 * n}`;
+    const [done, all] = allTraced()
+      ? [1 + state.showers.filter((s) => s.found).length + state.showers.filter((s) => s.named).length, 1 + 2 * state.showers.length]
+      : [traced(), state.trails.length];
+    $('progressFill').style.width = (100 * done) / all + '%';
+    $('progressText').textContent = `${done} / ${all}`;
   }
 
   function updateToggles() {
