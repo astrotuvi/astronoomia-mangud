@@ -9,7 +9,6 @@
 
   const DEG = Math.PI / 180;
   const FLY = 0.35;       // s that a shooting star takes to draw its trail
-  const HINT_S = 6;       // s with nothing done before the hand shows a trail
   const ALONG = 8;        // degrees: a line nearer than this to the trail goes along it
 
   // Star figures as in tahtkujud/app.js: [RA, Dec (J2000, degrees),
@@ -337,13 +336,13 @@
       play: 'Mängi',
       captions: {
         start: ['Uuri meteoore!', 'Vajuta langeva tähe heledale peale ja lohista sõrm tagasi piki tema jälge.'],
-        more: ['Joonista veel üks joon', 'Ühe voolu jäljed tulevad kõik samast kohast'],
-        where: ['Kus jooned kokku saavad?', 'Puuduta seda kohta taevas. Võid ka veel jooni joonistada.'],
-        traceFirst: ['Joonista enne jooni', 'Vajuta jälje heledale peale ja lohista tagasi piki jälge'],
+        more: ['Joonista veel jooni', 'Joonista joon igale jäljele. Ühe voolu jäljed tulevad kõik samast kohast.'],
+        where: ['Kus jooned kokku saavad?', 'Puuduta seda kohta taevas. Jooni võid veel parandada.'],
+        traceFirst: ['Joonista enne kõik jooned', 'Igal jäljel peab olema joon, mis läheb piki jälge'],
         fromHead: ['Alusta heledast peast', 'Vajuta jälje heledale otsale ja lohista tagasi piki jälge'],
         dragBack: ['Nüüd lohista', 'Hoia sõrme all ja lohista tagasi piki jälge'],
         offTrail: ['Joon ei lähe piki jälge', 'Lohista joone otsas olevat täppi, et seda parandada'],
-        miss: ['Siin jooned kokku ei saa', 'Joonista veel mõni joon ja vaata, kus nad ristuvad'],
+        miss: ['Siin jooned kokku ei saa', 'Vaata, kus jooned lõikuvad'],
         missStray: ['Siin jooned kokku ei saa', 'Kõik jäljed ei tule radiandist. Otsi kohta, kus kokku saab mitu joont.'],
         found: ['Leidsid radiandi! 🎯', 'Sealt paistavad tulevat kõik selle voolu langevad tähed'],
         second: ['Siin on veel üks vool!', 'Osa valgeid jälgi tuleb teisest kohast. Leia ka nende radiant.']
@@ -355,10 +354,10 @@
       old: (name) => `${name} (vana)`,
       goOn: 'Edasi ▶',
       done: 'Valmis! 🎉',
-      winTitle: 'Tubli, detektiiv!',
+      winTitle: 'Tubli!',
       and: ' ja ',
       nextLevel: 'Järgmine tase',
-      again: 'Uus taevas',
+      again: 'Uued meteoorid',
       menu: 'Menüü',
       allGames: 'Kõik mängud',
       hint: 'Vihje',
@@ -372,13 +371,13 @@
       play: 'Play',
       captions: {
         start: ['Be a meteor detective!', 'Press the bright head of a shooting star and drag back along its trail.'],
-        more: ['Draw one more line', 'All the trails of one shower come from the same spot'],
-        where: ['Where do the lines meet?', 'Tap that spot in the sky. You can draw more lines too.'],
-        traceFirst: ['Draw the lines first', 'Press the bright head of a trail and drag back along it'],
+        more: ['Draw more lines', 'Draw a line on every trail. All the trails of one shower come from the same spot.'],
+        where: ['Where do the lines meet?', 'Tap that spot in the sky. You can still fix the lines.'],
+        traceFirst: ['Draw all the lines first', 'Every trail needs a line along it'],
         fromHead: ['Start at the bright head', 'Press the bright end of the trail and drag back along it'],
         dragBack: ['Now drag', 'Keep your finger down and drag back along the trail'],
         offTrail: ['The line is off the trail', 'Drag the dot at the end of the line to fix it'],
-        miss: ['The lines don’t meet here', 'Draw a few more lines and see where they cross'],
+        miss: ['The lines don’t meet here', 'Look where the lines cross'],
         missStray: ['The lines don’t meet here', 'Not every trail comes from the radiant. Look for a spot where many lines meet.'],
         found: ['You found the radiant! 🎯', 'All the shooting stars of this shower seem to come from there'],
         second: ['There is one more shower!', 'Some of the white trails come from another spot. Find their radiant too.']
@@ -390,10 +389,10 @@
       old: (name) => `${name} (old)`,
       goOn: 'Go on ▶',
       done: 'Done! 🎉',
-      winTitle: 'Well done, detective!',
+      winTitle: 'Well done!',
       and: ' and ',
       nextLevel: 'Next level',
-      again: 'New sky',
+      again: 'New meteors',
       menu: 'Menu',
       allGames: 'All games',
       hint: 'Hint',
@@ -509,7 +508,6 @@
                        // drawn back from the head to end, ok when along it
     phase: 'trace',    // 'trace', 'wait', 'ask' or 'over'
     t: 0,
-    idle: 0,
     misses: 0,         // taps beside the radiant in a row
     missRings: [],     // { v, t } where they were
     hint: null,        // { v, r, k }: a ring round the radiant, from 💡
@@ -519,6 +517,8 @@
     drag: null,        // { tr, end, ok, moved }: the line being drawn, and as it was
     pulse: null,       // { tr, until }: its head ringed, after a press beside it
     ask: null,         // { k, wrong, done, picked }
+    pan: [0, 0],       // px the picture is slid by, so that the question
+    panTo: [0, 0],     // does not hide the constellation, and where to
     caption: null,
     allFound: false,
     L: null,
@@ -601,8 +601,8 @@
     const lv = levelNow();
     Object.assign(state, {
       showers: lv.showers.map((s) => ({ ...s, R: vec(...s.radiant), found: false, named: false })),
-      trails: [], phase: 'trace', t: 0, idle: 0, misses: 0, missRings: [], hint: null, hintN: 0,
-      flash: null, hand: null, drag: null, pulse: null, ask: null, allFound: false
+      trails: [], phase: 'trace', t: 0, misses: 0, missRings: [], hint: null, hintN: 0,
+      flash: null, hand: null, drag: null, pulse: null, ask: null, allFound: false, pan: [0, 0], panTo: [0, 0]
     });
     // the middle of the view: near the radiant, but not on it, or between
     // the two radiants
@@ -669,11 +669,82 @@
       s = fit(L, tr.b, 10, W - 10, 10, H - 10, s);
     }
     L.s = s;
+    // slid while the question is open (see aim)
+    L.cx0 = cx;
+    L.cy0 = cy;
+    L.cx = cx + state.pan[0];
+    L.cy = cy + state.pan[1];
+    L.cap = captionBox();
     L.hitR = Math.max(24, u * 0.045);       // how near a tap must be to a trail
     L.tol = Math.max(34, u * 0.075);        // and to the radiant
     L.ring = Math.max(16, u * 0.035);
     state.L = L;
     L.sky = paintSky(L);
+    aim();
+  }
+
+  // Where the picture slides to while the question is open: just far
+  // enough that the question does not hide the name of the right
+  // constellation, but not so far that the radiant goes off the top.
+  function aim() {
+    const L = state.L;
+    const a = state.ask;
+    state.panTo = [0, 0];
+    if (!L || !a || $('ask').classList.contains('hidden')) return;
+    const sh = state.showers[a.k];
+    const id = sh.answer[0];
+    const f = FIGURES.find((q) => q.id === id);
+    const o = OLD.find((q) => q.id === id);
+    const at = f ? labelAt(L, f, f.v.map((v) => toScreen(L, v))) : o && toScreen(L, o.v);
+    const R = toScreen(L, sh.R);
+    if (!at || !R) return;
+    const size = Math.round(clamp(L.u * 0.032, 12, 16));
+    ctx.font = `800 ${size}px Nunito, sans-serif`;
+    const w = ctx.measureText(figName(id)).width / 2;
+    // where they are with the picture not slid
+    const [px, py] = state.pan;
+    const ask = $('ask');
+    if (sideAsk()) {
+      const dx = Math.min(0, ask.offsetLeft - 12 - w - (at[0] - px));
+      state.panTo = [Math.max(dx, L.ring + 12 - (R[0] - px)), 0];
+    } else {
+      const dy = Math.min(0, ask.offsetTop - 10 - size / 2 - (at[1] - py));
+      state.panTo = [0, Math.max(dy, L.ring + 12 - (R[1] - py))];
+    }
+  }
+
+  // the picture slides a little at a time towards where aim says
+  function slide(dt) {
+    const L = state.L;
+    const [px, py] = state.pan;
+    const [tx, ty] = state.panTo;
+    if (!L || (px === tx && py === ty)) return;
+    const q = Math.min(1, dt * 7);
+    state.pan = Math.hypot(tx - px, ty - py) < 0.5 ? [tx, ty] : [px + (tx - px) * q, py + (ty - py) * q];
+    L.cx = L.cx0 + state.pan[0];
+    L.cy = L.cy0 + state.pan[1];
+    L.sky = paintSky(L);
+  }
+
+  // where the caption is at its tallest, so that no trail is put under it
+  function captionBox() {
+    const c = $('caption');
+    const hidden = c.classList.contains('hidden');
+    const was = [$('capTitle').textContent, $('capText').textContent];
+    c.classList.remove('hidden');
+    let h = 0;
+    for (const [b, x] of Object.values(t('captions'))) {
+      $('capTitle').textContent = b;
+      $('capText').textContent = x;
+      h = Math.max(h, c.offsetHeight);
+    }
+    // all across, if it cannot be measured
+    const box = c.offsetWidth
+      ? { x0: c.offsetLeft, x1: c.offsetLeft + c.offsetWidth, y1: c.offsetTop + h + 10 }
+      : { x0: -1, x1: area.clientWidth + 1, y1: c.offsetTop + h + 10 };
+    [$('capTitle').textContent, $('capText').textContent] = was;
+    c.classList.toggle('hidden', hidden);
+    return box;
   }
 
   // distance from P to the line through A and B
@@ -697,6 +768,12 @@
     const L = state.L;
     const m = 14;
     const onScreen = (p) => p && p[0] > m && p[0] < L.W - m && p[1] > m && p[1] < L.H - m;
+    // whether any of the trail from A to B is under the caption
+    const underCap = (A, B) => Array.from({ length: 9 }, (_, i) => i / 8).some((q) => {
+      const x = A[0] + (B[0] - A[0]) * q;
+      const y = A[1] + (B[1] - A[1]) * q;
+      return y < L.cap.y1 && x > L.cap.x0 && x < L.cap.x1;
+    });
     const minLen = Math.max(36, L.u * 0.08);
     const rads = state.showers.map((s) => toScreen(L, s.R));
     const out = [];
@@ -712,21 +789,23 @@
     state.showers.forEach((sh, k) => {
       const base = rand(0, 2 * Math.PI);
       for (let i = 0; i < sh.trails; i++) {
-        for (let tries = 0; tries < 120; tries++) {
+        for (let tries = 0; tries < 300; tries++) {
           // spread all round, unless that side is off the view; and nearer
           // the radiant, if farther ones don't fit
           const th = tries < 40 ? base + ((i + rand(0.15, 0.85)) * 2 * Math.PI) / sh.trails : rand(0, 2 * Math.PI);
           const dir = towards(sh.R, th);
           const d = rand(9, Math.max(16, 50 - tries * 0.4)) * DEG;
-          // but long enough to tap
-          const len = Math.max(clamp(rand(5, 10) * (0.4 + (0.6 * Math.sin(d)) / Math.sin(40 * DEG)), 3, 14) * DEG,
-            (minLen / L.s) * rand(1.05, 1.5));
+          // The farther from the radiant, the longer, as the nearer ones
+          // come more towards us and are seen more end on: from just long
+          // enough to tap, 9 degrees away, to over three times that, 50 away.
+          const far = (Math.sin(d) - Math.sin(9 * DEG)) / (Math.sin(50 * DEG) - Math.sin(9 * DEG));
+          const len = (minLen / L.s) * (1.1 + 2.3 * far) * rand(0.9, 1.1);
           const a = along(sh.R, dir, d);
           const b = along(sh.R, dir, d + len);
           const A = toScreen(L, a);
           const B = toScreen(L, b);
           if (!onScreen(A) || !onScreen(B)) continue;
-          if (Math.hypot(B[0] - A[0], B[1] - A[1]) < minLen || crowded(A, B)) continue;
+          if (Math.hypot(B[0] - A[0], B[1] - A[1]) < minLen || crowded(A, B) || underCap(A, B)) continue;
           if (state.showers.some((o, j) => j !== k && offCircle(o.R, a, b) < 7 * DEG)) continue;
           add(A, B, k, a, b);
           break;
@@ -739,7 +818,7 @@
         const ang = rand(0, 2 * Math.PI);
         const len = rand(0.1, 0.18) * L.u;
         const B = [A[0] + len * Math.cos(ang), A[1] + len * Math.sin(ang)];
-        if (!onScreen(B) || crowded(A, B)) continue;
+        if (!onScreen(B) || crowded(A, B) || underCap(A, B)) continue;
         const a = fromScreen(L, ...A);
         const b = fromScreen(L, ...B);
         if (rads.some((P) => lineDist(P, A, B) < L.u * 0.14) || state.showers.some((o) => offCircle(o.R, a, b) < 8 * DEG)) continue;
@@ -918,31 +997,47 @@
     }
   }
 
-  // A trail: faint where the shooting star began and brightest at its
-  // head, where it burnt out. It is drawn from its start to its head while
-  // it flies (age from 0 to FLY s).
+  // A trail, as on a photo: a thin streak, faint where the shooting star
+  // began and slowly growing wider and brighter, brightest just before its
+  // head, where it burnt out and the streak narrows quickly to a point. It
+  // has a bluish glow, and is drawn from its start to its head while it
+  // flies (age from 0 to FLY s).
   function drawTrail(g, L, tr, age) {
     if (age < 0) return;
     const k = ends(L, tr);
     if (!k) return;
     const p = clamp(age / FLY, 0.02, 1);
-    const color = found(tr) ? '255, 211, 77' : tr.shower < 0 && state.allFound ? '150, 160, 190' : '230, 240, 255';
+    const gold = found(tr);
+    const grey = tr.shower < 0 && state.allFound;
+    const core = gold ? '255, 225, 130' : grey ? '160, 170, 195' : '245, 250, 255';
+    const halo = gold ? '255, 200, 60' : grey ? '130, 140, 170' : '150, 190, 255';
     const a = tr.bright;
     const H = [k.A[0] + (k.B[0] - k.A[0]) * p, k.A[1] + (k.B[1] - k.A[1]) * p];
+    const len = Math.hypot(H[0] - k.A[0], H[1] - k.A[1]) || 1;
+    const ux = (H[0] - k.A[0]) / len;
+    const uy = (H[1] - k.A[1]) / len;
+    // the streak with half widths along it, as [how far along, half width]
+    const streak = (wide) => {
+      const pts = [[0, 0.1], [0.3, 0.35], [0.75, 0.75], [0.92, 1], [0.98, 0.7], [1, 0.3]].map(([q, h]) => [q, h * tr.w * 0.6 * wide]);
+      const at = (q, h, side) => [k.A[0] + (H[0] - k.A[0]) * q - uy * h * side, k.A[1] + (H[1] - k.A[1]) * q + ux * h * side];
+      g.beginPath();
+      for (const [q, h] of pts) g.lineTo(...at(q, h, 1));
+      for (const [q, h] of pts.reverse()) g.lineTo(...at(q, h, -1));
+      g.closePath();
+      g.fill();
+    };
     const grad = g.createLinearGradient(...k.A, ...H);
-    grad.addColorStop(0, `rgba(${color}, ${(0.05 * a).toFixed(2)})`);
-    grad.addColorStop(0.6, `rgba(${color}, ${(0.45 * a).toFixed(2)})`);
-    grad.addColorStop(1, `rgba(${color}, ${a.toFixed(2)})`);
-    g.strokeStyle = grad;
-    g.lineWidth = tr.w;
-    g.lineCap = 'round';
-    g.beginPath();
-    g.moveTo(...k.A);
-    g.lineTo(...H);
-    g.stroke();
-    // the bright head, whiter while it flies
-    dot2(g, H[0], H[1], tr.w * 2.8, `rgba(${color}, ${(0.22 * a).toFixed(2)})`);
-    dot2(g, H[0], H[1], tr.w * 1.15, p < 1 ? '#fff' : `rgba(${color}, ${a.toFixed(2)})`);
+    grad.addColorStop(0, `rgba(${core}, ${(0.05 * a).toFixed(2)})`);
+    grad.addColorStop(0.4, `rgba(${core}, ${(0.45 * a).toFixed(2)})`);
+    grad.addColorStop(0.85, `rgba(${core}, ${a.toFixed(2)})`);
+    grad.addColorStop(1, p < 1 ? '#fff' : `rgba(${core}, ${a.toFixed(2)})`);
+    g.fillStyle = grad;
+    // the glow is a soft shadow, as bright as the streak is at each place
+    g.shadowColor = `rgba(${halo}, 0.9)`;
+    g.shadowBlur = tr.w * 3 * (window.devicePixelRatio || 1);
+    streak(1);
+    g.shadowColor = 'transparent';
+    g.shadowBlur = 0;
   }
 
   // the radiant found: a yellow ring, with the shower's name under it once
@@ -985,8 +1080,9 @@
         ctx.stroke();
       }
     }
-    // 💡 while searching: a ring round the part of the sky with the radiant
-    if (state.hint) {
+    // 💡 while searching: a ring round the part of the sky with the radiant,
+    // only while every trail has its line
+    if (state.hint && allTraced()) {
       const P = toScreen(L, state.hint.v);
       if (P) {
         ctx.setLineDash([8, 7]);
@@ -1034,10 +1130,8 @@
     const dt = Math.min(0.05, (now - state.last) / 1000);
     state.last = now;
     state.t += dt;
-    state.idle += dt;
     state.missRings = state.missRings.filter((m) => state.t - m.t < 0.9);
-    // nothing done for a while: the hand shows a trail to trace
-    if (state.phase === 'trace' && state.idle > HINT_S && !state.hand && traced() < 2) pointAt(nextTrail());
+    slide(dt);
     placeHand();
     draw();
     state.raf = requestAnimationFrame(frame);
@@ -1045,6 +1139,8 @@
 
   // the trails with a line drawn back along them
   const traced = () => state.trails.filter((tr) => tr.ok).length;
+  // the radiants can be tapped only once every trail has its line
+  const allTraced = () => state.trails.length > 0 && state.trails.every((tr) => tr.ok);
   const seen = (tr) => state.t - tr.at > FLY;
   // the next trail to draw a line on, one with a wrong line first
   const nextTrail = () => {
@@ -1087,16 +1183,18 @@
   function drawn(d) {
     const tr = d.tr;
     if (!d.moved) {
-      // only a tap: nothing changes
+      // only a tap: nothing changes, and a tap on the dot of a good line
+      // is a guess, as the dots may lie on the radiant
       tr.end = d.end;
       tr.ok = d.ok;
-      showCaption(tr.end ? 'offTrail' : 'dragBack');
+      if (tr.end && tr.ok) guess(d.x, d.y);
+      else showCaption(tr.end ? 'offTrail' : 'dragBack');
       return;
     }
     if (tr.ok) {
       if (!d.ok) {
         sfx.note(traced() - 1);
-        showCaption(traced() === 1 ? 'more' : 'where');
+        showCaption(allTraced() ? 'where' : 'more');
       } else sfx.pick();
     } else {
       sfx.oops();
@@ -1108,7 +1206,7 @@
   // a tap on the sky, not on a trail: is the radiant here?
   function guess(x, y) {
     const L = state.L;
-    if (traced() < 2) {
+    if (!allTraced()) {
       sfx.oops();
       showCaption('traceFirst');
       return;
@@ -1167,13 +1265,12 @@
 
   function hint() {
     sfx.pick();
-    state.idle = 0;
     if (state.phase === 'ask' && state.ask && !state.ask.done) {
       state.flash = { id: state.showers[state.ask.k].answer[0], until: state.t + 2.5 };
       return;
     }
     if (state.phase !== 'trace') return;
-    if (traced() < 2) pointAt(nextTrail());
+    if (!allTraced()) pointAt(nextTrail());
     else ringHint();
   }
 
@@ -1213,6 +1310,7 @@
         opts.appendChild(b);
       });
       $('nextBtn').classList.add('hidden');
+      aim();
       return;
     }
     $('askTitle').textContent = `${figName(a.picked)} → ${cap(sh.name[Astro.lang])}`;
@@ -1221,12 +1319,12 @@
     $('askText').textContent = last && levelNow().strays ? `${fact} ${t('strayNote')}` : fact;
     $('nextBtn').textContent = t(last ? 'done' : 'goOn');
     $('nextBtn').classList.remove('hidden');
+    aim();
   }
 
   function answer(id) {
     const a = state.ask;
     const sh = state.showers[a.k];
-    state.idle = 0;
     if (sh.answer.includes(id)) {
       a.done = true;
       a.picked = id;
@@ -1246,9 +1344,9 @@
     sfx.pick();
     $('ask').classList.add('hidden');
     state.ask = null;
+    aim();
     if (state.showers.some((s) => !s.found)) {
       state.phase = 'trace';
-      state.idle = 0;
       showCaption('second');
       return;
     }
@@ -1310,10 +1408,10 @@
     $('caption').classList.add('hidden');
   }
 
-  // the steps: tracing two trails, then finding and naming each radiant
+  // the steps: tracing all the trails, then finding and naming each radiant
   function updateBar() {
     const n = state.showers.length;
-    const steps = (traced() >= 2 || state.showers.some((s) => s.found) ? 1 : 0) +
+    const steps = (allTraced() ? 1 : 0) +
       state.showers.filter((s) => s.found).length + state.showers.filter((s) => s.named).length;
     $('progressFill').style.width = (100 * steps) / (1 + 2 * n) + '%';
     $('progressText').textContent = `${steps} / ${1 + 2 * n}`;
@@ -1385,13 +1483,17 @@
 
   // A press on a trail's bright head, dragged back along the trail, draws
   // a line; the dot at the end of a line drags it again. A press anywhere
-  // else is a guess where the radiant is.
+  // else is a guess where the radiant is, and so is a tap on a trail or a
+  // dot once every trail has its line.
   cv.addEventListener('pointerdown', (e) => {
     if (state.phase !== 'trace' || !state.L || state.drag) return;
-    state.idle = 0;
     const [x, y] = pos(e);
     const hit = pickAt(x, y);
     if (!hit) {
+      guess(x, y);
+      return;
+    }
+    if (hit.kind === 'trail' && allTraced()) {
       guess(x, y);
       return;
     }
@@ -1402,7 +1504,7 @@
       showCaption('fromHead');
       return;
     }
-    state.drag = { tr: hit.tr, end: hit.tr.end, ok: hit.tr.ok, moved: false };
+    state.drag = { tr: hit.tr, end: hit.tr.end, ok: hit.tr.ok, moved: false, x, y };
     try { cv.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
   });
   cv.addEventListener('pointermove', (e) => {
@@ -1411,6 +1513,8 @@
     const k = d && ends(L, d.tr);
     if (!k) return;
     const [x, y] = pos(e).map((q, i) => clamp(q, 3, (i ? L.H : L.W) - 3));
+    // a finger that shakes a little is still a tap
+    if (!d.moved && Math.hypot(x - d.x, y - d.y) < 8) return;
     if (Math.hypot(x - k.B[0], y - k.B[1]) < Math.max(20, L.u * 0.05)) return;
     d.moved = true;
     d.tr.end = fromScreen(L, x, y);
