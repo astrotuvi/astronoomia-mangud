@@ -29,8 +29,8 @@
 //                         rings (0 at the radiant); see TRAILS in app.js
 //   { orbit: 174 }        the Earth's path round the Sun with the Earth on that
 //                         day (0 is 1 January), as in Kuidas tekivad aastaajad?
-//   { yard: 55 }          a child at noon, with the Sun that many degrees high
-//                         and the child's shadow
+//   { arc: 174 }          the Sun's path across the sky in Tartu on that day,
+//                         looking south, all on the same scale
 // A picture may have a label: { photo: 'saturn', label: { et, en } }.
 window.QUIZ = [
   {
@@ -218,22 +218,6 @@ window.QUIZ = [
         why: { et: 'Jaanipäeval kestab päev Tartus 18 tundi ja 20 minutit. Jõulude ajal on see natuke üle 6 tunni.', en: 'On Midsummer Day the day lasts 18 hours and 20 minutes in Tartu. At Christmas it is just over 6 hours.' }
       },
       {
-        q: { et: 'Milline on keskpäev Eestis jõulude ajal?', en: 'What is noon like in Estonia at Christmas?' },
-        answers: [{ yard: 8 }, { yard: 32 }, { yard: 55 }, { yard: 80 }],
-        why: { et: 'Jõulude ajal tõuseb Päike keskpäeval Tartus vaid 8 kraadi kõrgusele. Siis on varjud väga pikad.', en: 'At Christmas the Sun climbs only 8 degrees over Tartu at noon. Then the shadows are very long.' }
-      },
-      {
-        q: { et: 'Keskpäeval tõuseb Päike Tartus nii kõrgele. Mis aastaaeg on?', en: 'At noon the Sun climbs this high over Tartu. What season is it?' },
-        pic: { yard: 55 },
-        answers: [
-          { et: 'Suvi', en: 'Summer' },
-          { et: 'Talv', en: 'Winter' },
-          { et: 'Kevad', en: 'Spring' },
-          { et: 'Sügis', en: 'Autumn' }
-        ],
-        why: { et: 'Jaanipäeval tõuseb Päike Tartus 55 kraadi kõrgusele. Eestis ei ole Päike kunagi kõrgemal ja varjud on siis kõige lühemad.', en: 'On Midsummer Day the Sun climbs 55 degrees over Tartu. It never gets higher in Estonia, and the shadows are shortest then.' }
-      },
-      {
         q: { et: 'Millal on päev ja öö ühepikkused?', en: 'When are day and night the same length?' },
         answers: [
           { et: 'Märtsis ja septembris', en: 'In March and September' },
@@ -264,9 +248,9 @@ window.QUIZ = [
         why: { et: 'Ilma kaldeta poleks aastaaegu: päev ja öö oleksid kogu aasta umbes 12 tundi pikad ja Päike tõuseks iga päev sama kõrgele.', en: 'Without the tilt there would be no seasons: day and night would be about 12 hours long all year, and the Sun would climb just as high every day.' }
       },
       {
-        q: { et: 'Pane keskpäevad aasta järjekorda, jaanipäevast jõuludeni.', en: 'Put the noons in order through the year, from Midsummer Day to Christmas.' },
-        order: [{ yard: 55 }, { yard: 44 }, { yard: 21 }, { yard: 8 }],
-        why: { et: 'Jaanipäevast jõuludeni tõuseb Päike keskpäeval iga päevaga natuke madalamale: juunis 55, augustis 44, oktoobris 21 ja detsembris 8 kraadi kõrgusele.', en: 'From Midsummer Day to Christmas the Sun climbs a little lower at noon each day: 55 degrees in June, 44 in August, 21 in October and 8 in December.' }
+        q: { et: 'Pane Päikese teekonnad üle taeva ajalisse järjekorda, jaanipäevast jõuludeni.', en: 'Put the Sun’s paths across the sky in order through the year, from Midsummer Day to Christmas.' },
+        order: [{ arc: 174 }, { arc: 227 }, { arc: 288 }, { arc: 358 }],
+        why: { et: 'Jaanipäevast jõuludeni jääb Päikese teekond iga päevaga natuke lühemaks ja madalamaks. Keskpäeval tõuseb Päike Tartus juunis 55, augustis 45, oktoobris 22 ja detsembris vaid 8 kraadi kõrgusele.', en: 'From Midsummer Day to Christmas the Sun’s path gets a little shorter and lower each day. At noon the Sun climbs 55 degrees over Tartu in June, 45 in August, 22 in October and only 8 in December.' }
       }
     ]
   },
@@ -913,7 +897,7 @@ window.QUIZ = [
         why: { et: 'Kui radiant on madalal või silmapiiri all, jõuab vähem langevaid tähti meie taevasse. Seepärast on enamikku voolusid kõige parem vaadata pärast südaööd.', en: 'When the radiant is low or below the horizon, fewer shooting stars reach our sky. That is why most showers are best after midnight.' }
       },
       {
-        q: { et: 'Pane meteoorivoolud aasta järjekorda, alates augustist.', en: 'Put the meteor showers in order through the year, starting from August.' },
+        q: { et: 'Pane meteoorivoolud ajalisse järjekorda, alates augustist.', en: 'Put the meteor showers in order through the year, starting from August.' },
         order: [
           { con: 'perseus', label: { et: 'Perseiidid', en: 'Perseids' } },
           { con: 'draco', label: { et: 'Drakoniidid', en: 'Draconids' } },

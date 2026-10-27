@@ -384,23 +384,30 @@
       (Math.sin(th) > 0 ? earth + sun : sun + earth) + '</svg>';
   }
 
-  // A yard at noon, seen from the side: a child, the Sun `h` degrees above
-  // the horizon on the left, and the child's shadow on the right.
-  function yardSVG(h) {
-    const a = h * DEG;
-    const x = 64;
-    const g = 76;
-    const tall = 16;
+  // The Sun's path across the sky in Tartu on day d (0 is 1 January), as in
+  // the yard of Kuidas tekivad aastaajad?: looking south, with the east on
+  // the left, the west on the right and the Sun at noon. The scale is the
+  // same on every day, so that the paths can be compared.
+  function arcSVG(d) {
+    const p = 58.4 * DEG;
+    const dec = Math.asin(Math.sin(23.44 * DEG) * Math.cos((2 * Math.PI * (d - 171)) / 365));
+    const g = 72;
+    const xOf = (az) => 50 + (az / Math.PI) * 48;
+    const yOf = (alt) => g - (alt / (Math.PI / 2)) * 64;
     const f = (v) => v.toFixed(1);
-    const sx = x - 54 * Math.cos(a);
-    const sy = g - 54 * Math.sin(a);
-    const shadow = Math.min(x + tall / Math.tan(a), 104);
-    return `<svg viewBox="0 0 100 100" aria-hidden="true" data-ink><rect width="100" height="${g}" fill="#7cc4ee" />` +
+    const pts = [];
+    for (let h = -180; h <= 180; h += 3) {
+      const t = h * DEG;
+      const alt = Math.asin(Math.sin(p) * Math.sin(dec) + Math.cos(p) * Math.cos(dec) * Math.cos(t));
+      const az = Math.atan2(Math.sin(t), Math.cos(t) * Math.sin(p) - Math.tan(dec) * Math.cos(p));
+      if (alt > 0) pts.push(`${f(xOf(az))},${f(yOf(alt))}`);
+    }
+    const sx = 50;
+    const sy = yOf(Math.PI / 2 - p + dec);
+    return `<svg viewBox="0 0 100 100" aria-hidden="true" data-ink><rect width="100" height="${g}" fill="#5aa8e6" />` +
       `<rect y="${g}" width="100" height="${100 - g}" fill="#7f9468" />` +
-      `<circle cx="${f(sx)}" cy="${f(sy)}" r="10" fill="#fff3b0" opacity="0.5" /><circle cx="${f(sx)}" cy="${f(sy)}" r="6.5" fill="#ffd34d" />` +
-      `<path d="M${x} ${g}L${f(shadow)} ${g}L${f(shadow)} ${g + 2.2}L${x} ${g + 2.2}Z" fill="#3c4a33" opacity="0.8" />` +
-      `<g stroke="#2a2f5a" stroke-width="2" stroke-linecap="round" fill="none"><path d="M${x - 2.5} ${g}L${x} ${g - 6}L${x + 2.5} ${g}M${x} ${g - 6}V${g - tall + 5}M${x - 3.5} ${g - 9.5}L${x} ${g - 11.5}L${x + 3.5} ${g - 9.5}" /></g>` +
-      `<circle cx="${x}" cy="${g - tall + 2.6}" r="2.6" fill="#2a2f5a" /></svg>`;
+      `<polyline points="${pts.join(' ')}" fill="none" stroke="#fffbe0" stroke-width="2.4" stroke-dasharray="0.1 4.2" stroke-linecap="round" />` +
+      `<circle cx="${sx}" cy="${f(sy)}" r="8" fill="#fff3b0" opacity="0.5" /><circle cx="${sx}" cy="${f(sy)}" r="5" fill="#ffd34d" /></svg>`;
   }
 
   function picHTML(p) {
@@ -414,7 +421,7 @@
     else if (p.anim) inner = animSVG(p.anim);
     else if (p.trails) inner = trailsSVG(p.trails, p.ring);
     else if (p.orbit !== undefined) inner = orbitSVG(p.orbit);
-    else if (p.yard !== undefined) inner = yardSVG(p.yard);
+    else if (p.arc !== undefined) inner = arcSVG(p.arc);
     return `<span class="pic-box">${inner}</span>`;
   }
 

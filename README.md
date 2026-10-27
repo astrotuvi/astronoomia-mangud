@@ -237,7 +237,7 @@ The levels are in the `LEVELS` list at the top of `asteroid/app.js`, and `makeFi
 - The answers are four coloured buttons with shapes (▲ ◆ ● ■), with text or pictures:
   - photos from the puzzle, pictures of the Earth, the Moon, Mars, Jupiter and Saturn, and the eight planets as drawn in Planeetide rivi
   - the Moon as seen from the Earth, and the Sun, the Earth and the Moon from above the North Pole, as in Kuu faasid
-  - the Earth's path round the Sun with the Earth on a day of the year, and a child at noon with the Sun at a height and the child's shadow, as in Kuidas tekivad aastaajad?
+  - the Earth's path round the Sun with the Earth on a day of the year, and the Sun's path across the sky in Tartu on a day, as in Kuidas tekivad aastaajad?
   - the stars of a constellation without lines
   - short animations of a plane, a satellite and a shooting star, as in Püüa langev täht
   - shooting-star trails on a photo, and the same photo with a yellow ring in one of four places, to find the radiant as in Uuri meteoore
