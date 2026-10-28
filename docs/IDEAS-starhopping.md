@@ -170,6 +170,20 @@ Each part has four levels, and a 🌟 in the menu marks the ones done.
    The player picks the stars to hop from, or taps the star straight away
    if they know it.
 
+In the Suur Vanker part, levels 3 and 4 pick a dark night of the year at
+random: an hour from 20:00 to 03:00 (not midnight), with the Sun at least
+15° below the horizon, so never in June or July. The caption names it,
+e.g. "Kevadöö, 17. märts kell 1". Of Põhjanael, Veega, Arktuurus and
+Põhjakroon, a task is asked only when its star is at least 10° up; when
+Arktuurus is below the horizon, the arc from the handle shows it going
+into the ground instead. Level 3 still draws Suur Vanker in and names the
+stars to start from, e.g. "Leia Arktuurus Suure Vankri aisa kaare abil";
+level 4 asks only "Leia Arktuurus.", draws no figure at the start, and
+keeps one view for all the tasks, so the view does not give away where to
+look. Their facts are new, e.g. that Põhjanael is always about 58° up in
+Estonia, as high as Estonia is north of the equator, and that Põhjakroon
+has a sleeping nova, T CrB.
+
 The win screen shows the whole chain as a map: the arrows of all the hops
 over the sky, with the figures and the names of the stars found. Its
 button "Vaata taevast" ("Look at the sky") opens the same sky without

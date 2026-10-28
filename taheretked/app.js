@@ -138,7 +138,11 @@
   //   slider: the sky starts as dark as `limit`, and the task is to move the
   //     slider to the countryside, where the faint stars of `figure` show
   // An arc without `find` is only to draw: it shows where a star is not, and
-  // its `title` heads the fact.
+  // its `title` heads the fact. A `random` level picks a dark night of the
+  // year and asks the tasks of its `pool` whose stars are up (or down) then;
+  // without `help` the guide stars do not pulse, `figs` are the figures drawn
+  // at the start, and with `fixedView` the view takes in all the tasks at
+  // once.
   // `figure` is drawn in when the task is done, and the figures `given` are
   // there from its start. `span` is how much sky the
   // view shows across its shorter side, in degrees (70 if not given); a
@@ -361,6 +365,153 @@
           }
         }
       ]
+    },
+    {
+      id: 'vanker3',
+      // a countryside sky on a dark night picked at random; the tasks name
+      // the stars to start from, but nothing pulses
+      limit: 6,
+      part: 'bigdipper',
+      icon: '🌌',
+      random: true,
+      help: false,
+      figs: ['bigdipper'],
+      win: {
+        name: { et: 'Päris taevas', en: 'A real sky' },
+        fact: {
+          et: 'Maal paistab taevas sadu tähti, ja tuttavad kujud on nende vahel raskemini leitavad. Suur Vanker näitab teed ka siis.',
+          en: 'In the countryside the sky shows hundreds of stars, and the figures you know are harder to find among them. The Big Dipper shows the way then too.'
+        }
+      },
+      // The tasks to choose from: a task is asked only if the stars `up` are
+      // at least 10° above the horizon, or the stars `down` below it, on the
+      // night picked.
+      pool: [
+        {
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 42, show: DIPPER, up: ['polaris'],
+          text: {
+            et: 'Leia Põhjanael Suure Vankri kahe tagumise ratta abil.',
+            en: 'Find the North Star with the two stars at the end of the Big Dipper’s bowl.'
+          },
+          fact: {
+            et: 'Maal on taevas sadu tähti, aga Suure Vankri tagumised rattad viivad ikka Põhjanaelani.',
+            en: 'In the countryside there are hundreds of stars in the sky, but the two stars at the end of the Big Dipper’s bowl still lead to the North Star.'
+          }
+        },
+        {
+          kind: 'tap', find: 'vega', near: [], figure: 'lyra', up: ['vega'],
+          show: ['eltanin', 'rastaban', 'kuma', 'grumium'],
+          text: {
+            et: 'Leia Veega, hele täht Lohe pea kõrval.',
+            en: 'Find Vega, the bright star next to the Dragon’s head.'
+          },
+          fact: {
+            et: 'Veega on meist 25 valgusaasta kaugusel. Tema valgus, mida praegu näed, lahkus temast 25 aastat tagasi.',
+            en: 'Vega is 25 light years away. The light you see now left it 25 years ago.'
+          }
+        },
+        {
+          kind: 'arc', along: ['alioth', 'mizar', 'alkaid'], curve: ['alioth', 'mizar', 'alkaid', 'arcturus', 'spica'],
+          find: 'arcturus', figure: 'bootes', span: 20, show: DIPPER, up: ['arcturus'],
+          text: {
+            et: 'Leia Arktuurus Suure Vankri aisa kaare abil.',
+            en: 'Find Arcturus along the curve of the Big Dipper’s handle.'
+          },
+          fact: {
+            et: 'Arktuurus on oranž, sest ta on Päikesest jahedam. Ta on aga palju suurem: läbimõõdult umbes 25 korda.',
+            en: 'Arcturus is orange because it is cooler than the Sun. But it is much bigger: about 25 times as wide.'
+          }
+        },
+        {
+          kind: 'arc', along: ['alioth', 'mizar', 'alkaid'], curve: ['alioth', 'mizar', 'alkaid', 'arcturus', 'spica'],
+          title: { et: 'Horisondi all', en: 'Below the horizon' }, span: 40, show: DIPPER, down: ['arcturus'],
+          text: {
+            et: 'Kus on Arktuurus? Leia see Suure Vankri aisa kaare abil.',
+            en: 'Where is Arcturus? Find out along the curve of the Big Dipper’s handle.'
+          },
+          fact: {
+            et: 'Kaar läheb maa alla: Arktuurus on praegu horisondi all. Õhtuti on ta taevas kevadel ja suvel.',
+            en: 'The curve goes under the ground: Arcturus is below the horizon now. It is in the evening sky in spring and summer.'
+          }
+        },
+        {
+          kind: 'tap', find: 'alphecca', near: [], figure: 'corona', span: 20, up: ['alphecca', 'arcturus'],
+          accept: ['theCrb', 'nusakan', 'gamCrb', 'delCrb', 'epsCrb', 'iotCrb'],
+          show: ['arcturus', 'izar', 'delBoo', 'nekkar', 'seginus', 'rhoBoo', 'muphrid'],
+          text: {
+            et: 'Leia Põhjakroon Karjase kõrval.',
+            en: 'Find the Northern Crown beside Boötes.'
+          },
+          fact: {
+            et: 'Põhjakroonis on täht, mis on uinuv noova: umbes iga 80 aasta järel süttib ta mõneks päevaks heledaks.',
+            en: 'In the Northern Crown there is a sleeping nova: about every 80 years it flares up and is bright for a few days.'
+          }
+        }
+      ]
+    },
+    {
+      id: 'vanker4',
+      // as level 3, but the tasks name only the star to find, Suur Vanker is
+      // not drawn in, and the view does not move to the stars of a task
+      limit: 6,
+      part: 'bigdipper',
+      icon: '🎯',
+      random: true,
+      help: false,
+      figs: [],
+      fixedView: true,
+      win: {
+        name: { et: 'Ilma abita', en: 'Without help' },
+        fact: {
+          et: 'Leidsid tähed ise üles, nagu päris taevas. Nüüd võid minna õue ja proovida!',
+          en: 'You found the stars yourself, as in the real sky. Now you can go outside and try!'
+        }
+      },
+      pool: [
+        {
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', up: ['polaris'],
+          text: { et: 'Leia Põhjanael.', en: 'Find the North Star.' },
+          fact: {
+            et: 'Põhjanael on Eestis alati umbes 58 kraadi kõrgusel: nii kõrgel, kui kaugel põhja pool ekvaatorit Eesti asub.',
+            en: 'In Estonia the North Star is always about 58 degrees up: as high as Estonia is far north of the equator.'
+          }
+        },
+        {
+          kind: 'tap', find: 'vega', near: [], figure: 'lyra', up: ['vega'],
+          text: { et: 'Leia Veega.', en: 'Find Vega.' },
+          fact: {
+            et: 'Veega, Luige tähtkuju Deneeb ja Kotka tähtkuju Altair moodustavad Suvekolmnurga, mis paistab suvel ja sügisel õhtuti kõrgel.',
+            en: 'Vega, Deneb in the Swan and Altair in the Eagle make the Summer Triangle, which is high in the evening sky in summer and autumn.'
+          }
+        },
+        {
+          kind: 'arc', along: ['alioth', 'mizar', 'alkaid'], curve: ['alioth', 'mizar', 'alkaid', 'arcturus', 'spica'],
+          find: 'arcturus', figure: 'bootes', up: ['arcturus'],
+          text: { et: 'Leia Arktuurus.', en: 'Find Arcturus.' },
+          fact: {
+            et: 'Arktuurus tähendab kreeka keeles karu valvajat: ta käib taevas Suure Karu järel.',
+            en: 'Arcturus means the bear’s guard in Greek: it follows the Great Bear across the sky.'
+          }
+        },
+        {
+          kind: 'arc', along: ['alioth', 'mizar', 'alkaid'], curve: ['alioth', 'mizar', 'alkaid', 'arcturus', 'spica'],
+          title: { et: 'Horisondi all', en: 'Below the horizon' }, down: ['arcturus'],
+          text: { et: 'Kus on Arktuurus?', en: 'Where is Arcturus?' },
+          fact: {
+            et: 'Arktuurus on praegu horisondi all. Õhtuti on ta taevas kevadel ja suvel.',
+            en: 'Arcturus is below the horizon now. It is in the evening sky in spring and summer.'
+          }
+        },
+        {
+          kind: 'tap', find: 'alphecca', near: [], figure: 'corona', up: ['alphecca', 'arcturus'],
+          accept: ['theCrb', 'nusakan', 'gamCrb', 'delCrb', 'epsCrb', 'iotCrb'],
+          text: { et: 'Leia Põhjakroon.', en: 'Find the Northern Crown.' },
+          fact: {
+            et: 'Vanad kreeklased nägid Põhjakroonis printsess Ariadne krooni.',
+            en: 'The ancient Greeks saw the crown of the princess Ariadne in the Northern Crown.'
+          }
+        }
+      ]
     }
   ];
 
@@ -372,8 +523,12 @@
       partBigDipper: 'Suur Vanker',
       levels: [
         { name: 'Õpi teed', about: 'Sügisõhtu: Suur Vanker näitab teed' },
-        { name: 'Taevas pöörleb', about: 'Neli aastaaega ja üks öö: samad tähed, aga taevas on pöördunud' }
+        { name: 'Taevas pöörleb', about: 'Neli aastaaega ja üks öö: samad tähed, aga taevas on pöördunud' },
+        { name: 'Päris taevas', about: 'Pime taevas sadade tähtedega, juhuslikul ööl' },
+        { name: 'Ilma abita', about: 'Leia ise tähed' }
       ],
+      seasons: ['Talve', 'Talve', 'Kevad', 'Kevad', 'Kevad', 'Suve', 'Suve', 'Suve', 'Sügis', 'Sügis', 'Sügis', 'Talve'],
+      night: (season, evening, d, m, h) => `${season}${evening ? 'õhtu' : 'öö'}, ${d}. ${m} kell ${h}`,
       months: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
       date: (d, m) => `${d}. ${m}`,
       clock: (h) => `kell ${h}`,
@@ -406,8 +561,12 @@
       partBigDipper: 'The Big Dipper',
       levels: [
         { name: 'Learn the way', about: 'An autumn evening: the Big Dipper shows the way' },
-        { name: 'The sky turns', about: 'Four seasons and one night: the same stars, but the sky has turned' }
+        { name: 'The sky turns', about: 'Four seasons and one night: the same stars, but the sky has turned' },
+        { name: 'A real sky', about: 'A dark sky with hundreds of stars, on a night picked at random' },
+        { name: 'Without help', about: 'Find the stars yourself' }
       ],
+      seasons: ['winter', 'winter', 'spring', 'spring', 'spring', 'summer', 'summer', 'summer', 'autumn', 'autumn', 'autumn', 'winter'],
+      night: (season, evening, d, m, h) => `A ${season} ${evening ? 'evening' : 'night'}, ${d} ${m} at ${String(h).padStart(2, '0')}:00`,
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       date: (d, m) => `${d} ${m}`,
       clock: (h) => `${String(h).padStart(2, '0')}:00`,
@@ -454,6 +613,7 @@
   const done = new Set(store.get('done', []));
   const state = {
     level: clamp(store.get('level', 0), 0, LEVELS.length - 1),
+    tasks: [],        // the tasks of the game being played
     ti: 0,            // the task being played
     phase: 'menu',    // 'task', 'fact' or 'win'
     th: 0,            // the sidereal time, radians
@@ -481,7 +641,7 @@
     gen: 0
   };
   const level = () => LEVELS[state.level];
-  const task = () => level().tasks[state.ti];
+  const task = () => state.tasks[state.ti];
   let raf = 0;
 
   function later(ms, fn) {
@@ -616,7 +776,7 @@
       pad: clamp(u * 0.09, 30, 70),   // room round the stars of a task
       hitR: clamp(u * 0.06, 24, 40)
     };
-    if (state.cam) state.cam = fitView(viewKeys());
+    if (state.cam) state.cam = taskView();
   }
 
   // A view that looks at the middle of the stars and fits them, with `span`
@@ -1246,7 +1406,7 @@
     // the 👆 shows where to start, when nothing has happened for a while
     // only in the first task, until its line is drawn: later the pulsing
     // stars show where to start
-    const idle = state.ti === 0 && state.phase === 'task' && !state.drag && !state.pan && now - state.lastAct > 7000 && !lineDrawn();
+    const idle = state.level === 0 && state.ti === 0 && state.phase === 'task' && !state.drag && !state.pan && now - state.lastAct > 7000 && !lineDrawn();
     const at = idle ? idleSpot() : null;
     fingerEl.classList.toggle('hidden', !at);
     if (at) Object.assign(fingerEl.style, { left: at.x - 16 + 'px', top: at.y + 4 + 'px' });
@@ -1285,7 +1445,7 @@
   // the stars that pulse on this level, to show where to start
   function guides() {
     const k = task();
-    if (!k || state.phase !== 'task') return [];
+    if (!k || state.phase !== 'task' || level().help === false) return [];
     if (k.kind === 'hop' || k.kind === 'part') return [k.from, k.via];
     if (k.kind === 'arc') return k.along;
     if (k.kind === 'tap') return k.near;
@@ -1307,7 +1467,7 @@
     const T = state.turn;
     if (!T) {
       const k = task();
-      return ((k && k.caption) || state.caption || level().caption)[Astro.lang];
+      return ((k && k.caption) || state.caption)[Astro.lang];
     }
     const e = clamp((performance.now() - T.t0) / T.dur, 0, 1);
     const ms = T.ms0 + (T.ms1 - T.ms0) * e;
@@ -1337,14 +1497,14 @@
     $('taskName').textContent = k.title ? k.title[Astro.lang] : t('found')(name);
     $('taskText').textContent = k.fact[Astro.lang];
     $('tip').textContent = '';
-    const last = state.ti === level().tasks.length - 1;
+    const last = state.ti === state.tasks.length - 1;
     $('nextBtn').textContent = last ? t('finish') : t('next');
     $('nextBtn').classList.remove('hidden');
     updateBar();
   }
 
   function updateBar() {
-    const n = level().tasks.length;
+    const n = state.tasks.length;
     const k = state.ti + (state.phase === 'fact' || state.phase === 'wait' ? 1 : 0);
     $('fill').style.width = (100 * k) / n + '%';
     $('count').textContent = `${k} / ${n}`;
@@ -1353,6 +1513,14 @@
   function relayoutTop() {
     if (!state.L) return;
     state.L.top = $('task').offsetHeight + 12;
+  }
+
+  // the view for the current task, or for all of them on a level without
+  // moving views
+  function taskView() {
+    if (!level().fixedView) return fitView(viewKeys());
+    const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []), ...(k.accept || [])]).filter(Boolean);
+    return fitView([...keys, ...DIPPER], state.L, 70);
   }
 
   function startTask() {
@@ -1375,7 +1543,7 @@
     state.lastStep = performance.now();
     showTask();
     relayoutTop();
-    panTo(fitView(viewKeys()));
+    panTo(taskView());
   }
 
   // The sky turns forwards round Põhjanael to the task's date and hour,
@@ -1390,7 +1558,7 @@
     // the view for the task, worked out for the sky as it will be
     const th = state.th;
     state.th = th1;
-    const cam = fitView(viewKeys());
+    const cam = taskView();
     state.th = th;
     $('taskText').textContent = '';
     $('taskName').textContent = '';
@@ -1418,18 +1586,61 @@
     }
   }
 
+  // where the Sun is at a time (ms, UT): accurate to about a degree
+  function sun(ms) {
+    const n = (ms - Date.UTC(2000, 0, 1, 12)) / 86400000;
+    const g = (357.528 + 0.9856003 * n) * DEG;
+    const l = (280.46 + 0.9856474 * n) * DEG + (1.915 * Math.sin(g) + 0.02 * Math.sin(2 * g)) * DEG;
+    const e = 23.439 * DEG;
+    return sphere(Math.atan2(Math.cos(e) * Math.sin(l), Math.cos(l)) / DEG, Math.asin(Math.sin(e) * Math.sin(l)) / DEG);
+  }
+
+  // A dark night of 2027 picked at random, an hour from 20:00 to 03:00 on the
+  // clock with the Sun at least 15° below the horizon (so not in June and
+  // July), and the tasks of the level's pool whose stars are up then.
+  function randomNight(lv) {
+    for (let tries = 0; ; tries++) {
+      const day = Math.floor(Math.random() * 365);
+      // (not midnight, which would read "kell 0")
+      const hour = [20, 21, 22, 23, 25, 26, 27][Math.floor(Math.random() * 7)];
+      // summer time from the end of March to the end of October
+      const tz = day >= 86 && day < 303 ? 3 : 2;
+      const ms = Date.UTC(2027, 0, 1 + day, hour - tz);
+      const th = siderealTime(ms);
+      if (horizon(sun(ms), th)[2] > Math.sin(-15 * DEG) && tries < 500) continue;
+      const alt = (key) => Math.asin(horizon(STARS[key], th)[2]) / DEG;
+      const tasks = lv.pool.filter((k) => (k.up || []).every((key) => alt(key) >= 10) && (k.down || []).every((key) => alt(key) < 0));
+      if (tasks.length < 3 && tries < 500) continue;
+      const d = new Date(ms + tz * 3600000);
+      const caption = {};
+      for (const lang of ['et', 'en']) {
+        const T = TEXT[lang];
+        caption[lang] = T.night(T.seasons[d.getUTCMonth()], hour < 24, d.getUTCDate(), T.months[d.getUTCMonth()], d.getUTCHours());
+      }
+      return { ms, tz, caption, tasks };
+    }
+  }
+
   function startGame() {
     state.gen++;
     state.ti = 0;
     state.lines = [];
-    state.figs = new Set(['bigdipper']);
+    state.figs = new Set(level().figs || ['bigdipper']);
     state.named = new Set();
     state.flash = null;
     state.cam = null;
     state.pan = null;
-    state.th = siderealTime(level().when);
-    state.when = level().when;
+    let when = level().when;
     state.caption = level().caption;
+    state.tasks = level().tasks;
+    if (level().random) {
+      const night = randomNight(level());
+      when = night.ms;
+      state.caption = night.caption;
+      state.tasks = night.tasks;
+    }
+    state.th = siderealTime(when);
+    state.when = when;
     state.turn = null;
     state.limit = state.limitTo = level().limit;
     $('menu').classList.add('hidden');
@@ -1463,12 +1674,12 @@
     showFact();
     relayoutTop();
     // the view takes in the figure just drawn
-    panTo(fitView(viewKeys()));
+    panTo(taskView());
   }
 
   function nextTask() {
     sfx.pick();
-    if (state.ti === level().tasks.length - 1) {
+    if (state.ti === state.tasks.length - 1) {
       win();
       return;
     }
@@ -1738,7 +1949,7 @@
     c.height = size;
     const g = c.getContext('2d');
     const L = { W: size, H: size, u: size * 0.8, dpr: 1, top: 20, pad: 40, hitR: 36, map: true };
-    const keys = level().tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []),
+    const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []),
       ...(k.figure ? FIGURES[k.figure].lines.flat() : [])]).filter(Boolean);
     keys.push(...FIGURES.bigdipper.lines.flat());
     const cam = state.cam;
