@@ -1,0 +1,80 @@
+/* Tähest täheni: the sky, the task card and the levels.
+   The rest is in shared/common.css. */
+
+.intro {
+  margin: 10px 0 0;
+  max-width: 760px;
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* Suur Vanker in the title, as big as an emoji */
+.dipper-logo { width: 1em; height: 1em; vertical-align: -0.12em; }
+
+/* the levels */
+.levels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+}
+.level {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 22px;
+  background: var(--card);
+  border: 5px solid transparent;
+  text-align: left;
+  transition: transform 0.15s, background 0.15s, border-color 0.15s;
+}
+.level:hover { background: var(--card-hover); }
+.level.selected {
+  border-color: var(--accent);
+  transform: scale(1.03);
+  box-shadow: 0 0 26px rgba(255, 211, 77, 0.45);
+}
+.level-icon { flex: none; font-size: 2.2rem; line-height: 1; }
+.level-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.level-name { font-size: 1.15rem; }
+.level-about { font-size: 0.95rem; color: var(--muted); }
+.done-badge { flex: none; font-size: 1.4rem; }
+
+/* ---------- Game ---------- */
+
+#sky { position: absolute; left: 0; top: 0; }
+
+/* the task, or the fact of the star just found, over the top of the sky */
+.task {
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  translate: -50% 0;
+  width: min(600px, calc(100% - 16px));
+  padding: 8px 16px 10px;
+  border-radius: 22px;
+  background: rgba(20, 28, 80, 0.82);
+  text-align: center;
+  pointer-events: none;
+}
+.task small { display: block; font-size: clamp(0.85rem, 2.4vmin, 1rem); font-weight: 600; color: var(--muted); }
+.task b { display: block; font-size: clamp(1.15rem, 3.6vmin, 1.5rem); font-weight: 900; color: var(--accent); line-height: 1.25; }
+.task b:empty { display: none; }
+.task p { margin: 4px 0 0; font-size: clamp(0.95rem, 2.8vmin, 1.15rem); font-weight: 700; line-height: 1.35; }
+.task p:empty { display: none; }
+.task .tip { color: var(--sky); }
+.task.fact p { font-weight: 600; }
+.task .btn { margin-top: 8px; font-size: 1.1rem; padding: 8px 22px; pointer-events: auto; }
+
+.finger {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 2.4rem;
+  line-height: 1;
+  pointer-events: none;
+  animation: poke 1.2s ease-in-out infinite;
+}
+@keyframes poke { 50% { translate: 0 -10px; } }

@@ -25,11 +25,14 @@ the task.
   in the view, at the same place.
 - **Orion** looks south, at a winter evening sky.
 
-The view shows about 100° of sky, so that the stars are far enough apart to
-tap on a phone (Merak and Dubhe are only 5° apart). A whole round sky, as
-on a planisphere, would put them about 10 px apart. When a hop's line runs
-off the edge, for example from the handle of Suur Vanker towards Arktuurus
-in the east, the view pans along it.
+The view shows about 70° of sky across its shorter side, so that the stars
+are far enough apart to tap on a phone (Merak and Dubhe are only 5°
+apart). A whole round sky, as on a planisphere, would put them about 10 px
+apart. Each task shows the stars it is about, and the view pans to them.
+The first tasks, Põhjanael and Väike Vanker, show less sky, about 40° and
+35°, so that the other figures do not get in the way, and the Arktuurus
+task shows only as much as Suur Vanker and Karjane need. The view looks at
+the middle of the outline of the stars a task is about.
 
 The task is at the top, with a short text, e.g. "Leia Põhjanael" ("Find the
 North Star"), and on the first levels the names of the stars to start from.
@@ -47,20 +50,29 @@ oktoober kell 21" ("An autumn evening, 15 October at 21:00").
   level 1 the arrow has a tick at every gap between the two stars, so that
   "five times as far" can be counted.
 - **Osa teest (part of the way):** drag from one star to another, and a
-  ring marks the place on the line, e.g. a third of the way for
-  Põhjakroon.
+  ring marks the place on the line, e.g. a third of the way from
+  Arktuurus to Veega for Põhjakroon (not on level 1 of Suur Vanker).
 - **Kaar (an arc):** drag along the three stars of the handle of Suur
   Vanker, and the curve goes on as a dashed arc. The arc is drawn from
   points kept in the data: a circle through the three handle stars bends
   far too much and misses Arktuurus.
-- **Joonista (draw a figure):** slide a finger from star to star, as in
-  Tähtkujud, to join a figure that hangs from a star already found, such
-  as Väike Vanker from Põhjanael.
+- **Joonista (draw a figure):** as in Tähtkujud: the stars of the figure
+  are numbered 1, 2, 3 …, and the player taps them in turn or slides a
+  finger from star to star, also star 1, even when it was found already,
+  such as Põhjanael for Väike Vanker. Each star joined turns golden and
+  plays the next note of a tune, and a golden line grows to it. The next
+  star pulses at the start and after a few seconds without progress, a
+  star of the figure tapped out of turn wiggles, and 💡 shows the whole
+  figure as faint dashed lines.
 - **Puuduta (tap):** tap the star to find. A tap picks the brightest star
   near the finger, not the nearest one, so that a child aiming at Thuban
   in a sky full of faint stars gets Thuban. The right star lights up, gets
   its name and a short fact, and its figure is drawn in. A wrong star only
-  wiggles, and on levels 1 and 2 says its name, e.g. "See on Miitsar".
+  wiggles, and on levels 1 and 2 says its name if it has one used in
+  Estonia, e.g. "See on Veega", or else its figure, e.g. "See täht on Lohe
+  tähtkujus". The Arabic names of the stars, such as Merak and Dubhe, are
+  not used in Estonia, so the game does not show them: the tasks name the
+  stars by where they are, e.g. Suure Vankri tagumised rattad.
 
 Each star found becomes a start for the next task, so the tasks of a level
 are one chain across the sky. 💡 shows the arrow to follow, or on level 1,
@@ -125,9 +137,10 @@ A darker sky makes the figures harder to find, not easier, which children
 do not expect. The level sets how dark the sky is, rather than a free
 slider, so that the stars a task needs are always there:
 
-- Level 1 shows only the stars of the figures of its part and the stars
-  brighter than 3.5.
-- Level 2 is a small-town sky, and in one task a slider with three stops
+- Levels 1 and 2 are a small-town sky, to magnitude 4.5. The stars of the
+  figures always show, also the fainter ones, such as η UMi (5.0) in Väike
+  Vanker, and they are drawn a little bigger.
+- On level 2, in one task a slider with three stops
   (🏙️ 🏘️ 🌲) appears. In the Suur Vanker part: "Linnas paistab Väikesest
   Vankrist ainult kolm tähte. Vii liugur maale, et näha teda tervet." ("In
   a city only three stars of Väike Vanker can be seen. Move the slider to
@@ -178,10 +191,20 @@ above it, and Veega (57° up), Põhjakroon (24°) and Arktuurus (8°) to the
 west, where the view pans to. The trees there are drawn low, so that
 Arktuurus shows above them.
 
-1. **Põhjanael:** "Leia Põhjanael. Tõmba joon Merakist läbi Dubhe ja jätka
-   seda." ("Find the North Star. Draw a line from Merak through Dubhe and
-   carry it on.") Põhjanael is five times the gap between them beyond
-   Dubhe (5.4° and 29°), 2° off the line.
+1. **Põhjanael**, in two steps, so that drawing the line and finding the
+   star on it are learnt one at a time:
+   - "Tõmba joon läbi Suure Vankri kahe tagumise ratta ja jätka seda."
+     ("Draw a line through the two stars at the end of the Big Dipper's
+     bowl and carry it on.") When the line has grown, the next step starts
+     by itself. A tap on another star first says "Tõmba kõigepealt joon."
+     ("Draw the line first.")
+   - "Põhjanael on sellel joonel, viis korda nii kaugel, kui on kahe ratta
+     vahe. Puuduta Põhjanaela." ("The North Star is on this line, five
+     times as far as the gap between the two stars. Tap the North Star.")
+     The line stays bright, with its ticks.
+
+   The line goes from Merak through Dubhe, and Põhjanael is five times the
+   gap between them beyond Dubhe (5.4° and 29°), 2° off the line.
    - Fact: "Põhjanael on peaaegu täpselt taevapooluse kohal. Kogu taevas
      pöörleb tema ümber, aga tema ise püsib paigal, alati põhjas."
      ("The North Star is almost exactly at the sky's pole. The whole sky
@@ -190,10 +213,9 @@ Arktuurus shows above them.
    Vanker." ("The North Star is the end of the Little Dipper's handle.
    Draw the Little Dipper.")
    - Fact: "Väike Vanker on palju tuhmim kui Suur Vanker. Linnas paistavad
-     temast ainult Põhjanael ja kaks vankri tagumist tähte, Kochab ja
-     Pherkad." ("The Little Dipper is much fainter than the Big Dipper. In
-     a city only the North Star and the two stars at the back of the
-     dipper, Kochab and Pherkad, can be seen.")
+     temast ainult Põhjanael ja vankri kaks tagumist ratast." ("The Little
+     Dipper is much fainter than the Big Dipper. In a city only the North
+     Star and the two stars at the end of the bowl can be seen.")
 3. **Lohe:** "Lohe saba ots on Suure Vankri ja Põhjanaela vahel. Joonista
    Lohe sabast peani." ("The tip of the Dragon's tail is between the Big
    Dipper and the North Star. Draw the Dragon from its tail to its head.")
@@ -205,7 +227,8 @@ Arktuurus shows above them.
      wraps round the Little Dipper. Its head is four stars, and next to it
      shines bright Vega.")
 4. **Veega:** "Leia Veega, hele täht Lohe pea kõrval." ("Find Vega, the
-   bright star next to the Dragon's head.")
+   bright star next to the Dragon's head.") A pulsing blue arrow points
+   from the head towards Veega, without reaching it.
    - Fact: "Veega on Lüüra tähtkuju kõige heledam täht, meist 25
      valgusaasta kaugusel. Eestis ta ei looju kunagi." ("Vega is the
      brightest star of Lyra, 25 light years away. In Estonia it never
@@ -214,20 +237,25 @@ Arktuurus shows above them.
    jätka sama kaarega edasi." ("Find Arcturus. Slide your finger along the
    Big Dipper's handle and carry on along the same curve.") It is about
    31° beyond Alkaid, low above the trees in the west-north-west.
-   - Fact: "Arktuurus on taeva põhjapoolse poole kõige heledam täht, oranž
+   - Fact: "Arktuurus on põhjataeva kõige heledam täht, oranž
      hiidtäht Karjase tähtkujus. Sügisõhtul on ta madalal ja loojub varsti,
      aga kevadel tõuseb ta õhtuti kõrgele." ("Arcturus is the brightest
      star in the northern half of the sky, an orange giant in Boötes. On an
      autumn evening it is low and soon sets, but in spring it climbs high in
      the evening.")
-6. **Põhjakroon:** "Leia Põhjakroon. Ta on Arktuuruse ja Veega vahel,
-   Arktuurusele lähemal, umbes kolmandiku teel." ("Find the Northern Crown.
-   It is between Arcturus and Vega, nearer Arcturus, about a third of the
-   way.") Alphecca is at 0.33 of the way, 3° off the line.
+6. **Põhjakroon:** "Leia Põhjakroon. See on poolring tähti Karjasest
+   vasakul." ("Find the Northern Crown. It is a half circle of stars to the
+   left of Boötes.") The view stays close to Karjane, and a pulsing blue
+   arrow points from Karjane's left side towards the Crown, without
+   reaching it. On an autumn evening,
+   low in the west, the Crown is to its left and a little higher; any of
+   its stars counts. (In other seasons Karjane stands differently, and the
+   hop from Arktuurus towards Veega, a third of the way, may serve better:
+   Alphecca is at 0.33 of the way, 3° off the line.)
    - Fact: "Põhjakroon on poolring tähti nagu kuninga kroon. Tema kõige
-     heledam täht Alphecca on nagu kroonis särav pärl." ("The Northern
-     Crown is a half circle of stars, like a king's crown. Its brightest
-     star, Alphecca, is like a shining pearl in it.")
+     heledam täht on nagu kroonis särav pärl." ("The Northern Crown is a
+     half circle of stars, like a king's crown. Its brightest star is like a
+     shining pearl in it.")
 
 On level 2, the sky turns on from the autumn evening of level 1, and the
 seasons each take a few of these: autumn Põhjanael and Arktuurus setting,
@@ -306,12 +334,12 @@ Left out of the first version, but easy to add as more hops:
 
 ## What it needs
 
-- **Star data:** Tähtkujud has only the stars of its figures, enough for
-  level 1. The other levels need a catalogue of the stars to magnitude 6,
-  such as the Yale Bright Star Catalogue (about 9,000 stars). Trimmed to
-  the stars north of −35° and to RA, Dec, magnitude and colour (B−V, so
-  that Arktuurus, Aldebaran and Betelgeuse are orange), that is about 4,000
-  stars and 70–100 kB, in a `stars.js` of its own.
+- **Star data:** a catalogue of the stars to magnitude 6, the Yale Bright
+  Star Catalogue (about 9,000 stars), without T CrB, a recurrent nova that
+  the catalogue lists at its outburst brightness (2.0) beside Põhjakroon. Trimmed to the stars north of −40°
+  and to RA, Dec, magnitude and colour (B−V, so that Arktuurus, Aldebaran
+  and Betelgeuse are orange), that is about 4,000 stars and 80 kB, in a
+  `stars.js` of its own.
 - **The named stars, the figures, the hops and the levels** go in lists at
   the top of `app.js`: for each hop its kind, its stars, where the star to
   find is (e.g. five gaps, or a third of the way), the arc's points, and
@@ -341,5 +369,4 @@ About 1,200–1,500 lines and the star data, like Püüa langev täht, whose
 projection and horizon it can reuse. Most of the work is in the moves,
 making the loose drag snap the way the child means it, and in the panning
 and the turning of the view. A first version could be level 1 of the Suur
-Vanker part, without the catalogue, in a folder `taheretked/` not yet linked
-from the main page.
+Vanker part, in a folder `taheretked/` not yet linked from the main page.
