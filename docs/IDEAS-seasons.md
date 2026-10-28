@@ -1,7 +1,7 @@
 # Kuidas tekivad aastaajad? (What causes the seasons?)
 
 A game idea for ages 8–10, which is now the game in `aastaajad/`, described
-in the [README](README.md#kuidas-tekivad-aastaajad). The extras and the
+in the [README](../README.md#kuidas-tekivad-aastaajad). The extras and the
 simpler version below are not made yet. It goes well with Kuu faasid. For
 how a new game should look and work, see [DESIGN.md](DESIGN.md).
 

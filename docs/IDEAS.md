@@ -54,9 +54,11 @@ aastaajad?
    left, forward 2") on a grid to reach rocks or ice, then press go.
    Signals take minutes to reach Mars, so the rover can't be steered live.
    It's a first taste of coding.
-14. **Taevakaart (star hopping):** find stars by following lines from ones
-    you know, such as from Suur Vanker to Põhjanael, or along Orion's belt
-    to Sirius. It reuses the star positions from Tähtkujud.
+14. **Tähest täheni (star hopping):** find stars by following lines from
+    ones you know, such as from Suur Vanker to Põhjanael, or along Orion's
+    belt to Sirius, in a sky that turns with the seasons and the hours.
+    See [IDEAS-starhopping.md](IDEAS-starhopping.md) for the moves, the
+    levels, the hops and what the game needs.
 15. **Päikesekell (shadows and sundial):** drag the Sun across the sky over
     a stick, a tree or a child, and watch the shadow turn and change
     length. Tasks ask for the shortest shadow (noon) or one pointing east,

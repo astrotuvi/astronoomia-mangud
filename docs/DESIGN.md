@@ -1,7 +1,7 @@
 # Design notes
 
 Rules for new games, so that they look and work like the others. For the
-folder layout, see [README.md](README.md#layout). The shared parts are in
+folder layout, see [README.md](../README.md#layout). The shared parts are in
 `shared/common.css` and `shared/common.js`; use them rather than making new
 ones.
 

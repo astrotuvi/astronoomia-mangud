@@ -35,8 +35,9 @@ python3 -m http.server
 - `index.html`: the start page with links to the games, and at the bottom the address of the published games, https://astrotuvi.github.io/astronoomia-mangud/, with its QR code (`shared/qr.png`)
 - `shared/`: the theme, menu, top bar and win screen (`common.css`), settings, language, the author line shown in every menu, sounds and star confetti (`common.js`), and the drawn pictures of the planets and of Ceres, among them Mars and the Earth seen from space, and a flat map of the Earth (`planets.js`)
 - one folder per game, each with its own `index.html`, `app.js` and `style.css`
+- `docs/`: the design rules for new games (`DESIGN.md`), ideas for new games (`IDEAS.md`), and some of them written out in full (`IDEAS-*.md`)
 
-To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`. Follow [DESIGN.md](DESIGN.md), so that it looks and works like the other games, also on phones in dark mode.
+To add a game, make a new folder that loads `../shared/common.css` and `../shared/common.js`, and add a card for it to `index.html`. Follow [docs/DESIGN.md](docs/DESIGN.md), so that it looks and works like the other games, also on phones in dark mode.
 
 ## Tähepusle
 
