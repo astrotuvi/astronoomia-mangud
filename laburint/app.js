@@ -7,8 +7,7 @@
 
   // The photos of Tähepusle, by Tõrva Astronoomiaklubi (AstroBin, CC BY-NC-SA).
   // `astrobin` is the image id: https://www.astrobin.com/<id>/
-  // `kind` keeps the decoy on level 1 a different kind of thing from the
-  // picture to find.
+  // `kind` keeps the decoys a different kind of thing from the picture to find.
   const PHOTOS = [
     {
       file: '../pusle/images/pleiades.jpg',
@@ -312,11 +311,18 @@
     }
   ];
 
-  const ROUNDS = 5;
-  // about this many cells along the longer side of the maze, each at least
-  // MIN_CELL px, so that a finger can follow the paths
-  const CELLS = 9;
-  const MIN_CELL = 40;
+  // `cells`: about this many cells along the longer side of the maze, each at
+  // least `min` px, so that a finger can follow the paths. `match`: the task
+  // shows the picture to find, otherwise its name. `decoys`: how many wrong
+  // pictures. `dark`: the maze is seen only where the rocket has been.
+  const LEVELS = [
+    { icon: '🖼️', cells: 9, min: 40, match: true, decoys: 1 },
+    { icon: '🌀', cells: 13, min: 34, match: true, decoys: 1 },
+    { icon: '🔤', cells: 13, min: 34, match: false, decoys: 1 },
+    { icon: '🎯', cells: 13, min: 34, match: false, decoys: 2 },
+    { icon: '🌑', cells: 13, min: 34, match: false, decoys: 2, dark: true }
+  ];
+
   const SPEED = 9; // cells a second
   const REACH = 4; // at most this many steps to where the finger is, so that it cannot jump a wall
 
@@ -324,39 +330,57 @@
     et: {
       title: 'Kosmoselabürint',
       intro1: 'Lenda raketiga läbi labürindi õige pildini.',
-      intro2: 'Labürindi kummalgi pool on üks pilt. Vaata, kumb neist on see, mida otsid, ja leia tee selleni. Rakett liigub, kui vead sõrme või hiirega mööda käiku. Arvutis saad vajutada ka nooleklahve.',
+      intro2: 'Labürindi servades on pildid. Vaata, milline neist on see, mida otsid, ja leia tee selleni. Rakett liigub, kui vead sõrme või hiirega mööda käiku. Arvutis saad vajutada ka nooleklahve.',
+      chooseLevel: 'Vali tase',
+      levels: [
+        { name: 'Sama pilt', about: 'Leia tee pildini, mis on üleval' },
+        { name: 'Suurem labürint', about: 'Sama pilt, aga pikem tee' },
+        { name: 'Pildi nimi', about: 'Üleval on pildi asemel selle nimi' },
+        { name: 'Kolm pilti', about: 'Kaks pilti kolmest on valed' },
+        { name: 'Pime labürint', about: 'Labürint paistab ainult seal, kus rakett on lennanud' }
+      ],
       play: 'Mängi',
+      flyMatch: 'Lenda raketiga selle pildini:',
       fly: 'Lenda raketiga pildini, millel on',
-      next: 'Järgmine labürint ▶',
-      finish: 'Lõpeta 🏆',
       back: 'Lenda tagasi 🚀',
       notThis: 'See ei ole pilt, mida otsid. Lenda teise pildini!',
+      notThis2: 'See ei ole pilt, mida otsid. Proovi mõnda teist pilti!',
       wellDone: 'Tubli!',
-      winName: 'Leidsid tee kõigi viie pildini!',
-      again: 'Uuesti',
+      newMaze: 'Uus labürint',
+      nextLevel: 'Järgmine tase',
       menu: 'Menüü',
       hint: 'Vihje',
       sound: 'Heli',
       credit: 'Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.',
+      photo: 'Foto: Tõrva Astronoomiaklubi',
       allGames: 'Kõik mängud'
     },
     en: {
       title: 'Space Maze',
       intro1: 'Fly the rocket through the maze to the right picture.',
-      intro2: 'There is a picture on each side of the maze. Work out which one you are looking for, and find the way to it. To move the rocket, drag your finger or the mouse along a path. On a computer you can also use the arrow keys.',
+      intro2: 'There are pictures at the edges of the maze. Work out which one you are looking for, and find the way to it. To move the rocket, drag your finger or the mouse along a path. On a computer you can also use the arrow keys.',
+      chooseLevel: 'Pick a level',
+      levels: [
+        { name: 'Same picture', about: 'Find the way to the picture shown at the top' },
+        { name: 'Bigger maze', about: 'The same picture, but a longer way' },
+        { name: 'The name', about: 'The name of the picture instead of the picture' },
+        { name: 'Three pictures', about: 'Two of the three pictures are wrong' },
+        { name: 'Dark maze', about: 'You see the maze only where the rocket has been' }
+      ],
       play: 'Play',
+      flyMatch: 'Fly the rocket to this picture:',
       fly: 'Fly the rocket to the picture of',
-      next: 'Next maze ▶',
-      finish: 'Finish 🏆',
       back: 'Fly back 🚀',
       notThis: 'This is not the picture you are looking for. Fly to the other one!',
+      notThis2: 'This is not the picture you are looking for. Try another one!',
       wellDone: 'Well done!',
-      winName: 'You found the way to all five pictures!',
-      again: 'Again',
+      newMaze: 'New maze',
+      nextLevel: 'Next level',
       menu: 'Menu',
       hint: 'Hint',
       sound: 'Sound',
       credit: 'Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.',
+      photo: 'Photo: Tõrva Astronoomiaklubi',
       allGames: 'All games'
     }
   };
@@ -366,13 +390,15 @@
   // ---------------------------------------------------------------------------
 
   const { $, rand, clamp, shuffle, sfx } = Astro;
+  const store = Astro.makeStore('laburint.');
   const t = (key) => TEXT[Astro.lang][key];
 
   const field = $('field');
   const cv = $('maze');
+  const fogCv = document.createElement('canvas');
   const rocketEl = $('rocket');
   const fingerEl = $('finger');
-  const photoEls = [$('photoA'), $('photoB')];
+  const photoEls = [$('photoA'), $('photoB'), $('photoC')];
 
   // the open sides of a cell, as bits, and the side of the cell next to it
   const DIRS = [
@@ -382,10 +408,11 @@
     { bit: 8, dx: -1, dy: 0, back: 2 }
   ];
 
+  const done = new Set(store.get('done', []));
   const state = {
-    pairs: [],      // [target, decoy] for each round
-    round: 0,
-    found: 0,
+    level: clamp(store.get('level', 0), 0, LEVELS.length - 1),
+    set: null,      // [target, ...decoys]
+    last: [],       // the pictures to find lately, not to be asked again soon
     L: null,        // the layout of the field
     m: null,        // the maze
     cell: 0,        // where the rocket is, or last was
@@ -394,13 +421,21 @@
     scale: 1,
     queue: [],      // the cells the rocket is flying to, in turn
     stack: [],      // the way from the start to the rocket, without the dead ends left again
+    seen: new Set(), // the cells the rocket has been in, for the dark maze
     fly: null,      // the rocket flying into the right picture
     drag: null,
     busy: false,
     moved: false,
-    roundStart: 0,
-    hintUntil: 0
+    start: 0,
+    hintUntil: 0,
+    gen: 0          // goes up when a game ends, so that its timers do nothing
   };
+  const level = () => LEVELS[state.level];
+
+  function later(ms, fn) {
+    const gen = state.gen;
+    setTimeout(() => { if (gen === state.gen) fn(); }, ms);
+  }
 
   // ---------------------------------------------------------------------------
   // The maze
@@ -469,53 +504,74 @@
     return path;
   }
 
-  // A maze with the start in the middle and a way out on two opposite
+  // A maze with the start in the middle and the ways out on two opposite
   // sides: left and right on a wide screen, top and bottom on a tall one.
-  // The two ways out are about as far from the start, so that the nearer
-  // one does not give the answer, and the way to one does not go past the
-  // other.
-  function makeMaze(cols, rows, wide) {
-    // a few tries, as in a narrow maze the ways out may be far from even
+  // With three pictures, one side has two, one in each half. The ways out
+  // are about as far from the start, so that the nearest one does not give
+  // the answer, and the way to one does not go past another. A few tries,
+  // as in a narrow maze they may be far from even.
+  function makeMaze(cols, rows, wide, n) {
     let best = null;
-    for (let n = 0; n < 40; n++) {
-      const m = tryMaze(cols, rows, wide);
+    for (let k = 0; k < 40; k++) {
+      const m = tryMaze(cols, rows, wide, n);
       if (m && (!best || m.score > best.score)) best = m;
       if (best && best.diff <= Math.max(1, best.len * 0.15)) break;
     }
     return best;
   }
 
-  function tryMaze(cols, rows, wide) {
+  function tryMaze(cols, rows, wide, n) {
     const start = Math.floor(rows / 2) * cols + Math.floor(cols / 2);
     const m = { cols, rows, start, wide, open: carve(cols, rows, start) };
-    const A = [];
-    const B = [];
-    for (let k = 0; k < (wide ? rows : cols); k++) {
-      A.push(wide ? k * cols : k);
-      B.push(wide ? k * cols + cols - 1 : (rows - 1) * cols + k);
+    const along = wide ? rows : cols;
+    const cellOn = (side, k) => {
+      if (wide) return k * cols + (side ? cols - 1 : 0);
+      return side ? (rows - 1) * cols + k : k;
+    };
+    // for each way out: the side, and the first and last+1 cell along it
+    let parts;
+    if (n === 2) parts = [[0, 0, along], [1, 0, along]];
+    else {
+      const two = Math.random() < 0.5 ? 0 : 1;
+      const h = Math.floor(along / 2);
+      parts = [[two, 0, h], [two, along - h, along], [1 - two, 0, along]];
     }
-    const ways = new Map([...A, ...B].map((i) => [i, route(m, start, i)]));
+    const sets = parts.map(([side, a, b]) => {
+      const out = [];
+      for (let k = a; k < b; k++) out.push(cellOn(side, k));
+      return out;
+    });
+    const ways = new Map();
+    sets.flat().forEach((i) => ways.set(i, route(m, start, i)));
+
     let best = null;
     let bestScore = -Infinity;
-    for (const a of A) {
-      for (const b of B) {
-        const pa = ways.get(a);
-        const pb = ways.get(b);
-        if (pa.includes(b) || pb.includes(a)) continue;
-        const score = Math.min(pa.length, pb.length) - 2 * Math.abs(pa.length - pb.length) + rand(0, 3);
-        if (score > bestScore) {
-          bestScore = score;
-          best = [a, b];
-          m.len = Math.min(pa.length, pb.length);
-          m.diff = Math.abs(pa.length - pb.length);
-        }
+    const pick = (chosen) => {
+      if (chosen.length < sets.length) {
+        for (const i of sets[chosen.length]) pick([...chosen, i]);
+        return;
       }
-    }
+      const paths = chosen.map((i) => ways.get(i));
+      if (paths.some((p, k) => chosen.some((i, j) => j !== k && p.includes(i)))) return;
+      const lens = paths.map((p) => p.length);
+      const lo = Math.min(...lens);
+      const hi = Math.max(...lens);
+      const score = lo - 2 * (hi - lo) + rand(0, 3);
+      if (score > bestScore) {
+        bestScore = score;
+        best = chosen;
+        m.len = lo;
+        m.diff = hi - lo;
+      }
+    };
+    pick([]);
     if (!best) return null;
     m.score = bestScore;
     m.exits = best;
-    // the side of each exit cell that opens to its picture
-    m.gates = wide ? [8, 2] : [1, 4];
+    // the side of each exit cell that opens to its picture, and which half
+    // of the side the picture is in (0: anywhere, 1: first, 2: second)
+    m.gates = parts.map(([side]) => (wide ? (side ? 2 : 8) : (side ? 4 : 1)));
+    m.parts = parts.map(([side, a, b]) => ({ side, half: b - a === along ? 0 : a === 0 ? 1 : 2 }));
     return m;
   }
 
@@ -524,13 +580,16 @@
   // ---------------------------------------------------------------------------
 
   // The pictures beside the maze on a wide screen, above and below it on a
-  // tall one.
+  // tall one. With three pictures, two of them share a side.
   function layout(wide) {
     const W = field.clientWidth;
     const H = field.clientHeight;
     const gap = 12;
     if (wide === undefined) wide = W > H;
-    const P = Math.floor(wide ? Math.min(H * 0.5, W * 0.2) : Math.min(W * 0.5, H * 0.2));
+    const share = level().decoys > 1 ? 0.5 : 1;
+    const P = Math.floor(wide
+      ? Math.min((H - gap) * share, H * 0.5, W * 0.2)
+      : Math.min((W - gap) * share, W * 0.5, H * 0.2));
     const mw = wide ? W - 2 * (P + gap) : W - 8;
     const mh = wide ? H - 8 : H - 2 * (P + gap);
     return { W, H, P, gap, wide, mw, mh };
@@ -538,14 +597,14 @@
 
   function gridSize(L) {
     const long = Math.max(L.mw, L.mh);
-    let n = CELLS;
-    while (n > 5 && long / n < MIN_CELL) n--;
+    let n = level().cells;
+    while (n > 5 && long / n < level().min) n--;
     const c = long / n;
     const other = Math.max(3, Math.floor(Math.min(L.mw, L.mh) / c));
     return L.mw >= L.mh ? [n, other] : [other, n];
   }
 
-  // the size and place of the maze, the pictures and the canvas
+  // the size and place of the maze, the pictures and the canvases
   function fit() {
     const { L, m } = state;
     m.c = Math.floor(Math.min(L.mw / m.cols, L.mh / m.rows));
@@ -553,27 +612,27 @@
     m.y = Math.round((L.H - m.rows * m.c) / 2);
 
     const dpr = window.devicePixelRatio || 1;
-    cv.width = Math.ceil(L.W * dpr);
-    cv.height = Math.ceil(L.H * dpr);
+    cv.width = fogCv.width = Math.ceil(L.W * dpr);
+    cv.height = fogCv.height = Math.ceil(L.H * dpr);
     cv.style.width = L.W + 'px';
     cv.style.height = L.H + 'px';
 
     m.photoBox = m.exits.map((e, k) => {
-      const cx = m.x + (e % m.cols + 0.5) * m.c;
-      const cy = m.y + (Math.floor(e / m.cols) + 0.5) * m.c;
+      const [cx, cy] = center(m, e);
+      const { side, half } = m.parts[k];
       const P = L.P;
-      let x, y;
+      const span = L.wide ? L.H : L.W;
+      const lo = half === 2 ? span / 2 + L.gap / 2 : 0;
+      const hi = half === 1 ? span / 2 - L.gap / 2 - P : span - P;
       if (L.wide) {
-        x = k ? m.x + m.cols * m.c + L.gap : m.x - L.gap - P;
-        y = clamp(cy - P / 2, 0, L.H - P);
-      } else {
-        x = clamp(cx - P / 2, 0, L.W - P);
-        y = k ? m.y + m.rows * m.c + L.gap : m.y - L.gap - P;
+        return { x: side ? m.x + m.cols * m.c + L.gap : m.x - L.gap - P, y: clamp(cy - P / 2, lo, hi), P };
       }
-      return { x, y, P };
+      return { x: clamp(cx - P / 2, lo, hi), y: side ? m.y + m.rows * m.c + L.gap : m.y - L.gap - P, P };
     });
     photoEls.forEach((el, k) => {
       const b = m.photoBox[k];
+      el.classList.toggle('hidden', !b);
+      if (!b) return;
       el.style.width = el.style.height = b.P + 'px';
       el.style.transform = `translate(${b.x}px, ${b.y}px)`;
     });
@@ -582,8 +641,34 @@
     rocketEl.style.width = rocketEl.style.height = s + 'px';
     rocketEl.style.fontSize = Math.round(s * 0.8) + 'px';
     rocketEl.style.lineHeight = s + 'px';
-    rocketEl.style.textAlign = 'center';
     fingerEl.style.fontSize = Math.round(m.c * 0.7) + 'px';
+
+    if (level().dark) {
+      // the dark over the maze, with the places the rocket has been cleared again
+      const f = fogCv.getContext('2d');
+      f.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const pad = m.c * 0.3;
+      f.fillStyle = '#0b1238';
+      f.beginPath();
+      f.roundRect(m.x - pad, m.y - pad, m.cols * m.c + 2 * pad, m.rows * m.c + 2 * pad, Math.min(22, m.c * 0.4));
+      f.fill();
+      state.seen.forEach((i) => reveal(...center(m, i)));
+    }
+  }
+
+  // clear the dark around a point of the field
+  function reveal(x, y) {
+    const f = fogCv.getContext('2d');
+    const r = state.m.c * 1.7;
+    const g = f.createRadialGradient(x, y, r * 0.45, x, y, r);
+    g.addColorStop(0, 'rgba(0, 0, 0, 1)');
+    g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    f.globalCompositeOperation = 'destination-out';
+    f.fillStyle = g;
+    f.beginPath();
+    f.arc(x, y, r, 0, Math.PI * 2);
+    f.fill();
+    f.globalCompositeOperation = 'source-over';
   }
 
   // ---------------------------------------------------------------------------
@@ -622,10 +707,11 @@
     m.exits.forEach((e, k) => {
       const [x, y] = center(m, e);
       const b = m.photoBox[k];
-      const bx = L.wide ? (k ? b.x : b.x + b.P) : clamp(x, b.x + 20, b.x + b.P - 20);
-      const by = L.wide ? clamp(y, b.y + 20, b.y + b.P - 20) : (k ? b.y : b.y + b.P);
-      const ex = L.wide ? (k ? x + c / 2 : x - c / 2) : x;
-      const ey = L.wide ? y : (k ? y + c / 2 : y - c / 2);
+      const side = m.parts[k].side;
+      const bx = L.wide ? (side ? b.x : b.x + b.P) : clamp(x, b.x + 20, b.x + b.P - 20);
+      const by = L.wide ? clamp(y, b.y + 20, b.y + b.P - 20) : (side ? b.y : b.y + b.P);
+      const ex = L.wide ? (side ? x + c / 2 : x - c / 2) : x;
+      const ey = L.wide ? y : (side ? y + c / 2 : y - c / 2);
       line(ctx, [[ex, ey], [bx, by]]);
     });
     ctx.setLineDash([]);
@@ -637,18 +723,6 @@
     ctx.lineWidth = c * 0.22;
     if (!state.fly) line(ctx, [...state.stack.map((i) => center(m, i)), [rx, ry]]);
     else line(ctx, state.stack.map((i) => center(m, i)));
-
-    // the hint: the way to the right picture, fading
-    const hint = (state.hintUntil - now) / 2500;
-    if (hint > 0) {
-      const way = route(m, state.cell, m.exits[m.target]) || [];
-      ctx.strokeStyle = `rgba(255, 211, 77, ${0.8 * Math.min(1, hint * 2)})`;
-      ctx.lineWidth = c * 0.3;
-      ctx.shadowColor = 'rgba(255, 211, 77, 0.8)';
-      ctx.shadowBlur = c * 0.3;
-      line(ctx, [center(m, state.cell), ...way.map((i) => center(m, i))]);
-      ctx.shadowBlur = 0;
-    }
 
     // the walls
     ctx.strokeStyle = '#5fd4ff';
@@ -667,6 +741,25 @@
       }
     }
     ctx.stroke();
+
+    if (level().dark) {
+      if (!state.fly) reveal(rx, ry);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(fogCv, 0, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // the hint: the way to the right picture, fading, over the dark too
+    const hint = (state.hintUntil - now) / 2500;
+    if (hint > 0) {
+      const way = route(m, state.cell, m.exits[m.target]) || [];
+      ctx.strokeStyle = `rgba(255, 211, 77, ${0.8 * Math.min(1, hint * 2)})`;
+      ctx.lineWidth = c * 0.3;
+      ctx.shadowColor = 'rgba(255, 211, 77, 0.8)';
+      ctx.shadowBlur = c * 0.3;
+      line(ctx, [center(m, state.cell), ...way.map((i) => center(m, i))]);
+      ctx.shadowBlur = 0;
+    }
   }
 
   function placeRocket(now) {
@@ -676,14 +769,14 @@
     const y = m.y + state.pos.y * m.c - s / 2;
     rocketEl.style.transform = `translate(${x}px, ${y}px) rotate(${state.angle}deg) scale(${state.scale})`;
     // a finger under the rocket, if nothing has happened for a while
-    const idle = !state.moved && !state.busy && now - state.roundStart > 2500;
+    const idle = !state.moved && !state.busy && now - state.start > 2500;
     fingerEl.classList.toggle('hidden', !idle);
     if (idle) fingerEl.style.transform = `translate(${x + s * 0.2}px, ${y + s * 0.95}px)`;
   }
 
-  function updateProgress() {
-    $('progressFill').style.width = (100 * state.found) / ROUNDS + '%';
-    $('progressText').textContent = `⭐ ${state.found} / ${ROUNDS}`;
+  // the level, in the top bar
+  function showLevel() {
+    $('levelName').textContent = `${state.level + 1}. ${t('levels')[state.level].name}`;
   }
 
   function updateSound() {
@@ -709,7 +802,7 @@
 
   function turnTo(dx, dy, dt) {
     const want = (Math.atan2(dy, dx) * 180) / Math.PI + 45; // the emoji points up and right
-    let d = ((want - state.angle) % 360 + 540) % 360 - 180;
+    const d = ((want - state.angle) % 360 + 540) % 360 - 180;
     state.angle += d * Math.min(1, dt * 16);
   }
 
@@ -725,9 +818,7 @@
       turnTo(f.x1 - f.x0, f.y1 - f.y0, dt);
       if (k === 1 && !f.done) {
         f.done = true;
-        state.found++;
-        updateProgress();
-        setTimeout(() => showFact(m.target, true), 300);
+        later(300, win);
       }
       return;
     }
@@ -757,6 +848,7 @@
   function enter(j) {
     const m = state.m;
     state.cell = j;
+    state.seen.add(j);
     const s = state.stack;
     if (s.length > 1 && s[s.length - 2] === j) s.pop();
     else s.push(j);
@@ -783,7 +875,7 @@
     } else {
       sfx.oops();
       photoEls[k].classList.add('wrong');
-      setTimeout(() => showFact(k, false), 500);
+      later(500, () => showFact(k));
     }
   }
 
@@ -806,49 +898,97 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Rounds
+  // Menu
   // ---------------------------------------------------------------------------
 
-  // a different picture to find in each round, each with a decoy of another kind
-  function makePairs() {
-    const targets = shuffle(PHOTOS.slice()).slice(0, ROUNDS);
-    return targets.map((p) => {
-      const others = PHOTOS.filter((q) => q.kind !== p.kind && !targets.includes(q));
-      return [p, others[Math.floor(Math.random() * others.length)]];
+  function buildMenu() {
+    LEVELS.forEach((lv, i) => {
+      const b = document.createElement('button');
+      b.className = 'level';
+      b.innerHTML = `<span class="level-icon">${lv.icon}</span><span class="level-text"><b class="level-name"></b>` +
+        '<span class="level-about"></span></span><span class="done-badge"></span>';
+      b.addEventListener('click', () => {
+        state.level = i;
+        store.set('level', i);
+        sfx.pick();
+        updateMenu();
+      });
+      $('levels').appendChild(b);
     });
   }
 
+  function updateMenu() {
+    [...$('levels').children].forEach((b, i) => {
+      const tx = t('levels')[i];
+      b.classList.toggle('selected', i === state.level);
+      b.querySelector('.level-name').textContent = `${i + 1}. ${tx.name}`;
+      b.querySelector('.level-about').textContent = tx.about;
+      b.querySelector('.done-badge').textContent = done.has(i) ? '🌟' : '';
+    });
+  }
+
+  function showMenu() {
+    state.gen++;
+    cancelAnimationFrame(raf);
+    Astro.stopConfetti($('confetti'));
+    $('win').classList.add('hidden');
+    $('fact').classList.add('hidden');
+    $('game').classList.add('hidden');
+    $('menu').classList.remove('hidden');
+    state.m = null;
+    updateMenu();
+  }
+
+  // ---------------------------------------------------------------------------
+  // A maze
+  // ---------------------------------------------------------------------------
+
+  // The picture to find, not one of the last few, and decoys of other kinds,
+  // and of different kinds from each other when there are enough.
+  function makeSet() {
+    const target = shuffle(PHOTOS.filter((p) => !state.last.includes(p.file)))[0];
+    state.last = [target.file, ...state.last].slice(0, 10);
+    const set = [target];
+    for (let d = 0; d < level().decoys; d++) {
+      let pool = PHOTOS.filter((q) => !set.some((s) => s.kind === q.kind));
+      if (!pool.length) pool = PHOTOS.filter((q) => q.kind !== target.kind && !set.includes(q));
+      set.push(pool[Math.floor(Math.random() * pool.length)]);
+    }
+    return set;
+  }
+
   function startGame() {
+    state.gen++;
     Astro.stopConfetti($('confetti'));
     $('win').classList.add('hidden');
     $('fact').classList.add('hidden');
     $('menu').classList.add('hidden');
     $('game').classList.remove('hidden');
     updateSound();
-    state.pairs = makePairs();
-    state.round = 0;
-    state.found = 0;
-    updateProgress();
-    newRound();
+    showLevel();
+    state.m = null;
+    state.set = makeSet();
+    // the task first, as it sets how much room is left for the maze
+    showTask();
+    const L = layout();
+    state.L = L;
+    newMaze();
     cancelAnimationFrame(raf);
     last = performance.now();
     raf = requestAnimationFrame(frame);
   }
 
-  function newRound() {
-    state.m = null;
-    // the name first, as it sets how much room is left for the maze
-    $('targetName').textContent = state.pairs[state.round][0].name[Astro.lang];
-    const L = layout();
-    state.L = L;
+  function newMaze() {
+    const L = state.L;
     const [cols, rows] = gridSize(L);
-    const m = makeMaze(cols, rows, L.wide);
-    m.target = Math.random() < 0.5 ? 0 : 1;
-    const [target, decoy] = state.pairs[state.round];
-    m.photos = m.target ? [decoy, target] : [target, decoy];
+    const set = state.set;
+    const m = makeMaze(cols, rows, L.wide, set.length);
+    m.target = Math.floor(Math.random() * set.length);
+    m.photos = shuffle(set.slice(1));
+    m.photos.splice(m.target, 0, set[0]);
     state.m = m;
     photoEls.forEach((el, k) => {
-      el.src = m.photos[k].file;
+      if (m.photos[k]) el.src = m.photos[k].file;
       el.classList.remove('right', 'wrong');
     });
     state.cell = m.start;
@@ -857,57 +997,59 @@
     state.scale = 1;
     state.queue = [];
     state.stack = [m.start];
+    state.seen = new Set([m.start]);
     state.fly = null;
     state.drag = null;
     state.busy = false;
     state.moved = false;
     state.hintUntil = 0;
-    state.roundStart = performance.now();
+    state.start = performance.now();
     fit();
   }
 
-  function showTarget() {
-    if (state.m) $('targetName').textContent = state.m.photos[state.m.target].name[Astro.lang];
+  // the picture to find, or its name
+  function showTask() {
+    if (!state.set) return;
+    const p = state.set[0];
+    const match = level().match;
+    $('task').classList.toggle('match', match);
+    $('taskText').textContent = t(match ? 'flyMatch' : 'fly');
+    $('targetName').textContent = match ? '' : p.name[Astro.lang];
+    $('targetImg').classList.toggle('hidden', !match);
+    if (match) $('targetImg').src = p.file;
   }
 
-  function showFact(k, right) {
+  // what a wrong picture shows
+  function showFact(k) {
     const p = state.m.photos[k];
     $('factImg').src = p.file;
     $('factName').textContent = p.name[Astro.lang];
     $('factText').textContent = p.fact[Astro.lang];
-    $('factNote').textContent = right ? '' : t('notThis');
-    $('nextBtn').textContent = right ? t(state.round === ROUNDS - 1 ? 'finish' : 'next') : t('back');
-    $('nextBtn').dataset.right = right ? '1' : '';
+    $('factNote').textContent = t(state.m.photos.length > 2 ? 'notThis2' : 'notThis');
     $('fact').classList.remove('hidden');
   }
 
-  $('nextBtn').addEventListener('click', () => {
+  $('backBtn').addEventListener('click', () => {
     $('fact').classList.add('hidden');
     sfx.pick();
-    if (!$('nextBtn').dataset.right) {
-      state.busy = false;
-      return;
-    }
-    state.round++;
-    if (state.round < ROUNDS) newRound();
-    else win();
+    state.busy = false;
   });
 
+  // the right picture, big, with what it shows
   function win() {
     cancelAnimationFrame(raf);
+    done.add(state.level);
+    store.set('done', [...done]);
+    const p = state.set[0];
+    $('winImg').src = p.file;
+    $('winName').textContent = p.name[Astro.lang];
+    $('winFact').textContent = p.fact[Astro.lang];
+    $('winCredit').textContent = '📷 ' + t('photo');
+    $('winCredit').href = 'https://www.astrobin.com/' + p.astrobin + '/';
+    $('nextLevelBtn').classList.toggle('hidden', state.level === LEVELS.length - 1);
     $('win').classList.remove('hidden');
     sfx.win();
     Astro.startConfetti($('confetti'));
-  }
-
-  function showMenu() {
-    cancelAnimationFrame(raf);
-    Astro.stopConfetti($('confetti'));
-    $('win').classList.add('hidden');
-    $('fact').classList.add('hidden');
-    $('game').classList.add('hidden');
-    $('menu').classList.remove('hidden');
-    state.m = null;
   }
 
   // ---------------------------------------------------------------------------
@@ -969,7 +1111,8 @@
     const L = layout();
     if (L.W === state.L.W && L.H === state.L.H) return;
     if (L.wide !== state.m.wide && !state.busy) {
-      newRound();
+      state.L = L;
+      newMaze();
       return;
     }
     // while a picture is shown, the same maze for now, turned the old way
@@ -983,6 +1126,11 @@
 
   $('playBtn').addEventListener('click', startGame);
   $('againBtn').addEventListener('click', startGame);
+  $('nextLevelBtn').addEventListener('click', () => {
+    state.level = Math.min(state.level + 1, LEVELS.length - 1);
+    store.set('level', state.level);
+    startGame();
+  });
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
 
@@ -999,5 +1147,10 @@
     sfx.pick();
   });
 
-  Astro.setupLanguage(TEXT, showTarget);
+  buildMenu();
+  Astro.setupLanguage(TEXT, () => {
+    updateMenu();
+    showTask();
+    if (state.m) showLevel();
+  });
 })();
