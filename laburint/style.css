@@ -47,6 +47,31 @@
 .level-about { font-size: 0.95rem; color: var(--muted); }
 .done-badge { flex: none; font-size: 1.4rem; }
 
+/* every picture, with how many times it has been found */
+.found {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.found-pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 6px 10px;
+  border-radius: 18px;
+  background: var(--card);
+  text-align: center;
+}
+.found-pic img { width: 100%; aspect-ratio: 1; border-radius: 12px; object-fit: cover; }
+.found-name { font-size: 0.85rem; font-weight: 700; line-height: 1.2; }
+.found-n { font-size: 1.15rem; font-weight: 900; color: var(--accent); }
+.clear-row { display: flex; justify-content: center; margin-top: 14px; }
+/* not found yet */
+.found-pic.none img { opacity: 0.45; }
+.found-pic.none .found-n { color: var(--muted); }
+
 /* ---------- Game ---------- */
 
 .area { display: flex; flex-direction: column; }

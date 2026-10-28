@@ -132,6 +132,8 @@ Every maze has one way between any two cells, with long winding paths: mazes wit
 
 The wrong photos are always a different kind of object from the right one (a galaxy, a nebula, a comet, a planet …) and from each other where they can be. While the page is open, a photo to find does not come again in the next 10 games. The game uses the photos in `pusle/images/`; the list, with the kind of each, is at the top of `laburint/app.js`.
 
+On levels 3–5, where the task gives the photo's name, the browser keeps count of how many times each photo has been found, under `laburint.found` in its local storage, e.g. `{"orion": 2, "crab": 1}`. A photo counts only when the rocket gets to it before going to any wrong one, and without 💡. The menu shows every photo with its count, below the Mängi button, the most found first; the ones not found yet are dimmed. 🗑️ below them clears the counts, with a second tap within 4 seconds.
+
 ## Kuu faasid
 
 - Two views side by side (or one above the other on a tall screen):

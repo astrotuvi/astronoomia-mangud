@@ -315,12 +315,14 @@
   // least `min` px, so that a finger can follow the paths. `match`: the task
   // shows the picture to find, otherwise its name. `decoys`: how many wrong
   // pictures. `dark`: the maze is seen only where the rocket has been.
+  // `count`: a picture found here, without first going to a wrong one or
+  // asking for a hint, adds to how many times it has been found.
   const LEVELS = [
     { icon: '🖼️', cells: 9, min: 40, match: true, decoys: 1 },
     { icon: '🌀', cells: 13, min: 34, match: true, decoys: 1 },
-    { icon: '🔤', cells: 13, min: 34, match: false, decoys: 1 },
-    { icon: '🎯', cells: 17, min: 28, match: false, decoys: 2 },
-    { icon: '🌑', cells: 17, min: 28, match: false, decoys: 2, dark: true }
+    { icon: '🔤', cells: 13, min: 34, match: false, decoys: 1, count: true },
+    { icon: '🎯', cells: 17, min: 28, match: false, decoys: 2, count: true },
+    { icon: '🌑', cells: 17, min: 28, match: false, decoys: 2, dark: true, count: true }
   ];
 
   const SPEED = 9; // cells a second
@@ -340,6 +342,10 @@
         { name: 'Pime labürint', about: 'Labürint paistab ainult seal, kus rakett on lennanud' }
       ],
       play: 'Mängi',
+      foundTitle: 'Nime järgi leitud pildid',
+      foundAbout: 'Tasemetel 3–5 loeb pilt siis, kui rakett jõuab selleni enne ühtegi valet pilti ja ilma vihjeta.',
+      clear: '🗑️ Kustuta loendus',
+      clearSure: '🗑️ Puuduta uuesti, et kustutada',
       flyMatch: 'Lenda raketiga selle pildini:',
       fly: 'Lenda raketiga pildini, millel on',
       back: 'Lenda tagasi 🚀',
@@ -368,6 +374,10 @@
         { name: 'Dark maze', about: 'You see the maze only where the rocket has been' }
       ],
       play: 'Play',
+      foundTitle: 'Pictures found by name',
+      foundAbout: 'On levels 3–5 a picture counts when the rocket gets to it before any wrong picture, and without a hint.',
+      clear: '🗑️ Clear the counts',
+      clearSure: '🗑️ Tap again to clear them',
       flyMatch: 'Fly the rocket to this picture:',
       fly: 'Fly the rocket to the picture of',
       back: 'Fly back 🚀',
@@ -409,6 +419,9 @@
   ];
 
   const done = new Set(store.get('done', []));
+  // how many times each picture has been found by its name, by its file name: { orion: 2, … }
+  const found = store.get('found', {});
+  const photoKey = (p) => p.file.split('/').pop().replace(/\.\w+$/, '');
   const state = {
     level: clamp(store.get('level', 0), 0, LEVELS.length - 1),
     set: null,      // [target, ...decoys]
@@ -426,6 +439,9 @@
     drag: null,
     busy: false,
     moved: false,
+    clearArmed: false, // the counts are cleared on the next tap of 🗑️
+    clearTimer: 0,
+    missed: false,  // the rocket has been to a wrong picture, or a hint was asked for, in this maze
     start: 0,
     hintUntil: 0,
     gen: 0          // goes up when a game ends, so that its timers do nothing
@@ -875,6 +891,7 @@
       };
     } else {
       sfx.oops();
+      state.missed = true;
       photoEls[k].classList.add('wrong');
       later(500, () => showFact(k));
     }
@@ -926,7 +943,55 @@
       b.querySelector('.level-about').textContent = tx.about;
       b.querySelector('.done-badge').textContent = done.has(i) ? '🌟' : '';
     });
+    updateFound();
   }
+
+  // every picture, with how many times it has been found by its name
+  const foundEls = [];
+  function buildFound() {
+    PHOTOS.forEach((p) => {
+      const d = document.createElement('div');
+      d.className = 'found-pic';
+      d.innerHTML = '<img alt="" loading="lazy"><span class="found-name"></span><b class="found-n"></b>';
+      d.querySelector('img').src = p.file;
+      foundEls.push(d);
+    });
+  }
+
+  // the most found first; the same count in the order of the list
+  function updateFound() {
+    const n = PHOTOS.map((p) => found[photoKey(p)] || 0);
+    PHOTOS.forEach((p, i) => {
+      const d = foundEls[i];
+      d.classList.toggle('none', !n[i]);
+      d.querySelector('.found-name').textContent = p.name[Astro.lang];
+      d.querySelector('.found-n').textContent = '× ' + n[i];
+    });
+    const order = PHOTOS.map((p, i) => i).sort((a, b) => n[b] - n[a] || a - b);
+    $('found').replaceChildren(...order.map((i) => foundEls[i]));
+    $('clearBtn').classList.toggle('hidden', !n.some((k) => k));
+    $('clearBtn').textContent = t(state.clearArmed ? 'clearSure' : 'clear');
+  }
+
+  // Clearing the counts takes two taps, so that they are not cleared by
+  // mistake. The second one must come within a few seconds.
+  $('clearBtn').addEventListener('click', () => {
+    clearTimeout(state.clearTimer);
+    if (state.clearArmed) {
+      state.clearArmed = false;
+      Object.keys(found).forEach((k) => delete found[k]);
+      store.set('found', found);
+      sfx.oops();
+    } else {
+      state.clearArmed = true;
+      sfx.pick();
+      state.clearTimer = setTimeout(() => {
+        state.clearArmed = false;
+        updateFound();
+      }, 4000);
+    }
+    updateFound();
+  });
 
   function showMenu() {
     state.gen++;
@@ -1003,6 +1068,7 @@
     state.drag = null;
     state.busy = false;
     state.moved = false;
+    state.missed = false;
     state.hintUntil = 0;
     state.start = performance.now();
     fit();
@@ -1042,6 +1108,11 @@
     done.add(state.level);
     store.set('done', [...done]);
     const p = state.set[0];
+    if (level().count && !state.missed) {
+      const key = photoKey(p);
+      found[key] = (found[key] || 0) + 1;
+      store.set('found', found);
+    }
     $('winImg').src = p.file;
     $('winName').textContent = p.name[Astro.lang];
     $('winFact').textContent = p.fact[Astro.lang];
@@ -1139,6 +1210,7 @@
     if (!state.m || state.busy) return;
     state.hintUntil = performance.now() + 2500;
     state.moved = true;
+    state.missed = true;
     sfx.pick();
   });
 
@@ -1149,6 +1221,7 @@
   });
 
   buildMenu();
+  buildFound();
   Astro.setupLanguage(TEXT, () => {
     updateMenu();
     showTask();
