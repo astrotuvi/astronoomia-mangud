@@ -344,8 +344,8 @@
       play: 'Mängi',
       foundTitle: 'Nime järgi leitud pildid',
       foundAbout: 'Tasemetel 3–5 loeb pilt siis, kui rakett jõuab selleni enne ühtegi valet pilti ja ilma vihjeta.',
-      clear: '🗑️ Kustuta loendus',
-      clearSure: '🗑️ Puuduta uuesti, et kustutada',
+      clear: '🗑️ Kustuta skoor',
+      clearAsk: 'Kas kustutada kõigi piltide skoor?',
       flyMatch: 'Lenda raketiga selle pildini:',
       fly: 'Lenda raketiga pildini, millel on',
       back: 'Lenda tagasi 🚀',
@@ -377,7 +377,7 @@
       foundTitle: 'Pictures found by name',
       foundAbout: 'On levels 3–5 a picture counts when the rocket gets to it before any wrong picture, and without a hint.',
       clear: '🗑️ Clear the counts',
-      clearSure: '🗑️ Tap again to clear them',
+      clearAsk: 'Clear the counts of all the pictures?',
       flyMatch: 'Fly the rocket to this picture:',
       fly: 'Fly the rocket to the picture of',
       back: 'Fly back 🚀',
@@ -439,8 +439,6 @@
     drag: null,
     busy: false,
     moved: false,
-    clearArmed: false, // the counts are cleared on the next tap of 🗑️
-    clearTimer: 0,
     missed: false,  // the rocket has been to a wrong picture, or a hint was asked for, in this maze
     start: 0,
     hintUntil: 0,
@@ -970,26 +968,16 @@
     const order = PHOTOS.map((p, i) => i).sort((a, b) => n[b] - n[a] || a - b);
     $('found').replaceChildren(...order.map((i) => foundEls[i]));
     $('clearBtn').classList.toggle('hidden', !n.some((k) => k));
-    $('clearBtn').textContent = t(state.clearArmed ? 'clearSure' : 'clear');
+    $('clearBtn').textContent = t('clear');
   }
 
-  // Clearing the counts takes two taps, so that they are not cleared by
-  // mistake. The second one must come within a few seconds.
+  // asked first, in a box of the browser's own, so that a second tap on the
+  // same spot does not clear them
   $('clearBtn').addEventListener('click', () => {
-    clearTimeout(state.clearTimer);
-    if (state.clearArmed) {
-      state.clearArmed = false;
-      Object.keys(found).forEach((k) => delete found[k]);
-      store.set('found', found);
-      sfx.oops();
-    } else {
-      state.clearArmed = true;
-      sfx.pick();
-      state.clearTimer = setTimeout(() => {
-        state.clearArmed = false;
-        updateFound();
-      }, 4000);
-    }
+    if (!window.confirm(t('clearAsk'))) return;
+    Object.keys(found).forEach((k) => delete found[k]);
+    store.set('found', found);
+    sfx.oops();
     updateFound();
   });
 
