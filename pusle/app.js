@@ -110,9 +110,9 @@
     {
       file: 'images/california.jpg',
       astrobin: 'q8ho3d',
-      name: { et: 'California udu', en: 'California Nebula' },
+      name: { et: 'Kalifornia udu', en: 'California Nebula' },
       fact: {
-        et: 'See udu on sama kujuga nagu California osariik Ameerikas. Taevas on see sama pikk kui viis täiskuud kõrvuti.',
+        et: 'See udu on sama kujuga nagu Kalifornia osariik Ameerikas. Taevas on see sama pikk kui viis täiskuud kõrvuti.',
         en: 'This nebula has the same shape as the state of California in America. In the sky it is as long as five full moons side by side.'
       }
     },

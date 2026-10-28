@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, Kuu faasid, Kuidas tekivad aastaajad?, Uuri meteoore and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, Kosmoselabürint for ages 5–10 (its first two levels need no reading), Kuu faasid, Kuidas tekivad aastaajad?, Uuri meteoore and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -11,6 +11,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
 | Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars, Jupiter and the dwarf planet Ceres and catch a star on each |
 | Planeetide rivi / Line Up the Planets | [`planeedid/`](planeedid/) | Drag the planets into order from the Sun outwards, or by size, smallest or biggest first |
+| Kosmoselabürint / Space Maze | [`laburint/`](laburint/) | Fly a rocket through a maze to the right one of two or three photos |
 | Kuu faasid / Moon Phases | [`kuufaasid/`](kuufaasid/) | Move the Moon round the Earth and see why its shape changes |
 | Kuidas tekivad aastaajad? / What Causes the Seasons? | [`aastaajad/`](aastaajad/) | Move the Earth round the Sun and see how high the Sun climbs in Estonia and how long the day is |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
@@ -113,6 +114,23 @@ The worlds and their pull are in the `WORLDS` list at the top of `hupe/app.js`. 
 - The win screen shows the whole row with names.
 
 The planets are drawn pixel by pixel in `shared/planets.js` rather than taken from photos: the Earth and Mars are the ones from Kosmoserakett, and the others are in the `LOOKS` list there, with Saturn's and Uranus's rings. Their sizes in the game, in the `PLANETS` list at the top of `planeedid/app.js`, are not to scale (Jupiter would be 28 times as wide as Mercury), but they are bigger and smaller in the right order.
+
+## Kosmoselabürint
+
+- Pick a level. Each game is one new maze, with the rocket in the middle and a photo at each way out: left and right on a wide screen, top and bottom on a tall one.
+  1. Sama pilt: the task at the top shows a small copy of the photo to find, in a maze of about 9 cells across
+  2. Suurem labürint: the same, in a maze of about 13 cells across
+  3. Pildi nimi: the task gives the photo's name instead, e.g. "Lenda raketiga pildini, millel on Orioni udu"
+  4. Kolm pilti: two wrong photos, two of the three on one side, in a maze of about 17 cells across
+  5. Pime labürint: as Kolm pilti, but the maze is seen only where the rocket has been
+- Drag a finger or the mouse along a path, or tap a cell a few steps away, and the rocket flies there. It cannot go through walls, and a tap too far away does nothing. On a computer the arrow keys move it too. A faint yellow trail shows the way from the start, without the dead ends flown back out of.
+- At a wrong photo, the photo shakes and dims, and a card says what it is, with its fact, and asks to try another one.
+- At the right photo, the rocket flies into it, and the win screen shows the photo large with its name, fact and credit. A 🌟 marks the levels done in the menu.
+- 💡 lights up the way to the right photo for a moment. If nothing happens at the start, a 👆 shows under the rocket.
+
+Every maze has one way between any two cells, with long winding paths: mazes with more side paths turned out easier, as the way through is shorter. The ways out are about equally far from the start, so the nearest photo does not give the answer, and the way to one never goes past another. The cells are at least 40 px wide on level 1, 34 px on levels 2–3 and 28 px on levels 4–5, so a finger can follow the paths on a phone.
+
+The wrong photos are always a different kind of object from the right one (a galaxy, a nebula, a comet, a planet …) and from each other where they can be. While the page is open, a photo to find does not come again in the next 10 games. The game uses the photos in `pusle/images/`; the list, with the kind of each, is at the top of `laburint/app.js`.
 
 ## Kuu faasid
 

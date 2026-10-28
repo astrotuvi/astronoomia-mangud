@@ -20,7 +20,7 @@
     { file: '../pusle/images/horsehead.jpg', name: { et: 'Hobusepea udu', en: 'Horsehead Nebula' } },
     { file: '../pusle/images/rosette.jpg', name: { et: 'Roseti udu', en: 'Rosette Nebula' } },
     { file: '../pusle/images/bubble.jpg', name: { et: 'Mulli udu', en: 'Bubble Nebula' } },
-    { file: '../pusle/images/california.jpg', name: { et: 'California udu', en: 'California Nebula' } },
+    { file: '../pusle/images/california.jpg', name: { et: 'Kalifornia udu', en: 'California Nebula' } },
     { file: '../pusle/images/crescent.jpg', name: { et: 'Poolkuu udu', en: 'Crescent Nebula' } },
     { file: '../pusle/images/cygnusloop.jpg', name: { et: 'Luige silmus', en: 'Cygnus Loop' } },
     { file: '../pusle/images/dumbbell.jpg', name: { et: 'Hantli udu', en: 'Dumbbell Nebula' } },

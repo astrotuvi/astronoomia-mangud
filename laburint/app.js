@@ -123,9 +123,9 @@
       file: '../pusle/images/california.jpg',
       kind: 'nebula',
       astrobin: 'q8ho3d',
-      name: { et: 'California udu', en: 'California Nebula' },
+      name: { et: 'Kalifornia udu', en: 'California Nebula' },
       fact: {
-        et: 'See udu on sama kujuga nagu California osariik Ameerikas. Taevas on see sama pikk kui viis täiskuud kõrvuti.',
+        et: 'See udu on sama kujuga nagu Kalifornia osariik Ameerikas. Taevas on see sama pikk kui viis täiskuud kõrvuti.',
         en: 'This nebula has the same shape as the state of California in America. In the sky it is as long as five full moons side by side.'
       }
     },
@@ -319,8 +319,8 @@
     { icon: '🖼️', cells: 9, min: 40, match: true, decoys: 1 },
     { icon: '🌀', cells: 13, min: 34, match: true, decoys: 1 },
     { icon: '🔤', cells: 13, min: 34, match: false, decoys: 1 },
-    { icon: '🎯', cells: 13, min: 34, match: false, decoys: 2 },
-    { icon: '🌑', cells: 13, min: 34, match: false, decoys: 2, dark: true }
+    { icon: '🎯', cells: 17, min: 28, match: false, decoys: 2 },
+    { icon: '🌑', cells: 17, min: 28, match: false, decoys: 2, dark: true }
   ];
 
   const SPEED = 9; // cells a second
@@ -336,7 +336,7 @@
         { name: 'Sama pilt', about: 'Leia tee pildini, mis on üleval' },
         { name: 'Suurem labürint', about: 'Sama pilt, aga pikem tee' },
         { name: 'Pildi nimi', about: 'Üleval on pildi asemel selle nimi' },
-        { name: 'Kolm pilti', about: 'Kaks pilti kolmest on valed' },
+        { name: 'Kolm pilti', about: 'Kaks pilti kolmest on valed ja labürint on veel suurem' },
         { name: 'Pime labürint', about: 'Labürint paistab ainult seal, kus rakett on lennanud' }
       ],
       play: 'Mängi',
@@ -364,7 +364,7 @@
         { name: 'Same picture', about: 'Find the way to the picture shown at the top' },
         { name: 'Bigger maze', about: 'The same picture, but a longer way' },
         { name: 'The name', about: 'The name of the picture instead of the picture' },
-        { name: 'Three pictures', about: 'Two of the three pictures are wrong' },
+        { name: 'Three pictures', about: 'Two of the three pictures are wrong, in an even bigger maze' },
         { name: 'Dark maze', about: 'You see the maze only where the rocket has been' }
       ],
       play: 'Play',
@@ -443,7 +443,8 @@
 
   // A maze with one way between any two cells, dug from the start by going
   // on at random and stepping back from dead ends. It makes long winding
-  // paths with few short side ones.
+  // paths with few short side ones, so the way through is long: harder than
+  // a maze with more side paths, where the way through is shorter.
   function carve(cols, rows, start) {
     const open = new Uint8Array(cols * rows);
     const seen = new Uint8Array(cols * rows);

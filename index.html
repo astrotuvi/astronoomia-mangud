@@ -112,6 +112,37 @@
           <b data-t="puzzle"></b>
           <span data-t="puzzleText"></span>
         </a>
+        <a class="game-card" href="malumang/index.html">
+          <div class="memo" aria-hidden="true">
+            <span><img src="pusle/images/saturn.jpg" alt=""></span><i>✦</i>
+            <i>✦</i><span><img src="pusle/images/saturn.jpg" alt=""></span>
+          </div>
+          <b data-t="memory"></b>
+          <span data-t="memoryText"></span>
+        </a>
+        <a class="game-card" href="laburint/index.html">
+          <!-- a maze with a photo at each of its two ways out, and the rocket on its way -->
+          <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
+            <defs>
+              <clipPath id="mazeLeft"><rect x="16.5" y="6" width="28" height="28" rx="5" /></clipPath>
+              <clipPath id="mazeRight"><rect x="55.5" y="6" width="28" height="28" rx="5" /></clipPath>
+            </defs>
+            <g fill="#fff">
+              <circle cx="7" cy="12" r="0.7" opacity="0.7" /><circle cx="93" cy="20" r="0.6" opacity="0.5" />
+              <circle cx="50" cy="4" r="0.5" opacity="0.6" /><circle cx="5" cy="33" r="0.6" opacity="0.5" />
+            </g>
+            <!-- drawn twice as big and scaled down: phones in dark mode turn small dark pictures white -->
+            <g clip-path="url(#mazeLeft)"><image href="pusle/images/andromeda.jpg" x="33" y="12" width="56" height="56" transform="scale(0.5)" /></g>
+            <g clip-path="url(#mazeRight)"><image href="pusle/images/orion.jpg" x="111" y="12" width="56" height="56" transform="scale(0.5)" /></g>
+            <rect x="16.5" y="6" width="28" height="28" rx="5" fill="none" stroke="#5fd4ff" stroke-width="1.2" opacity="0.6" />
+            <rect x="55.5" y="6" width="28" height="28" rx="5" fill="none" stroke="#5fd4ff" stroke-width="1.2" opacity="0.6" />
+            <polyline points="43.5,72.5 30.5,72.5 30.5,59.5 43.5,59.5" fill="none" stroke="#ffd34d" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M11 40H24M11 40V53M37 40H50M37 40V53M50 40H63M63 40V53M76 40H89M89 40V53M11 53V66M24 53H37M24 53V66M50 53V66M63 53H76M63 53V66M89 53V66M11 66V79M24 66V79M37 66H50M50 66V79M63 66V79M76 66V79M89 66V79M11 79V92M11 92H24M24 79H37M24 92H37M37 79H50M37 92H50M50 92H63M63 92H76M76 79V92M89 79V92M76 92H89" fill="none" stroke="#5fd4ff" stroke-width="2.2" stroke-linecap="round" />
+            <text x="43.5" y="59.5" font-size="10" text-anchor="middle" dominant-baseline="central" transform="rotate(-45 43.5 59.5)">🚀</text>
+          </svg>
+          <b data-t="maze"></b>
+          <span data-t="mazeText"></span>
+        </a>
         <a class="game-card" href="tahtkujud/index.html">
           <!-- the Big Dipper, from the same star positions as in the game -->
           <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
@@ -131,14 +162,6 @@
           </svg>
           <b data-t="stars"></b>
           <span data-t="starsText"></span>
-        </a>
-        <a class="game-card" href="malumang/index.html">
-          <div class="memo" aria-hidden="true">
-            <span><img src="pusle/images/saturn.jpg" alt=""></span><i>✦</i>
-            <i>✦</i><span><img src="pusle/images/saturn.jpg" alt=""></span>
-          </div>
-          <b data-t="memory"></b>
-          <span data-t="memoryText"></span>
         </a>
         <a class="game-card" href="rakett/index.html">
           <!-- a rocket like the ones built in the game, flying to Saturn -->
@@ -476,6 +499,8 @@
         jumpText: 'Hüppa Maal, Kuul, Marsil, Jupiteril ja kääbusplaneedil Ceresel ja vaata, kus saad kõige kõrgemale.',
         order: 'Planeetide rivi',
         orderText: 'Pane planeedid õigesse järjekorda, alates Päikesele kõige lähemast.',
+        maze: 'Kosmose\u00adlabürint',
+        mazeText: 'Lenda raketiga läbi labürindi õige pildini: udukogu, galaktika, planeedi või komeedini.',
         meteor: 'Püüa langev täht',
         meteorText: 'Püüa ühe ööga purki nii palju langevaid tähti kui jõuad.',
         radiant: 'Uuri meteoore',
@@ -507,6 +532,8 @@
         jumpText: 'Jump on the Earth, the Moon, Mars, Jupiter and the dwarf planet Ceres, and see where you get highest.',
         order: 'Line Up the Planets',
         orderText: 'Put the planets in order, starting with the one closest to the Sun.',
+        maze: 'Space Maze',
+        mazeText: 'Fly the rocket through the maze to the right picture: a nebula, a galaxy, a planet or a comet.',
         meteor: 'Catch a Shooting Star',
         meteorText: 'Catch as many shooting stars in your jar as you can in one night.',
         radiant: 'Meteor Detective',
