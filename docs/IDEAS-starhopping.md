@@ -142,7 +142,7 @@ slider, so that the stars a task needs are always there:
   Vanker, and they are drawn a little bigger.
 - On level 2, in one task a slider with three stops
   (🏙️ 🏘️ 🌲) appears. In the Suur Vanker part: "Linnas paistab Väikesest
-  Vankrist ainult kolm tähte. Vii liugur maale, et näha teda tervet." ("In
+  Vankrist ainult kolm tähte. Vii liugur maale, et näha teda tervenisti." ("In
   a city only three stars of Väike Vanker can be seen. Move the slider to
   the countryside to see all of it.") In the Orion part, the same for the
   sword with the Orion Nebula.
@@ -212,10 +212,11 @@ Arktuurus shows above them.
 2. **Väike Vanker:** "Põhjanael on Väikese Vankri aisa ots. Joonista Väike
    Vanker." ("The North Star is the end of the Little Dipper's handle.
    Draw the Little Dipper.")
-   - Fact: "Väike Vanker on palju tuhmim kui Suur Vanker. Linnas paistavad
-     temast ainult Põhjanael ja vankri kaks tagumist ratast." ("The Little
-     Dipper is much fainter than the Big Dipper. In a city only the North
-     Star and the two stars at the end of the bowl can be seen.")
+   - Fact: "Väikese Vankri tähed on Suure Vankri tähtedest nõrgemad.
+     Linnas paistavad temast ainult Põhjanael ja vankri kaks tagumist
+     ratast." ("The stars of the Little Dipper are fainter than those of
+     the Big Dipper. In a city only the North Star and the two stars at the
+     end of the bowl can be seen.")
 3. **Lohe:** "Lohe saba ots on Suure Vankri ja Põhjanaela vahel. Joonista
    Lohe sabast peani." ("The tip of the Dragon's tail is between the Big
    Dipper and the North Star. Draw the Dragon from its tail to its head.")
@@ -257,12 +258,26 @@ Arktuurus shows above them.
      half circle of stars, like a king's crown. Its brightest star is like a
      shining pearl in it.")
 
-On level 2, the sky turns on from the autumn evening of level 1, and the
-seasons each take a few of these: autumn Põhjanael and Arktuurus setting,
-winter Lohe and Arktuurus below the horizon, then the hour task (from 20:00
-to 02:00), spring Veega and Arktuurus high in the east, and summer
-Väike Vanker (the slider task) and Põhjakroon. So the sky always turns
-forwards, as it does.
+On level 2, the sky turns on from the autumn evening of level 1, always
+forwards, with seven tasks:
+
+1. autumn, 15 October at 21:00: Põhjanael, now without ticks
+2. winter, 15 January at 20:00: Veega, low in the north-west, with the
+   arrow from Lohe's head; Lohe, drawn on level 1, is not drawn again but
+   is there from the start
+3. the same evening: the arc from the handle runs into the ground, as
+   Arktuurus has not risen yet ("Horisondi all")
+4. the same night at 02:00, the hour task: Arktuurus has risen, and the
+   arc finds it in the east
+5. spring, 15 April at 23:00: Põhjanael again, with Suur Vanker upside
+   down almost overhead, its wheels pointing down
+6. summer, 15 August at 23:00: the slider task, from a city sky to the
+   countryside, which brings out the faint stars of Väike Vanker
+7. the same evening: Põhjakroon beside Karjane, with the arrow
+
+Each fact tells how the sky has turned, and the lines drawn before a turn
+are hidden, as they would point somewhere else now; the win map shows them
+all.
 
 ### Orion
 

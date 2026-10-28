@@ -76,6 +76,11 @@
         <button id="nextBtn" class="btn hidden"></button>
       </div>
       <span id="finger" class="finger hidden">👆</span>
+      <!-- how dark the sky is: a city, a small town, the countryside -->
+      <div id="slider" class="sky-slider hidden">
+        <input id="skyRange" type="range" min="0" max="2" step="1" value="0" aria-label="🏙️ 🏘️ 🌲">
+        <div id="skyLabels" class="sky-labels"><span data-sky="skyCity">🏙️</span><span data-sky="skyTown">🏘️</span><span data-sky="skyCountry">🌲</span></div>
+      </div>
     </div>
   </div>
 
@@ -85,10 +90,11 @@
     <div class="win-pic"><img id="winImg" alt=""></div>
     <div class="win-card">
       <h2><span data-t="wellDone"></span> 🎉</h2>
-      <p class="win-name" data-t="winName"></p>
-      <p class="win-fact" data-t="winFact"></p>
+      <p id="winName" class="win-name"></p>
+      <p id="winFact" class="win-fact"></p>
       <div class="win-buttons">
         <button id="againBtn" class="btn">🔁 <span data-t="again"></span></button>
+        <button id="nextLevelBtn" class="btn">▶ <span data-t="nextLevel"></span></button>
         <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
       </div>
     </div>
