@@ -404,7 +404,11 @@
   // the tasks in one sky share one view. On a `steady` level, too, the card
   // at the top keeps the room of the biggest text of its sky, and the slider
   // keeps its room once done, so that the view does not move when the text
-  // changes.
+  // changes. On a `sweep` level the date and hour sliders are there from the
+  // start, and the view is of the southern sky, from the east to the west:
+  //   set: the sliders are to be set to the date and hour `at`, and then
+  //     `find` is to be found, or any star of `accept`; a faint copy of
+  //     Orion stays where he was then
   const LEVELS = [
     {
       id: 'vanker1',
@@ -611,7 +615,7 @@
       when: Date.UTC(2027, 2, 15, 19, 0),
       caption: { et: 'Kevadõhtu, 15. märts kell 21', en: 'A spring evening, 15 March at 21:00' },
       win: {
-        name: { et: 'Tõusevad ja loojuvad', en: 'They rise and set' },
+        name: { et: 'Arktuurus ja Veega', en: 'Arcturus and Vega' },
         fact: {
           et: 'Arktuurus tõuseb ja loojub: õhtuti on ta taevas kevadest sügiseni. Veega, Suur Vanker ja Põhjanael on Eestis taevas igal ööl.',
           en: 'Arcturus rises and sets: it is in the evening sky from spring to autumn. Vega, the Big Dipper and the North Star are in the sky every night in Estonia.'
@@ -808,60 +812,7 @@
       ]
     },
     {
-      id: 'vanker5',
-      // a dark sky on a night picked at random; the tasks name only the star
-      // to find, Suur Vanker is not drawn in, and the view does not move to
-      // the stars of a task
-      limit: 6,
-      part: 'bigdipper',
-      icon: '🎯',
-      random: true,
-      help: false,
-      figs: [],
-      fixedView: true,
-      win: {
-        name: { et: 'Ilma abita', en: 'Without help' },
-        fact: {
-          et: 'Leidsid tähed ise üles, nagu päris taevas. Nüüd võid minna õue ja proovida!',
-          en: 'You found the stars yourself, as in the real sky. Now you can go outside and try!'
-        }
-      },
-      pool: [
-        {
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', up: ['polaris'],
-          text: { et: 'Leia Põhjanael.', en: 'Find the North Star.' },
-          fact: {
-            et: 'Põhjanael on Eestis alati umbes 58 kraadi kõrgusel: nii kõrgel, kui kaugel põhja pool ekvaatorit Eesti asub.',
-            en: 'In Estonia the North Star is always about 58 degrees up: as high as Estonia is far north of the equator.'
-          }
-        },
-        {
-          kind: 'tap', find: 'kochab', near: [], figure: 'littledipper', up: ['polaris'],
-          accept: ['yildun', 'epsUmi', 'zetUmi', 'pherkad', 'etaUmi'],
-          text: { et: 'Leia Väike Vanker.', en: 'Find the Little Dipper.' }
-        },
-        {
-          kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
-          find: 'arcturus', figure: 'bootes', up: ['arcturus'],
-          text: { et: 'Leia Arktuurus.', en: 'Find Arcturus.' },
-          fact: {
-            et: 'Arktuurus tähendab kreeka keeles karu valvajat: ta käib taevas Suure Karu järel.',
-            en: 'Arcturus means the bear’s guard in Greek: it follows the Great Bear across the sky.'
-          }
-        },
-        {
-          kind: 'tap', find: 'alphecca', near: [], figure: 'corona', up: ['alphecca', 'arcturus'],
-          accept: ['theCrb', 'nusakan', 'gamCrb', 'delCrb', 'epsCrb', 'iotCrb'],
-          text: { et: 'Leia Põhjakroon.', en: 'Find the Northern Crown.' },
-          fact: {
-            et: 'Vanad kreeklased nägid Põhjakroonis printsess Ariadne krooni.',
-            en: 'The ancient Greeks saw the crown of the princess Ariadne in the Northern Crown.'
-          }
-        }
-      ]
-    },
-    {
-      // The Orion part. A winter evening, at the same hour as level 1, with
+      // Orion shows the way. A winter evening, at the same hour as level 1, with
       // Orion upright in the south: hops from the belt and the corners to the
       // bright stars round him, which make the Winter Hexagon. After Sõel and
       // the Orion Nebula, the view zooms in on their `photo`, and a `note`
@@ -1011,6 +962,134 @@
           }
         }
       ]
+    },
+    {
+      // Orion at the same hour through the months: the player sets the
+      // sliders to a date and an hour and finds him, in the east on a
+      // midnight in October, in the south on a February evening and low in
+      // the south-west on an April evening; then plays with them freely.
+      id: 'orion2',
+      limit: 4.5,
+      sweep: true,
+      part: 'orion',
+      icon: '🌙',
+      figs: [],
+      // 15 October 2026 at 18:00, where the sliders start
+      when: Date.UTC(2026, 9, 15, 16, 0),
+      caption: { et: '15. oktoober, kell 18.00', en: '15 October, 18:00' },
+      win: {
+        name: { et: 'Orion tõusis ja loojus', en: 'Orion rose and set' },
+        fact: {
+          et: 'Samal kellaajal on Orion iga kuuga kaugemal läänes. Oktoobris tõuseb ta kesköö paiku, veebruari õhtul on ta lõunas ja aprilli õhtul loojub ta läänes. Suvel on ta päeval taevas ega paista.',
+          en: 'At the same hour, Orion is further west every month. In October he rises about midnight, on a February evening he is in the south, and on an April evening he sets in the west. In summer he is in the sky by day and cannot be seen.'
+        }
+      },
+      tasks: [
+        {
+          // the belt is 13° up, in the east; it rose at about 22:40
+          kind: 'set', at: Date.UTC(2026, 9, 15, 22, 0), find: 'betelgeuse', figure: 'orion',
+          accept: ['bellatrix', 'rigel', 'saiph', 'mintaka', 'alnilam', 'alnitak', 'meissa', 'muOri', 'xiOri', 'pi3Ori', 'pi1Ori', 'pi5Ori'],
+          title: { et: 'Orion!', en: 'Orion!' },
+          text: {
+            et: 'Sea liugurid: 15. oktoober, kesköö. Siis leia Orion.',
+            en: 'Set the sliders to 15 October, midnight. Then find Orion.'
+          },
+          fact: {
+            et: 'Oktoobri keskel on Orion kesköö paiku madalal idas: ta on just tõusnud.',
+            en: 'In the middle of October Orion is low in the east about midnight: he has just risen.'
+          }
+        },
+        {
+          // the belt is 31° up, due south, as high as it gets
+          kind: 'set', at: Date.UTC(2027, 1, 1, 19, 0), find: 'betelgeuse', figure: 'orion',
+          accept: ['bellatrix', 'rigel', 'saiph', 'mintaka', 'alnilam', 'alnitak', 'meissa', 'muOri', 'xiOri', 'pi3Ori', 'pi1Ori', 'pi5Ori'],
+          title: { et: 'Orion!', en: 'Orion!' },
+          text: {
+            et: 'Sea liugurid: 1. veebruar, kell 21. Siis leia Orion.',
+            en: 'Set the sliders to 1 February, 21:00. Then find Orion.'
+          },
+          fact: {
+            et: 'Veebruari alguses on Orion kell 21 otse lõunas, nii kõrgel, kui ta Eestis üldse tõuseb. Talveõhtud on parim aeg teda vaadata.',
+            en: 'At the start of February Orion is due south at 21:00, as high as he ever gets in Estonia. Winter evenings are the best time to look at him.'
+          }
+        },
+        {
+          // the belt is 16° up, south-west, in the last twilight, and sets
+          // at about 23:00
+          kind: 'set', at: Date.UTC(2027, 3, 1, 19, 0), find: 'betelgeuse', figure: 'orion',
+          accept: ['bellatrix', 'rigel', 'saiph', 'mintaka', 'alnilam', 'alnitak', 'meissa', 'muOri', 'xiOri', 'pi3Ori', 'pi1Ori', 'pi5Ori'],
+          title: { et: 'Orion!', en: 'Orion!' },
+          text: {
+            et: 'Sea liugurid: 1. aprill, kell 21. Siis leia Orion.',
+            en: 'Set the sliders to 1 April, 21:00. Then find Orion.'
+          },
+          fact: {
+            et: 'Aprilli alguses on Orion õhtul madalal edelas ja loojub enne keskööd. Suvel on ta taevas päeval, koos Päikesega, ja teda ei paista.',
+            en: 'At the start of April Orion is low in the south-west in the evening and sets before midnight. In summer he is in the sky by day, with the Sun, and cannot be seen.'
+          }
+        },
+        {
+          // the player's own date and hour
+          kind: 'explore',
+          text: {
+            et: 'Vali ise kuupäev ja kellaaeg ning vaata, kus on Orion.',
+            en: 'Pick a date and an hour yourself and see where Orion is.'
+          }
+        }
+      ]
+    },
+    {
+      id: 'vanker5',
+      // a dark sky on a night picked at random; the tasks name only the star
+      // to find, Suur Vanker is not drawn in, and the view does not move to
+      // the stars of a task
+      limit: 6,
+      part: 'bigdipper',
+      icon: '🎯',
+      random: true,
+      help: false,
+      figs: [],
+      fixedView: true,
+      win: {
+        name: { et: 'Ilma abita', en: 'Without help' },
+        fact: {
+          et: 'Leidsid tähed ise üles, nagu päris taevas. Nüüd võid minna õue ja proovida!',
+          en: 'You found the stars yourself, as in the real sky. Now you can go outside and try!'
+        }
+      },
+      pool: [
+        {
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', up: ['polaris'],
+          text: { et: 'Leia Põhjanael.', en: 'Find the North Star.' },
+          fact: {
+            et: 'Põhjanael on Eestis alati umbes 58 kraadi kõrgusel: nii kõrgel, kui kaugel põhja pool ekvaatorit Eesti asub.',
+            en: 'In Estonia the North Star is always about 58 degrees up: as high as Estonia is far north of the equator.'
+          }
+        },
+        {
+          kind: 'tap', find: 'kochab', near: [], figure: 'littledipper', up: ['polaris'],
+          accept: ['yildun', 'epsUmi', 'zetUmi', 'pherkad', 'etaUmi'],
+          text: { et: 'Leia Väike Vanker.', en: 'Find the Little Dipper.' }
+        },
+        {
+          kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
+          find: 'arcturus', figure: 'bootes', up: ['arcturus'],
+          text: { et: 'Leia Arktuurus.', en: 'Find Arcturus.' },
+          fact: {
+            et: 'Arktuurus tähendab kreeka keeles karu valvajat: ta käib taevas Suure Karu järel.',
+            en: 'Arcturus means the bear’s guard in Greek: it follows the Great Bear across the sky.'
+          }
+        },
+        {
+          kind: 'tap', find: 'alphecca', near: [], figure: 'corona', up: ['alphecca', 'arcturus'],
+          accept: ['theCrb', 'nusakan', 'gamCrb', 'delCrb', 'epsCrb', 'iotCrb'],
+          text: { et: 'Leia Põhjakroon.', en: 'Find the Northern Crown.' },
+          fact: {
+            et: 'Vanad kreeklased nägid Põhjakroonis printsess Ariadne krooni.',
+            en: 'The ancient Greeks saw the crown of the princess Ariadne in the Northern Crown.'
+          }
+        }
+      ]
     }
   ];
 
@@ -1019,26 +1098,32 @@
       title: 'Tähest täheni',
       intro1: 'Õpi taevast tähti leidma. Tuntud tähtedest viivad jooned edasi järgmiste juurde.',
       intro2: 'Vea sõrme või hiirega ühelt tähelt läbi teise ja vaata, kuhu joon edasi viib. Siis puuduta tähte, mida otsid.',
-      partBigDipper: 'Suur Vanker',
-      partOrion: 'Orion',
+      chooseLevel: 'Vali teema',
       levels: [
-        { name: 'Leia suunad', about: 'Sügisõhtu: Suur Vanker näitab teed' },
+        { name: 'Suur Vanker näitab teed', about: 'Sügisõhtu: Põhjanaelast Põhjakroonini' },
         { name: 'Taevas pöörleb', about: 'Suur Vanker tiirleb ümber Põhjanaela' },
-        { name: 'Tõusevad ja loojuvad', about: 'Arktuurus tuleb ja läheb, Veega jääb' },
+        { name: 'Arktuurus ja Veega', about: 'Arktuurus tuleb ja läheb, Veega jääb' },
         { name: 'Hele ja pime taevas', about: 'Linnatuled, Kuu ja suveöö' },
-        { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' },
-        { name: 'Leia suunad', about: 'Talveõhtu: Orion näitab teed' }
+        { name: 'Orion näitab teed', about: 'Talveõhtu: Orionist heledate tähtedeni' },
+        { name: 'Orion tõuseb ja loojub', about: 'Orion sügisest kevadeni' },
+        { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' }
       ],
       seasons: ['Talve', 'Talve', 'Kevad', 'Kevad', 'Kevad', 'Suve', 'Suve', 'Suve', 'Sügis', 'Sügis', 'Sügis', 'Talve'],
       night: (season, evening, d, m, h) => `${season}${evening ? 'õhtu' : 'öö'}, ${d}. ${m} kell ${h}`,
       months: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
       date: (d, m) => `${d}. ${m}`,
       clock: (h) => `kell ${h}`,
+      clockMin: (h, mm) => `kell ${h}.${String(mm).padStart(2, '0')}`,
+      midnightShort: 'kesköö',
       dateTime: (d, m, h, mm) => `${d}. ${m}, kell ${h}.${String(mm).padStart(2, '0')}`,
       summer: (h, mm) => ` (suveaja järgi ${!h && !mm ? 'kesköö' : `kell ${h}${mm === null ? '' : '.' + String(mm).padStart(2, '0')}`})`,
       midnight: (d, m) => `${d}. ${m}, kesköö`,
       lightSky: 'Taevas on hele: Päike on horisondi lähedal ja paistavad ainult heledamad tähed.',
       daySky: 'Päike on üleval ja tähti pole näha. Suur Vanker ja Põhjanael on ikka oma kohal.',
+      daySkyOrion: 'Päike on üleval ja tähti pole näha. Orion on ikka oma kohal.',
+      dragSky: 'Lohista taevast, et vaadata rohkem itta või läände.',
+      setFirst: 'Sea kõigepealt liugurid õigele kuupäevale ja kellaajale.',
+      timeSet: 'Õige aeg! Nüüd leia Orion.',
       day: 'Kuupäev',
       hour: 'Kellaaeg',
       skyLabel: 'Taeva heledus',
@@ -1070,26 +1155,32 @@
       title: 'Star Hopping',
       intro1: 'Learn to find stars in the sky. Lines from stars you know lead on to the next ones.',
       intro2: 'Drag your finger or the mouse from one star through another, and see where the line leads. Then tap the star you are looking for.',
-      partBigDipper: 'The Big Dipper',
-      partOrion: 'Orion',
+      chooseLevel: 'Pick a topic',
       levels: [
-        { name: 'Find the directions', about: 'An autumn evening: the Big Dipper shows the way' },
+        { name: 'The Big Dipper shows the way', about: 'An autumn evening: from the North Star to the Northern Crown' },
         { name: 'The sky turns', about: 'The Big Dipper goes round the North Star' },
-        { name: 'They rise and set', about: 'Arcturus comes and goes, Vega stays' },
+        { name: 'Arcturus and Vega', about: 'Arcturus comes and goes, Vega stays' },
         { name: 'Bright and dark skies', about: 'City lights, the Moon and summer nights' },
-        { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' },
-        { name: 'Find the directions', about: 'A winter evening: Orion shows the way' }
+        { name: 'Orion shows the way', about: 'A winter evening: from Orion to the bright stars' },
+        { name: 'Orion rises and sets', about: 'Orion from autumn to spring' },
+        { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' }
       ],
       seasons: ['winter', 'winter', 'spring', 'spring', 'spring', 'summer', 'summer', 'summer', 'autumn', 'autumn', 'autumn', 'winter'],
       night: (season, evening, d, m, h) => `A ${season} ${evening ? 'evening' : 'night'}, ${d} ${m} at ${String(h).padStart(2, '0')}:00`,
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       date: (d, m) => `${d} ${m}`,
       clock: (h) => `${String(h).padStart(2, '0')}:00`,
+      clockMin: (h, mm) => `${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`,
+      midnightShort: 'midnight',
       dateTime: (d, m, h, mm) => `${d} ${m}, ${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`,
       summer: (h, mm) => ` (${!h && !mm ? 'midnight' : `${String(h).padStart(2, '0')}:${String(mm || 0).padStart(2, '0')}`} summer time)`,
       midnight: (d, m) => `${d} ${m}, midnight`,
       lightSky: 'The sky is light: the Sun is near the horizon, and only the brighter stars show.',
       daySky: 'The Sun is up, and no stars can be seen. The Big Dipper and the North Star are still in their places.',
+      daySkyOrion: 'The Sun is up, and no stars can be seen. Orion is still in his place.',
+      dragSky: 'Drag the sky to look further east or west.',
+      setFirst: 'Set the sliders to the right date and hour first.',
+      timeSet: 'That’s the time! Now find Orion.',
       day: 'Date',
       hour: 'Time',
       skyLabel: 'How bright the sky is',
@@ -1170,6 +1261,8 @@
     wiggle: null,     // a wrong star: { star, t0 }
     flash: null,      // a star just found: { key, t0 }
     photo: null,      // a photo over the sky: { id, at, out, fast }
+    copies: [],       // Orion at each date and hour he was found at: { th, when }
+    lookAz: 180,      // where the view of the southern sky looks
     hintUntil: 0,
     lastAct: 0,
     gen: 0
@@ -1449,6 +1542,23 @@
     const w = L.W / 2 - 14;
     const h = (L.H - L.top - (L.bottom || 16)) / 2 - 10;
     return { az: Math.atan2(c[0], c[1]) / DEG, alt: Math.asin(c[2]) / DEG, s: Math.min(w, h) / (2 * Math.tan((R / 2) * DEG)) };
+  }
+
+  // The view of the southern sky, with the sliders, from the horizon up to about
+  // 64°: on a screen too narrow for all of it, from a little past the east to
+  // a little past the west, where Orion rises and sets, it can be dragged
+  // sideways between them. Its azimuth is `state.lookAz`.
+  function sweepView(L = state.L) {
+    const h = (L.H - L.top - (L.bottom || 16)) / 2;
+    const s = h / (2 * Math.tan(17 * DEG));
+    return { az: lookRange(L, s).fit(state.lookAz), alt: (2 * Math.atan(h / (2 * s))) / DEG - 4, s };
+  }
+
+  // how far the view to play with can turn: its edges no further than 20°
+  // past the east and the west
+  function lookRange(L, s) {
+    const half = (2 * Math.atan(L.W / 2 / (2 * s))) / DEG;
+    return { free: half < 110, fit: (az) => (half >= 110 ? 180 : clamp(az, 70 + half, 290 - half)) };
   }
 
   // a view straight at the middle of a photo, just wide enough for it
@@ -1773,11 +1883,17 @@
       }
     }
 
+    // the copies of Orion at the hours of the night
+    if (level().sweep && !map && task().kind !== 'explore') drawCopies(g, L, V);
+    if (level().sweep && map) {
+      drawPath(g, V, 'sirius', 'rgba(200, 215, 255, 0.45)');
+      drawPath(g, V, 'alnilam', 'rgba(255, 220, 120, 0.6)');
+    }
     // the figures (not while the slider of how bright the sky is waits for
     // the dark sky: the player is to find them only as the stars come out)
     for (const id of figsHidden(map) ? [] : state.figs) {
-      // in daylight only Suur Vanker's lines, where it is
-      if (state.day && id !== 'bigdipper') continue;
+      // in daylight only the lines of Suur Vanker, or of Orion, where it is
+      if (state.day && id !== dayFig()) continue;
       if (figHidden(id, map)) continue;
       if (onlyFigs(id, map)) continue;
       const f = FIGURES[id];
@@ -1974,6 +2090,89 @@
       g.fillStyle = 'rgba(255, 233, 160, 0.85)';
       g.fillText(nameOf(STARS[b.star].name), q[0], q[1] + L.hitR * 0.45 + fs + 4);
     }
+    g.restore();
+  }
+
+  // the figure whose lines show in daylight
+  const dayFig = () => (level().part === 'orion' ? 'orion' : 'bigdipper');
+
+  // a date and hour, short: "1. veebruar, kell 21", and midnight with the
+  // evening's date, "15. oktoober, kesköö"
+  function dayText(ms) {
+    const d = new Date(ms + TZ * 3600000);
+    const h = d.getUTCHours();
+    const mm = d.getUTCMinutes();
+    const eve = h < 12 ? new Date(d.getTime() - 86400000) : d;
+    const date = t('date')(eve.getUTCDate(), t('months')[eve.getUTCMonth()]);
+    return `${date}, ${!h && !mm ? t('midnightShort') : mm ? t('clockMin')(h, mm) : t('clock')(h)}`;
+  }
+
+  // A faint copy of Orion's figure where he was at each date and hour he was
+  // found at, with them above it.
+  function drawCopies(g, L, V) {
+    const fs = Math.round(clamp(L.u * 0.026, 11, 14));
+    g.save();
+    g.font = `800 ${fs}px Nunito, sans-serif`;
+    g.textAlign = 'center';
+    g.lineJoin = 'round';
+    const boxes = [];
+    for (const c of state.copies) {
+      // (not over Orion himself)
+      if (Math.abs(((((c.th - state.th) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI)) - Math.PI) < 0.3 * DEG) continue;
+      const at = (key) => {
+        const v = horizon(STARS[key], c.th);
+        return v[2] > 0 ? toScreen(V, v) : null;
+      };
+      g.strokeStyle = 'rgba(200, 215, 255, 0.3)';
+      g.lineWidth = 1.5;
+      for (const line of FIGURES.orion.lines) {
+        g.beginPath();
+        for (let i = 1; i < line.length; i++) {
+          const p = at(line[i - 1]);
+          const q = at(line[i]);
+          if (!p || !q) continue;
+          g.moveTo(...p);
+          g.lineTo(...q);
+        }
+        g.stroke();
+      }
+      const ps = ORION.map(at).filter(Boolean);
+      if (!ps.length) continue;
+      const top = ps.reduce((a, q) => (q[1] < a[1] ? q : a));
+      const txt = dayText(c.when);
+      const w = g.measureText(txt).width;
+      // (higher up, if it would cover the date of another copy)
+      let y = top[1] - fs * 0.9;
+      const hits = () => boxes.some((b) => Math.abs(b.x - top[0]) < (b.w + w) / 2 + 4 && Math.abs(b.y - y) < fs);
+      for (let n = 0; n < 4 && hits(); n++) y -= fs + 2;
+      boxes.push({ x: top[0], y, w });
+      g.strokeStyle = 'rgba(4, 8, 32, 0.85)';
+      g.lineWidth = 4;
+      g.strokeText(txt, top[0], y);
+      g.fillStyle = 'rgba(200, 215, 255, 0.7)';
+      g.fillText(txt, top[0], y);
+    }
+    g.restore();
+  }
+
+  // the path of a star across the sky, dashed, on the map: of Orion's belt,
+  // and of Siirius, grey
+  function drawPath(g, V, key, color) {
+    g.save();
+    g.strokeStyle = color;
+    g.lineWidth = 2.5;
+    g.setLineDash([8, 10]);
+    g.beginPath();
+    let pen = false;
+    for (let x = 0; x <= 360; x += 0.5) {
+      const v = horizon(STARS[key], x * DEG);
+      const q = v[2] > -0.03 ? toScreen(V, v) : null;
+      if (!q) { pen = false; continue; }
+      if (pen) g.lineTo(...q);
+      else g.moveTo(...q);
+      pen = true;
+    }
+    g.stroke();
     g.restore();
   }
 
@@ -2234,7 +2433,7 @@
       // of how bright the sky is, where it is one of the figures to see)
       if (id === 'bigdipper' && !map && state.ti > 1 && task().kind !== 'slider') continue;
       if (!map && state.hideFig && state.hideFig.has(id)) continue;
-      if (!map && state.day && id !== 'bigdipper') continue;
+      if (!map && state.day && id !== dayFig()) continue;
       if (figHidden(id, map)) continue;
       // (only the stars that show: in a bright sky a figure may have none)
       const pts = [...new Set(FIGURES[id].label || FIGURES[id].lines.flat())].filter((k) => map || state.day || shown(STARS[k]))
@@ -2350,15 +2549,20 @@
       return [V.cx + k * dotv(v, V.right) * V.s, V.cy - k * dotv(v, V.up) * V.s];
     };
     g.fillStyle = ink;
-    g.beginPath();
-    g.rect(-10, -10, L.W + 20, L.H + 20);
-    for (let az = 0; az <= 360; az += 1) {
-      const p = far(dirOf(az, 0));
-      if (az === 0) g.moveTo(...p);
-      else g.lineTo(...p);
+    // (a view looking level, as the map of Orion rising and setting, has the
+    // horizon as a straight line through its middle)
+    if (Math.abs(V.fwd[2]) < 1e-3) g.fillRect(-10, V.cy, L.W + 20, L.H + 20);
+    else {
+      g.beginPath();
+      g.rect(-10, -10, L.W + 20, L.H + 20);
+      for (let az = 0; az <= 360; az += 1) {
+        const p = far(dirOf(az, 0));
+        if (az === 0) g.moveTo(...p);
+        else g.lineTo(...p);
+      }
+      g.closePath();
+      g.fill('evenodd');
     }
-    g.closePath();
-    g.fill('evenodd');
     for (const tr of TREES) {
       const b = toScreen(V, dirOf(tr.az, -0.3));
       const t2 = toScreen(V, dirOf(tr.az, tr.h));
@@ -2493,7 +2697,7 @@
     const T = state.turn;
     if (!T) {
       const k = task();
-      return withSummer(((k && k.caption) || state.caption)[Astro.lang], state.when, k && k.kind === 'explore');
+      return withSummer(((k && k.caption) || state.caption)[Astro.lang], state.when, k && (k.kind === 'explore' || k.kind === 'set'));
     }
     const e = clamp((performance.now() - T.t0) / T.dur, 0, 1);
     const ms = T.ms0 + (T.ms1 - T.ms0) * e;
@@ -2504,7 +2708,7 @@
 
   function showTask() {
     const k = task();
-    if (k && k.kind === 'explore') {
+    if (k && (k.kind === 'explore' || k.kind === 'set')) {
       showExplore();
       return;
     }
@@ -2604,7 +2808,7 @@
   // and facts needs, so that the view does not move from one task to the
   // next; it is measured when the sky turns, and when the screen changes.
   function cardRoom() {
-    if (!(level().look || level().steady) || state.phase === 'menu') return $('task').offsetHeight + 12;
+    if (!(level().look || level().steady || level().sweep) || state.phase === 'menu') return $('task').offsetHeight + 12;
     if (!state.skyTop || state.skyTopW !== area.clientWidth) measureSky();
     return state.skyTop;
   }
@@ -2616,17 +2820,21 @@
     const fact = box.classList.contains('fact');
     const ti = state.ti;
     const ts = state.tasks;
-    let i = ti;
+    // (with the sliders, all the tasks, and their texts with a tip)
+    const all = level().sweep;
+    let i = all ? 0 : ti;
     while (i > 0 && !ts[i].when) i--;
     let h = 0;
-    for (let j = i; j < ts.length && (j === i || !ts[j].when); j++) {
+    for (let j = i; j < ts.length && (all || j === i || !ts[j].when); j++) {
       state.ti = j;
       // (the caption of the sky the task is in)
-      $('when').textContent = withSummer((ts[i].caption || level().caption)[Astro.lang], ts[i].when || level().when);
+      const c = all ? ts[j] : ts[i];
+      $('when').textContent = withSummer((c.caption || level().caption)[Astro.lang], c.when || level().when);
       if (ts[j].text) {
         box.classList.remove('fact');
         $('taskName').textContent = '';
         $('taskText').textContent = ts[j].text[Astro.lang];
+        if (all) $('tip').textContent = [t('setFirst'), t('dragSky')].sort((a, b) => b.length - a.length)[0];
         $('nextBtn').classList.add('hidden');
         h = Math.max(h, box.offsetHeight);
       }
@@ -2655,6 +2863,7 @@
   // the view for the current task, or for all of them on a level without
   // moving views
   function taskView() {
+    if (level().sweep) return sweepView();
     if (task() && (task().kind === 'explore' || task().wide) && level().center) return ringView(level().center);
     if (level().look) return fitView(skyKeys());
     if (!level().fixedView) return fitView(viewKeys());
@@ -2702,9 +2911,15 @@
       state.figs.delete('littledipper');
     }
     state.auto = null;
-    $('explore').classList.toggle('hidden', k.kind !== 'explore');
+    $('explore').classList.toggle('hidden', k.kind !== 'explore' && k.kind !== 'set');
+    $('explore').classList.remove('waiting');
     skyLight(turned);
-    if (k.kind === 'explore') startExplore();
+    // (Orion to find again, at the next date and hour, without his names)
+    if (k.kind === 'set') {
+      state.figs.delete(k.figure);
+      state.named = new Set();
+    }
+    if (k.kind === 'explore' || k.kind === 'set') startExplore();
     state.sel = null;
     state.lit = 0;
     state.doneAt = 0;
@@ -2717,7 +2932,7 @@
     // its text while the view goes there, and its fact with the photo)
     if (k.kind === 'note') {
       state.phase = 'fact';
-      state.noteAt = performance.now();
+      state.noteAt = state.factAt = performance.now();
       if (!k.photo) showFact();
       else {
         const ti = state.ti;
@@ -2799,24 +3014,50 @@
   }
 
   // The player's own date and hour: the evening's date over the year 2027,
-  // and the time from 18:00 to 06:00 on the clock, by the minute.
+  // or for Orion from 1 July 2026 to 30 June 2027, so that the winter is in
+  // the middle, and the time from 18:00 to 06:00 on the clock, by the minute.
+  const exploreStart = () => (level().sweep ? Date.UTC(2026, 6, 1) : Date.UTC(2027, 0, 1));
   function exploreTime() {
     const day = +$('dayRange').value;
     const h = 18 + (+$('hourRange').value) / 60;
-    return { ms: Date.UTC(2027, 0, 1 + day) + (h - TZ) * 3600000, tz: TZ };
+    return { ms: exploreStart() + day * 86400000 + (h - TZ) * 3600000, tz: TZ };
   }
 
-  function startExplore() {
-    // the sliders start where the sky is now
-    const local = new Date(state.when + state.tz * 3600000);
+  // where the sliders are for a date and hour (ms, UT)
+  function sliderOf(ms) {
+    const local = new Date(ms + TZ * 3600000);
     let h = local.getUTCHours() + local.getUTCMinutes() / 60;
-    let day = Math.round((Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) - Date.UTC(2027, 0, 1)) / 86400000);
+    let day = Math.round((Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) - exploreStart()) / 86400000);
     if (h < 12) {
       h += 24;
       day -= 1;
     }
-    $('dayRange').value = clamp(day, 0, 364);
-    $('hourRange').value = clamp(Math.round((h - 18) * 60), 0, 720);
+    return { day: clamp(day, 0, 364), min: clamp(Math.round((h - 18) * 60), 0, 720) };
+  }
+
+  function startExplore() {
+    // (to find Orion, the view starts looking south, so that it does not
+    // show where he is)
+    if (task().kind === 'set') state.lookAz = 180;
+    state.setOk = false;
+    // the sliders start where the sky is now
+    const at = sliderOf(state.when);
+    $('dayRange').value = at.day;
+    $('hourRange').value = at.min;
+    explore();
+  }
+
+  // To find Orion at a date and hour, the sliders snap to it once they are
+  // within 5 days and 15 minutes of it.
+  function setSliders() {
+    const goal = sliderOf(task().at);
+    const near = Math.abs(+$('dayRange').value - goal.day) <= 5 && Math.abs(+$('hourRange').value - goal.min) <= 15;
+    if (near) {
+      $('dayRange').value = goal.day;
+      $('hourRange').value = goal.min;
+      if (!state.setOk) sfx.snap();
+    }
+    state.setOk = near;
     explore();
   }
 
@@ -2840,8 +3081,11 @@
         ? T.midnight(eve.getUTCDate(), T.months[eve.getUTCMonth()])
         : T.dateTime(local.getUTCDate(), T.months[local.getUTCMonth()], local.getUTCHours(), mm);
     }
-    // the view stays on Põhjanael
-    if (state.L) state.cam = taskView();
+    // the view stays on Põhjanael, or for Orion on the southern sky
+    if (state.L) {
+      state.pan = null;
+      state.cam = taskView();
+    }
     showExplore();
   }
 
@@ -2851,9 +3095,13 @@
     $('when').textContent = caption();
     $('taskName').textContent = '';
     $('taskText').textContent = k.text[Astro.lang];
-    $('tip').textContent = state.day ? t('daySky') : state.light > 0.5 ? t('lightSky') : '';
+    const drag = level().sweep && state.L && lookRange(state.L, sweepView().s).free;
+    $('tip').textContent = k.kind === 'set' && state.setOk ? t('timeSet')
+      : state.day ? t(level().sweep ? 'daySkyOrion' : 'daySky') : state.light > 0.5 ? t('lightSky') : drag ? t('dragSky') : '';
     // the button to finish is beside the sliders, so that the card is low
+    // (and none while the sliders are to set)
     $('nextBtn').classList.add('hidden');
+    $('exploreDone').classList.toggle('hidden', k.kind === 'set');
     $('exploreDone').textContent = t('finish');
     updateBar();
   }
@@ -2946,6 +3194,7 @@
     state.photo = null;
     state.cam = null;
     state.pan = null;
+    state.copies = [];
     let when = level().when;
     state.caption = level().caption;
     state.tasks = level().tasks;
@@ -3020,6 +3269,12 @@
     state.phase = 'fact';
     state.factAt = performance.now();
     state.sel = null;
+    // Orion found at a date and hour: a faint copy of him stays there, and the
+    // sliders go until the next task
+    if (k.kind === 'set') {
+      state.copies.push({ th: state.th, when: state.when });
+      $('explore').classList.add('waiting');
+    }
     // (the slider is done with, and leaves room for the view, or on a
     // steady level only goes out of sight)
     $('slider').classList.add(level().steady ? 'waiting' : 'hidden');
@@ -3227,6 +3482,11 @@
     if (!s) return;
     const k = task();
     if (k.kind === 'slider' || k.kind === 'explore') return;
+    if (k.kind === 'set' && !state.setOk) {
+      $('tip').textContent = t('setFirst');
+      sfx.pick();
+      return;
+    }
     if (!k.find && (k.kind === 'hop' || k.kind === 'arc') && ![k.from, k.via, ...(k.along || [])].includes(s.key)) {
       $('tip').textContent = t('drawFirst');
       sfx.pick();
@@ -3268,6 +3528,14 @@
     const p = pointAt(e);
     state.lastAct = performance.now();
     const k = task();
+    // with the sliders for Orion, the view is dragged sideways, and a tap
+    // without a drag is a tap on a star
+    if (level().sweep) {
+      try { area.setPointerCapture(e.pointerId); } catch (err) { /* a pointer that is gone already */ }
+      state.pan = null;
+      state.drag = { id: e.pointerId, mode: 'look', x0: p.x, p0: p, az0: state.cam.az, moved: false };
+      return;
+    }
     const s = pick(p);
     try { area.setPointerCapture(e.pointerId); } catch (err) { /* a pointer that is gone already */ }
     const mode = k.kind === 'trace' ? 'trace' : 'hop';
@@ -3279,6 +3547,14 @@
     const d = state.drag;
     if (!d || d.id !== e.pointerId) return;
     const p = pointAt(e);
+    if (d.mode === 'look') {
+      if (Math.hypot(p.x - d.p0.x, p.y - d.p0.y) > 10) d.moved = true;
+      if (!d.moved) return;
+      state.lookAz = d.az0 - (p.x - d.x0) / (state.cam.s * DEG);
+      state.cam = taskView();
+      state.lookAz = state.cam.az;
+      return;
+    }
     d.last = p;
     d.path.push(p);
     if (Math.hypot(p.x - d.p0.x, p.y - d.p0.y) > 10) d.moved = true;
@@ -3292,6 +3568,10 @@
     state.drag = null;
     if (state.phase !== 'task') return;
     if (d.mode === 'trace') return;
+    if (d.mode === 'look') {
+      if (!d.moved) tap(d.p0);
+      return;
+    }
     if (!d.moved) {
       tap(d.p0);
       return;
@@ -3310,7 +3590,7 @@
   // Menu and win
   // ---------------------------------------------------------------------------
 
-  // the levels of each part under its own heading
+  // the levels, in one list
   const levelBtns = [];
   function buildMenu() {
     LEVELS.forEach((lv, i) => {
@@ -3324,7 +3604,7 @@
         sfx.pick();
         updateMenu();
       });
-      $(lv.part === 'orion' ? 'levelsOrion' : 'levels').appendChild(b);
+      $('levels').appendChild(b);
       levelBtns.push(b);
     });
   }
@@ -3369,11 +3649,23 @@
     if (level().part === 'bigdipper') keys.push(...FIGURES.bigdipper.lines.flat());
     const cam = state.cam;
     const figs = state.figs;
+    // (the night sky of the level, also when the player has played with the
+    // date and the hour)
+    const keep = { th: state.th, day: state.day, limit: state.limit, named: state.named };
+    state.day = false;
+    state.limit = level().limit;
     // (with the figures shown only for a while, as the Winter Triangle)
     state.figs = new Set([...figs, ...state.tasks.flatMap((k) => [k.figure, k.autoDraw]).filter(Boolean)]);
-    state.cam = fitView(keys, L, 70, level().center, false);
+    if (level().sweep) {
+      // Orion at his highest, due south, with no names of stars
+      state.th = STARS.alnilam.ra;
+      state.figs = new Set(['orion']);
+      state.named = new Set();
+      state.cam = sweepMap(L);
+    } else state.cam = fitView(keys, L, 70, level().center, false);
     const V = view(L, state.cam);
     render(g, L, V, performance.now(), true);
+    Object.assign(state, keep);
     state.figs = figs;
     // the places of the photos, with a frame round each, to tap
     state.mapPhotos = [];
@@ -3396,6 +3688,29 @@
     }
     state.cam = cam;
     return c.toDataURL('image/png');
+  }
+
+  // The map of Orion rising and setting: the sky from a little past the
+  // south-east to a little past the south-west (125°–235°), with Orion at his
+  // highest and the paths of his belt and of Siirius.
+  function sweepMap(L) {
+    const vs = [];
+    for (let az = 125; az <= 235; az += 5) vs.push(dirOf(az, -2));
+    FIGURES.orion.lines.flat().forEach((k) => vs.push(horizon(STARS[k])));
+    // (looking at the horizon itself, so that it is a straight line low in
+    // the picture, and the paths of the stars bend up from it)
+    const cam = { az: 180, alt: 0 };
+    const V = Object.assign(basis(cam), { s: 1, cx: 0, cy: 0 });
+    const ps = vs.map((v) => toScreen(V, v)).filter(Boolean);
+    const x0 = Math.min(...ps.map((q) => q[0]));
+    const x1 = Math.max(...ps.map((q) => q[0]));
+    const y0 = Math.min(...ps.map((q) => q[1]));
+    const y1 = Math.max(...ps.map((q) => q[1]));
+    const s = Math.min((L.W / 2 - L.pad) / ((x1 - x0) / 2), ((L.H - L.top - 16) / 2 - L.pad) / ((y1 - y0) / 2));
+    // (the horizon low in the picture, with just room below it for the
+    // directions, and the sky above)
+    const oy = (L.top + (L.H - L.top - 16) / 2 + y1 * s - (L.H - 80)) / s;
+    return Object.assign(cam, { s, ox: (x0 + x1) / 2, oy });
   }
 
   // A tap on the map near a photo's frame shows the photo, over the map.
@@ -3483,8 +3798,14 @@
     startGame();
   });
 
-  $('dayRange').addEventListener('input', () => { if (task() && task().kind === 'explore') explore(); });
-  $('hourRange').addEventListener('input', () => { if (task() && task().kind === 'explore') explore(); });
+  function slid() {
+    if (!task() || state.phase !== 'task') return;
+    if (task().kind === 'explore') explore();
+    if (task().kind === 'set') setSliders();
+    state.lastAct = performance.now();
+  }
+  $('dayRange').addEventListener('input', slid);
+  $('hourRange').addEventListener('input', slid);
 
   // The slider of how bright the sky is, smoothly from a bright sky (a city,
   // the full Moon) to a dark one; done when the faint stars of Väike Vanker

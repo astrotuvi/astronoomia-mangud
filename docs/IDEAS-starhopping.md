@@ -186,10 +186,10 @@ phone.
 
 ## Levels
 
-The game has seven levels, in one list under one heading in the menu,
-not split by constellation. The first four start from Suur Vanker and the
-next two from Orion, and the last, Ilma abita, asks about the stars of
-both. A 🌟 in the menu marks the ones done.
+The game has seven levels, in one list under one heading in the menu, "Vali
+teema" ("Pick a topic"), not split by constellation. The first four start
+from Suur Vanker and the next two from Orion, and the last, Ilma abita, asks
+about the stars of both. A 🌟 in the menu marks the ones done.
 
 1. **Suur Vanker näitab teed (the Big Dipper shows the way):** one sky
    that does not turn, the guide stars pulse, and the hops have ticks.
@@ -206,13 +206,13 @@ both. A 🌟 in the menu marks the ones done.
    night, and the slider to play with at the end.
 5. **Orion näitab teed (Orion shows the way):** as level 1, on a winter
    evening that does not turn, from Orion to the bright stars round him.
-6. **Orion tõuseb ja loojub (Orion rises and sets):** Orion moving from the east to the
-   west through the hours of one winter night. As on level 2, the texts
-   name only the stars.
-7. **Ilma abita (without help):** a dark sky, with the tasks of both
-   Suur Vanker and Orion, each on a night picked at random. The task names only the star
-   to find. The player picks the stars to hop from, or taps the star straight away
-   if they know it.
+6. **Orion tõuseb ja loojub (Orion rises and sets):** the date and hour
+   sliders from the start: the player sets them to three times, from
+   autumn to spring, and finds Orion at each, further west every time.
+7. **Ilma abita (without help):** a dark sky, with the tasks of both Suur
+   Vanker and Orion, each on a night picked at random. The task names only
+   the star to find. The player picks the stars to hop from, or taps the
+   star straight away if they know it.
 
 Level 7 picks a new dark night at random for each task, so that the
 player sees the stars in all kinds of places: an hour from 18:00 to 05:00
@@ -239,10 +239,11 @@ south before dawn. At the end the Talvekuusnurk is drawn on a night of
 its own, without the numbers.
 
 The task asks only, e.g., "Leia Arktuurus.", no figure is drawn at the
-start, and the view is the same for all the tasks of Suur Vanker, the
-whole northern sky, and for all those of Orion, the whole southern sky,
-so that the view does not give away where to look. Its facts are new, e.g. that Põhjanael is always about 58° up in
-Estonia, as high as Estonia is north of the equator.
+start, and the view is the same for all the tasks of Suur Vanker, the whole
+northern sky, and for all those of Orion, the whole southern sky, so that
+the view does not give away where to look. Its facts are new, e.g. that
+Põhjanael is always about 58° up in Estonia, as high as Estonia is north of
+the equator.
 
 The win screen shows the whole chain as a map: the arrows of all the hops
 over the sky, with the figures and the names of the stars found. Its
@@ -660,63 +661,55 @@ On the win map, the places of the three photos have a small frame, and a
 tap on one shows its photo again.
 
 
-**Level 6, Orion tõuseb ja loojub.** Orion from his rising to his setting, on
-the night of 15–16 December. The belt crosses the sky in a low, wide arc,
-about 180° from east to west and at most 31° up, which does not fit on a
-phone held upright. So the level has three views, each about 70° wide:
+**Level 6, Orion tõuseb ja loojub.** Orion at the same hour through the
+months. The date and hour sliders of the free play are there from the
+start, the date from 1 July to 30 June, so that the winter is in the
+middle, and the hour from 18:00 to 06:00. The sliders start on 15 October
+at 18:00.
 
-- **East to south-east** (about 75°–145°), from 18:00 to 21:30
-- **South, a little to the east** (about 120°–190°), at midnight, with
-  Prooküon and the Kaksikud beside Orion
-- **South-west to west** (about 200°–270°), from 03:00 to 06:05
+Each task names a date and an hour, e.g. "Sea liugurid: 15. oktoober,
+kesköö. Siis leia Orion." ("Set the sliders to 15 October, midnight. Then
+find Orion."). Once the sliders are within 5 days and 15 minutes of it,
+they snap to it, with a sound, and the tip says "Õige aeg! Nüüd leia
+Orion." ("That's the time! Now find Orion."). A tap on a star before
+that only says to set the sliders first. Then a tap on any star of Orion
+finds him, and his figure is drawn in. His figure is not there at the
+start of a task, so that he is found again each time.
 
-Within a view the camera stays still while the clock runs, so Orion
-visibly moves across it and tilts. Between the views the clock keeps
-running and the view pans along the horizon at about the rate the sky
-turns, so Orion stays about where he is on the screen during the pan, and
-the sky moves on as one motion. The caption counts the hours, with a short
-stop at each hour of a task so that it can be read.
+The view is of the southern sky, from the horizon up to about 64°. On a
+screen too narrow for all of it, as on a phone held upright, it is
+dragged sideways, from 20° past the east to 20° past the west, where
+Orion rises and sets. It starts looking south, so that it does not give
+away where he is; a tap without a drag is a tap on a star.
 
-At each stop of a task, a faint copy of Orion's lines, the four corners
-and the belt, stays where he was, with the hour beside it. On the win map
-the view is the whole southern sky from east to west, with the copies and
-the path of the belt dashed through them, like a photo taken many times
-over one night.
+1. **15 October, midnight:** the belt is 13° up in the east; it rose at
+   about 22:40.
+   - Fact: "Oktoobri keskel on Orion kesköö paiku madalal idas: ta on just
+     tõusnud." ("In the middle of October Orion is low in the east about
+     midnight: he has just risen.")
+2. **1 February, 21:00:** the belt is 31° up, due south, as high as it
+   gets.
+   - Fact: "Veebruari alguses on Orion kell 21 otse lõunas, nii kõrgel, kui
+     ta Eestis üldse tõuseb. Talveõhtud on parim aeg teda vaadata." ("At the
+     start of February Orion is due south at 21:00, as high as he ever gets
+     in Estonia. Winter evenings are the best time to look at him.")
+3. **1 April, 21:00** (22:00 summer time): the belt is 16° up in the
+   south-west, in the last twilight, and sets at about 23:00.
+   - Fact: "Aprilli alguses on Orion õhtul madalal edelas ja loojub enne
+     keskööd. Suvel on ta taevas päeval, koos Päikesega, ja teda ei
+     paista." ("At the start of April Orion is low in the south-west in the
+     evening and sets before midnight. In summer he is in the sky by day,
+     with the Sun, and cannot be seen.")
+4. **Free play** with the sliders, from where they are.
 
-The texts name only the stars, not left or right:
-
-1. **18:00, east:** only the shoulders, Betelgeuse and Bellatrix, are
-   up. The clock runs on to 19:00 while Orion rises lying on his side:
-   "Orion tõuseb külili, õlad ees." ("Orion rises on his side, shoulders
-   first.") Riigel comes up last, at about 18:50.
-2. **19:00:** find Aldebaran from the belt, 28° up.
-3. **19:00, Siirius:** the belt points below the horizon. "Siirius tõuseb
-   natuke hiljem. Oota!" ("Sirius rises a little later. Wait!") The line
-   goes on behind the horizon, and the clock runs on until Siirius is up,
-   at about 21:30; then the player taps him, low in the south-east.
-4. **Pan to the south, 00:00:** Orion upright at his highest. Find
-   Prooküon and the Kaksikud.
-   - Fact: "Kesköö paiku on Orion kõige kõrgemal, otse lõunas. Eestis ei
-     tõuse ta kunagi kõrgemale kui umbes 30 kraadi." ("About midnight
-     Orion is at his highest, due south. In Estonia he never gets higher
-     than about 30°.")
-5. **Pan to the south-west, 03:00:** Orion tilted the other way. Find
-   Siirius again, 12° up, and Sõel.
-   - Fact: "Siirius ei tõuse Eestis kunagi kõrgemale kui 15 kraadi. Mida
-     lõuna pool sa elad, seda kõrgemale ta tõuseb." ("In Estonia Sirius
-     never gets higher than 15°. The further south you live, the higher he
-     gets.")
-6. **05:00 to 06:05, west:** the clock runs on while Orion sets: "Orion
-   loojub külili, jalad ees." ("Orion sets on his side, feet first.")
-   Riigel goes first, at about 05:00, and the belt touches the horizon at
-   about 06:05, while Betelgeuse is still 10° up. The last copy is left
-   there.
-7. **Free play** with the date and the hour, as on level 2, starting on
-   15 December at 18:00. The view stays on the southern sky, from the
-   east along the horizon to the west, and does not follow the stars,
-   and the copies are not drawn. Where the screen is too narrow for all
-   of it, as on a phone held upright, the view can be dragged sideways,
-   but only between the east and the west.
+Where Orion was found, a faint grey copy of his figure stays, with the
+date and hour above it, and the names of his stars go, so that he is
+found again by his shape. The win map is the sky from a little past the
+south-east to a little past the south-west (125°–235°), looking level, so
+that the horizon is straight and low and the arcs bend up from it, with
+Orion's figure at his highest, due south, the arc of his belt across the
+sky dashed, and below it the lower arc of Siirius, grey, without the
+copies or the names of stars.
 
 Level 7, Ilma abita, with the tasks of both Suur Vanker and Orion, is
 under Levels above.
@@ -735,6 +728,9 @@ Left out of the first version, but easy to add as more hops:
 - **Miitsar ja Alkor:** a test for the eyes, a faint star next to Miitsar
 - **Photos in the free play:** on level 6, a tap on Sõel or the Orion
   Nebula shows its photo, as on level 5
+- **Orion through one night:** on level 6, the clock running from his
+  rising on a December evening to his setting in the morning, with a stop
+  at each hour to find a star from him
 - **Suvekolmnurk (the Summer Triangle):** Veega, the tail of Luik and the
   brightest star of Kotkas, high on late summer and autumn evenings; it
   may become a level of its own
