@@ -126,6 +126,21 @@
 
 /* the win map: a tap on a photo's frame shows the photo over it */
 #winImg { cursor: pointer; }
+.win-pic { position: relative; }
+.win-pic .map-btn { position: absolute; top: 4px; right: 4px; z-index: 2; }
+/* the map over the whole screen, and twice as big, to scroll round */
+.overlay.map-box { flex-direction: column; gap: 8px; padding: 8px; }
+.map-scroll {
+  --side: min(calc(100vw - 16px), calc(100dvh - 76px));
+  width: var(--side);
+  height: var(--side);
+  overflow: auto;
+  border-radius: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.map-scroll img { display: block; width: 100%; height: 100%; cursor: pointer; }
+.map-scroll.big img { width: 200%; height: 200%; }
+.map-buttons { display: flex; gap: 12px; }
 .overlay.photo-box { flex-direction: column; gap: 8px; cursor: pointer; }
 .photo-box img {
   width: min(92vw, calc(100dvh - 140px));

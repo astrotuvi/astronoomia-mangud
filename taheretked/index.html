@@ -99,7 +99,10 @@
   <!-- Win overlay: the map of all the hops -->
   <div id="win" class="overlay hidden">
     <canvas id="confetti"></canvas>
-    <div class="win-pic"><img id="winImg" alt=""></div>
+    <div class="win-pic">
+      <img id="winImg" alt="">
+      <button id="mapBtn" class="icon map-btn" data-t-label="bigMap" aria-label="Suurem kaart">🔍</button>
+    </div>
     <div class="win-card">
       <h2><span data-t="wellDone"></span> 🎉</h2>
       <p id="winName" class="win-name"></p>
@@ -109,6 +112,15 @@
         <button id="nextLevelBtn" class="btn">▶ <span data-t="nextLevel"></span></button>
         <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
       </div>
+    </div>
+  </div>
+
+  <!-- the map over the whole screen, to make bigger and scroll round -->
+  <div id="mapBox" class="overlay map-box hidden">
+    <div id="mapScroll" class="map-scroll"><img id="mapBoxImg" alt=""></div>
+    <div class="map-buttons">
+      <button id="mapZoomBtn" class="icon">➕</button>
+      <button id="mapClose" class="icon" data-t-label="close" aria-label="Sulge">✕</button>
     </div>
   </div>
 

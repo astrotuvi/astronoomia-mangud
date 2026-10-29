@@ -227,6 +227,8 @@
     },
     // Suur Peni as in Tähtkujud, which draws itself once Siirius is found
     canismajor: {
+      // (beside Siirius, as the lower half is behind the trees)
+      labelBeside: 'sirius',
       order: ['sirius', 'mirzam', 'nu2CMa', 'omi1CMa', 'adhara', 'sigCMa', 'wezen', 'omi2CMa', 'aludra',
         'iotCMa', 'muliphein', 'theCMa'],
       join: { aludra: 'wezen', iotCMa: 'sirius' },
@@ -254,6 +256,8 @@
     },
     // and Kaksikud as in Tähtkujud, which draws itself once they are found
     gemini: {
+      // (between the twins, higher than Prooküon)
+      labelMid: true,
       order: ['castor', 'tauGem', 'mebsuta', 'tejat', 'propus', 'nuGem', 'iotGem', 'upsGem', 'pollux',
         'wasat', 'mekbuda', 'alhena', 'lamGem', 'xiGem'],
       join: { nuGem: 'mebsuta', iotGem: 'tauGem', wasat: 'upsGem', lamGem: 'wasat' },
@@ -276,6 +280,8 @@
       order: ['capella', 'aldebaran', 'rigel', 'sirius', 'procyon', 'pollux', 'capella'],
       where: { et: 'Talvekuusnurgas', en: 'the Winter Hexagon' },
       name: { et: 'Talvekuusnurk', en: 'Winter Hexagon' },
+      // (along its lower right side, from Riigel up towards Aldebaran)
+      labelAlong: ['rigel', 'aldebaran'],
       lines: [['capella', 'aldebaran', 'rigel', 'sirius', 'procyon', 'pollux', 'capella']]
     }
   };
@@ -314,6 +320,32 @@
       astrobin: '4yxzcw',
       // the left-hand star of the belt, and the star in the blue haze
       anchors: [[85.190, -1.943, 198, 553], [85.410, -2.259, 575, 760]]
+    },
+    // the galaxies by Suur Vanker, only on the map of level 1: each at its
+    // place `at` (RA and Dec), with its `short` name beside the frame, on its
+    // left with `left`
+    bode: {
+      name: { et: 'Bode ja Sigari galaktika', en: 'Bode’s and Cigar Galaxies' },
+      short: { et: 'M81 ja M82', en: 'M81 and M82' },
+      left: true,
+      file: '../pusle/images/bode.jpg',
+      astrobin: 'xcthwy',
+      at: [148.93, 69.37]
+    },
+    pinwheel: {
+      name: { et: 'Tuuleveski galaktika', en: 'Pinwheel Galaxy' },
+      short: { et: 'M101', en: 'M101' },
+      file: '../pusle/images/pinwheel.jpg',
+      astrobin: 'aqmyzp',
+      at: [210.80, 54.35]
+    },
+    whirlpool: {
+      name: { et: 'Keerise galaktika', en: 'Whirlpool Galaxy' },
+      short: { et: 'M51', en: 'M51' },
+      left: true,
+      file: '../pusle/images/whirlpool.jpg',
+      astrobin: 'ymu58n',
+      at: [202.47, 47.20]
     }
   };
 
@@ -380,14 +412,16 @@
       limit: 4.5,
       part: 'bigdipper',
       icon: '🍂',
+      // the galaxies by Suur Vanker, on the map, to tap for their photos
+      mapPhotos: ['bode', 'pinwheel', 'whirlpool'],
       // 15 October 2026 at 20:00
       when: Date.UTC(2026, 9, 15, 18, 0),
       caption: { et: 'Sügisõhtu, 15. oktoober kell 20', en: 'An autumn evening, 15 October at 20:00' },
       win: {
         name: { et: 'Suur Vanker näitas teed', en: 'The Big Dipper showed the way' },
         fact: {
-          et: 'Suur Vanker on Eestis taevas igal selgel ööl. Nüüd oskad tema abil leida Põhjanaela, Väikese Vankri, Lohe, Veega, Arktuuruse ja Põhjakrooni.',
-          en: 'In Estonia the Big Dipper is in the sky on every clear night. Now you can use it to find the North Star, the Little Dipper, the Dragon, Vega, Arcturus and the Northern Crown.'
+          et: 'Suur Vanker on Eestis taevas igal selgel ööl. Nüüd oskad tema abil leida Põhjanaela, Väikese Vankri, Lohe, Veega, Arktuuruse ja Põhjakrooni. Tema lähedal on ka kauged galaktikad, mida näeb binokli või teleskoobiga. Puuduta kaardil nende raame, et näha fotosid.',
+          en: 'In Estonia the Big Dipper is in the sky on every clear night. Now you can use it to find the North Star, the Little Dipper, the Dragon, Vega, Arcturus and the Northern Crown. Near it there are also faraway galaxies, which you can see with binoculars or a telescope. Tap their frames on the map to see photos.'
         }
       },
       tasks: [
@@ -1028,6 +1062,8 @@
       sound: 'Heli',
       credit: 'Tähed: Yale’i heledate tähtede kataloog (Hoffleit ja Warren, 1991). Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.',
       photo: 'Foto: Tõrva Astronoomiaklubi',
+      bigMap: 'Suurem kaart',
+      close: 'Sulge',
       allGames: 'Kõik mängud'
     },
     en: {
@@ -1077,6 +1113,8 @@
       sound: 'Sound',
       credit: 'Stars: the Yale Bright Star Catalogue (Hoffleit & Warren, 1991). Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.',
       photo: 'Photo: Tõrva Astronoomiaklubi',
+      bigMap: 'Bigger map',
+      close: 'Close',
       allGames: 'All games'
     }
   };
@@ -1175,6 +1213,11 @@
   // north, as in the photos, which are only turned and scaled: as complex
   // numbers, pixel = k · (−east, −north) from the first star.
   Object.values(PHOTOS).forEach((P) => {
+    // (a photo only on the map: just its place)
+    if (P.at) {
+      P.mid = sphere(...P.at);
+      return;
+    }
     const [[r1, d1, u1, v1], [r2, d2, u2, v2]] = P.anchors;
     const c = Math.cos(d1 * DEG);
     const wr = -(r2 - r1) * c;
@@ -2212,6 +2255,43 @@
         x = clamp(Math.max(...xs) + w / 2 + 8, w / 2 + 4, L.W - w / 2 - 4);
         y = by.y + fs + 6;
       }
+      // (with `labelAlong`, slanted along the side between those two stars:
+      // starting beside the first, towards the second, just outside the figure)
+      const al = FIGURES[id].labelAlong && FIGURES[id].labelAlong.map((k) => place(V, STARS[k]));
+      if (al && al[0] && al[1]) {
+        const [a, b] = al;
+        const ang = Math.atan2(b.y - a.y, b.x - a.x);
+        const ux = Math.cos(ang);
+        const uy = Math.sin(ang);
+        const cx = xs.reduce((s2, v) => s2 + v, 0) / xs.length;
+        const cy = pts.reduce((s2, q) => s2 + q.y, 0) / pts.length;
+        let nx = -uy;
+        let ny = ux;
+        if (nx * (a.x - cx) + ny * (a.y - cy) < 0) {
+          nx = -nx;
+          ny = -ny;
+        }
+        // (the start of the text a little along the side from the star, and
+        // out from it)
+        const tx = a.x + ux * fs * 0.6 + nx * fs * 1.1;
+        const ty = a.y + uy * fs * 0.6 + ny * fs * 1.1;
+        const hw = (Math.abs(ux) * w + Math.abs(uy) * fs) / 2;
+        const hh = (Math.abs(uy) * w + Math.abs(ux) * fs) / 2;
+        boxes.push({ x: tx + ux * w / 2 - hw, y: ty + uy * w / 2 - hh, w: 2 * hw, h: 2 * hh });
+        g.save();
+        g.translate(tx, ty);
+        g.rotate(ang);
+        g.textAlign = 'left';
+        g.textBaseline = 'middle';
+        g.strokeStyle = 'rgba(4, 8, 32, 0.85)';
+        g.lineWidth = 4;
+        g.strokeText(txt, 0, 0);
+        g.fillStyle = 'rgba(200, 220, 255, 0.75)';
+        g.fillText(txt, 0, 0);
+        g.restore();
+        g.textAlign = 'center';
+        continue;
+      }
       // (below the name of another figure, if they would overlap)
       for (let n = 0; n < 4 && hits({ x: x - w / 2, y: y - fs * 0.85, w, h: fs }); n++) y += fs + 2;
       boxes.push({ x: x - w / 2, y: y - fs * 0.85, w, h: fs });
@@ -2440,6 +2520,7 @@
     updateBar();
   }
 
+  let nextArmed = false;
   function showFact() {
     const k = task();
     const box = $('task');
@@ -2453,6 +2534,7 @@
     const last = state.ti === state.tasks.length - 1;
     $('nextBtn').textContent = last ? t('finish') : t('next');
     $('nextBtn').classList.remove('hidden');
+    nextArmed = false;
     if (state.photo && !state.photo.out) photoText();
     updateBar();
   }
@@ -3264,6 +3346,7 @@
     Astro.stopConfetti($('confetti'));
     $('win').classList.add('hidden');
     $('photoBox').classList.add('hidden');
+    $('mapBox').classList.add('hidden');
     $('game').classList.add('hidden');
     $('menu').classList.remove('hidden');
     fingerEl.classList.add('hidden');
@@ -3271,15 +3354,18 @@
   }
 
   // the map of the whole chain: all the hops and figures, with the names
+  const MAP = 900;
   function mapPicture() {
-    const size = 900;
+    const size = MAP;
     const c = document.createElement('canvas');
-    c.width = size;
-    c.height = size;
+    // (twice as sharp, for the map made bigger)
+    c.width = 2 * size;
+    c.height = 2 * size;
     const g = c.getContext('2d');
+    g.scale(2, 2);
     const L = { W: size, H: size, u: size * 0.8, dpr: 1, top: 20, pad: 40, hitR: 36, map: true };
     const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []),
-      ...(k.figure ? FIGURES[k.figure].lines.flat() : [])]).filter(Boolean);
+      ...[k.figure, k.autoDraw].filter(Boolean).flatMap((id) => FIGURES[id].lines.flat())]).filter(Boolean);
     if (level().part === 'bigdipper') keys.push(...FIGURES.bigdipper.lines.flat());
     const cam = state.cam;
     const figs = state.figs;
@@ -3293,13 +3379,19 @@
     state.mapPhotos = [];
     g.strokeStyle = 'rgba(255, 233, 160, 0.9)';
     g.lineWidth = 3;
-    for (const id of new Set(state.tasks.map((k) => k.photo).filter(Boolean))) {
+    g.font = '800 22px Nunito, sans-serif';
+    for (const id of new Set([...state.tasks.map((k) => k.photo), ...(level().mapPhotos || [])].filter(Boolean))) {
       const P = PHOTOS[id];
       const q = toScreen(V, horizon(P.mid));
-      const e = toScreen(V, horizon(P.toSky(P.W, P.H / 2)));
+      const e = P.toSky ? toScreen(V, horizon(P.toSky(P.W, P.H / 2))) : q;
       if (!q || !e) continue;
       const r = Math.max(Math.hypot(e[0] - q[0], e[1] - q[1]) * 0.75, 13);
       g.strokeRect(q[0] - r, q[1] - r, 2 * r, 2 * r);
+      if (P.short) {
+        g.fillStyle = 'rgba(255, 233, 160, 0.9)';
+        g.textAlign = P.left ? 'right' : 'left';
+        g.fillText(P.short[Astro.lang], q[0] + (P.left ? -r - 6 : r + 6), q[1] + 8);
+      }
       state.mapPhotos.push({ id, x: q[0], y: q[1] });
     }
     state.cam = cam;
@@ -3307,14 +3399,15 @@
   }
 
   // A tap on the map near a photo's frame shows the photo, over the map.
-  $('winImg').addEventListener('click', (e) => {
-    const r = e.currentTarget.getBoundingClientRect();
+  function photoAt(img, e) {
+    const r = img.getBoundingClientRect();
     // (the picture is square, in the middle of the image's box)
     const side = Math.min(r.width, r.height);
-    const x = ((e.clientX - r.left - (r.width - side) / 2) / side) * 900;
-    const y = ((e.clientY - r.top - (r.height - side) / 2) / side) * 900;
+    const x = ((e.clientX - r.left - (r.width - side) / 2) / side) * MAP;
+    const y = ((e.clientY - r.top - (r.height - side) / 2) / side) * MAP;
+    // (as far as a finger's width on the screen, however big the map)
+    let bd = Math.max(60, (30 / side) * MAP);
     let best = null;
-    let bd = 60;
     for (const m of state.mapPhotos || []) {
       const d = Math.hypot(m.x - x, m.y - y);
       if (d < bd) {
@@ -3322,7 +3415,7 @@
         best = m;
       }
     }
-    if (!best) return;
+    if (!best) return false;
     const P = PHOTOS[best.id];
     $('photoBoxImg').src = P.file;
     $('photoBoxName').textContent = P.name[Astro.lang];
@@ -3330,7 +3423,31 @@
     $('photoBoxCredit').href = 'https://www.astrobin.com/' + P.astrobin + '/';
     $('photoBox').classList.remove('hidden');
     sfx.pick();
+    return true;
+  }
+
+  // The map over the whole screen, and twice as big again, to scroll round
+  function showMap() {
+    $('mapBoxImg').src = $('winImg').src;
+    $('mapBox').classList.remove('hidden');
+    setMapZoom(1);
+  }
+  function setMapZoom(z) {
+    const box = $('mapScroll');
+    box.classList.toggle('big', z > 1);
+    $('mapZoomBtn').textContent = z > 1 ? '➖' : '➕';
+    // (onto the middle of the map)
+    box.scrollLeft = (box.scrollWidth - box.clientWidth) / 2;
+    box.scrollTop = (box.scrollHeight - box.clientHeight) / 2;
+  }
+  // (a tap on the small map away from the photos makes it bigger)
+  $('winImg').addEventListener('click', (e) => {
+    if (!photoAt(e.currentTarget, e)) showMap();
   });
+  $('mapBtn').addEventListener('click', showMap);
+  $('mapBoxImg').addEventListener('click', (e) => photoAt(e.currentTarget, e));
+  $('mapZoomBtn').addEventListener('click', () => setMapZoom($('mapScroll').classList.contains('big') ? 1 : 2));
+  $('mapClose').addEventListener('click', () => $('mapBox').classList.add('hidden'));
   $('photoBox').addEventListener('click', (e) => {
     if (!e.target.closest('a')) $('photoBox').classList.add('hidden');
   });
@@ -3388,7 +3505,15 @@
   });
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
-  $('nextBtn').addEventListener('click', nextTask);
+  // On a phone the tap that finds the last star goes on as a click on the
+  // button that has just come up under the finger: the button takes only a
+  // tap that began on it (or a key, with no pointer)
+  $('nextBtn').addEventListener('pointerdown', () => { nextArmed = true; });
+  $('nextBtn').addEventListener('click', (e) => {
+    if (e.detail && !nextArmed) return;
+    nextArmed = false;
+    nextTask();
+  });
   $('exploreDone').addEventListener('click', nextTask);
   $('sliderDone').addEventListener('click', nextTask);
 
