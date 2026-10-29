@@ -420,8 +420,8 @@
       win: {
         name: { et: 'Suur Vanker näitas teed', en: 'The Big Dipper showed the way' },
         fact: {
-          et: 'Suur Vanker on Eestis taevas igal selgel ööl. Nüüd oskad tema abil leida Põhjanaela, Väikese Vankri, Lohe, Veega, Arktuuruse ja Põhjakrooni. Tema lähedal on ka kauged galaktikad, mida näeb binokli või teleskoobiga. Puuduta kaardil nende raame, et näha fotosid.',
-          en: 'In Estonia the Big Dipper is in the sky on every clear night. Now you can use it to find the North Star, the Little Dipper, the Dragon, Vega, Arcturus and the Northern Crown. Near it there are also faraway galaxies, which you can see with binoculars or a telescope. Tap their frames on the map to see photos.'
+          et: 'Suur Vanker on Eestis taevas igal selgel ööl ja näitab teed paljude tähtede juurde. Tema lähedal on ka kauged galaktikad. Puuduta kaardil nende raame.',
+          en: 'In Estonia the Big Dipper is in the sky on every clear night, and it shows the way to many stars. Near it there are also faraway galaxies. Tap their frames on the map.'
         }
       },
       tasks: [

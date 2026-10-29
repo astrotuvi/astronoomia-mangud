@@ -53,13 +53,12 @@ the sliders, the minutes are always shown, also on the full hour, as "kell
   find, so that it does not give the answer away. A drag from other stars
   also makes an arrow; it is no mistake, it just leads somewhere else, and
   it fades out after a few seconds. On
-  level 1 the arrow has a tick at every gap between the two stars, so that
-  "five times as far" can be counted.
+  levels 1 and 5 the arrow has a tick at every gap between the two stars,
+  so that "five times as far" can be counted.
 - **Osa teest (part of the way):** drag from one star to another, and the
   line is drawn between them, without a mark on it; the text says how far
   along it to look, e.g. a third of the way from Arktuurus to Veega for
-  Põhjakroon (not on level 1 of Suur Vanker). 💡 circles the whole figure
-  to find.
+  Põhjakroon (not on level 1). 💡 circles the whole figure to find.
 - **Kaar (an arc):** drag along the last two stars of the handle of Suur
   Vanker, and the curve goes on as a dashed arc. A circle through the
   three handle stars alone bends far too much and misses Arktuurus, so the
@@ -81,16 +80,16 @@ the sliders, the minutes are always shown, also on the full hour, as "kell
   near the finger, not the nearest one, so that a child aiming at Thuban
   in a sky full of faint stars gets Thuban. The right star lights up, gets
   its name and a short fact, and its figure is drawn in. A wrong star only
-  wiggles, and on levels 1 and 2 says its name if it has one used in
-  Estonia, e.g. "See on Veega", or else its figure, e.g. "See täht on Lohe
+  wiggles, and on levels 1, 2, 5 and 6 says its name if it has one used
+  in Estonia, e.g. "See on Veega", or else its figure, e.g. "See täht on Lohe
   tähtkujus". The Arabic names of the stars, such as Merak and Dubhe, are
   not used in Estonia, so the game does not show them: the tasks name the
   stars by where they are, e.g. Suure Vankri tagumised rattad.
 
 Each star found becomes a start for the next task, so the tasks of a level
-are one chain across the sky. 💡 shows the arrow to follow, or on level 1,
-where the guide stars already pulse, the star to tap. If nothing happens
-for a few seconds, a 👆 shows where to start.
+are one chain across the sky. 💡 shows the arrow to follow, or on levels 1
+and 5, where the guide stars already pulse, the star to tap. If nothing
+happens for a few seconds, a 👆 shows where to start.
 
 ## Seasons and hours
 
@@ -130,7 +129,7 @@ it is turned as much as three months later at the same hour. On level 2 one
 task keeps the date and moves the clock: from 20:00 on 15 January to 02:00,
 when Suur Vanker stands as it does at 22:00 in the middle of March.
 
-Orion is in the evening sky only in winter, so his part changes the hour,
+Orion is in the evening sky only in winter, so his levels change the hour,
 not the season. On 15 December he rises in the east at about 18:20, lying
 on his side, stands upright in the south at about 00:15, only 31° up, and
 sets in the west at about 06:05, tilted the other way. The sky is dark all
@@ -159,21 +158,20 @@ A darker sky makes the figures harder to find, not easier, which children
 do not expect. The level sets how dark the sky is, rather than a free
 slider, so that the stars a task needs are always there:
 
-- Levels 1 to 3 are a sky to magnitude 4.5, as in a small town. The stars
-  of the figures always show, also the fainter ones, such as η UMi (5.0)
+- Levels 1 to 3, 5 and 6 are a sky to magnitude 4.5, as in a small town.
+  The stars of the figures always show, also the fainter ones, such as η UMi (5.0)
   in Väike Vanker, and they are drawn a little bigger.
 - The twilight of the date and the hour is added to it, as on level 2: on
   a light May or July night only the brighter stars show.
-- Level 4 is about the slider. In the Suur Vanker part: "Kui
+- Level 4 is about the slider: "Kui
   paistab täiskuu või oled linnas, on taevas hele, ja Väikesest Vankrist
   paistab ainult kolm tähte. Vii liugur pimeda taeva poole, et näha teda
   tervenisti." ("When the full Moon is out, or you are in a city, the sky
   is bright, and only three stars of the Little Dipper show. Move the
-  slider towards the dark sky to see all of it.") The Orion part has no
-  such level; its sword with the Orion Nebula (4.0) shows in the sky of
-  level 1.
-- Levels 4 and 5 are a dark sky, to magnitude 6, and so is Ilma abita in
-  the Orion part.
+  slider towards the dark sky to see all of it.") The Orion levels have
+  no slider; his sword with the Orion Nebula (4.0) shows in the sky of
+  level 5.
+- Levels 4 and 7 are a dark sky, to magnitude 6.
 
 The slider sets the light of the Moon and of the lights round, and the
 twilight is added on top of it. So on a July night at 23:00, even at the dark
@@ -188,46 +186,63 @@ phone.
 
 ## Levels
 
-The Suur Vanker part has five levels and the Orion part three: Leia
-suunad, Taevas pöörleb and Ilma abita. In the menu each part has its own
-heading, and the levels are numbered on through both, so the Orion ones
-are 6, 7 and 8. A 🌟 in the menu marks the ones done.
+The game has seven levels, in one list under one heading in the menu,
+not split by constellation. The first four start from Suur Vanker and the
+next two from Orion, and the last, Ilma abita, asks about the stars of
+both. A 🌟 in the menu marks the ones done.
 
-1. **Leia suunad (find the directions):** one sky that does not turn, the
-   guide stars pulse, and the hops have ticks. The texts say which way to
-   go, e.g. left or down.
-2. **Taevas pöörleb (the sky turns):** in the Suur Vanker part, only how
-   the sky turns round Põhjanael, through the seasons and the hours; in
-   the Orion part, through the hours of one winter night. The
-   texts name only the stars, not left or right, as those change when the
-   sky turns.
-3. **Tõusevad ja loojuvad (they rise and set):** only in the Suur Vanker part,
-   Arktuurus and Veega through a year of evenings and one winter night.
-   The task still names the stars to start from, but they do not pulse.
-4. **Hele ja pime taevas (bright and dark skies):** only in the Suur
-   Vanker part, the slider of how
+1. **Suur Vanker näitab teed (the Big Dipper shows the way):** one sky
+   that does not turn, the guide stars pulse, and the hops have ticks.
+   The texts say which way to go, e.g. left or down.
+2. **Taevas pöörleb (the sky turns):** only how the sky turns round
+   Põhjanael, through the seasons and the hours. The texts name only the
+   stars, not left or right, as those change when the sky turns.
+3. **Arktuurus ja Veega (Arcturus and Vega):** Arktuurus rises and
+   sets, while Veega does not, through a year of evenings and one winter
+   night. The task still names the stars to start from, but they do not
+   pulse.
+4. **Hele ja pime taevas (bright and dark skies):** the slider of how
    bright the sky is, a figure in a dark sky full of stars, a light summer
    night, and the slider to play with at the end.
-5. **Ilma abita (without help):** a dark sky on a night picked at random.
-   The task names only the star to find. The player picks the stars to hop
-   from, or taps the star straight away if they know it.
+5. **Orion näitab teed (Orion shows the way):** as level 1, on a winter
+   evening that does not turn, from Orion to the bright stars round him.
+6. **Orion tõuseb ja loojub (Orion rises and sets):** Orion moving from the east to the
+   west through the hours of one winter night. As on level 2, the texts
+   name only the stars.
+7. **Ilma abita (without help):** a dark sky, with the tasks of both
+   Suur Vanker and Orion, each on a night picked at random. The task names only the star
+   to find. The player picks the stars to hop from, or taps the star straight away
+   if they know it.
 
-In the Suur Vanker part, level 5 picks a dark night of the year at random:
-an hour from 20:00 to 03:00 on winter time (not midnight), with the Sun
-at least 15° below the horizon, so never in June or July. The caption
-names it, e.g. "Kevadöö, 17. märts kell 1". Põhjanael and Väike Vanker never set, so
-they are asked every night. Arktuurus and Põhjakroon are asked only when
-they are at least 10° up (Veega is left out, as among all the stars of a
-dark sky it is too hard to find alone). Half of the nights are picked so
-that both are up too, from about February to October. Only those would
-show Suur Vanker always high, from the northeast to overhead, so the other
-half are any dark night, with Suur Vanker low in the north on an autumn
-evening or on its side in the east or the west.
-Arktuurus below the horizon is only on level 3. The task asks only "Leia Arktuurus.", no
-figure is drawn at the start, and one view is kept for all the tasks, so
-that the view does not give away where to look. Its facts are new, e.g.
-that Põhjanael is always about 58° up in Estonia, as high as Estonia is
-north of the equator.
+Level 7 picks a new dark night at random for each task, so that the
+player sees the stars in all kinds of places: an hour from 18:00 to 05:00
+on winter time (not midnight), with the Sun at least 15° below the
+horizon, so never in June or July, and with the star to find at least 10°
+up (Siirius 5°). The caption names it, e.g. "Kevadöö, 17. märts kell 1".
+Between the tasks the sky turns on to the next night, always forwards, as
+on level 2, while the caption counts the months and the hours.
+
+The tasks of Suur Vanker come first, in the north: Põhjanael, Väike
+Vanker, Arktuurus and Põhjakroon (Veega is left out, as among all the
+stars of a dark sky it is too hard to find alone). Põhjanael and Väike
+Vanker never set, so their nights can be any dark night, with Suur Vanker
+low in the north on an autumn evening, on its side in the east or the
+west, or high overhead. Arktuurus and Põhjakroon get nights from about
+February to October, when they are up. Arktuurus below the horizon is
+only on level 3.
+
+Then the view turns along the horizon to the south, for the tasks of
+Orion: Aldebaran, Sõel, Prooküon, the Kaksikud, Kapella and Siirius, on
+nights with the belt of Orion at least 15° up. So they are mostly from
+November to March, and sometimes an autumn morning, with Orion in the
+south before dawn. At the end the Talvekuusnurk is drawn on a night of
+its own, without the numbers.
+
+The task asks only, e.g., "Leia Arktuurus.", no figure is drawn at the
+start, and the view is the same for all the tasks of Suur Vanker, the
+whole northern sky, and for all those of Orion, the whole southern sky,
+so that the view does not give away where to look. Its facts are new, e.g. that Põhjanael is always about 58° up in
+Estonia, as high as Estonia is north of the equator.
 
 The win screen shows the whole chain as a map: the arrows of all the hops
 over the sky, with the figures and the names of the stars found. Its
@@ -518,8 +533,8 @@ stars of the belt are only 2.7° from end to end, about 15 px on a phone,
 so a drag along the belt snaps onto the whole belt as one line, rather
 than onto two of its stars.
 
-**Level 1, Leia suunad.** A winter evening, 15 February at 20:00, at the
-same hour as the Suur Vanker part, with Orion upright in the south (the
+**Level 5, Orion näitab teed.** A winter evening, 15 February at 20:00,
+at the same hour as level 1, with Orion upright in the south (the
 same sky as on 15 January at 22:00). The dashed lines of a task go when
 the next task starts, so that only the one to follow is there:
 
@@ -579,7 +594,7 @@ the next task starts, so that only the one to follow is there:
      are the two bright stars of the Twins, like two brothers. Pollux is
      orange and a little brighter.")
    - Then Kaksikud draws itself, the figure of Tähtkujud, at the pace of
-     Väike Vanker on level 2 of the Suur Vanker part.
+     Väike Vanker on level 2.
 7. **Kapella:** "Leia Kapella. Tõmba joon Orioni vasakpoolsest jalast
    läbi tema pea ja jätka seda üles." ("Find Capella. Draw a line from
    Orion's left-hand foot through his head and carry it on upwards.")
@@ -594,7 +609,7 @@ the next task starts, so that only the one to follow is there:
 8. **Orioni udu:** "Leia Orioni udu. Vöö all ripub mõõk, ja selle keskel
    on udune täht." ("Find the Orion Nebula. Below the belt hangs the sword,
    and in its middle is a fuzzy star.") Tapped as one target, like Sõel.
-   At magnitude 4.0 it shows in the sky of levels 1 and 2.
+   At magnitude 4.0 it shows in the sky of levels 5 and 6.
    - Fact: "Orioni udu on hiiglaslik gaasipilv, kus sünnivad uued tähed.
      Ta on meist umbes 1300 valgusaasta kaugusel." ("The Orion Nebula is a
      huge cloud of gas where new stars are born. It is about 1,300 light
@@ -610,7 +625,7 @@ the next task starts, so that only the one to follow is there:
      is a dark cloud of dust. It hides the glowing gas behind it, so
      that the shape of a horse's head shows. It cannot be seen with the
      eye or with binoculars.") "Left-hand" is safe here, as the sky of
-     level 1 does not turn.
+     level 5 does not turn.
 9. **Talvekuusnurk:** "Joonista Talvekuusnurk: Kapellast Aldebarani,
    Riigeli, Siiriuse, Prooküoni ja Polluksini ning tagasi." ("Draw the
    Winter Hexagon: from Capella to Aldebaran, Rigel, Sirius, Procyon and
@@ -645,7 +660,7 @@ On the win map, the places of the three photos have a small frame, and a
 tap on one shows its photo again.
 
 
-**Level 2, Taevas pöörleb.** Orion from his rising to his setting, on
+**Level 6, Orion tõuseb ja loojub.** Orion from his rising to his setting, on
 the night of 15–16 December. The belt crosses the sky in a low, wide arc,
 about 180° from east to west and at most 31° up, which does not fit on a
 phone held upright. So the level has three views, each about 70° wide:
@@ -696,22 +711,15 @@ The texts name only the stars, not left or right:
    Riigel goes first, at about 05:00, and the belt touches the horizon at
    about 06:05, while Betelgeuse is still 10° up. The last copy is left
    there.
-7. **Free play** with the date and the hour, as on level 2 of the Suur
-   Vanker part, starting on 15 December at 18:00. The view stays on the
-   southern sky, from the east along the horizon to the west, and does
-   not follow the stars, and the copies are not drawn. Where the screen
-   is too narrow for all of it, as on a phone held upright, the view can
-   be dragged sideways, but only between the east and the west.
+7. **Free play** with the date and the hour, as on level 2, starting on
+   15 December at 18:00. The view stays on the southern sky, from the
+   east along the horizon to the west, and does not follow the stars,
+   and the copies are not drawn. Where the screen is too narrow for all
+   of it, as on a phone held upright, the view can be dragged sideways,
+   but only between the east and the west.
 
-**Level 3, Ilma abita.** A dark sky, to magnitude 6, on a night picked at
-random: an hour from 18:00 to 05:00 on winter time, with the Sun at least
-15° below the horizon and the belt at least 15° up. So it is mostly from
-November to March, and sometimes an autumn morning, with Orion in the
-south before dawn. The task names only the star to find, as in the Suur
-Vanker part, and one view is kept for all the tasks. It asks for
-Aldebaran, Sõel, Prooküon, the Kaksikud and Kapella every night, Siirius
-when he is at least 5° up, and at the end the Talvekuusnurk, without the
-numbers.
+Level 7, Ilma abita, with the tasks of both Suur Vanker and Orion, is
+under Levels above.
 
 ## Extras
 
@@ -725,8 +733,8 @@ Left out of the first version, but easy to add as more hops:
 - **Lõvi (Leo):** the back of the bowl, Dubhe → Merak, carried on the
   other way, to Regulus
 - **Miitsar ja Alkor:** a test for the eyes, a faint star next to Miitsar
-- **Photos in the free play:** on level 2 of the Orion part, a tap on Sõel
-  or the Orion Nebula shows its photo, as on level 1
+- **Photos in the free play:** on level 6, a tap on Sõel or the Orion
+  Nebula shows its photo, as on level 5
 - **Suvekolmnurk (the Summer Triangle):** Veega, the tail of Luik and the
   brightest star of Kotkas, high on late summer and autumn evenings; it
   may become a level of its own
@@ -773,5 +781,4 @@ Left out of the first version, but easy to add as more hops:
 About 1,200–1,500 lines and the star data, like Püüa langev täht, whose
 projection and horizon it can reuse. Most of the work is in the moves,
 making the loose drag snap the way the child means it, and in the panning
-and the turning of the view. A first version could be level 1 of the Suur
-Vanker part, in a folder `taheretked/` not yet linked from the main page.
+and the turning of the view. A first version could be level 1, in a folder `taheretked/` not yet linked from the main page.
