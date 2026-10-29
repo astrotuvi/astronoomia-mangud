@@ -55,11 +55,15 @@ oktoober kell 21" ("An autumn evening, 15 October at 21:00").
   along it to look, e.g. a third of the way from Arktuurus to Veega for
   Põhjakroon (not on level 1 of Suur Vanker). 💡 circles the whole figure
   to find.
-- **Kaar (an arc):** drag along the three stars of the handle of Suur
-  Vanker, and the curve goes on as a dashed arc. The arc is drawn from
-  points kept in the data: a circle through the three handle stars bends
-  far too much and misses Arktuurus. The arc stops about 5° past
-  Arktuurus, not going on to Spiika.
+- **Kaar (an arc):** drag along the last two stars of the handle of Suur
+  Vanker, and the curve goes on as a dashed arc. A circle through the
+  three handle stars alone bends far too much and misses Arktuurus, so the
+  arc is the circle on the sky through Miitsar, Alkaid and Arktuurus: it
+  starts at Miitsar, goes through the end of the handle and bends evenly
+  on to Arktuurus. The arc stops about 5° past Arktuurus, not going on to
+  Spiika. On level 1 a short curved arrow under Miitsar and Alkaid shows
+  which way to slide. Alioth, the handle star next to the bowl, is left
+  out: the arc does not pass through it.
 - **Joonista (draw a figure):** as in Tähtkujud: the stars of the figure
   are numbered 1, 2, 3 …, and the player taps them in turn or slides a
   finger from star to star, also star 1, even when it was found already,
@@ -397,10 +401,15 @@ drawn in at the start, and Lohe is given wherever Veega is asked for:
      silmapiiri ega paista. Õhtuti on ta taevas kevadest sügiseni."
      ("Where is Arcturus? On a winter evening it is below the horizon and
      cannot be seen. It is in the evening sky from spring to autumn.")
+     The horizon is drawn as a line, and the dashed curve along the handle
+     grows on through it, over the ground, to a dashed circle with the name
+     Arktuurus, 11° below the horizon. The view takes in that spot too.
    - **Veega:** "Leia Veega."
      - Fact: "Talveõhtul on Veega madalal põhjas, aga silmapiiri taha ta ei
        lähe." ("On a winter evening Vega is low in the north, but it does not
        go below the horizon.")
+     - With the fact, a dashed line grows from the horizon straight up to
+       Veega, with "13°" beside it, to show how high it is.
 5. The clock moves on to 06:00 on the next morning, 6 January, and the sky
    turns by 135°.
    - **Arktuurus:** "Leia Arktuurus."
@@ -434,12 +443,12 @@ Level 4 is about how bright the sky is. It starts on the autumn evening of
 level 1, 15 October at 21:00, with Suur Vanker upright, low in the north,
 below Põhjanael and Väike Vanker, close up on the two of them:
 
-1. **The slider**, starting at the bright end. Väike Vanker is drawn in
-   from the start, with Põhjanael named, and at the bright end only
-   Põhjanael and the two stars at the end of its bowl show, with the line
-   between those two. As the slider moves towards the dark sky, its other
-   stars show and its lines join up. The task is done when the slider has
-   stayed near the dark end for a moment.
+1. **The slider**, starting at the bright end, with Põhjanael named. At
+   the bright end only Põhjanael and the two stars at the end of Väike
+   Vanker's bowl show. As the slider moves towards the dark sky, its other
+   stars show. No figure lines are drawn until the slider has stayed near
+   the dark end for a moment: then the task is done, and Suur Vanker and
+   Väike Vanker are drawn in.
    - Fact: "Pimedas taevas paistab Väike Vanker tervenisti. Linnatuled ja
      Kuu valgustavad taevast, ja siis nõrgemaid tähti ei paista." ("In a
      dark sky the whole Little Dipper shows. City lights and the Moon light
@@ -452,8 +461,10 @@ below Põhjanael and Väike Vanker, close up on the two of them:
    - Fact: "Lohe tähed on nõrgad: linnas teda peaaegu ei näe, aga pimedas
      taevas paistab ta tervenisti." ("The Dragon's stars are faint: in a
      city it can hardly be seen, but in a dark sky all of it shows.")
-3. The sky turns on to midnight on 15–16 July, when the Sun is only about
-   9° below the horizon, and **the slider** starts at the bright end again:
+3. The sky goes straight to midnight on 15–16 July, without turning
+   through the months, when the Sun is only about 9° below the horizon.
+   The twilight comes on smoothly, in about 1.5 s, and only then **the
+   slider** shows, starting at the bright end again:
    "Juuli keskööl. Vii liugur jälle pimeda taeva poole." ("At midnight in
    July. Move the slider towards the dark sky again.") Even at the dark end
    the twilight keeps the sky light, and the faintest stars do not show.
@@ -463,7 +474,7 @@ below Põhjanael and Väike Vanker, close up on the two of them:
      Estonia never gets quite dark, as the Sun is only a little below the
      horizon. Even in the countryside, with no lights, only the brighter
      stars show then.")
-   The view stays as wide as while the sky turned, without zooming in.
+   The view is wide, round Põhjanael, without zooming in.
 4. The sky turns on to 15 October at 21:00 again, and **the slider is to
    play with**, starting at the dark end, with Valmis beside it: "Liiguta
    liugurit ise ja vaata, kuidas tähed heledas taevas kaovad ja pimedas
@@ -473,7 +484,14 @@ below Põhjanael and Väike Vanker, close up on the two of them:
 The first slider task shows Suur Vanker and Väike Vanker close up, sliding the
 picture as on level 2. Even at the bright end, Põhjanael and the brightest
 stars stay, so that the sky is never empty. The names of stars and figures
-that do not show are left out.
+that do not show are left out. In the two slider tasks with a task to do,
+the figures are drawn only once it is done; the slider to play with at the
+end starts at the dark sky, with the figures drawn.
+
+As on level 3, the view does not move when the text changes: the card at
+the top keeps the room of the biggest text of the tasks in that sky, and
+once a slider task is done, the slider goes out of sight but keeps its
+room. The view moves only, smoothly, to the next task's view.
 
 ### Orion
 
