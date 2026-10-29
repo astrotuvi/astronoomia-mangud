@@ -218,9 +218,9 @@ Level 7 picks a new dark night at random for each task, so that the
 player sees the stars in all kinds of places: an hour from 18:00 to 05:00
 on winter time (not midnight), with the Sun at least 15° below the
 horizon, so never in June or July, and with the star to find at least 10°
-up (Siirius 5°). The caption names it, e.g. "Kevadöö, 17. märts kell 1".
-Between the tasks the sky turns on to the next night, always forwards, as
-on level 2, while the caption counts the months and the hours.
+up (Siirius 5°). Each night is later than the one before, by up to 200
+days. The caption names it, e.g. "Kevadöö, 17. märts kell 1". The next
+task's night is shown at once, without the sky turning on to it.
 
 The tasks of Suur Vanker come first, in the north: Põhjanael, Väike
 Vanker, Arktuurus and Põhjakroon (Veega is left out, as among all the
@@ -232,24 +232,23 @@ February to October, when they are up. Arktuurus below the horizon is
 only on level 3.
 
 Then the view turns along the horizon to the south, for the tasks of
-Orion: Aldebaran, Sõel, Prooküon, the Kaksikud, Kapella and Siirius, on
-nights with the belt of Orion at least 15° up. So they are mostly from
-November to March, and sometimes an autumn morning, with Orion in the
-south before dawn. At the end the Talvekuusnurk is drawn on a night of
-its own, without the numbers.
+Orion: Aldebaran, Sõel, the Kaksikud, Kapella and Siirius, on nights with
+the belt of Orion at least 15° up. So they are mostly from November to
+March, and sometimes an autumn morning, with Orion in the south before
+dawn.
 
 The task asks only, e.g., "Leia Arktuurus.", no figure is drawn at the
-start, and the view is the same for all the tasks of Suur Vanker, the whole
-northern sky, and for all those of Orion, the whole southern sky, so that
-the view does not give away where to look. Its facts are new, e.g. that
-Põhjanael is always about 58° up in Estonia, as high as Estonia is north of
-the equator.
+start, and the names of the stars to start from do not show. The view
+is close round the stars of the task, but not in the middle of it: slid by
+up to a fifth of the view each way, at random, as far as the stars stay on
+the screen, so that it does not show where to look. The facts
+are new, e.g. that Põhjanael is always about 58° up in Estonia, as high as
+Estonia is north of the equator, that Sõel formed when dinosaurs lived, or
+that Siirius has a white dwarf beside it.
 
-The win screen shows the whole chain as a map: the arrows of all the hops
-over the sky, with the figures and the names of the stars found. Its
-button "Vaata taevast" ("Look at the sky") opens the same sky without
-tasks, with the slider and a control for the season (Suur Vanker) or the
-hour (Orion), to play with.
+The win screen shows the whole chain as a map: the sky turned to the hour
+when all the stars found are up at once, wide enough for all of them, with
+the lines of all the hops, the figures and the names of the stars found.
 
 ## The hops
 
@@ -731,6 +730,9 @@ Left out of the first version, but easy to add as more hops:
 - **Orion through one night:** on level 6, the clock running from his
   rising on a December evening to his setting in the morning, with a stop
   at each hour to find a star from him
+- **Vaata taevast (look at the sky):** a button on the win screen of level
+  7 that opens the same sky without tasks, with the slider and the date
+  and hour sliders, to play with
 - **Suvekolmnurk (the Summer Triangle):** Veega, the tail of Luik and the
   brightest star of Kotkas, high on late summer and autumn evenings; it
   may become a level of its own

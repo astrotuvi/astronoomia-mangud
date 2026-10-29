@@ -381,11 +381,10 @@
   // `height`: once the task is done, a dashed line from the horizon straight
   // up to that star shows how high it is, in degrees.
   // An arc without `find` is only to draw: it shows where a star is not, and
-  // its `title` heads the fact. A `random` level picks a dark night of the
-  // year and asks the tasks of its `pool` whose stars are up then;
-  // without `help` the guide stars do not pulse, `figs` are the figures drawn
-  // at the start, and with `fixedView` the view takes in all the tasks at
-  // once.
+  // its `title` heads the fact. A `random` level asks all the tasks of its
+  // `pool`, each on a dark night picked at random with its stars `up`;
+  // without `help` the guide stars do not pulse, and `figs` are the figures
+  // drawn at the start.
   // `figure` is drawn in when the task is done, and the figures `given` are
   // there from its start. `span` is how much sky the
   // view shows across its shorter side, in degrees (70 if not given); a
@@ -1039,27 +1038,26 @@
       ]
     },
     {
-      id: 'vanker5',
-      // a dark sky on a night picked at random; the tasks name only the star
-      // to find, Suur Vanker is not drawn in, and the view does not move to
-      // the stars of a task
+      id: 'nohelp',
+      // A dark sky, with a new night picked at random for each task, later
+      // than the one before, shown at once. The tasks name only the star to
+      // find, and no figures are drawn at the start. `up` is how high, in
+      // degrees, each of its stars is to be on the task's night.
       limit: 6,
-      part: 'bigdipper',
       icon: '🎯',
       random: true,
       help: false,
       figs: [],
-      fixedView: true,
       win: {
         name: { et: 'Ilma abita', en: 'Without help' },
         fact: {
-          et: 'Leidsid tähed ise üles, nagu päris taevas. Nüüd võid minna õue ja proovida!',
-          en: 'You found the stars yourself, as in the real sky. Now you can go outside and try!'
+          et: 'Leidsid tähed ise üles, igal ööl uues kohas, nagu päris taevas. Nüüd võid minna õue ja proovida!',
+          en: 'You found the stars yourself, in a new place every night, as in the real sky. Now you can go outside and try!'
         }
       },
       pool: [
         {
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', up: ['polaris'],
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', up: {},
           text: { et: 'Leia Põhjanael.', en: 'Find the North Star.' },
           fact: {
             et: 'Põhjanael on Eestis alati umbes 58 kraadi kõrgusel: nii kõrgel, kui kaugel põhja pool ekvaatorit Eesti asub.',
@@ -1067,13 +1065,13 @@
           }
         },
         {
-          kind: 'tap', find: 'kochab', near: [], figure: 'littledipper', up: ['polaris'],
+          kind: 'tap', find: 'kochab', near: [], figure: 'littledipper', up: {},
           accept: ['yildun', 'epsUmi', 'zetUmi', 'pherkad', 'etaUmi'],
           text: { et: 'Leia Väike Vanker.', en: 'Find the Little Dipper.' }
         },
         {
           kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
-          find: 'arcturus', figure: 'bootes', up: ['arcturus'],
+          find: 'arcturus', figure: 'bootes', up: { arcturus: 10 },
           text: { et: 'Leia Arktuurus.', en: 'Find Arcturus.' },
           fact: {
             et: 'Arktuurus tähendab kreeka keeles karu valvajat: ta käib taevas Suure Karu järel.',
@@ -1081,12 +1079,60 @@
           }
         },
         {
-          kind: 'tap', find: 'alphecca', near: [], figure: 'corona', up: ['alphecca', 'arcturus'],
+          kind: 'tap', find: 'alphecca', near: [], figure: 'corona', up: { alphecca: 10, arcturus: 10 },
           accept: ['theCrb', 'nusakan', 'gamCrb', 'delCrb', 'epsCrb', 'iotCrb'],
           text: { et: 'Leia Põhjakroon.', en: 'Find the Northern Crown.' },
           fact: {
             et: 'Vanad kreeklased nägid Põhjakroonis printsess Ariadne krooni.',
             en: 'The ancient Greeks saw the crown of the princess Ariadne in the Northern Crown.'
+          }
+        },
+        // the tasks of Orion, in the south, with his belt at least 15° up
+        {
+          kind: 'hop', from: 'alnitak', via: 'mintaka', find: 'aldebaran', figure: 'taurus',
+          up: { alnilam: 15, aldebaran: 10 },
+          text: { et: 'Leia Aldebaran.', en: 'Find Aldebaran.' },
+          fact: {
+            et: 'Aldebaran paistab Sõnni pea V-kujulise tähtede rühma Hüaadide servas, aga ta ei kuulu nende hulka: Hüaadid on meist umbes kaks korda kaugemal.',
+            en: 'Aldebaran shows at the edge of the Hyades, the V of stars of the Bull’s head, but is not one of them: the Hyades are about twice as far away.'
+          }
+        },
+        {
+          kind: 'tap', find: 'alcyone', near: [], figure: 'pleiades',
+          accept: ['atlas', 'electra', 'maia', 'merope', 'taygeta', 'pleione'],
+          up: { alnilam: 15, alcyone: 10 },
+          text: { et: 'Leia Sõel.', en: 'Find the Pleiades.' },
+          fact: {
+            et: 'Sõela tähed on noored, umbes 100 miljonit aastat vanad: nad tekkisid siis, kui Maal elasid dinosaurused.',
+            en: 'The stars of the Pleiades are young, about 100 million years old: they formed when dinosaurs lived on Earth.'
+          }
+        },
+        {
+          kind: 'hop', from: 'rigel', via: 'betelgeuse', find: 'pollux', accept: ['castor'], figure: 'twins',
+          up: { alnilam: 15, rigel: 5, pollux: 10 },
+          title: { et: 'Kastor ja Polluks!', en: 'Castor and Pollux!' },
+          text: { et: 'Leia Kaksikud.', en: 'Find the Twins.' },
+          fact: {
+            et: 'Polluks on meist 34 valgusaasta kaugusel, Kastor 51. Kastor on tegelikult kuus tähte, mis tiirlevad üksteise ümber.',
+            en: 'Pollux is 34 light years away, Castor 51. Castor is really six stars, going round one another.'
+          }
+        },
+        {
+          kind: 'hop', from: 'saiph', via: 'meissa', find: 'capella', autoDraw: 'auriga',
+          up: { alnilam: 15, saiph: 5, capella: 10 },
+          text: { et: 'Leia Kapella.', en: 'Find Capella.' },
+          fact: {
+            et: 'Kapella on kaks kollast hiidtähte, nii lähestikku, et silmaga paistavad nad ühe tähena. Nad on meist 43 valgusaasta kaugusel.',
+            en: 'Capella is two yellow giant stars, so close together that to the eye they show as one star. They are 43 light years away.'
+          }
+        },
+        {
+          kind: 'hop', from: 'mintaka', via: 'alnitak', find: 'sirius', autoDraw: 'canismajor',
+          up: { alnilam: 15, sirius: 5 },
+          text: { et: 'Leia Siirius.', en: 'Find Sirius.' },
+          fact: {
+            et: 'Siiriusel on kaaslane, valge kääbus: surnud tähe jäänuk, umbes Maa suurune, aga peaaegu sama raske kui Päike.',
+            en: 'Sirius has a companion, a white dwarf: what is left of a dead star, about the size of the Earth, but almost as heavy as the Sun.'
           }
         }
       ]
@@ -2419,8 +2465,10 @@
     if (!map && task()) {
       const k = task();
       // (the stars to start from while the task is on, and its `names` also after)
-      // (and `namesAfter` only once it is done, so that they are not in the way)
-      const ks = state.phase === 'task' ? [k.from, k.via, ...(k.along || []), ...(k.names || [])]
+      // (and `namesAfter` only once it is done, so that they are not in the way;
+      // without `help`, no names of the stars to start from, which would show
+      // where to look)
+      const ks = state.phase === 'task' ? [...(level().help === false ? [] : [k.from, k.via, ...(k.along || [])]), ...(k.names || [])]
         : [...(k.names || []), ...(k.namesAfter || [])];
       ks.filter((x) => x && known(STARS[x])).forEach((x) => keys.add(x));
     }
@@ -2866,9 +2914,29 @@
     if (level().sweep) return sweepView();
     if (task() && (task().kind === 'explore' || task().wide) && level().center) return ringView(level().center);
     if (level().look) return fitView(skyKeys());
-    if (!level().fixedView) return fitView(viewKeys());
-    const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []), ...(k.accept || [])]).filter(Boolean);
-    return fitView([...keys, ...DIPPER], state.L, 70, null);
+    if (level().random) return offView(fitView(viewKeys()), task().off, viewKeys());
+    return fitView(viewKeys());
+  }
+
+  // On a random level the stars of the task are not in the middle of the
+  // view, so that it does not show where to look: slid by up to a fifth of
+  // the view each way, at random (`off`, from −1 to 1 across and down), but
+  // less where that would take a star off the screen.
+  function offView(cam, [x, y], keys, L = state.L) {
+    const w = L.W / 2;
+    const h = (L.H - L.top - (L.bottom || 16)) / 2;
+    const m = 20;
+    for (let f = 1; f > 0; f -= 0.1) {
+      const c = Object.assign({}, cam, { ox: (cam.ox || 0) + (0.2 * f * x * w) / cam.s, oy: (cam.oy || 0) + (0.2 * f * y * h) / cam.s });
+      const V = view(L, c);
+      const inside = keys.every((k) => {
+        // (stars below the horizon do not count)
+        const q = place(V, STARS[k]);
+        return !q ? horizon(STARS[k])[2] <= 0 : q.x > m && q.x < L.W - m && q.y > L.top + m && q.y < L.H - (L.bottom || 16) - m;
+      });
+      if (inside) return c;
+    }
+    return cam;
   }
 
   function startTask() {
@@ -3154,34 +3222,38 @@
     return sphere(Math.atan2(Math.cos(e) * Math.sin(l), Math.cos(l)) / DEG, Math.asin(Math.sin(e) * Math.sin(l)) / DEG);
   }
 
-  // A dark night of 2027 picked at random, an hour from 20:00 to 03:00 on the
-  // clock with the Sun at least 15° below the horizon (so not in June and
-  // July), and the tasks of the level's pool whose stars are up then.
-  // (Not only nights when all of them are up: on a dark night with
-  // Arktuurus up, Suur Vanker is always high. Põhjanael and Väike Vanker
-  // never set, so they are asked every night. Half of the nights are ones
-  // with all of them up.)
-  function randomNight(lv) {
-    const all = Math.random() < 0.5;
-    for (let tries = 0; ; tries++) {
-      const day = Math.floor(Math.random() * 365);
-      // (not midnight, which would read "kell 0")
-      const hour = [20, 21, 22, 23, 25, 26, 27][Math.floor(Math.random() * 7)];
-      const tz = TZ;
-      const ms = Date.UTC(2027, 0, 1 + day, hour - tz);
-      const th = siderealTime(ms);
-      if (horizon(sun(ms), th)[2] > Math.sin(-15 * DEG) && tries < 500) continue;
-      const alt = (key) => Math.asin(horizon(STARS[key], th)[2]) / DEG;
-      const tasks = lv.pool.filter((k) => (k.up || []).every((key) => alt(key) >= 10));
-      if (all && tasks.length < lv.pool.length && tries < 500) continue;
-      const d = new Date(ms + tz * 3600000);
+  // The tasks of a random level, each on a dark night picked at random, later
+  // than the one before, by up to 200 days: an hour from 18:00 to 05:00 on
+  // the clock of winter time, with the Sun at least 15° below the horizon
+  // (so never in June or July), and the stars of the task's `up` as high as
+  // it says.
+  function randomNights(lv) {
+    let ms = Date.UTC(2026, 6, 1 + Math.floor(Math.random() * 365));
+    return lv.pool.map((k) => {
+      let pick = null;
+      for (let tries = 0; tries < 2000 && !pick; tries++) {
+        const d = new Date(ms + TZ * 3600000);
+        const day = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) + (1 + Math.floor(Math.random() * 200)) * 86400000;
+        // (not midnight, which would read "kell 0")
+        const hour = [18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29][Math.floor(Math.random() * 11)];
+        const at = day + (hour - TZ) * 3600000;
+        const th = siderealTime(at);
+        if (horizon(sun(at), th)[2] > Math.sin(-15 * DEG)) continue;
+        const alt = (key) => Math.asin(horizon(STARS[key], th)[2]) / DEG;
+        if (Object.entries(k.up || {}).every(([key, h]) => alt(key) >= h)) pick = at;
+      }
+      ms = pick || ms + 86400000;
+      const d = new Date(ms + TZ * 3600000);
       const caption = {};
       for (const lang of ['et', 'en']) {
         const T = TEXT[lang];
-        caption[lang] = T.night(T.seasons[d.getUTCMonth()], hour < 24, d.getUTCDate(), T.months[d.getUTCMonth()], d.getUTCHours());
+        caption[lang] = T.night(T.seasons[d.getUTCMonth()], d.getUTCHours() >= 12, d.getUTCDate(), T.months[d.getUTCMonth()], d.getUTCHours());
       }
-      return { ms, tz, caption, tasks };
-    }
+      // (the sky goes to the night at once, without turning)
+      // (and the stars of the task off the middle of the view, at random)
+      const off = [2 * Math.random() - 1, 2 * Math.random() - 1];
+      return Object.assign({}, k, { when: ms, caption, jump: true, off });
+    });
   }
 
   function startGame() {
@@ -3199,10 +3271,9 @@
     state.caption = level().caption;
     state.tasks = level().tasks;
     if (level().random) {
-      const night = randomNight(level());
-      when = night.ms;
-      state.caption = night.caption;
-      state.tasks = night.tasks;
+      state.tasks = randomNights(level());
+      when = state.tasks[0].when;
+      state.caption = state.tasks[0].caption;
     }
     state.th = siderealTime(when);
     state.when = when;
@@ -3662,6 +3733,9 @@
       state.figs = new Set(['orion']);
       state.named = new Set();
       state.cam = sweepMap(L);
+    } else if (level().random) {
+      state.th = upTime(keys);
+      state.cam = framed(L, keys.map((k) => horizon(STARS[k])));
     } else state.cam = fitView(keys, L, 70, level().center, false);
     const V = view(L, state.cam);
     render(g, L, V, performance.now(), true);
@@ -3699,7 +3773,20 @@
     FIGURES.orion.lines.flat().forEach((k) => vs.push(horizon(STARS[k])));
     // (looking at the horizon itself, so that it is a straight line low in
     // the picture, and the paths of the stars bend up from it)
-    const cam = { az: 180, alt: 0 };
+    const cam = framed(L, vs, { az: 180, alt: 0 });
+    // (the horizon low in the picture, with just room below it for the
+    // directions, and the sky above)
+    cam.oy = (L.top + (L.H - L.top - 16) / 2 + cam.y1 * cam.s - (L.H - 80)) / cam.s;
+    return cam;
+  }
+
+  // A view of the map that takes in all the points `vs`, however wide, looking
+  // at their average unless `cam` says where.
+  function framed(L, vs, cam = null) {
+    if (!cam) {
+      const m = vs.reduce((a, v) => [a[0] + v[0], a[1] + v[1], a[2] + v[2]], [0, 0, 0]);
+      cam = { az: Math.atan2(m[0], m[1]) / DEG, alt: Math.asin(m[2] / Math.hypot(...m)) / DEG };
+    }
     const V = Object.assign(basis(cam), { s: 1, cx: 0, cy: 0 });
     const ps = vs.map((v) => toScreen(V, v)).filter(Boolean);
     const x0 = Math.min(...ps.map((q) => q[0]));
@@ -3707,10 +3794,24 @@
     const y0 = Math.min(...ps.map((q) => q[1]));
     const y1 = Math.max(...ps.map((q) => q[1]));
     const s = Math.min((L.W / 2 - L.pad) / ((x1 - x0) / 2), ((L.H - L.top - 16) / 2 - L.pad) / ((y1 - y0) / 2));
-    // (the horizon low in the picture, with just room below it for the
-    // directions, and the sky above)
-    const oy = (L.top + (L.H - L.top - 16) / 2 + y1 * s - (L.H - 80)) / s;
-    return Object.assign(cam, { s, ox: (x0 + x1) / 2, oy });
+    return Object.assign(cam, { s, ox: (x0 + x1) / 2, oy: (y0 + y1) / 2, y1 });
+  }
+
+  // the sidereal time when the stars are all as high as they can be at once:
+  // for the map of a random level, with the stars of both Suur Vanker and
+  // Orion
+  function upTime(keys) {
+    let best = 0;
+    let top = -Infinity;
+    for (let i = 0; i < 96; i++) {
+      const th = (i / 96) * 2 * Math.PI;
+      const low = Math.min(...keys.map((k) => horizon(STARS[k], th)[2]));
+      if (low > top) {
+        top = low;
+        best = th;
+      }
+    }
+    return best;
   }
 
   // A tap on the map near a photo's frame shows the photo, over the map.
