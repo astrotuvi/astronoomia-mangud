@@ -82,10 +82,12 @@
         <label><span data-t="hour"></span><input id="hourRange" type="range" min="0" max="720" step="1" value="180"></label>
         <button id="exploreDone" class="btn"></button>
       </div>
-      <!-- how dark the sky is: a city, a small town, the countryside -->
+      <!-- how bright the sky is, smoothly from bright to dark: the lights
+           round, the Moon and the twilight -->
       <div id="slider" class="sky-slider hidden">
-        <input id="skyRange" type="range" min="0" max="2" step="1" value="0" aria-label="🏙️ 🏘️ 🌲">
-        <div id="skyLabels" class="sky-labels"><span data-sky="skyCity">🏙️</span><span data-sky="skyTown">🏘️</span><span data-sky="skyCountry">🌲</span></div>
+        <input id="skyRange" type="range" min="0" max="100" step="1" value="0" data-t-label="skyLabel" aria-label="Taeva heledus">
+        <div class="sky-labels"><span data-t="skyBright"></span><span data-t="skyDark"></span></div>
+        <button id="sliderDone" class="btn"></button>
       </div>
     </div>
   </div>

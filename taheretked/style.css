@@ -79,7 +79,7 @@
 }
 @keyframes poke { 50% { translate: 0 -10px; } }
 
-/* the slider of how dark the sky is, at the bottom of the sky */
+/* the slider of how bright the sky is, at the bottom of the sky */
 .sky-slider {
   position: absolute;
   left: 50%;
@@ -92,7 +92,18 @@
   animation: pop 0.4s cubic-bezier(0.2, 1.6, 0.4, 1);
 }
 .sky-slider input { width: 100%; height: 36px; accent-color: var(--accent); cursor: pointer; }
-.sky-labels { display: flex; justify-content: space-between; font-size: 1.8rem; line-height: 1.2; }
+/* (the button to finish shows only when the slider is to play with) */
+.sky-slider:not(.free) #sliderDone { display: none; }
+.sky-slider.free {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 14px;
+  align-items: center;
+  width: min(480px, calc(100% - 16px));
+}
+.sky-slider.free input, .sky-slider.free .sky-labels { grid-column: 1; }
+.sky-slider.free .btn { grid-column: 2; grid-row: 1 / span 2; font-size: 1.05rem; padding: 8px 16px; }
+.sky-labels { display: flex; justify-content: space-between; font-size: 0.95rem; font-weight: 700; line-height: 1.2; color: var(--muted); }
 
 /* the date and the hour, on level 2, with the button to finish beside them */
 .sky-slider.explore {

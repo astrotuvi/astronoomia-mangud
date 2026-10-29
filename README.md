@@ -7,6 +7,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 |---|---|---|
 | Tähepusle / Star Puzzle | [`pusle/`](pusle/) | Put together a jigsaw puzzle of an astronomy photo |
 | Tähtkujud / Constellations | [`tahtkujud/`](tahtkujud/) | Join the stars of a constellation in order 1, 2, 3 … |
+| Tähest täheni / Star Hopping | [`taheretked/`](taheretked/) | Hop from the Big Dipper to the North Star, Arcturus, Vega and other stars, as the sky turns through the seasons and the night |
 | Mälumäng / Memory | [`malumang/`](malumang/) | Turn cards over and find the pairs of astronomy photos |
 | Kosmoserakett / Space Rocket | [`rakett/`](rakett/) | Build a rocket and fly it to the Moon, Mars, Jupiter or Saturn |
 | Hüppa planeedil / Planet Jump | [`hupe/`](hupe/) | Jump on the Earth, the Moon, Mars, Jupiter and the dwarf planet Ceres and catch a star on each |
