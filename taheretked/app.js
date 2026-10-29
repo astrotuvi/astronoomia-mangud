@@ -3361,7 +3361,11 @@
     later(200, () => sfx.note(state.ti + 2));
     showFact();
     relayoutTop();
-    if (k.autoDraw) {
+    // (on a random level the figure shows at once, as the one found)
+    if (k.autoDraw && level().random) {
+      state.hideFig = new Set();
+      state.figs.add(k.autoDraw);
+    } else if (k.autoDraw) {
       state.hideFig = new Set();
       const ti = state.ti;
       later(400, () => {
