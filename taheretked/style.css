@@ -94,7 +94,17 @@
 .sky-slider input { width: 100%; height: 36px; accent-color: var(--accent); cursor: pointer; }
 .sky-labels { display: flex; justify-content: space-between; font-size: 1.8rem; line-height: 1.2; }
 
-/* the date and the hour, on level 2 */
-.explore label { display: flex; align-items: center; gap: 10px; font-size: 1rem; }
-.explore label span { flex: none; width: 5.5em; color: var(--muted); }
-.explore input { flex: 1; min-width: 0; }
+/* the date and the hour, on level 2, with the button to finish beside them */
+.sky-slider.explore {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 12px;
+  align-items: center;
+  width: min(560px, calc(100% - 16px));
+  bottom: 8px;
+  padding: 6px 12px 6px 16px;
+}
+.explore label { grid-column: 1; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+.explore label span { flex: none; min-width: 4.2em; color: var(--muted); }
+.explore input { flex: 1; min-width: 0; height: 30px; }
+.explore .btn { grid-column: 2; grid-row: 1 / span 2; font-size: 1.05rem; padding: 8px 16px; }

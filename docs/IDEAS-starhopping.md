@@ -157,9 +157,9 @@ rather than smaller, with a smallest dot that still shows on a phone.
 
 Each part has four levels, and a 🌟 in the menu marks the ones done.
 
-1. **Õpi teed (learn the way):** one sky that does not turn, the guide
-   stars pulse, and the hops have ticks. The texts say which way to go,
-   e.g. left or down.
+1. **Leia suunad (find the directions):** one sky that does not turn, the
+   guide stars pulse, and the hops have ticks. The texts say which way to
+   go, e.g. left or down.
 2. **Taevas pöörleb (the sky turns):** the same hops, two or three in each
    season (Suur Vanker) or hour (Orion), with the turning between them,
    the hour task and the slider task. The texts name only the stars, not
@@ -273,28 +273,34 @@ Arktuurus shows above them.
      half circle of stars, like a king's crown. Its brightest star is like a
      shining pearl in it.")
 
-Level 2 is only about how the sky turns. The view stays centred on
-Põhjanael, so that the sky turns round it:
+Level 2 is only about how the sky turns. While the sky turns, the view is
+wide and centred on Põhjanael, so that the sky turns round it; while the
+player looks for Põhjanael, it zooms in to Suur Vanker and Põhjanael:
 
-1. autumn, 15 October at 21:00: find Põhjanael from the two wheels. Then
-   Väike Vanker draws itself in from Põhjanael, star after star.
-2. the view zooms out a little, and the sky turns a quarter of a circle
-   (6 hours of sidereal time) to 15 January at 20:00. Väike Vanker is taken
-   away while the sky turns, the name of Põhjanael is hidden, and the
-   player finds Põhjanael again; then Väike Vanker draws itself again, as
-   one smooth line without sounds.
-3. another quarter, to the same night at 02:00, and Põhjanael again
-4. another quarter, to 16 March at 04:00, and Põhjanael again; all in all
-   three quarters of a circle
+1. autumn, 6 October at 21:00: find Põhjanael from the two wheels. Then
+   Väike Vanker draws itself in from Põhjanael.
+2. the view zooms out a little, and the sky turns about a quarter of a
+   circle (105°) to 5 January at 21:00. Väike Vanker is
+   taken away while the sky turns, the name of Põhjanael is hidden, and
+   the player finds Põhjanael again; then Väike Vanker draws itself again,
+   as one smooth line without sounds.
+3. about another quarter (99°), to 15 April at 22:00, as at 21:00 the sky
+   is still quite light then, and Põhjanael again
+4. July, at midnight on 15–16 July, and Põhjanael again. At 21:00 the July
+   sky would be light, so this turn is bigger, about 120°, and the sky is
+   still in twilight, with only the brighter stars.
 5. two sliders, for the date over the year and the time from 18:00 to
    06:00 by the minute, to turn the sky at one's own pace. On light summer
    nights the sky is lighter and only the brighter stars show, and when
    the Sun is up there are no stars: only the lines of Suur Vanker and
    Põhjanael stay, to show where they are.
 
-The four times are dark (the Sun at least 20° below the horizon), and the
-sky always turns forwards. Veega, Arktuurus and Põhjakroon are left to the
-levels after it, and so is the slider of how dark the sky is.
+The turns are not exactly a quarter of a circle, as the clock time goes
+later with the light evenings of spring and summer, and the clocks change
+between summer and winter time. The sky always turns forwards, and at each
+time it is as light as it really is then.
+Veega, Arktuurus and Põhjakroon are left to the levels after it, and so is
+the slider of how dark the sky is.
 
 ### Orion
 

@@ -149,7 +149,12 @@
   // closer view keeps the other figures out of the way. `show` adds stars
   // for the view to show, and with `keepLine` the line of the task before
   // stays bright, with its ticks. `arrow` points from a star towards
-  // another, part of the way, to show which way to look.
+  // another, part of the way, to show which way to look. A level's `center`
+  // is the star its views look straight at, and a task's `center` (null for
+  // none) overrides it; while the sky turns, the view is wide round the
+  // level's centre. `autoDraw` is a figure that draws itself when the task
+  // is done, and `hideNames` hides the names of Põhjanael and Väike Vanker
+  // until Põhjanael is found again.
   const LEVELS = [
     {
       id: 'vanker1',
@@ -255,12 +260,14 @@
       limit: 4.5,
       part: 'bigdipper',
       icon: '🔄',
-      // Only about how the sky turns: the view stays on Põhjanael, and the sky
-      // turns round it by a quarter of a circle (6 hours of sidereal time)
-      // three times, each time to a dark night, always forwards
+      // Only about how the sky turns: the sky turns round Põhjanael, always
+      // forwards, by about a quarter of a circle each time (105°, 99° and
+      // 120°): evenings in October and January at 21:00, in April at 22:00
+      // and in July at midnight, as the sky is light earlier then
       center: 'polaris',
-      when: Date.UTC(2026, 9, 15, 18, 0),
-      caption: { et: 'Sügisõhtu, 15. oktoober kell 21', en: 'An autumn evening, 15 October at 21:00' },
+      // 6 October 2026 at 21:00 summer time
+      when: Date.UTC(2026, 9, 6, 18, 0),
+      caption: { et: 'Sügisõhtu, 6. oktoober kell 21', en: 'An autumn evening, 6 October at 21:00' },
       win: {
         name: { et: 'Taevas pöörles', en: 'The sky turned' },
         fact: {
@@ -270,7 +277,7 @@
       },
       tasks: [
         {
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 70, show: DIPPER, autoDraw: 'littledipper',
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 45, center: null, show: DIPPER, autoDraw: 'littledipper',
           text: {
             et: 'Leia Põhjanael. Tõmba joon läbi Suure Vankri kahe tagumise ratta ja jätka seda.',
             en: 'Find the North Star. Draw a line through the two stars at the end of the Big Dipper’s bowl and carry it on.'
@@ -281,45 +288,46 @@
           }
         },
         {
-          // 15 January 2027 at 20:00 winter time: a quarter of a circle later
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 100, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
-          when: Date.UTC(2027, 0, 15, 18, 0), tz: 2,
-          caption: { et: 'Talveõhtu, 15. jaanuar kell 20', en: 'A winter evening, 15 January at 20:00' },
+          // 5 January 2027 at 21:00 winter time: the sky turns about 105°
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 45, center: null, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
+          when: Date.UTC(2027, 0, 5, 19, 0), tz: 2,
+          caption: { et: 'Talveõhtu, 5. jaanuar kell 21', en: 'A winter evening, 5 January at 21:00' },
           text: {
-            et: 'Kolm kuud hiljem, peaaegu samal kellaajal. Taevas on pöördunud. Leia Põhjanael uuesti.',
-            en: 'Three months later, at almost the same hour. The sky has turned. Find the North Star again.'
+            et: 'Jaanuari alguses, jälle kell 21. Taevas on pöördunud. Leia Põhjanael uuesti.',
+            en: 'At the start of January, again at 21:00. The sky has turned. Find the North Star again.'
           },
           fact: {
-            et: 'Kolme kuuga on taevas pöördunud veerandi ringi. Põhja poole vaadates pöörleb taevas Põhjanaela ümber vastupäeva, aga Põhjanael ise jääb paigale.',
-            en: 'In three months the sky has turned a quarter of a circle. Facing north, the sky turns anticlockwise round the North Star, but the North Star stays in place.'
+            et: 'Taevas on pöördunud umbes veerandi ringi. Samal kellaajal vaadates pöörleb taevas iga kuuga Põhjanaela ümber edasi, põhja poole vaadates vastupäeva. Põhjanael ise jääb paigale.',
+            en: 'The sky has turned about a quarter of a circle. Watched at the same hour, the sky turns on round the North Star every month, anticlockwise when you face north. The North Star stays in place.'
           }
         },
         {
-          // the same night, six hours later: 16 January at 02:00
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 100, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
-          when: Date.UTC(2027, 0, 16, 0, 0), tz: 2,
-          caption: { et: 'Talveöö, 16. jaanuar kell 2', en: 'A winter night, 16 January at 02:00' },
+          // 15 April 2027 at 22:00 summer time: the sky turns about 99°
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 45, center: null, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
+          when: Date.UTC(2027, 3, 15, 19, 0), tz: 3,
+          caption: { et: 'Kevadõhtu, 15. aprill kell 22', en: 'A spring evening, 15 April at 22:00' },
           text: {
-            et: 'Sama öö, kuus tundi hiljem. Leia Põhjanael uuesti.',
-            en: 'The same night, six hours later. Find the North Star again.'
+            et: 'Aprilli keskel on kell 21 veel üsna valge, seepärast vaatame kell 22. Leia Põhjanael uuesti.',
+            en: 'In the middle of April it is still quite light at 21:00, so we look at 22:00. Find the North Star again.'
           },
           fact: {
-            et: 'Kuue tunniga pööras taevas veel veerandi ringi: sama palju kui kolme kuuga samal kellaajal. Suur Vanker on nüüd peaaegu pea kohal, tagurpidi.',
-            en: 'In six hours the sky turned another quarter of a circle: as much as in three months at the same hour. The Big Dipper is now almost overhead, upside down.'
+            et: 'Taevas pööras jälle umbes veerandi ringi. Suur Vanker on nüüd peaaegu pea kohal, tagurpidi.',
+            en: 'The sky turned about a quarter of a circle again. The Big Dipper is now almost overhead, upside down.'
           }
         },
         {
-          // 16 March 2027 at 04:00 winter time
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 100, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
-          when: Date.UTC(2027, 2, 16, 2, 0), tz: 2,
-          caption: { et: 'Kevadöö, 16. märts kell 4', en: 'A spring night, 16 March at 04:00' },
+          // the night of 15 to 16 July 2027 at midnight, summer time: at 21:00
+          // the sky would still be light. The sky turns about 120° this time.
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 45, center: null, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
+          when: Date.UTC(2027, 6, 15, 21, 0), tz: 3,
+          caption: { et: 'Suveöö, 15. juuli, kesköö', en: 'A summer night, 15 July at midnight' },
           text: {
-            et: 'Kaks kuud hiljem, varahommikul. Leia Põhjanael uuesti.',
-            en: 'Two months later, early in the morning. Find the North Star again.'
+            et: 'Juulis on kell 21 veel valge, seepärast vaatame keskööl. Leia Põhjanael uuesti.',
+            en: 'In July it is still light at 21:00, so we look at midnight. Find the North Star again.'
           },
           fact: {
-            et: 'Kokku on taevas pöördunud kolmveerand ringi. Täisringi teeb ta ühe ööpäevaga, aga samal kellaajal vaadates ühe aastaga.',
-            en: 'All in all, the sky has turned three quarters of a circle. It turns a full circle in a day and a night, but watched at the same hour, in a year.'
+            et: 'Seekord pööras taevas rohkem kui veerandi ringi, sest vaatame hiljem: keskööl, mitte kell 21. Taevas pöörleb ka iga tunniga edasi. Juuli keskööl on taevas hele, aga Suur Vanker ja Põhjanael paistavad.',
+            en: 'This time the sky turned more than a quarter of a circle, as we look later: at midnight, not at 21:00. The sky also turns on every hour. At midnight in July the sky is light, but the Big Dipper and the North Star show.'
           }
         },
         {
@@ -488,7 +496,7 @@
       intro2: 'Vea sõrme või hiirega ühelt tähelt läbi teise ja vaata, kuhu joon edasi viib. Siis puuduta tähte, mida otsid.',
       partBigDipper: 'Suur Vanker',
       levels: [
-        { name: 'Õpi teed', about: 'Sügisõhtu: Suur Vanker näitab teed' },
+        { name: 'Leia suunad', about: 'Sügisõhtu: Suur Vanker näitab teed' },
         { name: 'Taevas pöörleb', about: 'Suur Vanker tiirleb ümber Põhjanaela' },
         { name: 'Päris taevas', about: 'Pime taevas sadade tähtedega, juhuslikul ööl' },
         { name: 'Ilma abita', about: 'Leia ise tähed' }
@@ -499,6 +507,7 @@
       date: (d, m) => `${d}. ${m}`,
       clock: (h) => `kell ${h}`,
       dateTime: (d, m, h, mm) => `${d}. ${m}, kell ${h}${mm ? '.' + String(mm).padStart(2, '0') : ''}`,
+      midnight: (d, m) => `${d}. ${m}, kesköö`,
       lightSky: 'Taevas on hele: Päike on horisondi lähedal, ja paistavad ainult heledamad tähed.',
       daySky: 'Päike on üleval, ja tähti pole näha. Suur Vanker ja Põhjanael on ikka oma kohal.',
       day: 'Kuupäev',
@@ -516,7 +525,7 @@
       inFigure: (name) => `See täht on ${name}. Otsi edasi!`,
       next: 'Edasi ▶',
       finish: 'Valmis 🏁',
-      dirs: { 0: 'põhi', 45: 'kirre', 90: 'ida', 135: 'kagu', 180: 'lõuna', 225: 'edel', 270: 'lääs', 315: 'loode' },
+      dirs: { 0: 'põhi', 45: 'kirre', 90: 'ida', 135: 'kagu', 180: 'lõuna', 225: 'edel', 270: 'lääs', 315: 'loe' },
       wellDone: 'Tubli!',
       again: 'Mängi uuesti',
       menu: 'Menüü',
@@ -531,7 +540,7 @@
       intro2: 'Drag your finger or the mouse from one star through another, and see where the line leads. Then tap the star you are looking for.',
       partBigDipper: 'The Big Dipper',
       levels: [
-        { name: 'Learn the way', about: 'An autumn evening: the Big Dipper shows the way' },
+        { name: 'Find the directions', about: 'An autumn evening: the Big Dipper shows the way' },
         { name: 'The sky turns', about: 'The Big Dipper goes round the North Star' },
         { name: 'A real sky', about: 'A dark sky with hundreds of stars, on a night picked at random' },
         { name: 'Without help', about: 'Find the stars yourself' }
@@ -542,6 +551,7 @@
       date: (d, m) => `${d} ${m}`,
       clock: (h) => `${String(h).padStart(2, '0')}:00`,
       dateTime: (d, m, h, mm) => `${d} ${m}, ${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`,
+      midnight: (d, m) => `${d} ${m}, midnight`,
       lightSky: 'The sky is light: the Sun is near the horizon, and only the brighter stars show.',
       daySky: 'The Sun is up, and no stars can be seen. The Big Dipper and the North Star are still in their places.',
       day: 'Date',
@@ -754,6 +764,7 @@
     state.L = {
       W, H, u, dpr,
       top: $('task').offsetHeight + 12,
+      bottom: $('explore').classList.contains('hidden') ? 16 : $('explore').offsetHeight + 24,
       pad: clamp(u * 0.09, 30, 70),   // room round the stars of a task
       hitR: clamp(u * 0.06, 24, 40)
     };
@@ -763,7 +774,8 @@
   // A view that looks at the middle of the stars and fits them, with `span`
   // degrees of sky across the shorter side, or more if they need it, up to
   // 120°.
-  function fitView(keys, L = state.L, span = (task() && task().span) || 70, center = level().center) {
+  function fitView(keys, L = state.L, span = (task() && task().span) || 70,
+    center = task() && 'center' in task() ? task().center : level().center) {
     const vs = keys.map((k) => horizon(STARS[k]));
     const m = vs.reduce((a, v) => [a[0] + v[0], a[1] + v[1], a[2] + v[2]], [0, 0, 0]);
     let az = Math.atan2(m[0], m[1]) / DEG;
@@ -773,9 +785,13 @@
     // to the edge: twice, as the outline changes a little when the view turns
     let V;
     let box;
-    if (center) {
-      // looking straight at that star, so that the sky turns round it
-      const c = horizon(STARS[center]);
+    // On a level with a centre, the view always looks at it (Põhjanael, due
+    // north), and the stars of a task without a centre of its own are framed
+    // by sliding the picture, not by turning the view, which would tilt it:
+    // so zooming in and out never looks like the sky turning.
+    const slide = !center && level().center;
+    if (center || slide) {
+      const c = horizon(STARS[center || level().center]);
       az = Math.atan2(c[0], c[1]) / DEG;
       alt = Math.asin(c[2]) / DEG;
     }
@@ -786,7 +802,7 @@
         x0: Math.min(...ps.map((q) => q[0])), x1: Math.max(...ps.map((q) => q[0])),
         y0: Math.min(...ps.map((q) => q[1])), y1: Math.max(...ps.map((q) => q[1]))
       };
-      if (n === 2 || center) break;
+      if (n === 2 || center || slide) break;
       // the inverse of the stereographic projection, for the middle of the box
       const X = (box.x0 + box.x1) / 2;
       const Y = -(box.y0 + box.y1) / 2;
@@ -796,19 +812,39 @@
       alt = Math.asin(clamp(d[2], -1, 1)) / DEG;
     }
     const w = L.W / 2 - L.pad;
-    const h = (L.H - L.top - 16) / 2 - L.pad;
+    const h = (L.H - L.top - (L.bottom || 16)) / 2 - L.pad;
     let s = Math.min(w, h) / (2 * Math.tan((span / 2) * DEG / 2));
     const sMin = Math.min(w, h) / (2 * Math.tan(60 * DEG / 2));
-    const hx = Math.max(Math.abs(box.x0), Math.abs(box.x1));
-    const hy = Math.max(Math.abs(box.y0), Math.abs(box.y1));
+    // the middle of the stars' outline, where the picture slides to
+    const ox = slide ? (box.x0 + box.x1) / 2 : 0;
+    const oy = slide ? (box.y0 + box.y1) / 2 : 0;
+    const hx = Math.max(Math.abs(box.x0 - ox), Math.abs(box.x1 - ox));
+    const hy = Math.max(Math.abs(box.y0 - oy), Math.abs(box.y1 - oy));
     if (hx > 1e-6) s = Math.min(s, w / hx);
     if (hy > 1e-6) s = Math.min(s, h / hy);
-    return { az, alt, s: Math.max(s, sMin) };
+    return { az, alt, s: Math.max(s, sMin), ox, oy };
+  }
+
+  // A view straight at a star, as wide as a circle of `R` degrees round it:
+  // round Põhjanael, just enough for Suur Vanker in every position (Alkaid,
+  // its farthest star, is 40.0° from Põhjanael), so that the zoom stays the
+  // same however the sky turns.
+  function ringView(key, R = 40.5, L = state.L) {
+    const c = horizon(STARS[key]);
+    // (a margin just for the size of the stars and their names)
+    const w = L.W / 2 - 14;
+    const h = (L.H - L.top - (L.bottom || 16)) / 2 - 10;
+    return { az: Math.atan2(c[0], c[1]) / DEG, alt: Math.asin(c[2]) / DEG, s: Math.min(w, h) / (2 * Math.tan((R / 2) * DEG)) };
   }
 
   // the view as it is now, ready for toScreen()
   function view(L = state.L, cam = state.cam) {
-    return Object.assign(basis(cam), { s: cam.s, cx: L.W / 2, cy: L.top + (L.H - L.top - 16) / 2 });
+    // (ox, oy: how far the picture is slid, in the units of the projection)
+    return Object.assign(basis(cam), {
+      s: cam.s,
+      cx: L.W / 2 - (cam.ox || 0) * cam.s,
+      cy: L.top + (L.H - L.top - (L.bottom || 16)) / 2 - (cam.oy || 0) * cam.s
+    });
   }
 
   // the stars the current task is about, for the view to show
@@ -823,6 +859,7 @@
     if (k.figure) keys.push(...new Set(FIGURES[k.figure].lines.flat()));
     if (k.accept) keys.push(...k.accept);
     if (k.show) keys.push(...k.show);
+    if (k.autoDraw && state.phase === 'fact') keys.push(...FIGURES[k.autoDraw].order);
     return keys;
   }
 
@@ -841,10 +878,15 @@
     const p = clamp((now - P.t0) / P.dur, 0, 1);
     const e = p * p * (3 - 2 * p);
     let dAz = ((P.to.az - P.from.az + 540) % 360) - 180;
+    const lerp = (a, b) => (a || 0) + ((b || 0) - (a || 0)) * e;
     state.cam = {
       az: P.from.az + dAz * e,
       alt: P.from.alt + (P.to.alt - P.from.alt) * e,
-      s: P.from.s + (P.to.s - P.from.s) * e
+      s: P.from.s + (P.to.s - P.from.s) * e,
+      // the picture slides on the screen as the view zooms (the point that
+      // stays still moves straight, rather than the slide being scaled)
+      ox: lerp(P.from.ox * P.from.s, P.to.ox * P.to.s) / (P.from.s + (P.to.s - P.from.s) * e),
+      oy: lerp(P.from.oy * P.from.s, P.to.oy * P.to.s) / (P.from.s + (P.to.s - P.from.s) * e)
     };
     if (p >= 1) state.pan = null;
   }
@@ -1173,8 +1215,8 @@
   }
 
   // the stars joined are golden and pop as they light up, the next one
-  // pulses at the start and when nothing has happened for a while, and
-  // every star has its number
+  // pulses at the start and when nothing has happened for a while, and the
+  // next two have their numbers
   function drawTraceStars(g, L, V, now, f) {
     // (a figure that draws itself is only its lines)
     if (state.auto) return;
@@ -1223,9 +1265,18 @@
         }
       }
       placed.push(best);
-      g.fillStyle = i < state.lit ? 'rgba(255, 211, 77, 0.7)' : '#ffffff';
+      // only the next two stars have their numbers, so that the figure shows:
+      // a joined star's number fades out, and the one after the next fades in
+      const a = i < state.lit ? 1 - clamp((now - state.litAt[i]) / 600, 0, 1)
+        : i === state.lit ? 1
+          : i === state.lit + 1 ? clamp((now - state.lastStep) / 400, 0, 1) : 0;
+      if (a <= 0) return;
+      const keep = g.globalAlpha;
+      g.globalAlpha = keep * a;
+      g.fillStyle = i < state.lit ? 'rgb(255, 211, 77)' : '#ffffff';
       g.strokeText(String(i + 1), best[0], best[1]);
       g.fillText(String(i + 1), best[0], best[1]);
+      g.globalAlpha = keep;
     });
     g.textBaseline = 'alphabetic';
   }
@@ -1523,11 +1574,15 @@
   function relayoutTop() {
     if (!state.L) return;
     state.L.top = $('task').offsetHeight + 12;
+    // the sliders at the bottom are kept clear too
+    const ex = $('explore');
+    state.L.bottom = ex.classList.contains('hidden') ? 16 : ex.offsetHeight + 24;
   }
 
   // the view for the current task, or for all of them on a level without
   // moving views
   function taskView() {
+    if (task() && task().kind === 'explore' && level().center) return ringView(level().center);
     if (!level().fixedView) return fitView(viewKeys());
     const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []), ...(k.accept || [])]).filter(Boolean);
     return fitView([...keys, ...DIPPER], state.L, 70, null);
@@ -1553,8 +1608,7 @@
     }
     state.auto = null;
     $('explore').classList.toggle('hidden', k.kind !== 'explore');
-    state.light = 0;
-    state.day = false;
+    skyLight();
     if (k.kind === 'explore') startExplore();
     state.sel = null;
     state.lit = 0;
@@ -1585,7 +1639,9 @@
     // the view for the task, worked out for the sky as it will be
     const th = state.th;
     state.th = th1;
-    const cam = taskView();
+    // (on a level with a centre, the wide view round it while the sky turns;
+    // the task's own view comes after)
+    const cam = level().center ? ringView(level().center) : taskView();
     state.th = th;
     $('taskText').textContent = '';
     $('taskName').textContent = '';
@@ -1644,16 +1700,18 @@
     state.when = ms;
     state.tz = tz;
     state.th = siderealTime(ms);
-    const sunAlt = Math.asin(horizon(sun(ms))[2]) / DEG;
-    state.light = clamp((sunAlt + 18) / 18, 0, 1);
-    state.day = sunAlt > -0.8;
-    state.limitTo = level().limit - 3.5 * state.light;
+    skyLight();
     const local = new Date(ms + tz * 3600000);
     const mm = local.getUTCMinutes();
+    // midnight with the evening's date, as "15. juuli, kesköö"
+    const midnight = local.getUTCHours() === 0 && mm === 0;
+    const eve = new Date(ms + tz * 3600000 - 86400000);
     state.caption = {};
     for (const lang of ['et', 'en']) {
       const T = TEXT[lang];
-      state.caption[lang] = T.dateTime(local.getUTCDate(), T.months[local.getUTCMonth()], local.getUTCHours(), mm);
+      state.caption[lang] = midnight
+        ? T.midnight(eve.getUTCDate(), T.months[eve.getUTCMonth()])
+        : T.dateTime(local.getUTCDate(), T.months[local.getUTCMonth()], local.getUTCHours(), mm);
     }
     // the view stays on Põhjanael
     if (state.L) state.cam = taskView();
@@ -1667,9 +1725,19 @@
     $('taskName').textContent = '';
     $('taskText').textContent = k.text[Astro.lang];
     $('tip').textContent = state.day ? t('daySky') : state.light > 0.5 ? t('lightSky') : '';
-    $('nextBtn').textContent = t('finish');
-    $('nextBtn').classList.remove('hidden');
+    // the button to finish is beside the sliders, so that the card is low
+    $('nextBtn').classList.add('hidden');
+    $('exploreDone').textContent = t('finish');
     updateBar();
+  }
+
+  // how light the sky is at its date and hour: the stars fade in twilight,
+  // and none show when the Sun is up
+  function skyLight() {
+    const sunAlt = Math.asin(horizon(sun(state.when))[2]) / DEG;
+    state.light = clamp((sunAlt + 18) / 18, 0, 1);
+    state.day = sunAlt > -0.8;
+    state.limitTo = (task().limit || level().limit) - 3.5 * state.light;
   }
 
   // where the Sun is at a time (ms, UT): accurate to about a degree
@@ -1971,7 +2039,8 @@
   }
 
   area.addEventListener('pointerdown', (e) => {
-    if (state.phase !== 'task' || e.target.closest('button')) return;
+    // (not a press on a button or on the sliders over the sky)
+    if (state.phase !== 'task' || e.target.closest('button, input, .sky-slider')) return;
     const p = pointAt(e);
     state.lastAct = performance.now();
     const k = task();
@@ -2120,6 +2189,7 @@
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
   $('nextBtn').addEventListener('click', nextTask);
+  $('exploreDone').addEventListener('click', nextTask);
 
   $('hintBtn').addEventListener('click', () => {
     if (state.phase !== 'task') return;
