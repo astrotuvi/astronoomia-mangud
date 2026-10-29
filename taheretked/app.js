@@ -213,6 +213,9 @@
         ['alnitak', 'betelgeuse', 'muOri', 'xiOri'], ['bellatrix', 'pi3Ori', 'pi1Ori'], ['pi3Ori', 'pi5Ori']]
     },
     taurus: {
+      // (between the horns, beyond the open end of the V)
+      label: ['elnath', 'zetTau', 'epsTau', 'aldebaran'],
+      labelMid: true,
       where: { et: 'Sõnni tähtkujus', en: 'Taurus, the Bull' },
       name: { et: 'Sõnn', en: 'Taurus' },
       lines: [['elnath', 'epsTau', 'delTau', 'gamTau', 'theTau', 'aldebaran', 'zetTau']]
@@ -990,8 +993,8 @@
           accept: ['bellatrix', 'rigel', 'saiph', 'mintaka', 'alnilam', 'alnitak', 'meissa', 'muOri', 'xiOri', 'pi3Ori', 'pi1Ori', 'pi5Ori'],
           title: { et: 'Orion!', en: 'Orion!' },
           text: {
-            et: 'Sea liugurid: 15. oktoober, kesköö. Siis leia Orion.',
-            en: 'Set the sliders to 15 October, midnight. Then find Orion.'
+            et: 'Sea liugurid: 15. oktoober, kesköö. Siis\u00a0leia\u00a0Orion.',
+            en: 'Set the sliders to 15 October, midnight. Then\u00a0find\u00a0Orion.'
           },
           fact: {
             et: 'Oktoobri keskel on Orion kesköö paiku madalal idas: ta on just tõusnud.',
@@ -1004,8 +1007,8 @@
           accept: ['bellatrix', 'rigel', 'saiph', 'mintaka', 'alnilam', 'alnitak', 'meissa', 'muOri', 'xiOri', 'pi3Ori', 'pi1Ori', 'pi5Ori'],
           title: { et: 'Orion!', en: 'Orion!' },
           text: {
-            et: 'Sea liugurid: 1. veebruar, kell 21. Siis leia Orion.',
-            en: 'Set the sliders to 1 February, 21:00. Then find Orion.'
+            et: 'Sea liugurid: 1. veebruar, kell 21. Siis\u00a0leia\u00a0Orion.',
+            en: 'Set the sliders to 1 February, 21:00. Then\u00a0find\u00a0Orion.'
           },
           fact: {
             et: 'Veebruari alguses on Orion kell 21 otse lõunas, nii kõrgel, kui ta Eestis üldse tõuseb. Talveõhtud on parim aeg teda vaadata.',
@@ -1019,8 +1022,8 @@
           accept: ['bellatrix', 'rigel', 'saiph', 'mintaka', 'alnilam', 'alnitak', 'meissa', 'muOri', 'xiOri', 'pi3Ori', 'pi1Ori', 'pi5Ori'],
           title: { et: 'Orion!', en: 'Orion!' },
           text: {
-            et: 'Sea liugurid: 1. aprill, kell 21. Siis leia Orion.',
-            en: 'Set the sliders to 1 April, 21:00. Then find Orion.'
+            et: 'Sea liugurid: 1. aprill, kell 21. Siis\u00a0leia\u00a0Orion.',
+            en: 'Set the sliders to 1 April, 21:00. Then\u00a0find\u00a0Orion.'
           },
           fact: {
             et: 'Aprilli alguses on Orion õhtul madalal edelas ja loojub enne keskööd. Suvel on ta taevas päeval, koos Päikesega, ja teda ei paista.',
@@ -1089,7 +1092,7 @@
         },
         // the tasks of Orion, in the south, with his belt at least 15° up
         {
-          kind: 'hop', from: 'alnitak', via: 'mintaka', find: 'aldebaran', figure: 'taurus',
+          kind: 'hop', from: 'alnitak', via: 'mintaka', find: 'aldebaran', figure: 'taurus', span: 30, show: ORION,
           up: { alnilam: 15, aldebaran: 10 },
           text: { et: 'Leia Aldebaran.', en: 'Find Aldebaran.' },
           fact: {
@@ -1098,7 +1101,7 @@
           }
         },
         {
-          kind: 'tap', find: 'alcyone', near: [], figure: 'pleiades',
+          kind: 'tap', find: 'alcyone', near: [], figure: 'pleiades', span: 30, show: ORION,
           accept: ['atlas', 'electra', 'maia', 'merope', 'taygeta', 'pleione'],
           up: { alnilam: 15, alcyone: 10 },
           text: { et: 'Leia Sõel.', en: 'Find the Pleiades.' },
@@ -1108,7 +1111,7 @@
           }
         },
         {
-          kind: 'hop', from: 'rigel', via: 'betelgeuse', find: 'pollux', accept: ['castor'], figure: 'twins',
+          kind: 'hop', from: 'rigel', via: 'betelgeuse', find: 'pollux', accept: ['castor'], figure: 'twins', autoDraw: 'gemini', span: 30, show: ORION,
           up: { alnilam: 15, rigel: 5, pollux: 10 },
           title: { et: 'Kastor ja Polluks!', en: 'Castor and Pollux!' },
           text: { et: 'Leia Kaksikud.', en: 'Find the Twins.' },
@@ -1118,7 +1121,7 @@
           }
         },
         {
-          kind: 'hop', from: 'saiph', via: 'meissa', find: 'capella', autoDraw: 'auriga',
+          kind: 'hop', from: 'saiph', via: 'meissa', find: 'capella', autoDraw: 'auriga', span: 30, show: ORION,
           up: { alnilam: 15, saiph: 5, capella: 10 },
           text: { et: 'Leia Kapella.', en: 'Find Capella.' },
           fact: {
@@ -1127,7 +1130,7 @@
           }
         },
         {
-          kind: 'hop', from: 'mintaka', via: 'alnitak', find: 'sirius', autoDraw: 'canismajor',
+          kind: 'hop', from: 'mintaka', via: 'alnitak', find: 'sirius', autoDraw: 'canismajor', span: 30, show: ORION,
           up: { alnilam: 15, sirius: 5 },
           text: { et: 'Leia Siirius.', en: 'Find Sirius.' },
           fact: {
@@ -1591,20 +1594,20 @@
   }
 
   // The view of the southern sky, with the sliders, from the horizon up to about
-  // 64°: on a screen too narrow for all of it, from a little past the east to
-  // a little past the west, where Orion rises and sets, it can be dragged
-  // sideways between them. Its azimuth is `state.lookAz`.
+  // 64°: it can be dragged sideways, at least until the east or the west,
+  // where Orion rises and sets, is in the middle, and on a screen too narrow
+  // for that much, until a little past them. Its azimuth is `state.lookAz`.
   function sweepView(L = state.L) {
     const h = (L.H - L.top - (L.bottom || 16)) / 2;
     const s = h / (2 * Math.tan(17 * DEG));
-    return { az: lookRange(L, s).fit(state.lookAz), alt: (2 * Math.atan(h / (2 * s))) / DEG - 4, s };
+    return { az: lookRange(L, s)(state.lookAz), alt: (2 * Math.atan(h / (2 * s))) / DEG - 4, s };
   }
 
-  // how far the view to play with can turn: its edges no further than 20°
-  // past the east and the west
+  // how far the view to play with can turn: to due east or due west in the
+  // middle, or on a narrow screen, until its edge is 20° past them
   function lookRange(L, s) {
     const half = (2 * Math.atan(L.W / 2 / (2 * s))) / DEG;
-    return { free: half < 110, fit: (az) => (half >= 110 ? 180 : clamp(az, 70 + half, 290 - half)) };
+    return (az) => clamp(az, Math.min(70 + half, 90), Math.max(290 - half, 270));
   }
 
   // a view straight at the middle of a photo, just wide enough for it
@@ -2738,7 +2741,9 @@
     if (!summerTime(ms)) return text;
     const d = new Date(ms + (TZ + 1) * 3600000);
     const mm = d.getUTCMinutes();
-    return text + t('summer')(d.getUTCHours(), mm || minutes ? mm : null);
+    // (on a narrow screen, the line breaks only before the brackets)
+    const nb = (x) => x.replace(/ /g, '\u00a0');
+    return nb(text) + ' ' + nb(t('summer')(d.getUTCHours(), mm || minutes ? mm : null).trim());
   }
 
   function caption() {
@@ -3163,7 +3168,7 @@
     $('when').textContent = caption();
     $('taskName').textContent = '';
     $('taskText').textContent = k.text[Astro.lang];
-    const drag = level().sweep && state.L && lookRange(state.L, sweepView().s).free;
+    const drag = level().sweep;
     $('tip').textContent = k.kind === 'set' && state.setOk ? t('timeSet')
       : state.day ? t(level().sweep ? 'daySkyOrion' : 'daySky') : state.light > 0.5 ? t('lightSky') : drag ? t('dragSky') : '';
     // the button to finish is beside the sliders, so that the card is low
