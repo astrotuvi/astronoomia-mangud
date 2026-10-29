@@ -255,113 +255,79 @@
       limit: 4.5,
       part: 'bigdipper',
       icon: '🔄',
-      // the sky turns on from the autumn evening of level 1, always forwards
+      // Only about how the sky turns: the view stays on Põhjanael, and the sky
+      // turns round it by a quarter of a circle (6 hours of sidereal time)
+      // three times, each time to a dark night, always forwards
+      center: 'polaris',
       when: Date.UTC(2026, 9, 15, 18, 0),
       caption: { et: 'Sügisõhtu, 15. oktoober kell 21', en: 'An autumn evening, 15 October at 21:00' },
       win: {
         name: { et: 'Taevas pöörles', en: 'The sky turned' },
         fact: {
-          et: 'Suur Vanker tiirleb ümber Põhjanaela: aasta jooksul ja ka iga öö. Tema abil leiad samad tähed igal aastaajal ja igal kellaajal, kui nad on horisondi kohal.',
-          en: 'The Big Dipper goes round the North Star, over the year and also every night. With it you can find the same stars in every season and at every hour, when they are above the horizon.'
+          et: 'Suur Vanker tiirleb ümber Põhjanaela: iga öö ja ka aasta jooksul. Kus ta parasjagu ka on, tema tagumised rattad näitavad Põhjanaela poole.',
+          en: 'The Big Dipper goes round the North Star, every night and also over the year. Wherever it is, the two stars at the end of its bowl point to the North Star.'
         }
       },
       tasks: [
         {
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 42, show: DIPPER,
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 70, show: DIPPER, autoDraw: 'littledipper',
           text: {
             et: 'Leia Põhjanael. Tõmba joon läbi Suure Vankri kahe tagumise ratta ja jätka seda.',
             en: 'Find the North Star. Draw a line through the two stars at the end of the Big Dipper’s bowl and carry it on.'
           },
           fact: {
-            et: 'Sügisõhtul on Suur Vanker madalal põhjas. Aasta jooksul tiirleb ta ümber Põhjanaela, aga tema tagumised rattad näitavad alati Põhjanaela poole.',
-            en: 'On an autumn evening the Big Dipper is low in the north. Over the year it goes round the North Star, but the two stars at the end of its bowl always point to the North Star.'
+            et: 'Põhjanael on peaaegu täpselt taevapooluse kohal. Kogu taevas pöörleb tema ümber, aga tema ise püsib paigal. Tema küljes ripub Väike Vanker.',
+            en: 'The North Star is almost exactly at the sky’s pole. The whole sky turns round it, but it stays in place. The Little Dipper hangs from it.'
           }
         },
         {
-          // 15 January 2027 at 20:00 winter time; Lohe, drawn on level 1, is
-          // there already
-          kind: 'tap', find: 'vega', near: [], figure: 'lyra', arrow: ['eltanin', 'vega'], given: ['draco'],
-          show: ['eltanin', 'rastaban', 'kuma', 'grumium'],
+          // 15 January 2027 at 20:00 winter time: a quarter of a circle later
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 100, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
           when: Date.UTC(2027, 0, 15, 18, 0), tz: 2,
           caption: { et: 'Talveõhtu, 15. jaanuar kell 20', en: 'A winter evening, 15 January at 20:00' },
           text: {
-            et: 'Taevas on kolme kuuga pöördunud. Leia Veega, hele täht Lohe pea kõrval.',
-            en: 'In three months the sky has turned. Find Vega, the bright star next to the Dragon’s head.'
+            et: 'Kolm kuud hiljem, peaaegu samal kellaajal. Taevas on pöördunud. Leia Põhjanael uuesti.',
+            en: 'Three months later, at almost the same hour. The sky has turned. Find the North Star again.'
           },
           fact: {
-            et: 'Talveõhtul seisab Suur Vanker kirdes oma aisa peal, ja Veega on madalal loodes. Veega, Lohe ja Väike Vanker ei looju Eestis kunagi.',
-            en: 'On a winter evening the Big Dipper stands on its handle in the north-east, and Vega is low in the north-west. Vega, the Dragon and the Little Dipper never set in Estonia.'
-          }
-        },
-        {
-          // the arc runs into the ground: Arktuurus has not risen yet
-          kind: 'arc', along: ['alioth', 'mizar', 'alkaid'], curve: ['alioth', 'mizar', 'alkaid', 'arcturus', 'spica'],
-          title: { et: 'Horisondi all', en: 'Below the horizon' },
-          show: ['dubhe', 'merak', 'phecda', 'megrez'], span: 40,
-          text: {
-            et: 'Kus on Arktuurus? Libista sõrme mööda Suure Vankri aisa ja jätka sama kaarega edasi.',
-            en: 'Where is Arcturus? Slide your finger along the Big Dipper’s handle and carry on along the same curve.'
-          },
-          fact: {
-            et: 'Kaar läheb maa alla: Arktuurus on praegu horisondi all. Jaanuaris tõuseb ta alles hilja õhtul, kevadel ja suvel on ta aga õhtuti taevas.',
-            en: 'The curve goes under the ground: Arcturus is below the horizon now. In January it rises only late in the evening, but in spring and summer it is in the evening sky.'
+            et: 'Kolme kuuga on taevas pöördunud veerandi ringi. Põhja poole vaadates pöörleb taevas Põhjanaela ümber vastupäeva, aga Põhjanael ise jääb paigale.',
+            en: 'In three months the sky has turned a quarter of a circle. Facing north, the sky turns anticlockwise round the North Star, but the North Star stays in place.'
           }
         },
         {
           // the same night, six hours later: 16 January at 02:00
-          kind: 'arc', along: ['alioth', 'mizar', 'alkaid'], curve: ['alioth', 'mizar', 'alkaid', 'arcturus', 'spica'],
-          find: 'arcturus', figure: 'bootes', span: 20,
-          show: ['dubhe', 'merak', 'phecda', 'megrez'],
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 100, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
           when: Date.UTC(2027, 0, 16, 0, 0), tz: 2,
           caption: { et: 'Talveöö, 16. jaanuar kell 2', en: 'A winter night, 16 January at 02:00' },
           text: {
-            et: 'Kell on nüüd 2 öösel, ja taevas on kuue tunniga pöördunud. Leia Arktuurus samamoodi mööda aisa kaart.',
-            en: 'It is now 2 at night, and in six hours the sky has turned. Find Arcturus the same way, along the curve of the handle.'
+            et: 'Sama öö, kuus tundi hiljem. Leia Põhjanael uuesti.',
+            en: 'The same night, six hours later. Find the North Star again.'
           },
           fact: {
-            et: 'Taevas pöörleb ühe tunniga umbes 15 kraadi. Kuue tunniga pööras ta sama palju kui kolme kuuga samal kellaajal: jaanuaris kell 2 öösel on taevas nagu märtsi keskel kell 22.',
-            en: 'The sky turns about 15 degrees an hour. In six hours it turned as much as in three months at the same hour: at 2 at night in January the sky is as at 22:00 in the middle of March.'
+            et: 'Kuue tunniga pööras taevas veel veerandi ringi: sama palju kui kolme kuuga samal kellaajal. Suur Vanker on nüüd peaaegu pea kohal, tagurpidi.',
+            en: 'In six hours the sky turned another quarter of a circle: as much as in three months at the same hour. The Big Dipper is now almost overhead, upside down.'
           }
         },
         {
-          // 15 April 2027 at 23:00 summer time
-          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 42, show: DIPPER,
-          when: Date.UTC(2027, 3, 15, 20, 0), tz: 3,
-          caption: { et: 'Kevadõhtu, 15. aprill kell 23', en: 'A spring evening, 15 April at 23:00' },
+          // 16 March 2027 at 04:00 winter time
+          kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 100, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
+          when: Date.UTC(2027, 2, 16, 2, 0), tz: 2,
+          caption: { et: 'Kevadöö, 16. märts kell 4', en: 'A spring night, 16 March at 04:00' },
           text: {
-            et: 'Leia jälle Põhjanael. Tõmba joon läbi Suure Vankri kahe tagumise ratta ja jätka seda.',
-            en: 'Find the North Star again. Draw a line through the two stars at the end of the Big Dipper’s bowl and carry it on.'
+            et: 'Kaks kuud hiljem, varahommikul. Leia Põhjanael uuesti.',
+            en: 'Two months later, early in the morning. Find the North Star again.'
           },
           fact: {
-            et: 'Kevadõhtul on Suur Vanker peaaegu pea kohal, tagurpidi. Tagumised rattad näitavad nüüd alla, aga ikka Põhjanaela poole.',
-            en: 'On a spring evening the Big Dipper is almost overhead, upside down. The two stars at the end of the bowl now point down, but still to the North Star.'
+            et: 'Kokku on taevas pöördunud kolmveerand ringi. Täisringi teeb ta ühe ööpäevaga, aga samal kellaajal vaadates ühe aastaga.',
+            en: 'All in all, the sky has turned three quarters of a circle. It turns a full circle in a day and a night, but watched at the same hour, in a year.'
           }
         },
         {
-          // 15 August 2027 at 23:00 summer time; a city sky at first
-          kind: 'slider', figure: 'littledipper', limit: 3, span: 34,
-          when: Date.UTC(2027, 7, 15, 20, 0), tz: 3,
-          caption: { et: 'Suveõhtu, 15. august kell 23', en: 'A summer evening, 15 August at 23:00' },
+          // the player's own date and hour, with two sliders
+          kind: 'explore', span: 100, show: DIPPER,
           text: {
-            et: 'Linnas paistab Väikesest Vankrist ainult kolm tähte. Vii liugur maale, et näha teda tervenisti.',
-            en: 'In a city only three stars of the Little Dipper can be seen. Move the slider to the countryside to see all of it.'
-          },
-          fact: {
-            et: 'Mida pimedam on taevas, seda rohkem tähti paistab. Maal näed Väikese Vankri kõiki seitset tähte, aga linnatuled peidavad nõrgad tähed.',
-            en: 'The darker the sky, the more stars you see. In the countryside you see all seven stars of the Little Dipper, but city lights hide the faint ones.'
-          }
-        },
-        {
-          kind: 'tap', find: 'alphecca', near: [], figure: 'corona', span: 20, arrow: ['izar', 'alphecca'],
-          accept: ['theCrb', 'nusakan', 'gamCrb', 'delCrb', 'epsCrb', 'iotCrb'],
-          show: ['arcturus', 'izar', 'delBoo', 'nekkar', 'seginus', 'rhoBoo', 'muphrid'],
-          text: {
-            et: 'Leia Põhjakroon, poolring tähti Karjase kõrval.',
-            en: 'Find the Northern Crown, a half circle of stars beside Boötes.'
-          },
-          fact: {
-            et: 'Suveõhtul on Põhjakroon läänetaevas Karjase kõrval, sügisõhtul aga juba madalal. Tema kõige heledam täht on nagu kroonis särav pärl.',
-            en: 'On a summer evening the Northern Crown is in the western sky beside Boötes, and on an autumn evening already low. Its brightest star is like a shining pearl in it.'
+            et: 'Vali ise kuupäev ja kellaaeg ning vaata, kus on Suur Vanker. Põhjanael jääb alati paigale.',
+            en: 'Pick a date and an hour yourself and see where the Big Dipper is. The North Star always stays in place.'
           }
         }
       ]
@@ -523,7 +489,7 @@
       partBigDipper: 'Suur Vanker',
       levels: [
         { name: 'Õpi teed', about: 'Sügisõhtu: Suur Vanker näitab teed' },
-        { name: 'Taevas pöörleb', about: 'Neli aastaaega ja üks öö: samad tähed, aga taevas on pöördunud' },
+        { name: 'Taevas pöörleb', about: 'Suur Vanker tiirleb ümber Põhjanaela' },
         { name: 'Päris taevas', about: 'Pime taevas sadade tähtedega, juhuslikul ööl' },
         { name: 'Ilma abita', about: 'Leia ise tähed' }
       ],
@@ -532,6 +498,11 @@
       months: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
       date: (d, m) => `${d}. ${m}`,
       clock: (h) => `kell ${h}`,
+      dateTime: (d, m, h, mm) => `${d}. ${m}, kell ${h}${mm ? '.' + String(mm).padStart(2, '0') : ''}`,
+      lightSky: 'Taevas on hele: Päike on horisondi lähedal, ja paistavad ainult heledamad tähed.',
+      daySky: 'Päike on üleval, ja tähti pole näha. Suur Vanker ja Põhjanael on ikka oma kohal.',
+      day: 'Kuupäev',
+      hour: 'Kellaaeg',
       skyCity: 'Linn',
       skyTown: 'Alevik',
       skyCountry: 'Maa',
@@ -561,7 +532,7 @@
       partBigDipper: 'The Big Dipper',
       levels: [
         { name: 'Learn the way', about: 'An autumn evening: the Big Dipper shows the way' },
-        { name: 'The sky turns', about: 'Four seasons and one night: the same stars, but the sky has turned' },
+        { name: 'The sky turns', about: 'The Big Dipper goes round the North Star' },
         { name: 'A real sky', about: 'A dark sky with hundreds of stars, on a night picked at random' },
         { name: 'Without help', about: 'Find the stars yourself' }
       ],
@@ -570,6 +541,11 @@
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       date: (d, m) => `${d} ${m}`,
       clock: (h) => `${String(h).padStart(2, '0')}:00`,
+      dateTime: (d, m, h, mm) => `${d} ${m}, ${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`,
+      lightSky: 'The sky is light: the Sun is near the horizon, and only the brighter stars show.',
+      daySky: 'The Sun is up, and no stars can be seen. The Big Dipper and the North Star are still in their places.',
+      day: 'Date',
+      hour: 'Time',
       skyCity: 'City',
       skyTown: 'Small town',
       skyCountry: 'Countryside',
@@ -627,6 +603,10 @@
     litAt: [],        // when each of them was joined (performance.now())
     lastStep: 0,      // when the last star was joined
     doneAt: 0,        // when the figure was finished, for its numbers to fade out
+    auto: null,       // a figure drawing itself
+    hideFig: null,    // the figures whose names are hidden
+    light: 0,         // how light the sky is, from 0 (night) to 1 (the Sun just set)
+    day: false,       // the Sun is up: no stars, only Suur Vanker's lines and Põhjanael
     limit: 4.5,       // the faintest stars shown now, moving towards limitTo
     limitTo: 4.5,
     when: 0,          // the date and hour of the sky (ms, UT), and the hours to the clock time
@@ -674,7 +654,8 @@
   const ALL = [...named, ...FIELD];
   // the stars of the figures always show, the others to the level's limit
   // (in the slider task the stars of the figures too, so that the city hides them)
-  const shown = (s) => (s.key && task() && task().kind !== 'slider') || s.mag <= state.limit + 0.7;
+  const shown = (s) => (state.day ? s.key === 'polaris'
+    : (s.key && task() && task().kind !== 'slider') || s.mag <= state.limit + 0.7);
   // and the faintest ones dimmer rather than smaller
   const faint = (s) => (s.key && task() && task().kind !== 'slider'
     ? clamp((state.limit + 0.7 - s.mag) / 1.4, 0.85, 1)
@@ -782,7 +763,7 @@
   // A view that looks at the middle of the stars and fits them, with `span`
   // degrees of sky across the shorter side, or more if they need it, up to
   // 120°.
-  function fitView(keys, L = state.L, span = (task() && task().span) || 70) {
+  function fitView(keys, L = state.L, span = (task() && task().span) || 70, center = level().center) {
     const vs = keys.map((k) => horizon(STARS[k]));
     const m = vs.reduce((a, v) => [a[0] + v[0], a[1] + v[1], a[2] + v[2]], [0, 0, 0]);
     let az = Math.atan2(m[0], m[1]) / DEG;
@@ -792,6 +773,12 @@
     // to the edge: twice, as the outline changes a little when the view turns
     let V;
     let box;
+    if (center) {
+      // looking straight at that star, so that the sky turns round it
+      const c = horizon(STARS[center]);
+      az = Math.atan2(c[0], c[1]) / DEG;
+      alt = Math.asin(c[2]) / DEG;
+    }
     for (let n = 0; n < 3; n++) {
       V = Object.assign(basis({ az, alt }), { s: 1, cx: 0, cy: 0 });
       const ps = vs.map((v) => toScreen(V, v)).filter(Boolean);
@@ -799,7 +786,7 @@
         x0: Math.min(...ps.map((q) => q[0])), x1: Math.max(...ps.map((q) => q[0])),
         y0: Math.min(...ps.map((q) => q[1])), y1: Math.max(...ps.map((q) => q[1]))
       };
-      if (n === 2) break;
+      if (n === 2 || center) break;
       // the inverse of the stereographic projection, for the middle of the box
       const X = (box.x0 + box.x1) / 2;
       const Y = -(box.y0 + box.y1) / 2;
@@ -1013,18 +1000,27 @@
     grad.addColorStop(1, '#26357a');
     g.fillStyle = grad;
     g.fillRect(0, 0, W, H);
+    // a day sky, under the lines of Suur Vanker
+    if (state.day && !map) {
+      g.fillStyle = 'rgba(95, 150, 225, 0.85)';
+      g.fillRect(0, 0, W, H);
+    }
 
     // the hops
     g.lineCap = 'round';
     g.lineJoin = 'round';
     for (const l of state.lines) {
-      // the lines drawn before the sky turned would point somewhere else now
-      if (!map && l.when !== state.when) continue;
+      // the lines drawn before the sky turned would point somewhere else now,
+      // and none while the player turns the sky
+      if (!map && (l.when !== state.when || (task() && task().kind === 'explore'))) continue;
       const p = map ? 1 : clamp((now - l.t0) / l.dur, 0, 1);
       const age = (now - l.t0) / 1000;
       // the lines of the tasks done are fainter, except on the map
       const old = !map && l.task < state.ti && !(task().keepLine && l.task === state.ti - 1);
-      const a = l.keep ? (old ? 0.22 : 0.5) : clamp(1 - age / 6, 0.15, 0.5);
+      // a line that is not the task's fades out completely after a few
+      // seconds, and is not on the map
+      const a = l.keep ? (old ? 0.22 : 0.5) : 0.5 * (1 - clamp((age - 2.5) / 1.5, 0, 1));
+      if (a <= 0.01 || (map && !l.keep)) continue;
       g.strokeStyle = `rgba(255, 220, 120, ${a.toFixed(2)})`;
       g.lineWidth = clamp(u * 0.0035, 1.5, 2.2);
       g.setLineDash(l.kind === 'part' ? [] : [6, 9]);
@@ -1069,14 +1065,16 @@
 
     // the figures
     for (const id of state.figs) {
+      // in daylight only Suur Vanker's lines, where it is
+      if (state.day && id !== 'bigdipper') continue;
       const f = FIGURES[id];
-      g.strokeStyle = id === 'bigdipper' ? 'rgba(150, 180, 255, 0.45)' : 'rgba(255, 211, 77, 0.55)';
+      g.strokeStyle = state.day ? 'rgba(255, 255, 255, 0.85)' : id === 'bigdipper' ? 'rgba(150, 180, 255, 0.45)' : 'rgba(255, 211, 77, 0.55)';
       g.lineWidth = figureWidth(u);
       for (const line of f.lines) {
         g.beginPath();
         for (let i = 1; i < line.length; i++) {
           // (only between stars that show: a city sky hides the faint ones)
-          if (!shown(STARS[line[i - 1]]) || !shown(STARS[line[i]])) continue;
+          if (!state.day && (!shown(STARS[line[i - 1]]) || !shown(STARS[line[i]]))) continue;
           const a = place(V, STARS[line[i - 1]]);
           const b = place(V, STARS[line[i]]);
           if (!a || !b) continue;
@@ -1089,7 +1087,7 @@
     // a figure being drawn, and just after its last star, while its
     // numbers and golden lines fade out
     const fade = state.phase === 'fact' && state.doneAt ? 1 - clamp((now - state.doneAt - 700) / 1300, 0, 1) : 1;
-    const tr = !map && (state.phase === 'task' || fade > 0) && traceOf(task());
+    const tr = !map && (state.auto || ((state.phase === 'task' || fade > 0) && traceOf(task())));
     g.globalAlpha = tr ? fade : 1;
     if (tr) drawTrace(g, L, V, now, tr);
     g.globalAlpha = 1;
@@ -1115,6 +1113,11 @@
 
     g.globalAlpha = tr ? fade : 1;
     if (tr) drawTraceStars(g, L, V, now, tr);
+    // the twilight over the stars, so that they fade
+    if (state.light > 0 && !state.day && !map) {
+      g.fillStyle = `rgba(80, 120, 190, ${(0.6 * state.light).toFixed(2)})`;
+      g.fillRect(0, 0, W, H);
+    }
     g.globalAlpha = 1;
     if (!map) drawMarks(g, L, V, now);
     drawLabels(g, L, V, map);
@@ -1147,16 +1150,17 @@
       g.setLineDash([]);
     }
     const lw = figureWidth(L.u);
-    g.strokeStyle = '#ffd34d';
+    // (a figure that draws itself looks as it will when it is done)
+    g.strokeStyle = state.auto ? 'rgba(255, 211, 77, 0.55)' : '#ffd34d';
     g.lineWidth = lw;
     g.shadowColor = 'rgba(255, 211, 77, 0.8)';
-    g.shadowBlur = lw * 2.5;
+    g.shadowBlur = state.auto ? 0 : lw * 2.5;
     for (const [a, b] of traceLinks(f)) {
       const ia = f.order.indexOf(a);
       const ib = f.order.indexOf(b);
       if (ia >= state.lit || ib >= state.lit) continue;
       const [s, e] = state.litAt[ia] <= state.litAt[ib] ? [a, b] : [b, a];
-      const k = clamp((now - state.litAt[f.order.indexOf(e)]) / LINE_MS, 0, 1);
+      const k = clamp((now - state.litAt[f.order.indexOf(e)]) / (state.auto ? AUTO_MS : LINE_MS), 0, 1);
       const p = at(s);
       const q = at(e);
       if (!p || !q) continue;
@@ -1172,6 +1176,8 @@
   // pulses at the start and when nothing has happened for a while, and
   // every star has its number
   function drawTraceStars(g, L, V, now, f) {
+    // (a figure that draws itself is only its lines)
+    if (state.auto) return;
     const pts = f.order.map((key) => place(V, STARS[key]));
     pts.forEach((q, i) => {
       if (!q || i >= state.lit) return;
@@ -1297,6 +1303,8 @@
     g.textAlign = 'center';
     for (const id of state.figs) {
       if (id === 'bigdipper' && !map && state.ti > 1) continue;
+      if (!map && state.hideFig && state.hideFig.has(id)) continue;
+      if (!map && state.day && id !== 'bigdipper') continue;
       const pts = [...new Set(FIGURES[id].lines.flat())].map((k) => place(V, STARS[k])).filter(Boolean);
       if (!pts.length) continue;
       const xs = pts.map((q) => q.x);
@@ -1336,26 +1344,24 @@
   // the ground below the horizon, with spruces along it and the directions
   function drawGround(g, L, V) {
     const ink = '#03050f';
-    const top = [];
-    const low = [];
-    for (let d = -110; d <= 110; d += 2) {
-      const az = state.cam.az + d;
-      const a = toScreen(V, dirOf(az, 0));
-      // as deep as the view goes, so that no sky shows below the ground
-      const b = toScreen(V, dirOf(az, -75)) || toScreen(V, dirOf(az, -50)) || toScreen(V, dirOf(az, -35));
-      if (a && b) {
-        top.push(a);
-        low.push(b);
-      }
-    }
-    if (top.length < 2) return;
+    // The horizon is a circle in this projection, with the sky inside it:
+    // the ground is everything outside it. Points behind the viewer are
+    // projected too, far off the screen, so that the circle is whole.
+    const far = (v) => {
+      const d = Math.max(dotv(v, V.fwd), -0.97);
+      const k = 2 / (1 + d);
+      return [V.cx + k * dotv(v, V.right) * V.s, V.cy - k * dotv(v, V.up) * V.s];
+    };
     g.fillStyle = ink;
     g.beginPath();
-    g.moveTo(...top[0]);
-    top.forEach((p) => g.lineTo(...p));
-    low.reverse().forEach((p) => g.lineTo(...p));
+    g.rect(-10, -10, L.W + 20, L.H + 20);
+    for (let az = 0; az <= 360; az += 1) {
+      const p = far(dirOf(az, 0));
+      if (az === 0) g.moveTo(...p);
+      else g.lineTo(...p);
+    }
     g.closePath();
-    g.fill();
+    g.fill('evenodd');
     for (const tr of TREES) {
       const b = toScreen(V, dirOf(tr.az, -0.3));
       const t2 = toScreen(V, dirOf(tr.az, tr.h));
@@ -1478,6 +1484,10 @@
 
   function showTask() {
     const k = task();
+    if (k && k.kind === 'explore') {
+      showExplore();
+      return;
+    }
     const box = $('task');
     box.classList.remove('fact');
     $('when').textContent = caption();
@@ -1520,7 +1530,7 @@
   function taskView() {
     if (!level().fixedView) return fitView(viewKeys());
     const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []), ...(k.accept || [])]).filter(Boolean);
-    return fitView([...keys, ...DIPPER], state.L, 70);
+    return fitView([...keys, ...DIPPER], state.L, 70, null);
   }
 
   function startTask() {
@@ -1533,7 +1543,19 @@
       return;
     }
     state.phase = 'task';
+    state.auto = null;
     (k.given || []).forEach((f) => state.figs.add(f));
+    // the names of Põhjanael and Väike Vanker hidden, to be found again
+    state.hideFig = new Set(k.hideNames ? ['littledipper'] : []);
+    if (k.hideNames) {
+      state.named.delete('polaris');
+      state.figs.delete('littledipper');
+    }
+    state.auto = null;
+    $('explore').classList.toggle('hidden', k.kind !== 'explore');
+    state.light = 0;
+    state.day = false;
+    if (k.kind === 'explore') startExplore();
     state.sel = null;
     state.lit = 0;
     state.doneAt = 0;
@@ -1555,6 +1577,11 @@
     state.turn = { th0: state.th, th1: state.th + d, ms0: state.when, ms1: k.when, tz: k.tz || 3, t0: performance.now(), dur };
     state.phase = 'turn';
     state.flash = null;
+    // Väike Vanker is drawn again once Põhjanael is found
+    if (k.hideNames) {
+      state.figs.delete('littledipper');
+      state.auto = null;
+    }
     // the view for the task, worked out for the sky as it will be
     const th = state.th;
     state.th = th1;
@@ -1584,6 +1611,65 @@
       state.turn = null;
       startTask();
     }
+  }
+
+  // The player's own date and hour: the evening's date over the year 2027,
+  // and the time from 18:00 to 06:00 on the clock, by the minute.
+  function exploreTime() {
+    const day = +$('dayRange').value;
+    const h = 18 + (+$('hourRange').value) / 60;
+    // summer time from the end of March to the end of October
+    const tz = day >= 86 && day < 303 ? 3 : 2;
+    return { ms: Date.UTC(2027, 0, 1 + day) + (h - tz) * 3600000, tz };
+  }
+
+  function startExplore() {
+    // the sliders start where the sky is now
+    const local = new Date(state.when + state.tz * 3600000);
+    let h = local.getUTCHours() + local.getUTCMinutes() / 60;
+    let day = Math.round((Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate()) - Date.UTC(2027, 0, 1)) / 86400000);
+    if (h < 12) {
+      h += 24;
+      day -= 1;
+    }
+    $('dayRange').value = clamp(day, 0, 364);
+    $('hourRange').value = clamp(Math.round((h - 18) * 60), 0, 720);
+    explore();
+  }
+
+  // the sky at the sliders' date and hour, lighter when the Sun is not far
+  // below the horizon
+  function explore() {
+    const { ms, tz } = exploreTime();
+    state.when = ms;
+    state.tz = tz;
+    state.th = siderealTime(ms);
+    const sunAlt = Math.asin(horizon(sun(ms))[2]) / DEG;
+    state.light = clamp((sunAlt + 18) / 18, 0, 1);
+    state.day = sunAlt > -0.8;
+    state.limitTo = level().limit - 3.5 * state.light;
+    const local = new Date(ms + tz * 3600000);
+    const mm = local.getUTCMinutes();
+    state.caption = {};
+    for (const lang of ['et', 'en']) {
+      const T = TEXT[lang];
+      state.caption[lang] = T.dateTime(local.getUTCDate(), T.months[local.getUTCMonth()], local.getUTCHours(), mm);
+    }
+    // the view stays on Põhjanael
+    if (state.L) state.cam = taskView();
+    showExplore();
+  }
+
+  function showExplore() {
+    const k = task();
+    $('task').classList.remove('fact');
+    $('when').textContent = caption();
+    $('taskName').textContent = '';
+    $('taskText').textContent = k.text[Astro.lang];
+    $('tip').textContent = state.day ? t('daySky') : state.light > 0.5 ? t('lightSky') : '';
+    $('nextBtn').textContent = t('finish');
+    $('nextBtn').classList.remove('hidden');
+    updateBar();
   }
 
   // where the Sun is at a time (ms, UT): accurate to about a degree
@@ -1654,6 +1740,29 @@
     raf = requestAnimationFrame(frame);
   }
 
+  // A figure that draws itself, quietly, as one line growing smoothly from
+  // its first star: each line grows for as long as the next one waits.
+  const AUTO_MS = 330;
+  function autoDraw(id) {
+    const f = FIGURES[id];
+    state.figs.delete(id);
+    state.auto = f;
+    state.lit = 0;
+    state.litAt = [];
+    const t0 = performance.now() + 400;
+    f.order.forEach((key, i) => {
+      state.litAt[i] = t0 + i * AUTO_MS;
+    });
+    state.lit = f.order.length;
+    // (not if the player has gone on to the next task meanwhile)
+    const ti = state.ti;
+    later(400 + f.order.length * AUTO_MS + 200, () => {
+      if (state.ti !== ti) return;
+      state.figs.add(id);
+      state.auto = null;
+    });
+  }
+
   // the task is done: the star gets its name and the figure is drawn in
   function solve() {
     const k = task();
@@ -1673,6 +1782,11 @@
     later(200, () => sfx.note(state.ti + 2));
     showFact();
     relayoutTop();
+    if (k.autoDraw) {
+      state.hideFig = new Set();
+      const ti = state.ti;
+      later(400, () => { if (state.ti === ti) autoDraw(k.autoDraw); });
+    }
     // the view takes in the figure just drawn
     panTo(taskView());
   }
@@ -1827,7 +1941,7 @@
     const s = pick(p);
     if (!s) return;
     const k = task();
-    if (k.kind === 'slider') return;
+    if (k.kind === 'slider' || k.kind === 'explore') return;
     if (!k.find && (k.kind === 'hop' || k.kind === 'arc') && ![k.from, k.via, ...(k.along || [])].includes(s.key)) {
       $('tip').textContent = t('drawFirst');
       sfx.pick();
@@ -1953,7 +2067,7 @@
       ...(k.figure ? FIGURES[k.figure].lines.flat() : [])]).filter(Boolean);
     keys.push(...FIGURES.bigdipper.lines.flat());
     const cam = state.cam;
-    state.cam = fitView(keys, L, 70);
+    state.cam = fitView(keys, L, 70, level().center);
     render(g, L, view(L, state.cam), performance.now(), true);
     state.cam = cam;
     return c.toDataURL('image/png');
@@ -1989,6 +2103,9 @@
     store.set('level', state.level);
     startGame();
   });
+
+  $('dayRange').addEventListener('input', () => { if (task() && task().kind === 'explore') explore(); });
+  $('hourRange').addEventListener('input', () => { if (task() && task().kind === 'explore') explore(); });
 
   // the slider of how dark the sky is: a city, a small town, the countryside
   const SKIES = [3, 4.5, 6];
