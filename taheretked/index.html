@@ -44,6 +44,9 @@
       <h2>🐻 <span data-t="partBigDipper"></span></h2>
       <div id="levels" class="levels"></div>
 
+      <h2>🏹 <span data-t="partOrion"></span></h2>
+      <div id="levelsOrion" class="levels"></div>
+
       <div class="play-row">
         <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
       </div>
@@ -73,6 +76,7 @@
         <b id="taskName"></b>
         <p id="taskText"></p>
         <p id="tip" class="tip"></p>
+        <a id="photoCredit" class="photo-credit hidden" target="_blank" rel="noopener"></a>
         <button id="nextBtn" class="btn hidden"></button>
       </div>
       <span id="finger" class="finger hidden">👆</span>
@@ -106,6 +110,13 @@
         <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
       </div>
     </div>
+  </div>
+
+  <!-- a photo from the map, over it -->
+  <div id="photoBox" class="overlay photo-box hidden">
+    <img id="photoBoxImg" alt="">
+    <p id="photoBoxName" class="win-name"></p>
+    <a id="photoBoxCredit" class="win-credit" target="_blank" rel="noopener"></a>
   </div>
 
   <script src="../shared/common.js"></script>

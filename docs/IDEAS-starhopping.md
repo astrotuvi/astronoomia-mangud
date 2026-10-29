@@ -189,8 +189,9 @@ phone.
 ## Levels
 
 The Suur Vanker part has five levels and the Orion part three: Leia
-suunad, Taevas pöörleb and Ilma abita. A 🌟 in the menu marks the ones
-done.
+suunad, Taevas pöörleb and Ilma abita. In the menu each part has its own
+heading, and the levels are numbered on through both, so the Orion ones
+are 6, 7 and 8. A 🌟 in the menu marks the ones done.
 
 1. **Leia suunad (find the directions):** one sky that does not turn, the
    guide stars pulse, and the hops have ticks. The texts say which way to
@@ -519,19 +520,31 @@ than onto two of its stars.
 
 **Level 1, Leia suunad.** A winter evening, 15 February at 20:00, at the
 same hour as the Suur Vanker part, with Orion upright in the south (the
-same sky as on 15 January at 22:00):
+same sky as on 15 January at 22:00). The dashed lines of a task go when
+the next task starts, so that only the one to follow is there:
 
-1. **Orion:** "Joonista Orion: neli nurka ja vöö nende keskel." ("Draw
-   Orion: four corners and the belt between them.") The four corners and
-   the belt, as an hourglass.
+1. **Orion:** "Joonista Orion: puuduta tähti järjest 1, 2, 3 … või libista
+   sõrme tähest täheni." ("Draw Orion: tap the stars in turn 1, 2, 3 … or
+   slide your finger from star to star.") No names while it is drawn;
+   Betelgeuse, Bellatrix and Riigel get theirs with the fact. The figure
+   of Tähtkujud, 13
+   stars: from Betelgeuse over the head to Bellatrix, down along the belt
+   to the left foot, Riigel from the right-hand end of the belt (the feet
+   are not joined), the club and the shield. The tasks after it show
+   Orion large, with only as much sky as their stars need, as on a
+   computer screen a view of 70° makes him small.
 2. **Siirius:** "Leia Siirius. Jätka Orioni vöö kolme tähe joont vasakule
    alla." ("Find Sirius. Carry the line of the three stars of Orion's belt
-   on, down to the left.") Siirius is about nine belt lengths beyond the
+   on, down to the left.") Siirius is about eight belt lengths beyond the
    belt, 3° off the line, 14° up.
    - Fact: "Siirius on kogu öötaeva kõige heledam täht. Ta on meist ainult
      8,6 valgusaasta kaugusel, üks meie lähimaid naabreid." ("Sirius is the
      brightest star of the whole night sky. It is only 8.6 light years
      away, one of our nearest neighbours.")
+   - Then Suur Peni draws itself, the figure of Tähtkujud, as Kaksikud.
+     Its lower half is at most 3° up, behind the trees, and the tip of
+     its tail (Aludra) is just below the horizon, so that line is left
+     out.
 3. **Aldebaran:** "Leia Aldebaran. Jätka vöö joont teisele poole, paremale
    üles." ("Find Aldebaran. Carry the line of the belt the other way, up to
    the right.") About as far as Siirius, 5° off the line.
@@ -549,13 +562,14 @@ same sky as on 15 January at 22:00):
    - Then the photo of Sõel, as described below the list.
 5. **Prooküon:** "Leia Prooküon. Tõmba joon Bellatrixist läbi
    Betelgeuse ja jätka seda vasakule." ("Find Procyon. Draw a line from
-   Bellatrix through Betelgeuse and carry it on to the left.") About four
+   Bellatrix through Betelgeuse and carry it on to the left.") About three
    and a half gaps beyond Betelgeuse, 5° off the line.
    - Fact: "Betelgeuse, Siirius ja Prooküon on Talvekolmnurk. Neid kolme
      heledat tähte on talveõhtul lõunataevas kerge leida." ("Betelgeuse,
      Sirius and Procyon are the Winter Triangle. These three bright stars
      are easy to find in the southern sky on a winter evening.") The
-     triangle is drawn in.
+     triangle is drawn in, dashed, with the fact only, and goes when the
+     next task starts.
 6. **Kastor ja Polluks:** "Leia Kaksikud. Tõmba joon Riigelist läbi
    Betelgeuse ja jätka seda üles." ("Find the Twins. Draw a line from Rigel
    through Betelgeuse and carry it on upwards.") Almost twice the gap
@@ -564,13 +578,19 @@ same sky as on 15 January at 22:00):
      venda. Polluks on oranžikas ja natuke heledam." ("Castor and Pollux
      are the two bright stars of the Twins, like two brothers. Pollux is
      orange and a little brighter.")
-7. **Kapella:** "Leia Kapella. Tõmba joon Orioni mõõgast läbi tema pea ja
-   jätka seda üles." ("Find Capella. Draw a line from Orion's sword through
-   his head and carry it on upwards.") About three and a half gaps beyond
-   the head, 3° off the line, 78° up, almost overhead.
+   - Then Kaksikud draws itself, the figure of Tähtkujud, at the pace of
+     Väike Vanker on level 2 of the Suur Vanker part.
+7. **Kapella:** "Leia Kapella. Tõmba joon Orioni vasakpoolsest jalast
+   läbi tema pea ja jätka seda üles." ("Find Capella. Draw a line from
+   Orion's left-hand foot through his head and carry it on upwards.")
+   About two gaps beyond the head, 2° off the line, 78° up, almost
+   overhead. The foot is a corner of the figure just drawn, and the line
+   is closer than one along the sword (3° off), whose bottom star is next
+   to the nebula, which comes only in the next task.
    - Fact: "Kapella ei looju Eestis kunagi. Suveõhtul on ta madalal
      põhjas." ("Capella never sets in Estonia. On a summer evening she is
      low in the north.") At her lowest she is 14° up.
+   - Then Veomees draws itself, the figure of Tähtkujud, as Kaksikud.
 8. **Orioni udu:** "Leia Orioni udu. Vöö all ripub mõõk, ja selle keskel
    on udune täht." ("Find the Orion Nebula. Below the belt hangs the sword,
    and in its middle is a fuzzy star.") Tapped as one target, like Sõel.
@@ -594,14 +614,17 @@ same sky as on 15 January at 22:00):
 9. **Talvekuusnurk:** "Joonista Talvekuusnurk: Kapellast Aldebarani,
    Riigeli, Siiriuse, Prooküoni ja Polluksini ning tagasi." ("Draw the
    Winter Hexagon: from Capella to Aldebaran, Rigel, Sirius, Procyon and
-   Pollux, and back.") A trace, with the numbers of the next two stars. It
-   is 66° from Siirius (14° up) to Kapella (78° up), so the view widens
-   for it, as on level 4 of the Suur Vanker part.
+   Pollux, and back.") A trace, with the numbers of the next two stars,
+   and Kapella tapped again at the end, as star 7, to close it. It is 66°
+   from Siirius (14° up) to Kapella (78° up), so the view is as close as
+   those stars let it be. While it is drawn, only Orion's lines show and
+   no names, so that the numbers can be seen.
    - Fact: "Talvekuusnurk on kuus heledat tähte kuuest tähtkujust.
      Betelgeuse on peaaegu tema keskel." ("The Winter Hexagon is six bright
      stars from six constellations. Betelgeuse is almost in its middle.")
      The win map draws both the Talvekolmnurk and the Talvekuusnurk, one
-     inside the other.
+     inside the other, and the figures, but not the dashed lines of the
+     hops.
 
 **Photos.** After the facts of Sõel and of the Orion Nebula, and for the
 Hobusepea udu, the view zooms in on the spot, and a photo fades in over
@@ -736,6 +759,7 @@ Left out of the first version, but easy to add as more hops:
 - **Drawing:** the stars, the arrows, the figures and the trees on a canvas,
   so that dark mode on phones leaves them alone.
 - **Photos:** the photos of Sõel, the Orion Nebula and the Hobusepea udu,
+  the square crops of Pusle by Tõrva Astronoomiaklubi (CC BY-NC-SA),
   each with its credit and with its middle (RA, Dec), its scale and its
   rotation, set by hand from two or three stars in it, so that it lines
   up with the sky. They are drawn on the canvas, fading in and out over

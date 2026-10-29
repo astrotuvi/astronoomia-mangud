@@ -74,8 +74,85 @@
     epsCrb: S(239.40, 26.88, 4.1, 'ε CrB'),
     iotCrb: S(240.36, 29.85, 5.0, 'ι CrB'),
     // where the arc from the handle goes on to
-    spica: S(201.30, -11.16, 1.0, { et: 'Spiika', en: 'Spica' })
+    spica: S(201.30, -11.16, 1.0, { et: 'Spiika', en: 'Spica' }),
+    // Orion: the four corners, the belt, the head and the sword. Only the
+    // shoulders and Riigel are named in the texts; the others by their place.
+    betelgeuse: S(88.79, 7.41, 0.5, { et: 'Betelgeuse', en: 'Betelgeuse' }, '255, 190, 130'),
+    bellatrix: S(81.28, 6.35, 1.6, { et: 'Bellatrix', en: 'Bellatrix' }),
+    rigel: S(78.63, -8.20, 0.1, { et: 'Riigel', en: 'Rigel' }, '215, 228, 255'),
+    saiph: S(86.94, -9.67, 2.1, 'Saiph'),
+    mintaka: S(83.00, -0.30, 2.2, 'Mintaka'),
+    alnilam: S(84.05, -1.20, 1.7, 'Alnilam'),
+    alnitak: S(85.19, -1.94, 1.8, 'Alnitak'),
+    meissa: S(83.78, 9.93, 3.4, 'Meissa'),
+    // the club and the shield
+    muOri: S(90.60, 9.65, 4.1, 'μ Ori'),
+    xiOri: S(92.99, 14.21, 4.5, 'ξ Ori'),
+    pi3Ori: S(72.46, 6.96, 3.2, 'π3 Ori'),
+    pi1Ori: S(73.72, 10.15, 4.6, 'π1 Ori'),
+    pi5Ori: S(73.56, 2.44, 3.7, 'π5 Ori'),
+    c42Ori: S(83.85, -4.84, 4.6, '42 Ori'),
+    m42: S(83.82, -5.39, 4.0, { et: 'Orioni udu', en: 'Orion Nebula' }),
+    iotOri: S(83.86, -5.91, 2.8, 'ι Ori'),
+    sirius: S(101.29, -16.72, -1.5, { et: 'Siirius', en: 'Sirius' }, '215, 228, 255'),
+    // the rest of Suur Peni, whose lower half is only a few degrees up in
+    // Estonia, behind the trees
+    mirzam: S(95.67, -17.96, 2.0, 'Mirzam'),
+    nu2CMa: S(99.17, -19.26, 3.9, 'ν2 CMa'),
+    omi1CMa: S(103.53, -24.18, 3.9, 'ο1 CMa'),
+    adhara: S(104.66, -28.97, 1.5, 'Adhara'),
+    sigCMa: S(105.43, -27.93, 3.5, 'σ CMa'),
+    wezen: S(107.10, -26.39, 1.8, 'Wezen'),
+    omi2CMa: S(105.76, -23.83, 3.0, 'ο2 CMa'),
+    aludra: S(111.02, -29.30, 2.4, 'Aludra'),
+    iotCMa: S(104.03, -17.05, 4.4, 'ι CMa'),
+    muliphein: S(105.94, -15.63, 4.1, 'Muliphein'),
+    theCMa: S(103.55, -12.04, 4.1, 'θ CMa'),
+    // Sõnn, with Aldebaran as its eye
+    aldebaran: S(68.98, 16.51, 0.9, { et: 'Aldebaran', en: 'Aldebaran' }, '255, 190, 130'),
+    theTau: S(67.17, 15.87, 3.4, 'θ Tau'),
+    gamTau: S(64.95, 15.63, 3.7, 'γ Tau'),
+    delTau: S(65.73, 17.54, 3.8, 'δ Tau'),
+    epsTau: S(67.15, 19.18, 3.5, 'ε Tau'),
+    elnath: S(81.57, 28.61, 1.7, 'Elnath'),
+    zetTau: S(84.41, 21.14, 3.0, 'ζ Tau'),
+    // Sõel, found as one target, with the name on its brightest star
+    alcyone: S(56.87, 24.11, 2.9, { et: 'Sõel', en: 'Pleiades' }),
+    atlas: S(57.29, 24.05, 3.6, 'Atlas'),
+    electra: S(56.22, 24.11, 3.7, 'Electra'),
+    maia: S(56.46, 24.37, 3.9, 'Maia'),
+    merope: S(56.58, 23.95, 4.2, 'Merope'),
+    taygeta: S(56.30, 24.47, 4.3, 'Taygeta'),
+    pleione: S(57.30, 24.14, 5.1, 'Pleione'),
+    procyon: S(114.83, 5.22, 0.3, { et: 'Prooküon', en: 'Procyon' }, '255, 248, 230'),
+    castor: S(113.65, 31.89, 1.6, { et: 'Kastor', en: 'Castor' }),
+    pollux: S(116.33, 28.03, 1.1, { et: 'Polluks', en: 'Pollux' }, '255, 210, 160'),
+    // the rest of Kaksikud
+    tauGem: S(107.78, 30.25, 4.4, 'τ Gem'),
+    mebsuta: S(100.98, 25.13, 3.0, 'Mebsuta'),
+    tejat: S(95.74, 22.51, 2.9, 'Tejat'),
+    propus: S(93.72, 22.51, 3.3, 'Propus'),
+    nuGem: S(97.24, 20.21, 4.1, 'ν Gem'),
+    iotGem: S(111.43, 27.80, 3.8, 'ι Gem'),
+    upsGem: S(113.98, 26.90, 4.1, 'υ Gem'),
+    wasat: S(110.03, 21.98, 3.5, 'Wasat'),
+    mekbuda: S(106.03, 20.57, 3.9, 'Mekbuda'),
+    alhena: S(99.43, 16.40, 1.9, 'Alhena'),
+    lamGem: S(109.52, 16.54, 3.6, 'λ Gem'),
+    xiGem: S(101.32, 12.90, 3.4, 'ξ Gem'),
+    capella: S(79.17, 46.00, 0.1, { et: 'Kapella', en: 'Capella' }, '255, 240, 200'),
+    // the rest of Veomees, with Elnath, which it shares with Sõnn
+    menkalinan: S(89.88, 44.95, 1.9, 'Menkalinan'),
+    theAur: S(89.93, 37.21, 2.6, 'θ Aur'),
+    hassaleh: S(74.25, 33.17, 2.7, 'Hassaleh')
   };
+  // the Orion Nebula is drawn as a fuzzy glow, not as a star
+  STARS.m42.nebula = true;
+
+  // the stars of Orion's figure, and of his belt, which a drag snaps onto as
+  // one line, as its stars are too close together to tell apart
+  const ORION = ['betelgeuse', 'bellatrix', 'mintaka', 'alnilam', 'alnitak', 'rigel', 'saiph'];
+  const BELT = ['mintaka', 'alnilam', 'alnitak'];
 
   // Figures, by the keys of their stars; each line is joined from star to
   // star. `where` says, for a wrong star tapped, which figure it is in.
@@ -120,6 +197,123 @@
       where: { et: 'Põhjakroonis', en: 'the Northern Crown' },
       name: { et: 'Põhjakroon', en: 'Northern Crown' },
       lines: [['theCrb', 'nusakan', 'alphecca', 'gamCrb', 'delCrb', 'epsCrb', 'iotCrb']]
+    },
+    // Orion as in Tähtkujud: from the left shoulder over the head to the
+    // other one, down along the belt to a foot, Riigel from the other end of
+    // the belt, and the club and the shield; a star of `join` is joined to
+    // that star rather than to the one before it
+    orion: {
+      order: ['betelgeuse', 'meissa', 'bellatrix', 'mintaka', 'alnilam', 'alnitak', 'saiph', 'rigel',
+        'muOri', 'xiOri', 'pi3Ori', 'pi1Ori', 'pi5Ori'],
+      join: { rigel: 'mintaka', muOri: 'betelgeuse', pi3Ori: 'bellatrix', pi5Ori: 'pi3Ori' },
+      extra: [['alnitak', 'betelgeuse']],
+      where: { et: 'Orioni tähtkujus', en: 'Orion' },
+      name: { et: 'Orion', en: 'Orion' },
+      lines: [['betelgeuse', 'meissa', 'bellatrix', 'mintaka', 'alnilam', 'alnitak', 'saiph'], ['mintaka', 'rigel'],
+        ['alnitak', 'betelgeuse', 'muOri', 'xiOri'], ['bellatrix', 'pi3Ori', 'pi1Ori'], ['pi3Ori', 'pi5Ori']]
+    },
+    taurus: {
+      where: { et: 'Sõnni tähtkujus', en: 'Taurus, the Bull' },
+      name: { et: 'Sõnn', en: 'Taurus' },
+      lines: [['elnath', 'epsTau', 'delTau', 'gamTau', 'theTau', 'aldebaran', 'zetTau']]
+    },
+    // (a cluster, not lines: only the ring round it, and its name on its
+    // brightest star)
+    pleiades: {
+      label: [],
+      where: { et: 'Sõelas', en: 'the Pleiades' },
+      name: { et: 'Sõel', en: 'Pleiades' },
+      lines: [['alcyone'], ['atlas'], ['electra'], ['maia'], ['merope'], ['taygeta'], ['pleione']]
+    },
+    // Suur Peni as in Tähtkujud, which draws itself once Siirius is found
+    canismajor: {
+      order: ['sirius', 'mirzam', 'nu2CMa', 'omi1CMa', 'adhara', 'sigCMa', 'wezen', 'omi2CMa', 'aludra',
+        'iotCMa', 'muliphein', 'theCMa'],
+      join: { aludra: 'wezen', iotCMa: 'sirius' },
+      extra: [['omi2CMa', 'sirius'], ['theCMa', 'iotCMa']],
+      where: { et: 'Suure Peni tähtkujus', en: 'Canis Major, the Great Dog' },
+      name: { et: 'Suur Peni', en: 'Canis Major' },
+      lines: [['sirius', 'mirzam', 'nu2CMa', 'omi1CMa', 'adhara', 'sigCMa', 'wezen', 'omi2CMa', 'sirius'], ['wezen', 'aludra'],
+        ['sirius', 'iotCMa', 'muliphein', 'theCMa', 'iotCMa']]
+    },
+    // Veomees as in Tähtkujud, which draws itself once Kapella is found
+    auriga: {
+      labelBeside: 'capella',
+      order: ['capella', 'menkalinan', 'theAur', 'elnath', 'hassaleh'],
+      extra: [['hassaleh', 'capella']],
+      where: { et: 'Veomehe tähtkujus', en: 'Auriga, the Charioteer' },
+      name: { et: 'Veomees', en: 'Auriga' },
+      lines: [['capella', 'menkalinan', 'theAur', 'elnath', 'hassaleh', 'capella']]
+    },
+    // Kastor and Polluks, to find: only the ring round them
+    twins: {
+      label: [],
+      where: { et: 'Kaksikute tähtkujus', en: 'Gemini, the Twins' },
+      name: { et: 'Kaksikud', en: 'Gemini' },
+      lines: [['castor'], ['pollux']]
+    },
+    // and Kaksikud as in Tähtkujud, which draws itself once they are found
+    gemini: {
+      order: ['castor', 'tauGem', 'mebsuta', 'tejat', 'propus', 'nuGem', 'iotGem', 'upsGem', 'pollux',
+        'wasat', 'mekbuda', 'alhena', 'lamGem', 'xiGem'],
+      join: { nuGem: 'mebsuta', iotGem: 'tauGem', wasat: 'upsGem', lamGem: 'wasat' },
+      where: { et: 'Kaksikute tähtkujus', en: 'Gemini, the Twins' },
+      name: { et: 'Kaksikud', en: 'Gemini' },
+      lines: [['castor', 'tauGem', 'mebsuta', 'tejat', 'propus'], ['mebsuta', 'nuGem'], ['tauGem', 'iotGem', 'upsGem', 'pollux'],
+        ['upsGem', 'wasat', 'mekbuda', 'alhena'], ['wasat', 'lamGem', 'xiGem']]
+    },
+    // the bright stars of several figures, drawn dashed
+    triangle: {
+      asterism: true,
+      labelMid: true,
+      where: { et: 'Talvekolmnurgas', en: 'the Winter Triangle' },
+      name: { et: 'Talvekolmnurk', en: 'Winter Triangle' },
+      lines: [['betelgeuse', 'sirius', 'procyon', 'betelgeuse']]
+    },
+    hexagon: {
+      asterism: true,
+      // (back to Kapella at the end, to close it)
+      order: ['capella', 'aldebaran', 'rigel', 'sirius', 'procyon', 'pollux', 'capella'],
+      where: { et: 'Talvekuusnurgas', en: 'the Winter Hexagon' },
+      name: { et: 'Talvekuusnurk', en: 'Winter Hexagon' },
+      lines: [['capella', 'aldebaran', 'rigel', 'sirius', 'procyon', 'pollux', 'capella']]
+    }
+  };
+
+  // Photos by Tõrva Astronoomiaklubi (AstroBin, CC BY-NC-SA), the square
+  // crops of Pusle. Each is lined up with the sky from two stars in it: RA
+  // and Dec (degrees), and where the star is in the photo (pixels).
+  // `astrobin` is the image id: https://www.astrobin.com/<id>/
+  const PHOTOS = {
+    pleiades: {
+      name: { et: 'Sõel', en: 'The Pleiades' },
+      file: '../pusle/images/pleiades.jpg',
+      astrobin: 'qirtxe',
+      // the brightest star, and the one up to the right of the others
+      anchors: [[56.871, 24.105, 278, 530], [56.302, 24.467, 955, 410]],
+      eye: {
+        et: 'Silmaga näed kuut või seitset tähte. Kaamera kogub valgust kaua ja näeb palju rohkem tähti ning sinist udu nende ümber.',
+        en: 'With the eye you see six or seven stars. The camera collects light for a long time and sees many more stars, and blue haze round them.'
+      }
+    },
+    orion: {
+      name: { et: 'Orioni udu', en: 'The Orion Nebula' },
+      file: '../pusle/images/orion.jpg',
+      astrobin: 'uu55w0',
+      // the stars in the bright middle of the nebula, and the bright star at
+      // the bottom of the sword
+      anchors: [[83.819, -5.390, 522, 408], [83.858, -5.910, 237, 910]],
+      eye: {
+        et: 'Silmaga näed udust täppi. Kaamera kogub valgust kaua ja näeb värve, mida silm ei näe.',
+        en: 'With the eye you see a fuzzy dot. The camera collects light for a long time and sees colours the eye does not see.'
+      }
+    },
+    horsehead: {
+      name: { et: 'Hobusepea udu', en: 'The Horsehead Nebula' },
+      file: '../pusle/images/horsehead.jpg',
+      astrobin: '4yxzcw',
+      // the left-hand star of the belt, and the star in the blue haze
+      anchors: [[85.190, -1.943, 198, 553], [85.410, -2.259, 575, 760]]
     }
   };
 
@@ -631,6 +825,158 @@
           }
         }
       ]
+    },
+    {
+      // The Orion part. A winter evening, at the same hour as level 1, with
+      // Orion upright in the south: hops from the belt and the corners to the
+      // bright stars round him, which make the Winter Hexagon. After Sõel and
+      // the Orion Nebula, the view zooms in on their `photo`, and a `note`
+      // with a `photo` looks at what cannot be seen at all: its `text` shows
+      // while the view zooms in, and its fact when the photo is there.
+      id: 'orion1',
+      limit: 4.5,
+      // the lines of the tasks done go when the next task starts, and the
+      // win map has only the figures, not the lines of the hops
+      clearLines: true,
+      mapLines: false,
+      part: 'orion',
+      icon: '❄️',
+      figs: [],
+      // 15 February 2027 at 20:00
+      when: Date.UTC(2027, 1, 15, 18, 0),
+      caption: { et: 'Talveõhtu, 15. veebruar kell 20', en: 'A winter evening, 15 February at 20:00' },
+      win: {
+        name: { et: 'Orion näitas teed', en: 'Orion showed the way' },
+        fact: {
+          et: 'Orion on talveõhtuti lõunataevas. Nüüd oskad tema abil leida Siiriuse, Aldebarani, Sõela, Prooküoni, Kaksikud, Kapella ja Orioni udu.',
+          en: 'Orion is in the southern sky on winter evenings. Now you can use him to find Sirius, Aldebaran, the Pleiades, Procyon, the Twins, Capella and the Orion Nebula.'
+        }
+      },
+      tasks: [
+        {
+          kind: 'trace', figure: 'orion', span: 32, namesAfter: ['betelgeuse', 'bellatrix', 'rigel'],
+          text: {
+            et: 'Joonista Orion: puuduta tähti järjest 1, 2, 3 … või libista sõrme tähest täheni.',
+            en: 'Draw Orion: tap the stars in turn 1, 2, 3 … or slide your finger from star to star.'
+          },
+          fact: {
+            et: 'Orion on kütt vanadest kreeka lugudest, ühes käes nui ja teises kilp. Tema õlad on punakas Betelgeuse ja Bellatrix, tema jalg on sinakasvalge Riigel, ja keskel on kolm tähte reas: Orioni vöö.',
+            en: 'Orion is a hunter from the old Greek stories, with a club in one hand and a shield in the other. His shoulders are reddish Betelgeuse and Bellatrix, his foot is blue-white Rigel, and in the middle are three stars in a row: Orion’s belt.'
+          }
+        },
+        {
+          kind: 'hop', from: 'mintaka', via: 'alnitak', find: 'sirius', autoDraw: 'canismajor', span: 30, show: ORION,
+          text: {
+            et: 'Leia Siirius. Jätka Orioni vöö kolme tähe joont vasakule alla.',
+            en: 'Find Sirius. Carry the line of the three stars of Orion’s belt on, down to the left.'
+          },
+          fact: {
+            et: 'Siirius on kogu öötaeva kõige heledam täht. Ta on meist ainult 8,6 valgusaasta kaugusel, üks meie lähimaid naabreid.',
+            en: 'Sirius is the brightest star of the whole night sky. It is only 8.6 light years away, one of our nearest neighbours.'
+          }
+        },
+        {
+          kind: 'hop', from: 'alnitak', via: 'mintaka', find: 'aldebaran', figure: 'taurus', span: 30, show: ORION,
+          text: {
+            et: 'Leia Aldebaran. Jätka vöö joont teisele poole, paremale üles.',
+            en: 'Find Aldebaran. Carry the line of the belt the other way, up to the right.'
+          },
+          fact: {
+            et: 'Aldebaran on Sõnni punakas silm. Ta on oranž hiidtäht, meist 65 valgusaasta kaugusel.',
+            en: 'Aldebaran is the reddish eye of the Bull. It is an orange giant, 65 light years away.'
+          }
+        },
+        {
+          kind: 'tap', find: 'alcyone', near: [], figure: 'pleiades', keepLine: true, photo: 'pleiades', span: 30,
+          accept: ['atlas', 'electra', 'maia', 'merope', 'taygeta', 'pleione'],
+          show: ['mintaka', 'alnitak', 'aldebaran'],
+          text: {
+            et: 'Jätka sama joont veel edasi ja leia Sõel.',
+            en: 'Carry the same line on further and find the Pleiades.'
+          },
+          fact: {
+            et: 'Sõel on täheparv. Silmaga näeb temast kuut või seitset tähte, aga tegelikult on seal umbes tuhat tähte.',
+            en: 'The Pleiades are a star cluster. With the eye one sees six or seven of its stars, but there are about a thousand.'
+          }
+        },
+        {
+          // (the Winter Triangle only with the fact, and gone at the next task)
+          kind: 'hop', from: 'bellatrix', via: 'betelgeuse', find: 'procyon', ticks: true, figure: 'triangle', figureOnce: true,
+          span: 30, show: ORION,
+          text: {
+            et: 'Leia Prooküon. Tõmba joon Bellatrixist läbi Betelgeuse ja jätka seda vasakule.',
+            en: 'Find Procyon. Draw a line from Bellatrix through Betelgeuse and carry it on to the left.'
+          },
+          fact: {
+            et: 'Betelgeuse, Siirius ja Prooküon on Talvekolmnurk. Neid kolme heledat tähte on talveõhtul lõunataevas kerge leida.',
+            en: 'Betelgeuse, Sirius and Procyon are the Winter Triangle. These three bright stars are easy to find in the southern sky on a winter evening.'
+          }
+        },
+        {
+          kind: 'hop', from: 'rigel', via: 'betelgeuse', find: 'pollux', accept: ['castor'], ticks: true, figure: 'twins', autoDraw: 'gemini', span: 30,
+          title: { et: 'Kastor ja Polluks!', en: 'Castor and Pollux!' },
+          text: {
+            et: 'Leia Kaksikud. Tõmba joon Riigelist läbi Betelgeuse ja jätka seda üles.',
+            en: 'Find the Twins. Draw a line from Rigel through Betelgeuse and carry it on upwards.'
+          },
+          fact: {
+            et: 'Kastor ja Polluks on Kaksikute kaks heledat tähte, nagu kaks venda. Polluks on oranžikas ja natuke heledam.',
+            en: 'Castor and Pollux are the two bright stars of the Twins, like two brothers. Pollux is orange and a little brighter.'
+          }
+        },
+        {
+          // (from the left-hand foot, a corner of the figure just drawn:
+          // Kapella is 2° off the line, closer than along the sword)
+          kind: 'hop', from: 'saiph', via: 'meissa', find: 'capella', ticks: true, autoDraw: 'auriga', span: 30, show: ORION,
+          text: {
+            et: 'Leia Kapella. Tõmba joon Orioni vasakpoolsest jalast läbi tema pea ja jätka seda üles.',
+            en: 'Find Capella. Draw a line from Orion’s left-hand foot through his head and carry it on upwards.'
+          },
+          fact: {
+            et: 'Kapella ei looju Eestis kunagi. Suveõhtul on ta madalal põhjas.',
+            en: 'Capella never sets in Estonia. On a summer evening she is low in the north.'
+          }
+        },
+        {
+          // the sword's stars count too: the nebula is in the middle of them
+          kind: 'tap', find: 'm42', near: [], accept: ['iotOri', 'c42Ori'], span: 30, show: ORION, photo: 'orion',
+          text: {
+            et: 'Leia Orioni udu. Vöö all ripub mõõk, ja selle keskel on udune täht.',
+            en: 'Find the Orion Nebula. Below the belt hangs the sword, and in its middle is a fuzzy star.'
+          },
+          fact: {
+            et: 'Orioni udu on hiiglaslik gaasipilv, kus sünnivad uued tähed. Ta on meist umbes 1300 valgusaasta kaugusel.',
+            en: 'The Orion Nebula is a huge cloud of gas where new stars are born. It is about 1,300 light years away.'
+          }
+        },
+        {
+          // only to look: "left-hand" is safe here, as this sky does not turn
+          kind: 'note', photo: 'horsehead', span: 12, center: null, show: ['alnitak', 'alnilam', 'mintaka', 'm42'],
+          title: { et: 'Hobusepea udu', en: 'The Horsehead Nebula' },
+          text: {
+            et: 'Vaata veel vöö vasakpoolse tähe alla.',
+            en: 'Look also below the left-hand star of the belt.'
+          },
+          fact: {
+            et: 'Hobusepea udu on tume tolmupilv. Ta varjab enda taga helendavat gaasi, nii et paistab hobusepea kuju. Teda ei näe silmaga ega binokliga.',
+            en: 'The Horsehead Nebula is a dark cloud of dust. It hides the glowing gas behind it, so that the shape of a horse’s head shows. It cannot be seen with the eye or with binoculars.'
+          }
+        },
+        {
+          // From Siirius, 14° up, to Kapella, 78° up: the view is as close as
+          // they let it be. Only Orion's lines are drawn, and no names, so
+          // that the numbers show.
+          kind: 'trace', figure: 'hexagon', span: 30, onlyFigs: ['orion'], noLabels: true,
+          text: {
+            et: 'Joonista Talvekuusnurk: Kapellast Aldebarani, Riigeli, Siiriuse, Prooküoni ja Polluksini ning tagasi.',
+            en: 'Draw the Winter Hexagon: from Capella to Aldebaran, Rigel, Sirius, Procyon and Pollux, and back.'
+          },
+          fact: {
+            et: 'Talvekuusnurk on kuus heledat tähte kuuest tähtkujust. Betelgeuse on peaaegu tema keskel.',
+            en: 'The Winter Hexagon is six bright stars from six constellations. Betelgeuse is almost in its middle.'
+          }
+        }
+      ]
     }
   ];
 
@@ -640,12 +986,14 @@
       intro1: 'Õpi taevast tähti leidma. Tuntud tähtedest viivad jooned edasi järgmiste juurde.',
       intro2: 'Vea sõrme või hiirega ühelt tähelt läbi teise ja vaata, kuhu joon edasi viib. Siis puuduta tähte, mida otsid.',
       partBigDipper: 'Suur Vanker',
+      partOrion: 'Orion',
       levels: [
         { name: 'Leia suunad', about: 'Sügisõhtu: Suur Vanker näitab teed' },
         { name: 'Taevas pöörleb', about: 'Suur Vanker tiirleb ümber Põhjanaela' },
         { name: 'Tõusevad ja loojuvad', about: 'Arktuurus tuleb ja läheb, Veega jääb' },
         { name: 'Hele ja pime taevas', about: 'Linnatuled, Kuu ja suveöö' },
-        { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' }
+        { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' },
+        { name: 'Leia suunad', about: 'Talveõhtu: Orion näitab teed' }
       ],
       seasons: ['Talve', 'Talve', 'Kevad', 'Kevad', 'Kevad', 'Suve', 'Suve', 'Suve', 'Sügis', 'Sügis', 'Sügis', 'Talve'],
       night: (season, evening, d, m, h) => `${season}${evening ? 'õhtu' : 'öö'}, ${d}. ${m} kell ${h}`,
@@ -678,7 +1026,8 @@
       menu: 'Menüü',
       hint: 'Vihje',
       sound: 'Heli',
-      credit: 'Tähed: Yale’i heledate tähtede kataloog (Hoffleit ja Warren, 1991).',
+      credit: 'Tähed: Yale’i heledate tähtede kataloog (Hoffleit ja Warren, 1991). Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.',
+      photo: 'Foto: Tõrva Astronoomiaklubi',
       allGames: 'Kõik mängud'
     },
     en: {
@@ -686,12 +1035,14 @@
       intro1: 'Learn to find stars in the sky. Lines from stars you know lead on to the next ones.',
       intro2: 'Drag your finger or the mouse from one star through another, and see where the line leads. Then tap the star you are looking for.',
       partBigDipper: 'The Big Dipper',
+      partOrion: 'Orion',
       levels: [
         { name: 'Find the directions', about: 'An autumn evening: the Big Dipper shows the way' },
         { name: 'The sky turns', about: 'The Big Dipper goes round the North Star' },
         { name: 'They rise and set', about: 'Arcturus comes and goes, Vega stays' },
         { name: 'Bright and dark skies', about: 'City lights, the Moon and summer nights' },
-        { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' }
+        { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' },
+        { name: 'Find the directions', about: 'A winter evening: Orion shows the way' }
       ],
       seasons: ['winter', 'winter', 'spring', 'spring', 'spring', 'summer', 'summer', 'summer', 'autumn', 'autumn', 'autumn', 'winter'],
       night: (season, evening, d, m, h) => `A ${season} ${evening ? 'evening' : 'night'}, ${d} ${m} at ${String(h).padStart(2, '0')}:00`,
@@ -724,7 +1075,8 @@
       menu: 'Menu',
       hint: 'Hint',
       sound: 'Sound',
-      credit: 'Stars: the Yale Bright Star Catalogue (Hoffleit & Warren, 1991).',
+      credit: 'Stars: the Yale Bright Star Catalogue (Hoffleit & Warren, 1991). Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.',
+      photo: 'Photo: Tõrva Astronoomiaklubi',
       allGames: 'All games'
     }
   };
@@ -779,6 +1131,7 @@
     drag: null,
     wiggle: null,     // a wrong star: { star, t0 }
     flash: null,      // a star just found: { key, t0 }
+    photo: null,      // a photo over the sky: { id, at, out, fast }
     hintUntil: 0,
     lastAct: 0,
     gen: 0
@@ -815,6 +1168,47 @@
     if (!named.some((n) => near(n, s))) FIELD.push(s);
   }
   const ALL = [...named, ...FIELD];
+
+  // Where each photo is on the sky: from a pixel of it to RA and Dec, on the
+  // plane touching the sky at its first star, which is flat enough for a
+  // degree of sky. Seen from below, the sky has the east to the left of the
+  // north, as in the photos, which are only turned and scaled: as complex
+  // numbers, pixel = k · (−east, −north) from the first star.
+  Object.values(PHOTOS).forEach((P) => {
+    const [[r1, d1, u1, v1], [r2, d2, u2, v2]] = P.anchors;
+    const c = Math.cos(d1 * DEG);
+    const wr = -(r2 - r1) * c;
+    const wi = -(d2 - d1);
+    const n = wr * wr + wi * wi;
+    const kr = ((u2 - u1) * wr + (v2 - v1) * wi) / n;
+    const ki = ((v2 - v1) * wr - (u2 - u1) * wi) / n;
+    const m = kr * kr + ki * ki;
+    P.toSky = (u, v) => sphere(r1 - ((u - u1) * kr + (v - v1) * ki) / m / c, d1 - ((v - v1) * kr - (u - u1) * ki) / m);
+    // (pixels per degree; the photos are 1200 px square)
+    P.scale = Math.sqrt(m);
+    P.W = P.H = 1200;
+    P.mid = P.toSky(600, 600);
+    // the photo with its edges fading out, so that it melts into the sky
+    const img = new Image();
+    img.onload = () => {
+      const W = img.naturalWidth;
+      const H = img.naturalHeight;
+      const c2 = document.createElement('canvas');
+      c2.width = W;
+      c2.height = H;
+      const g = c2.getContext('2d');
+      g.drawImage(img, 0, 0);
+      g.globalCompositeOperation = 'destination-in';
+      const R = Math.min(W, H) / 2;
+      const grad = g.createRadialGradient(W / 2, H / 2, R * 0.7, W / 2, H / 2, R);
+      grad.addColorStop(0, 'rgba(0, 0, 0, 1)');
+      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      g.fillStyle = grad;
+      g.fillRect(0, 0, W, H);
+      Object.assign(P, { img: c2, W, H, mid: P.toSky(W / 2, H / 2) });
+    };
+    img.src = P.file;
+  });
   // the stars of the figures always show, the others to the level's limit
   // (in the slider task the stars of the figures too, so that a bright sky hides them)
   const shown = (s) => (state.day ? s.key === 'polaris'
@@ -921,7 +1315,7 @@
       pad: clamp(u * 0.09, 30, 70),   // room round the stars of a task
       hitR: clamp(u * 0.06, 24, 40)
     };
-    if (state.cam) state.cam = taskView();
+    if (state.cam) state.cam = state.photo && !state.photo.out ? photoCam(state.photo.id) : taskView();
   }
 
   // A view that looks at the middle of the stars and fits them, with `span`
@@ -1014,6 +1408,16 @@
     return { az: Math.atan2(c[0], c[1]) / DEG, alt: Math.asin(c[2]) / DEG, s: Math.min(w, h) / (2 * Math.tan((R / 2) * DEG)) };
   }
 
+  // a view straight at the middle of a photo, just wide enough for it
+  function photoCam(id, L = state.L) {
+    const P = PHOTOS[id];
+    const c = horizon(P.mid);
+    const R = Math.min(P.W, P.H) / P.scale;
+    const w = L.W / 2 - 8;
+    const h = (L.H - L.top - (L.bottom || 16)) / 2 - 8;
+    return { az: Math.atan2(c[0], c[1]) / DEG, alt: Math.asin(c[2]) / DEG, s: Math.min(w, h) / (2 * Math.tan((R / 2) * DEG)) };
+  }
+
   // the view as it is now, ready for toScreen()
   function view(L = state.L, cam = state.cam) {
     // (ox, oy: how far the picture is slid, in the units of the projection)
@@ -1055,12 +1459,12 @@
   }
 
   // the view moves smoothly to show the stars of the next task
-  function panTo(cam) {
+  function panTo(cam, dur = 1200) {
     if (!state.cam) {
       state.cam = cam;
       return;
     }
-    state.pan = { from: { ...state.cam }, to: cam, t0: performance.now(), dur: 1200 };
+    state.pan = { from: { ...state.cam }, to: cam, t0: performance.now(), dur };
   }
 
   function stepPan(now) {
@@ -1073,15 +1477,21 @@
     let dAz = ((P.to.az - P.from.az + 540) % 360) - 180;
     const fwd = (((P.to.az - P.from.az) % 360) + 360) % 360;
     if (P.forward && fwd < 300) dAz = fwd;
-    const lerp = (a, b) => (a || 0) + ((b || 0) - (a || 0)) * e;
+    // Zooming far in or out, as to a photo, the zoom goes evenly, by the
+    // same factor every moment, and the point zoomed at moves straight across
+    // the screen, rather than flying off it.
+    const zoom = Math.abs(Math.log(P.to.s / P.from.s)) > 1;
+    const s = zoom ? P.from.s * Math.pow(P.to.s / P.from.s, e) : P.from.s + (P.to.s - P.from.s) * e;
+    const f = !zoom ? e : P.to.s > P.from.s ? 1 - ((1 - e) * P.from.s) / s : (e * P.to.s) / s;
+    const lerp = (a, b) => (a || 0) + ((b || 0) - (a || 0)) * f;
     state.cam = {
-      az: P.from.az + dAz * e,
-      alt: P.from.alt + (P.to.alt - P.from.alt) * e,
-      s: P.from.s + (P.to.s - P.from.s) * e,
+      az: P.from.az + dAz * f,
+      alt: P.from.alt + (P.to.alt - P.from.alt) * f,
+      s,
       // the picture slides on the screen as the view zooms (the point that
       // stays still moves straight, rather than the slide being scaled)
-      ox: lerp(P.from.ox * P.from.s, P.to.ox * P.to.s) / (P.from.s + (P.to.s - P.from.s) * e),
-      oy: lerp(P.from.oy * P.from.s, P.to.oy * P.to.s) / (P.from.s + (P.to.s - P.from.s) * e)
+      ox: lerp(P.from.ox * P.from.s, P.to.ox * P.to.s) / s,
+      oy: lerp(P.from.oy * P.from.s, P.to.oy * P.to.s) / s
     };
     if (p >= 1) state.pan = null;
   }
@@ -1159,7 +1569,9 @@
       line.pts = hopPoints(a, b, 0).pts;
       line.dur = 700;
     } else {
-      const H = hopPoints(a, b, Math.min(9, (110 * DEG) / Math.max(H0(a, b), 1e-6)));
+      // (along Orion's belt, which is short, as far as from the other stars)
+      const belt = BELT.includes(a.key) && BELT.includes(b.key);
+      const H = hopPoints(a, b, Math.min(belt ? 21 : 9, (110 * DEG) / Math.max(H0(a, b), 1e-6)));
       line.pts = H.pts;
       line.dur = 1500;
       if (k.ticks && a.key === k.from && b.key === k.via) {
@@ -1218,6 +1630,12 @@
   // and with the slider to play with, a figure only while all its stars show
   const figHidden = (id, map) => !map && task() && task().free && !FIGURES[id].lines.flat().every((k) => shown(STARS[k]));
 
+  // a task with `onlyFigs` draws only those figures, and its own once done
+  const onlyFigs = (id, map) => {
+    const k = !map && task();
+    return k && k.onlyFigs && !k.onlyFigs.includes(id) && !(state.phase === 'fact' && id === k.figure);
+  };
+
   // where a star is on the screen now, or null
   function place(V, s) {
     const v = horizon(s);
@@ -1275,10 +1693,11 @@
       const age = (now - l.t0) / 1000;
       // the lines of the tasks done are fainter, except on the map
       const old = !map && l.task < state.ti && !(task().keepLine && l.task === state.ti - 1);
+      if (old && level().clearLines) continue;
       // a line that is not the task's fades out completely after a few
       // seconds, and is not on the map
       const a = l.keep ? (old ? 0.22 : 0.5) : 0.5 * (1 - clamp((age - 2.5) / 1.5, 0, 1));
-      if (a <= 0.01 || (map && !l.keep)) continue;
+      if (a <= 0.01 || (map && (!l.keep || level().mapLines === false))) continue;
       g.strokeStyle = `rgba(255, 220, 120, ${a.toFixed(2)})`;
       g.lineWidth = clamp(u * 0.0035, 1.5, 2.2);
       g.setLineDash(l.kind === 'part' ? [] : [6, 9]);
@@ -1317,9 +1736,13 @@
       // in daylight only Suur Vanker's lines, where it is
       if (state.day && id !== 'bigdipper') continue;
       if (figHidden(id, map)) continue;
+      if (onlyFigs(id, map)) continue;
       const f = FIGURES[id];
-      g.strokeStyle = state.day ? 'rgba(255, 255, 255, 0.85)' : id === 'bigdipper' ? 'rgba(150, 180, 255, 0.45)' : 'rgba(255, 211, 77, 0.55)';
+      g.strokeStyle = state.day ? 'rgba(255, 255, 255, 0.85)' : id === 'bigdipper' ? 'rgba(150, 180, 255, 0.45)'
+        : f.asterism ? 'rgba(150, 210, 255, 0.5)' : 'rgba(255, 211, 77, 0.55)';
       g.lineWidth = figureWidth(u);
+      // (the bright stars of several figures, such as the Winter Triangle, dashed)
+      g.setLineDash(f.asterism ? [5, 7] : []);
       for (const line of f.lines) {
         g.beginPath();
         for (let i = 1; i < line.length; i++) {
@@ -1333,6 +1756,7 @@
         }
         g.stroke();
       }
+      g.setLineDash([]);
     }
     // a figure being drawn, and just after its last star, while its
     // numbers and golden lines fade out
@@ -1357,10 +1781,22 @@
       // the stars of the figures a little bigger, so that the faint ones can be followed
       const r = s.key ? Math.max(starR(s.mag, u), starR(3.6, u)) : starR(s.mag, u);
       const c = s.color || '255, 255, 255';
+      // the Orion Nebula, a fuzzy glow
+      if (s.nebula) {
+        const R = Math.max(r * 3, 7);
+        const glow = g.createRadialGradient(x, q.y, 0, x, q.y, R);
+        glow.addColorStop(0, `rgba(235, 228, 255, ${(0.8 * dim).toFixed(2)})`);
+        glow.addColorStop(0.35, `rgba(205, 195, 255, ${(0.35 * dim).toFixed(2)})`);
+        glow.addColorStop(1, 'rgba(205, 195, 255, 0)');
+        g.fillStyle = glow;
+        g.fillRect(x - R, q.y - R, 2 * R, 2 * R);
+        continue;
+      }
       if (s.mag < 2.6) dot(g, x, q.y, r * 2.6, `rgba(${c}, ${(0.13 * dim).toFixed(2)})`);
       dot(g, x, q.y, r, `rgba(${c}, ${dim.toFixed(2)})`);
     }
 
+    if (!map) drawPhoto(g, V, now);
     g.globalAlpha = tr ? fade : 1;
     if (tr) drawTraceStars(g, L, V, now, tr);
     // the twilight over the stars, so that they fade
@@ -1377,6 +1813,34 @@
       if (task().below) drawBelow(g, L, V, now, task().below);
       if (task().height) drawHeight(g, L, V, now, task().height);
     }
+  }
+
+  // A photo over the stars, lined up with them: the photo is mapped onto
+  // the screen through three of its corners, as over a degree of sky the
+  // projection is as good as flat.
+  function drawPhoto(g, V, now) {
+    const ph = state.photo;
+    const P = ph && PHOTOS[ph.id];
+    const a = ph ? photoAlpha(now) : 0;
+    if (!P || !P.img || a <= 0) return;
+    const at = (u, v) => toScreen(V, horizon(P.toSky(u, v)));
+    const p0 = at(0, 0);
+    const p1 = at(P.W, 0);
+    const p2 = at(0, P.H);
+    if (!p0 || !p1 || !p2) return;
+    g.save();
+    g.globalAlpha = a;
+    g.transform((p1[0] - p0[0]) / P.W, (p1[1] - p0[1]) / P.W, (p2[0] - p0[0]) / P.H, (p2[1] - p0[1]) / P.H, p0[0], p0[1]);
+    g.drawImage(P.img, 0, 0);
+    g.restore();
+  }
+
+  // how much the photo shows: fading in once the view has zoomed to it, and
+  // out again, quickly when the player goes on
+  function photoAlpha(now) {
+    const ph = state.photo;
+    const fadeIn = clamp((now - ph.at) / 900, 0, 1);
+    return ph.out ? fadeIn * (1 - clamp((now - ph.out) / (ph.fast ? 300 : 900), 0, 1)) : fadeIn;
   }
 
   // the horizon as a line
@@ -1476,7 +1940,10 @@
   const LINE_MS = 380;
   const HINT_MS = 3500;   // the next star starts to pulse after this long without progress
   const traceOf = (k) => k && k.kind === 'trace' && FIGURES[k.figure];
-  const traceLinks = (f) => f.order.slice(1).map((key, i) => [f.order[i], key]).concat(f.extra);
+  // the lines of a figure to draw, as places in its order, so that a star
+  // can come twice, as the first star again to close the figure
+  const traceLinks = (f) => f.order.slice(1).map((key, i) => [f.join && f.join[key] ? f.order.indexOf(f.join[key]) : i, i + 1])
+    .concat((f.extra || []).map(([a, b]) => [f.order.indexOf(a), f.order.indexOf(b)]));
 
   function drawTrace(g, L, V, now, f) {
     const at = (key) => place(V, STARS[key]);
@@ -1485,8 +1952,8 @@
       g.strokeStyle = 'rgba(95, 212, 255, 0.4)';
       g.lineWidth = 2;
       for (const [a, b] of traceLinks(f)) {
-        const p = at(a);
-        const q = at(b);
+        const p = at(f.order[a]);
+        const q = at(f.order[b]);
         if (!p || !q) continue;
         g.beginPath();
         g.moveTo(p.x, p.y);
@@ -1501,14 +1968,12 @@
     g.lineWidth = lw;
     g.shadowColor = 'rgba(255, 211, 77, 0.8)';
     g.shadowBlur = state.auto ? 0 : lw * 2.5;
-    for (const [a, b] of traceLinks(f)) {
-      const ia = f.order.indexOf(a);
-      const ib = f.order.indexOf(b);
+    for (const [ia, ib] of traceLinks(f)) {
       if (ia >= state.lit || ib >= state.lit) continue;
-      const [s, e] = state.litAt[ia] <= state.litAt[ib] ? [a, b] : [b, a];
-      const k = clamp((now - state.litAt[f.order.indexOf(e)]) / (state.auto ? AUTO_MS : LINE_MS), 0, 1);
-      const p = at(s);
-      const q = at(e);
+      const [s, e] = state.litAt[ia] <= state.litAt[ib] ? [ia, ib] : [ib, ia];
+      const k = clamp((now - state.litAt[e]) / (state.auto ? AUTO_MS : LINE_MS), 0, 1);
+      const p = at(f.order[s]);
+      const q = at(f.order[e]);
       if (!p || !q) continue;
       g.beginPath();
       g.moveTo(p.x, p.y);
@@ -1706,17 +2171,22 @@
     const fs = map ? 26 : Math.round(clamp(L.u * 0.03, 12, 16));
     g.font = `800 ${fs}px Nunito, sans-serif`;
     g.lineJoin = 'round';
+    // (none while a task with `noLabels` is on, so that its numbers show)
+    if (!map && task() && task().noLabels && state.phase === 'task') return;
     const keys = new Set([...state.named, ...(level().names || [])]);
     if (!map && task()) {
       const k = task();
       // (the stars to start from while the task is on, and its `names` also after)
-      const ks = state.phase === 'task' ? [k.from, k.via, ...(k.along || []), ...(k.names || [])] : k.names || [];
+      // (and `namesAfter` only once it is done, so that they are not in the way)
+      const ks = state.phase === 'task' ? [k.from, k.via, ...(k.along || []), ...(k.names || [])]
+        : [...(k.names || []), ...(k.namesAfter || [])];
       ks.filter((x) => x && known(STARS[x])).forEach((x) => keys.add(x));
     }
     const boxes = [];
     const hits = (b) => boxes.some((o) => b.x < o.x + o.w && o.x < b.x + b.w && b.y < o.y + o.h && o.y < b.y + b.h);
     g.textAlign = 'center';
     for (const id of figsHidden(map) ? [] : state.figs) {
+      if (onlyFigs(id, map)) continue;
       // (Suur Vanker's name only at the start, but all along with the slider
       // of how bright the sky is, where it is one of the figures to see)
       if (id === 'bigdipper' && !map && state.ti > 1 && task().kind !== 'slider') continue;
@@ -1730,9 +2200,18 @@
       const xs = pts.map((q) => q.x);
       const txt = FIGURES[id].name[Astro.lang];
       const w = g.measureText(txt).width;
-      // (inside the screen)
-      const x = clamp((Math.min(...xs) + Math.max(...xs)) / 2, w / 2 + 4, L.W - w / 2 - 4);
-      let y = Math.max(...pts.map((q) => q.y)) + fs + 8;
+      // (inside the screen; with `labelMid`, in the middle of its stars, as
+      // inside the Winter Triangle, rather than below them)
+      const mid = FIGURES[id].labelMid;
+      let x = clamp(mid ? xs.reduce((a, b) => a + b, 0) / xs.length : (Math.min(...xs) + Math.max(...xs)) / 2, w / 2 + 4, L.W - w / 2 - 4);
+      let y = mid ? pts.reduce((a, q) => a + q.y, 0) / pts.length + fs * 0.35 : Math.max(...pts.map((q) => q.y)) + fs + 8;
+      // (with `labelBeside`, to the right of the figure, just below that
+      // star, as Veomees below Kapella)
+      const by = FIGURES[id].labelBeside && place(V, STARS[FIGURES[id].labelBeside]);
+      if (by) {
+        x = clamp(Math.max(...xs) + w / 2 + 8, w / 2 + 4, L.W - w / 2 - 4);
+        y = by.y + fs + 6;
+      }
       // (below the name of another figure, if they would overlap)
       for (let n = 0; n < 4 && hits({ x: x - w / 2, y: y - fs * 0.85, w, h: fs }); n++) y += fs + 2;
       boxes.push({ x: x - w / 2, y: y - fs * 0.85, w, h: fs });
@@ -1847,6 +2326,7 @@
     // the stars fade in and out as the sky gets darker or lighter
     state.limit += (state.limitTo - state.limit) * clamp((now - (state.lastFrame || now)) / 250, 0, 1);
     state.lastFrame = now;
+    if (state.photo && state.photo.out && now - state.photo.out > 1000) state.photo = null;
     g0(now);
     // the 👆 shows where to start, when nothing has happened for a while
     // only in the first task, until its line is drawn: later the pulsing
@@ -1954,6 +2434,7 @@
     $('taskName').textContent = '';
     $('taskText').textContent = k && k.text ? k.text[Astro.lang] : '';
     $('tip').textContent = '';
+    $('photoCredit').classList.add('hidden');
     $('nextBtn').classList.add('hidden');
     $('sliderDone').textContent = t('finish');
     updateBar();
@@ -1972,7 +2453,55 @@
     const last = state.ti === state.tasks.length - 1;
     $('nextBtn').textContent = last ? t('finish') : t('next');
     $('nextBtn').classList.remove('hidden');
+    if (state.photo && !state.photo.out) photoText();
     updateBar();
+  }
+
+  // A photo of the spot just found: the view zooms in on it, and the photo
+  // fades in over the stars, lined up with them, with its credit and what
+  // the eye sees there; after a while, or on a tap, it fades back to the
+  // star dots and the view zooms out again.
+  const ZOOM_MS = 1800;
+  const PHOTO_MS = 9000;
+  function showPhoto(id) {
+    const ph = { id, at: performance.now() + ZOOM_MS, out: null };
+    state.photo = ph;
+    // (the card first, so that the view leaves room for it)
+    photoText();
+    relayoutTop();
+    panTo(photoCam(id), ZOOM_MS);
+    later(ZOOM_MS + PHOTO_MS, () => { if (state.photo === ph) hidePhoto(); });
+  }
+
+  function hidePhoto(fast = false) {
+    const ph = state.photo;
+    if (!ph || ph.out) return;
+    ph.out = performance.now();
+    ph.fast = fast;
+    $('tip').textContent = '';
+    $('photoCredit').classList.add('hidden');
+    if (fast) return;
+    const ti = state.ti;
+    later(700, () => {
+      if (state.ti !== ti || state.phase !== 'fact') return;
+      relayoutTop();
+      panTo(taskView(), ZOOM_MS);
+    });
+  }
+
+  // a tap on the sky while a fact is shown hides the photo, or shows it again
+  function togglePhoto() {
+    const k = task();
+    if (state.photo && !state.photo.out) hidePhoto();
+    else if (!state.photo && k.photo) showPhoto(k.photo);
+  }
+
+  function photoText() {
+    const P = PHOTOS[state.photo.id];
+    $('tip').textContent = P.eye ? P.eye[Astro.lang] : '';
+    $('photoCredit').textContent = '📷 ' + t('photo');
+    $('photoCredit').href = 'https://www.astrobin.com/' + P.astrobin + '/';
+    $('photoCredit').classList.remove('hidden');
   }
 
   function updateBar() {
@@ -2102,11 +2631,21 @@
     state.lastAct = performance.now();
     state.lastStep = performance.now();
     showTask();
-    // (a text only to read: straight to it, with the button)
+    // (a text only to read: straight to it, with the button; with a photo,
+    // its text while the view goes there, and its fact with the photo)
     if (k.kind === 'note') {
       state.phase = 'fact';
       state.noteAt = performance.now();
-      showFact();
+      if (!k.photo) showFact();
+      else {
+        const ti = state.ti;
+        later(1400, () => {
+          if (state.ti !== ti) return;
+          showFact();
+          relayoutTop();
+          if (!state.photo) showPhoto(k.photo);
+        });
+      }
     }
     relayoutTop();
     panTo(taskView());
@@ -2322,6 +2861,7 @@
     state.figs = new Set(level().figs || ['bigdipper']);
     state.named = new Set();
     state.flash = null;
+    state.photo = null;
     state.cam = null;
     state.pan = null;
     let when = level().when;
@@ -2340,6 +2880,7 @@
     state.skyTop = 0;
     $('menu').classList.add('hidden');
     $('win').classList.add('hidden');
+    $('photoBox').classList.add('hidden');
     $('game').classList.remove('hidden');
     updateSound();
     showTask();
@@ -2383,6 +2924,8 @@
     const key = k.kind === 'trace' ? null : k.find;
     if (key) {
       if (known(STARS[key])) state.named.add(key);
+      // (and the other stars that count, if they have names, as Kastor)
+      (k.accept || []).filter((x) => known(STARS[x])).forEach((x) => state.named.add(x));
       // (when any star of the figure counts, such as Põhjakroon, the ring
       // goes round the whole figure)
       state.flash = { key, t0: performance.now(), fig: k.accept ? k.figure : null };
@@ -2405,11 +2948,21 @@
     if (k.autoDraw) {
       state.hideFig = new Set();
       const ti = state.ti;
-      later(400, () => { if (state.ti === ti) autoDraw(k.autoDraw); });
+      later(400, () => {
+        if (state.ti !== ti) return;
+        // (the ring round the stars found, as Kastor and Polluks, goes as
+        // their whole figure draws itself)
+        if (state.flash && state.flash.fig) state.flash = null;
+        autoDraw(k.autoDraw);
+      });
     }
     // the view takes in the figure just drawn (a wide view, and the one
     // view of a sky on a level that looks at the horizon, stay as they are)
     if (!k.wide && !level().look) panTo(taskView());
+    if (k.photo) {
+      const ti = state.ti;
+      later(1300, () => { if (state.ti === ti && state.phase === 'fact' && !state.photo) showPhoto(k.photo); });
+    }
   }
 
   function nextTask() {
@@ -2418,6 +2971,8 @@
       win();
       return;
     }
+    hidePhoto(true);
+    if (task().figureOnce) state.figs.delete(task().figure);
     state.ti++;
     state.flash = null;
     startTask();
@@ -2517,7 +3072,10 @@
     const pa = place(V, a);
     const R = state.L.hitR;
     const k = task();
-    const want = [k.via, ...(k.along || [])].filter((x) => x && x !== a.key).map((x) => STARS[x]);
+    // (from the belt, its other stars are not the second star: the drag
+    // did not go along it, or it would have snapped onto it)
+    const skip = BELT.includes(a.key) ? BELT : [];
+    const want = [k.via, ...(k.along || [])].filter((x) => x && x !== a.key && !skip.includes(x)).map((x) => STARS[x]);
     const i0 = path.findIndex((p) => !pa || Math.hypot(p.x - pa.x, p.y - pa.y) > R * 0.8);
     if (i0 < 0) return null;
     const rest = path.slice(i0);
@@ -2530,14 +3088,38 @@
     }
     for (const p of rest) {
       const s = pick(p, R * 0.7, a);
-      if (s && s.mag < 4.5) return s;
+      if (s && s.mag < 4.5 && !skip.includes(s.key)) return s;
     }
     return null;
   }
 
+  // A drag from a star of Orion's belt along it, either way, snaps onto the
+  // whole belt, from the end it starts at: its stars are too close together
+  // to drag through one by one. The way along it is the way from the star
+  // to where the finger is let go, within 20°.
+  function beltWay(a, path) {
+    const V = view();
+    const m = place(V, STARS.mintaka);
+    const n = place(V, STARS.alnitak);
+    const p = place(V, a);
+    const q = path[path.length - 1];
+    if (!m || !n || !p || !q) return null;
+    const dx = q.x - p.x;
+    const dy = q.y - p.y;
+    const bx = n.x - m.x;
+    const by = n.y - m.y;
+    const d = Math.hypot(dx, dy);
+    const cos = (dx * bx + dy * by) / (d * Math.hypot(bx, by) || 1);
+    if (d < 4 || Math.abs(cos) < 0.94) return null;
+    return cos > 0 ? ['mintaka', 'alnitak'] : ['alnitak', 'mintaka'];
+  }
+
   // a drag from one star through another draws the line it makes
   function endHop(a, path) {
-    const b = firstPassed(a, path);
+    const belt = BELT.includes(a.key) && beltWay(a, path);
+    let b;
+    if (belt) [a, b] = belt.map((x) => STARS[x]);
+    else b = firstPassed(a, path);
     if (!b) return;
     const k = task();
     const is = (x, y) => (a.key === x && b.key === y);
@@ -2572,8 +3154,10 @@
       solve();
       return;
     }
-    // a guide star, and then another one, draw the line between them
+    // a guide star, and then another one, draw the line between them (any
+    // star of the belt, when the line is along it)
     const g = [k.from, k.via, ...(k.along || [])].filter(Boolean);
+    if (BELT.includes(k.from) && BELT.includes(k.via)) g.push(...BELT);
     if (g.includes(s.key)) {
       if (state.sel && state.sel !== s.key) {
         endHop(STARS[state.sel], [place(view(), s)]);
@@ -2592,8 +3176,13 @@
   }
 
   area.addEventListener('pointerdown', (e) => {
-    // (not a press on a button or on the sliders over the sky)
-    if (state.phase !== 'task' || e.target.closest('button, input, .sky-slider')) return;
+    // (not a press on a button, a link or the sliders over the sky)
+    if (e.target.closest('button, input, a, .sky-slider')) return;
+    if (state.phase === 'fact' && task() && task().photo) {
+      togglePhoto();
+      return;
+    }
+    if (state.phase !== 'task') return;
     const p = pointAt(e);
     state.lastAct = performance.now();
     const k = task();
@@ -2639,6 +3228,8 @@
   // Menu and win
   // ---------------------------------------------------------------------------
 
+  // the levels of each part under its own heading
+  const levelBtns = [];
   function buildMenu() {
     LEVELS.forEach((lv, i) => {
       const b = document.createElement('button');
@@ -2651,12 +3242,13 @@
         sfx.pick();
         updateMenu();
       });
-      $('levels').appendChild(b);
+      $(lv.part === 'orion' ? 'levelsOrion' : 'levels').appendChild(b);
+      levelBtns.push(b);
     });
   }
 
   function updateMenu() {
-    [...$('levels').children].forEach((b, i) => {
+    levelBtns.forEach((b, i) => {
       const tx = t('levels')[i];
       b.classList.toggle('selected', i === state.level);
       b.querySelector('.level-name').textContent = `${i + 1}. ${tx.name}`;
@@ -2671,6 +3263,7 @@
     cancelAnimationFrame(raf);
     Astro.stopConfetti($('confetti'));
     $('win').classList.add('hidden');
+    $('photoBox').classList.add('hidden');
     $('game').classList.add('hidden');
     $('menu').classList.remove('hidden');
     fingerEl.classList.add('hidden');
@@ -2687,13 +3280,60 @@
     const L = { W: size, H: size, u: size * 0.8, dpr: 1, top: 20, pad: 40, hitR: 36, map: true };
     const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []),
       ...(k.figure ? FIGURES[k.figure].lines.flat() : [])]).filter(Boolean);
-    keys.push(...FIGURES.bigdipper.lines.flat());
+    if (level().part === 'bigdipper') keys.push(...FIGURES.bigdipper.lines.flat());
     const cam = state.cam;
+    const figs = state.figs;
+    // (with the figures shown only for a while, as the Winter Triangle)
+    state.figs = new Set([...figs, ...state.tasks.flatMap((k) => [k.figure, k.autoDraw]).filter(Boolean)]);
     state.cam = fitView(keys, L, 70, level().center, false);
-    render(g, L, view(L, state.cam), performance.now(), true);
+    const V = view(L, state.cam);
+    render(g, L, V, performance.now(), true);
+    state.figs = figs;
+    // the places of the photos, with a frame round each, to tap
+    state.mapPhotos = [];
+    g.strokeStyle = 'rgba(255, 233, 160, 0.9)';
+    g.lineWidth = 3;
+    for (const id of new Set(state.tasks.map((k) => k.photo).filter(Boolean))) {
+      const P = PHOTOS[id];
+      const q = toScreen(V, horizon(P.mid));
+      const e = toScreen(V, horizon(P.toSky(P.W, P.H / 2)));
+      if (!q || !e) continue;
+      const r = Math.max(Math.hypot(e[0] - q[0], e[1] - q[1]) * 0.75, 13);
+      g.strokeRect(q[0] - r, q[1] - r, 2 * r, 2 * r);
+      state.mapPhotos.push({ id, x: q[0], y: q[1] });
+    }
     state.cam = cam;
     return c.toDataURL('image/png');
   }
+
+  // A tap on the map near a photo's frame shows the photo, over the map.
+  $('winImg').addEventListener('click', (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    // (the picture is square, in the middle of the image's box)
+    const side = Math.min(r.width, r.height);
+    const x = ((e.clientX - r.left - (r.width - side) / 2) / side) * 900;
+    const y = ((e.clientY - r.top - (r.height - side) / 2) / side) * 900;
+    let best = null;
+    let bd = 60;
+    for (const m of state.mapPhotos || []) {
+      const d = Math.hypot(m.x - x, m.y - y);
+      if (d < bd) {
+        bd = d;
+        best = m;
+      }
+    }
+    if (!best) return;
+    const P = PHOTOS[best.id];
+    $('photoBoxImg').src = P.file;
+    $('photoBoxName').textContent = P.name[Astro.lang];
+    $('photoBoxCredit').textContent = '📷 ' + t('photo');
+    $('photoBoxCredit').href = 'https://www.astrobin.com/' + P.astrobin + '/';
+    $('photoBox').classList.remove('hidden');
+    sfx.pick();
+  });
+  $('photoBox').addEventListener('click', (e) => {
+    if (!e.target.closest('a')) $('photoBox').classList.add('hidden');
+  });
 
   function win() {
     state.phase = 'win';
