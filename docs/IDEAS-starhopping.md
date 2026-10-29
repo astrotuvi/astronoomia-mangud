@@ -131,13 +131,14 @@ task keeps the date and moves the clock: from 20:00 on 15 January to 02:00,
 when Suur Vanker stands as it does at 22:00 in the middle of March.
 
 Orion is in the evening sky only in winter, so his part changes the hour,
-not the season. On 15 January at 19:00 he is low in the south-east, lying
-on his side, at about 22:00 he stands upright in the south, and at 02:00
-he is low in the south-west, tilted the other way (at 03:00 Riigel has
-set). The belt points to
-Siirius at every hour, but at 19:00 Siirius has not risen yet: "Siirius
-tõuseb natuke hiljem. Oota!" ("Siirius rises a little later. Wait!"), and
-the clock moves on until he does.
+not the season. On 15 December he rises in the east at about 18:20, lying
+on his side, stands upright in the south at about 00:15, only 31° up, and
+sets in the west at about 06:05, tilted the other way. The sky is dark all
+that time, from 18:00 to 06:25, so his whole path can be watched in one
+night; on 15 January he rises before the sky is dark. The belt points to
+Siirius at every hour, but until about 21:20 Siirius has not risen yet:
+"Siirius tõuseb natuke hiljem. Oota!" ("Siirius rises a little later.
+Wait!"), and the clock moves on until he does.
 
 ## How bright the sky is
 
@@ -545,6 +546,7 @@ same sky as on 15 January at 22:00):
      aga tegelikult on seal umbes tuhat tähte." ("The Pleiades are a star
      cluster. With the eye one sees six or seven of its stars, but there
      are about a thousand.")
+   - Then the photo of Sõel, as described below the list.
 5. **Prooküon:** "Leia Prooküon. Tõmba joon Bellatrixist läbi
    Betelgeuse ja jätka seda vasakule." ("Find Procyon. Draw a line from
    Bellatrix through Betelgeuse and carry it on to the left.") About four
@@ -577,6 +579,18 @@ same sky as on 15 January at 22:00):
      Ta on meist umbes 1300 valgusaasta kaugusel." ("The Orion Nebula is a
      huge cloud of gas where new stars are born. It is about 1,300 light
      years away.")
+   - Then the photo of the Orion Nebula, and the view moves on up the
+     sword to the left-hand star of the belt (Alnitak). Here the player
+     only looks and does not find anything: "Vaata veel vöö vasakpoolse
+     tähe alla." ("Look also below the left-hand star of the belt.") The
+     photo of the Hobusepea udu (Horsehead Nebula) fades in, only 0.5°
+     below that star, with its fact: "Hobusepea udu on tume tolmupilv.
+     Ta varjab enda taga helendavat gaasi, nii et paistab hobusepea
+     kuju. Teda ei näe silmaga ega binokliga." ("The Horsehead Nebula
+     is a dark cloud of dust. It hides the glowing gas behind it, so
+     that the shape of a horse's head shows. It cannot be seen with the
+     eye or with binoculars.") "Left-hand" is safe here, as the sky of
+     level 1 does not turn.
 9. **Talvekuusnurk:** "Joonista Talvekuusnurk: Kapellast Aldebarani,
    Riigeli, Siiriuse, Prooküoni ja Polluksini ning tagasi." ("Draw the
    Winter Hexagon: from Capella to Aldebaran, Rigel, Sirius, Procyon and
@@ -589,31 +603,82 @@ same sky as on 15 January at 22:00):
      The win map draws both the Talvekolmnurk and the Talvekuusnurk, one
      inside the other.
 
-**Level 2, Taevas pöörleb.** The hours of 15 January, with the view
-looking south. The sky turns from one hour to the next as in the Suur
-Vanker part, and the texts name only the stars, not left or right:
+**Photos.** After the facts of Sõel and of the Orion Nebula, and for the
+Hobusepea udu, the view zooms in on the spot, and a photo fades in over
+the sky, lined up with it, so that its brightest stars sit on the star
+dots. Then it fades back to the dots, after a few seconds or on a tap.
+So the photo is tied to a place in the sky the player has just found,
+rather than shown on a card of its own. Under each photo is its credit,
+and one line on what the eye sees: "Silmaga näed udust täppi. Kaamera
+kogub valgust kaua ja näeb värve, mida silm ei näe." ("With the eye you
+see a fuzzy dot. The camera collects light for a long time and sees
+colours the eye does not see.") For Sõel: "Silmaga näed kuut või seitset
+tähte. Kaamera kogub valgust kaua ja näeb palju rohkem tähti ning
+sinist udu nende ümber." ("With the eye you see six or seven stars. The
+camera collects light for a long time and sees many more stars, and blue
+haze round them.")
 
-1. **19:00,** Orion lying on his side, low in the east-south-east: find
-   Aldebaran from the belt.
-2. **19:00, Siirius:** the belt points below the horizon. "Siirius tõuseb
+On the win map, the places of the three photos have a small frame, and a
+tap on one shows its photo again.
+
+
+**Level 2, Taevas pöörleb.** Orion from his rising to his setting, on
+the night of 15–16 December. The belt crosses the sky in a low, wide arc,
+about 180° from east to west and at most 31° up, which does not fit on a
+phone held upright. So the level has three views, each about 70° wide:
+
+- **East to south-east** (about 75°–145°), from 18:00 to 21:30
+- **South, a little to the east** (about 120°–190°), at midnight, with
+  Prooküon and the Kaksikud beside Orion
+- **South-west to west** (about 200°–270°), from 03:00 to 06:05
+
+Within a view the camera stays still while the clock runs, so Orion
+visibly moves across it and tilts. Between the views the clock keeps
+running and the view pans along the horizon at about the rate the sky
+turns, so Orion stays about where he is on the screen during the pan, and
+the sky moves on as one motion. The caption counts the hours, with a short
+stop at each hour of a task so that it can be read.
+
+At each stop of a task, a faint copy of Orion's lines, the four corners
+and the belt, stays where he was, with the hour beside it. On the win map
+the view is the whole southern sky from east to west, with the copies and
+the path of the belt dashed through them, like a photo taken many times
+over one night.
+
+The texts name only the stars, not left or right:
+
+1. **18:00, east:** only the shoulders, Betelgeuse and Bellatrix, are
+   up. The clock runs on to 19:00 while Orion rises lying on his side:
+   "Orion tõuseb külili, õlad ees." ("Orion rises on his side, shoulders
+   first.") Riigel comes up last, at about 18:50.
+2. **19:00:** find Aldebaran from the belt, 28° up.
+3. **19:00, Siirius:** the belt points below the horizon. "Siirius tõuseb
    natuke hiljem. Oota!" ("Sirius rises a little later. Wait!") The line
    goes on behind the horizon, and the clock runs on until Siirius is up,
-   at about 19:30; then the player taps him.
+   at about 21:30; then the player taps him, low in the south-east.
+4. **Pan to the south, 00:00:** Orion upright at his highest. Find
+   Prooküon and the Kaksikud.
+   - Fact: "Kesköö paiku on Orion kõige kõrgemal, otse lõunas. Eestis ei
+     tõuse ta kunagi kõrgemale kui umbes 30 kraadi." ("About midnight
+     Orion is at his highest, due south. In Estonia he never gets higher
+     than about 30°.")
+5. **Pan to the south-west, 03:00:** Orion tilted the other way. Find
+   Siirius again, 12° up, and Sõel.
    - Fact: "Siirius ei tõuse Eestis kunagi kõrgemale kui 15 kraadi. Mida
      lõuna pool sa elad, seda kõrgemale ta tõuseb." ("In Estonia Sirius
      never gets higher than 15°. The further south you live, the higher he
      gets.")
-3. **22:00,** Orion upright in the south: find Prooküon and the Kaksikud.
-4. **02:00,** Orion low in the south-west, tilted the other way: find
-   Siirius again (8° up) and Sõel.
-5. **Free play** with the date and the hour, as on level 2 of the Suur
-   Vanker part, but the view stays on the southern sky, from the east
-   along the horizon to the west, and does not follow the stars. So Orion
-   can be followed from where he rises, lying on his side in the
-   east-south-east, across the south, to where he sets, tilted the other
-   way, in the west-south-west. Where the screen is too narrow for all of
-   it, as on a phone held upright, the view can be dragged sideways, but
-   only between the east and the west.
+6. **05:00 to 06:05, west:** the clock runs on while Orion sets: "Orion
+   loojub külili, jalad ees." ("Orion sets on his side, feet first.")
+   Riigel goes first, at about 05:00, and the belt touches the horizon at
+   about 06:05, while Betelgeuse is still 10° up. The last copy is left
+   there.
+7. **Free play** with the date and the hour, as on level 2 of the Suur
+   Vanker part, starting on 15 December at 18:00. The view stays on the
+   southern sky, from the east along the horizon to the west, and does
+   not follow the stars, and the copies are not drawn. Where the screen
+   is too narrow for all of it, as on a phone held upright, the view can
+   be dragged sideways, but only between the east and the west.
 
 **Level 3, Ilma abita.** A dark sky, to magnitude 6, on a night picked at
 random: an hour from 18:00 to 05:00 on winter time, with the Sun at least
@@ -637,6 +702,8 @@ Left out of the first version, but easy to add as more hops:
 - **Lõvi (Leo):** the back of the bowl, Dubhe → Merak, carried on the
   other way, to Regulus
 - **Miitsar ja Alkor:** a test for the eyes, a faint star next to Miitsar
+- **Photos in the free play:** on level 2 of the Orion part, a tap on Sõel
+  or the Orion Nebula shows its photo, as on level 1
 - **Suvekolmnurk (the Summer Triangle):** Veega, the tail of Luik and the
   brightest star of Kotkas, high on late summer and autumn evenings; it
   may become a level of its own
@@ -668,6 +735,11 @@ Left out of the first version, but easy to add as more hops:
   way it really does.
 - **Drawing:** the stars, the arrows, the figures and the trees on a canvas,
   so that dark mode on phones leaves them alone.
+- **Photos:** the photos of Sõel, the Orion Nebula and the Hobusepea udu,
+  each with its credit and with its middle (RA, Dec), its scale and its
+  rotation, set by hand from two or three stars in it, so that it lines
+  up with the sky. They are drawn on the canvas, fading in and out over
+  the stars.
 - **Sounds:** `pick()` when a drag starts on a star, `snap()` when the line
   snaps onto two stars, `oops()` on a wrong star, a note of a tune on each
   star found, and `win()` at the end.
