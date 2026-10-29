@@ -523,6 +523,9 @@
       // 120°): evenings in October, January and April at 21:00, and in July
       // at 23:00, as the sky is light earlier then
       center: 'polaris',
+      // on the win map, the dashed circle along which the front wheel of the
+      // bowl goes round the pole of the sky
+      orbit: 'dubhe',
       // 6 October 2026 at 21:00
       when: Date.UTC(2026, 9, 6, 19, 0),
       caption: { et: 'Sügisõhtu, 6. oktoober kell 21', en: 'An autumn evening, 6 October at 21:00' },
@@ -3744,6 +3747,21 @@
     } else state.cam = fitView(keys, L, 70, level().center, false);
     const V = view(L, state.cam);
     render(g, L, V, performance.now(), true);
+    // the path of a star round the pole, in a whole turn of the sky
+    if (level().orbit) {
+      const s = STARS[level().orbit];
+      g.setLineDash([8, 8]);
+      g.strokeStyle = 'rgba(255, 233, 160, 0.6)';
+      g.lineWidth = 2;
+      g.beginPath();
+      for (let i = 0; i <= 120; i++) {
+        const q = toScreen(V, horizon(s, state.th + (i / 120) * 2 * Math.PI));
+        if (i) g.lineTo(...q);
+        else g.moveTo(...q);
+      }
+      g.stroke();
+      g.setLineDash([]);
+    }
     Object.assign(state, keep);
     state.figs = figs;
     // the places of the photos, with a frame round each, to tap
