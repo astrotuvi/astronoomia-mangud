@@ -132,8 +132,9 @@ when Suur Vanker stands as it does at 22:00 in the middle of March.
 
 Orion is in the evening sky only in winter, so his part changes the hour,
 not the season. On 15 January at 19:00 he is low in the south-east, lying
-on his side, at about 22:00 he stands upright in the south, and at 03:00
-he is low in the south-west, tilted the other way. The belt points to
+on his side, at about 22:00 he stands upright in the south, and at 02:00
+he is low in the south-west, tilted the other way (at 03:00 Riigel has
+set). The belt points to
 Siirius at every hour, but at 19:00 Siirius has not risen yet: "Siirius
 tõuseb natuke hiljem. Oota!" ("Siirius rises a little later. Wait!"), and
 the clock moves on until he does.
@@ -167,9 +168,11 @@ slider, so that the stars a task needs are always there:
   paistab ainult kolm tähte. Vii liugur pimeda taeva poole, et näha teda
   tervenisti." ("When the full Moon is out, or you are in a city, the sky
   is bright, and only three stars of the Little Dipper show. Move the
-  slider towards the dark sky to see all of it.") In the Orion part, the
-  same for the sword with the Orion Nebula.
-- Levels 4 and 5 are a dark sky, to magnitude 6.
+  slider towards the dark sky to see all of it.") The Orion part has no
+  such level; its sword with the Orion Nebula (4.0) shows in the sky of
+  level 1.
+- Levels 4 and 5 are a dark sky, to magnitude 6, and so is Ilma abita in
+  the Orion part.
 
 The slider sets the light of the Moon and of the lights round, and the
 twilight is added on top of it. So on a July night at 23:00, even at the dark
@@ -184,19 +187,23 @@ phone.
 
 ## Levels
 
-Each part has five levels, and a 🌟 in the menu marks the ones done.
+The Suur Vanker part has five levels and the Orion part three: Leia
+suunad, Taevas pöörleb and Ilma abita. A 🌟 in the menu marks the ones
+done.
 
 1. **Leia suunad (find the directions):** one sky that does not turn, the
    guide stars pulse, and the hops have ticks. The texts say which way to
    go, e.g. left or down.
 2. **Taevas pöörleb (the sky turns):** in the Suur Vanker part, only how
-   the sky turns round Põhjanael, through the seasons and the hours. The
+   the sky turns round Põhjanael, through the seasons and the hours; in
+   the Orion part, through the hours of one winter night. The
    texts name only the stars, not left or right, as those change when the
    sky turns.
-3. **Tõusevad ja loojuvad (they rise and set):** in the Suur Vanker part,
+3. **Tõusevad ja loojuvad (they rise and set):** only in the Suur Vanker part,
    Arktuurus and Veega through a year of evenings and one winter night.
    The task still names the stars to start from, but they do not pulse.
-4. **Hele ja pime taevas (bright and dark skies):** the slider of how
+4. **Hele ja pime taevas (bright and dark skies):** only in the Suur
+   Vanker part, the slider of how
    bright the sky is, a figure in a dark sky full of stars, a light summer
    night, and the slider to play with at the end.
 5. **Ilma abita (without help):** a dark sky on a night picked at random.
@@ -502,40 +509,52 @@ room. The view moves only, smoothly, to the next task's view.
 
 ### Orion
 
-The chain of level 1, on a winter evening, 15 January at 22:00, with Orion
-nearly upright in the south:
+Betelgeuse, Bellatrix, Riigel and Aldebaran are named in the texts. The
+other stars of Orion are named by their place: the belt, the sword and the
+head. The three
+stars of the belt are only 2.7° from end to end, about 15 px on a phone,
+so a drag along the belt snaps onto the whole belt as one line, rather
+than onto two of its stars.
 
-1. **Siirius:** "Leia Siirius. Jätka Orioni vöö kolme tähe joont vasakule
+**Level 1, Leia suunad.** A winter evening, 15 February at 20:00, at the
+same hour as the Suur Vanker part, with Orion upright in the south (the
+same sky as on 15 January at 22:00):
+
+1. **Orion:** "Joonista Orion: neli nurka ja vöö nende keskel." ("Draw
+   Orion: four corners and the belt between them.") The four corners and
+   the belt, as an hourglass.
+2. **Siirius:** "Leia Siirius. Jätka Orioni vöö kolme tähe joont vasakule
    alla." ("Find Sirius. Carry the line of the three stars of Orion's belt
-   on, down to the left.") Siirius is about eight belt lengths beyond
-   Alnitak, 3° off the line.
+   on, down to the left.") Siirius is about nine belt lengths beyond the
+   belt, 3° off the line, 14° up.
    - Fact: "Siirius on kogu öötaeva kõige heledam täht. Ta on meist ainult
      8,6 valgusaasta kaugusel, üks meie lähimaid naabreid." ("Sirius is the
      brightest star of the whole night sky. It is only 8.6 light years
      away, one of our nearest neighbours.")
-2. **Aldebaran:** "Leia Aldebaran. Jätka vöö joont teisele poole, paremale
+3. **Aldebaran:** "Leia Aldebaran. Jätka vöö joont teisele poole, paremale
    üles." ("Find Aldebaran. Carry the line of the belt the other way, up to
    the right.") About as far as Siirius, 5° off the line.
    - Fact: "Aldebaran on Sõnni punakas silm. Ta on oranž hiidtäht, meist 65
      valgusaasta kaugusel." ("Aldebaran is the reddish eye of the Bull. It
      is an orange giant, 65 light years away.")
-3. **Sõel:** "Jätka sama joont veel edasi ja leia Sõel." ("Carry the same
-   line on further and find the Pleiades.") About two thirds as far again
-   beyond Aldebaran, 3° off the line.
+4. **Sõel:** "Jätka sama joont veel edasi ja leia Sõel." ("Carry the same
+   line on further and find the Pleiades.") About half as far again
+   beyond Aldebaran, 3° off the line. Sõel is tapped as one target, not as
+   one of its stars.
    - Fact: "Sõel on täheparv. Silmaga näeb temast kuut või seitset tähte,
      aga tegelikult on seal umbes tuhat tähte." ("The Pleiades are a star
      cluster. With the eye one sees six or seven of its stars, but there
      are about a thousand.")
-4. **Prooküon:** "Leia Prooküon. Tõmba joon Bellatrixist läbi Betelgeuse
-   ja jätka seda vasakule." ("Find Procyon. Draw a line from Bellatrix
-   through Betelgeuse and carry it on to the left.") About three and a half
-   gaps beyond Betelgeuse, 5° off the line.
+5. **Prooküon:** "Leia Prooküon. Tõmba joon Bellatrixist läbi
+   Betelgeuse ja jätka seda vasakule." ("Find Procyon. Draw a line from
+   Bellatrix through Betelgeuse and carry it on to the left.") About four
+   and a half gaps beyond Betelgeuse, 5° off the line.
    - Fact: "Betelgeuse, Siirius ja Prooküon on Talvekolmnurk. Neid kolme
      heledat tähte on talveõhtul lõunataevas kerge leida." ("Betelgeuse,
      Sirius and Procyon are the Winter Triangle. These three bright stars
      are easy to find in the southern sky on a winter evening.") The
      triangle is drawn in.
-5. **Kastor ja Polluks:** "Leia Kaksikud. Tõmba joon Rigelist läbi
+6. **Kastor ja Polluks:** "Leia Kaksikud. Tõmba joon Riigelist läbi
    Betelgeuse ja jätka seda üles." ("Find the Twins. Draw a line from Rigel
    through Betelgeuse and carry it on upwards.") Almost twice the gap
    beyond Betelgeuse, Kastor 4° off the line and Polluks 8°.
@@ -543,17 +562,68 @@ nearly upright in the south:
      venda. Polluks on oranžikas ja natuke heledam." ("Castor and Pollux
      are the two bright stars of the Twins, like two brothers. Pollux is
      orange and a little brighter.")
-6. **Orioni udu:** "Leia Orioni udu. Vöö all ripub mõõk, ja selle keskel
+7. **Kapella:** "Leia Kapella. Tõmba joon Orioni mõõgast läbi tema pea ja
+   jätka seda üles." ("Find Capella. Draw a line from Orion's sword through
+   his head and carry it on upwards.") About three and a half gaps beyond
+   the head, 3° off the line, 78° up, almost overhead.
+   - Fact: "Kapella ei looju Eestis kunagi. Suveõhtul on ta madalal
+     põhjas." ("Capella never sets in Estonia. On a summer evening she is
+     low in the north.") At her lowest she is 14° up.
+8. **Orioni udu:** "Leia Orioni udu. Vöö all ripub mõõk, ja selle keskel
    on udune täht." ("Find the Orion Nebula. Below the belt hangs the sword,
-   and in its middle is a fuzzy star.")
+   and in its middle is a fuzzy star.") Tapped as one target, like Sõel.
+   At magnitude 4.0 it shows in the sky of levels 1 and 2.
    - Fact: "Orioni udu on hiiglaslik gaasipilv, kus sünnivad uued tähed.
      Ta on meist umbes 1300 valgusaasta kaugusel." ("The Orion Nebula is a
      huge cloud of gas where new stars are born. It is about 1,300 light
      years away.")
+9. **Talvekuusnurk:** "Joonista Talvekuusnurk: Kapellast Aldebarani,
+   Riigeli, Siiriuse, Prooküoni ja Polluksini ning tagasi." ("Draw the
+   Winter Hexagon: from Capella to Aldebaran, Rigel, Sirius, Procyon and
+   Pollux, and back.") A trace, with the numbers of the next two stars. It
+   is 66° from Siirius (14° up) to Kapella (78° up), so the view widens
+   for it, as on level 4 of the Suur Vanker part.
+   - Fact: "Talvekuusnurk on kuus heledat tähte kuuest tähtkujust.
+     Betelgeuse on peaaegu tema keskel." ("The Winter Hexagon is six bright
+     stars from six constellations. Betelgeuse is almost in its middle.")
+     The win map draws both the Talvekolmnurk and the Talvekuusnurk, one
+     inside the other.
 
-On level 2, the hours of 15 January each take a few of these: 19:00 with
-Orion rising and Siirius not up yet, 22:00 upright, and 03:00 setting.
-Level 4 has the Orion Nebula as the slider task.
+**Level 2, Taevas pöörleb.** The hours of 15 January, with the view
+looking south. The sky turns from one hour to the next as in the Suur
+Vanker part, and the texts name only the stars, not left or right:
+
+1. **19:00,** Orion lying on his side, low in the east-south-east: find
+   Aldebaran from the belt.
+2. **19:00, Siirius:** the belt points below the horizon. "Siirius tõuseb
+   natuke hiljem. Oota!" ("Sirius rises a little later. Wait!") The line
+   goes on behind the horizon, and the clock runs on until Siirius is up,
+   at about 19:30; then the player taps him.
+   - Fact: "Siirius ei tõuse Eestis kunagi kõrgemale kui 15 kraadi. Mida
+     lõuna pool sa elad, seda kõrgemale ta tõuseb." ("In Estonia Sirius
+     never gets higher than 15°. The further south you live, the higher he
+     gets.")
+3. **22:00,** Orion upright in the south: find Prooküon and the Kaksikud.
+4. **02:00,** Orion low in the south-west, tilted the other way: find
+   Siirius again (8° up) and Sõel.
+5. **Free play** with the date and the hour, as on level 2 of the Suur
+   Vanker part, but the view stays on the southern sky, from the east
+   along the horizon to the west, and does not follow the stars. So Orion
+   can be followed from where he rises, lying on his side in the
+   east-south-east, across the south, to where he sets, tilted the other
+   way, in the west-south-west. Where the screen is too narrow for all of
+   it, as on a phone held upright, the view can be dragged sideways, but
+   only between the east and the west.
+
+**Level 3, Ilma abita.** A dark sky, to magnitude 6, on a night picked at
+random: an hour from 18:00 to 05:00 on winter time, with the Sun at least
+15° below the horizon and the belt at least 15° up. So it is mostly from
+November to March, and sometimes an autumn morning, with Orion in the
+south before dawn. The task names only the star to find, as in the Suur
+Vanker part, and one view is kept for all the tasks. It asks for
+Aldebaran, Sõel, Prooküon, the Kaksikud and Kapella every night, Siirius
+when he is at least 5° up, and at the end the Talvekuusnurk, without the
+numbers.
 
 ## Extras
 
