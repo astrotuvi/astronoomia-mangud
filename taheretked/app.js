@@ -588,6 +588,15 @@
           }
         },
         {
+          kind: 'tap', find: 'kochab', near: [], figure: 'littledipper', up: ['polaris'],
+          accept: ['yildun', 'epsUmi', 'zetUmi', 'pherkad', 'etaUmi'],
+          text: { et: 'Leia Väike Vanker.', en: 'Find the Little Dipper.' },
+          fact: {
+            et: 'Väikese Vankri kopa kaks heledamat tähte tiirlevad ümber Põhjanaela nagu kellaosuti, üks ring ööpäevas. Neid kutsutakse pooluse valvuriteks.',
+            en: 'The two brighter stars of the Little Dipper’s bowl go round the North Star like the hand of a clock, once a day. They are called the guardians of the pole.'
+          }
+        },
+        {
           kind: 'arc', along: ['alioth', 'mizar', 'alkaid'], curve: ['alioth', 'mizar', 'alkaid', 'arcturus', 'spica'],
           find: 'arcturus', figure: 'bootes', up: ['arcturus'],
           text: { et: 'Leia Arktuurus.', en: 'Find Arcturus.' },
@@ -2016,7 +2025,12 @@
   // A dark night of 2027 picked at random, an hour from 20:00 to 03:00 on the
   // clock with the Sun at least 15° below the horizon (so not in June and
   // July), and the tasks of the level's pool whose stars are up then.
+  // (Not only nights when all of them are up: on a dark night with
+  // Arktuurus up, Suur Vanker is always high. Põhjanael and Väike Vanker
+  // never set, so they are asked every night. Half of the nights are ones
+  // with all of them up.)
   function randomNight(lv) {
+    const all = Math.random() < 0.5;
     for (let tries = 0; ; tries++) {
       const day = Math.floor(Math.random() * 365);
       // (not midnight, which would read "kell 0")
@@ -2028,8 +2042,7 @@
       if (horizon(sun(ms), th)[2] > Math.sin(-15 * DEG) && tries < 500) continue;
       const alt = (key) => Math.asin(horizon(STARS[key], th)[2]) / DEG;
       const tasks = lv.pool.filter((k) => (k.up || []).every((key) => alt(key) >= 10));
-      // (all of them: a night when Arktuurus and Põhjakroon are up)
-      if (tasks.length < lv.pool.length && tries < 500) continue;
+      if (all && tasks.length < lv.pool.length && tries < 500) continue;
       const d = new Date(ms + tz * 3600000);
       const caption = {};
       for (const lang of ['et', 'en']) {

@@ -197,10 +197,14 @@ Each part has five levels, and a 🌟 in the menu marks the ones done.
 In the Suur Vanker part, level 5 picks a dark night of the year at random:
 an hour from 20:00 to 03:00 (not midnight), with the Sun at least 15° below
 the horizon, so never in June or July. The caption names it, e.g.
-"Kevadöö, 17. märts kell 1". Of Põhjanael, Arktuurus and Põhjakroon, a
-task is asked only when its star is at least 10° up (Veega is left out, as
-among all the stars of a dark sky it is too hard to find alone), and the
-night is picked so that all three are up, from about February to October.
+"Kevadöö, 17. märts kell 1". Põhjanael and Väike Vanker never set, so
+they are asked every night. Arktuurus and Põhjakroon are asked only when
+they are at least 10° up (Veega is left out, as among all the stars of a
+dark sky it is too hard to find alone). Half of the nights are picked so
+that both are up too, from about February to October. Only those would
+show Suur Vanker always high, from the northeast to overhead, so the other
+half are any dark night, with Suur Vanker low in the north on an autumn
+evening or on its side in the east or the west.
 Arktuurus below the horizon is only on level 3. The task asks only "Leia Arktuurus.", no
 figure is drawn at the start, and one view is kept for all the tasks, so
 that the view does not give away where to look. Its facts are new, e.g.
