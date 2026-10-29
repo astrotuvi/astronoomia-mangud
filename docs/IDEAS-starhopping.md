@@ -37,7 +37,12 @@ the middle of the outline of the stars a task is about.
 The task is at the top, with a short text, e.g. "Leia Põhjanael" ("Find the
 North Star"), and on the first levels the names of the stars to start from.
 The caption under it says the date and the hour, e.g. "Sügisõhtu, 15.
-oktoober kell 21" ("An autumn evening, 15 October at 21:00").
+oktoober kell 20 (suveaja järgi kell 21)" ("An autumn evening, 15 October
+at 20:00 (21:00 summer time)"). The clock is on winter time all the year
+round, so that the hours do not jump in spring and autumn; when summer time
+is on, the hour of summer time follows in brackets. In the free play with
+the sliders, the minutes are always shown, also on the full hour, as "kell
+18.00".
 
 ## Moves
 
@@ -96,13 +101,13 @@ in a different place round Põhjanael:
 
 | Evening | Suur Vanker | Arktuurus |
 |---|---|---|
-| spring, 15 April 23:00 | almost overhead, upside down, with the bowl open downwards | 40° up in the east-south-east |
-| summer, 15 August 23:00 | in the north-west, sinking, with the handle up | 23° up in the west |
-| autumn, 15 October 21:00 | low in the north-north-west, right side up | 8° up in the west-north-west, setting |
+| spring, 15 April 22:00 | almost overhead, upside down, with the bowl open downwards | 40° up in the east-south-east |
+| summer, 15 August 22:00 | in the north-west, sinking, with the handle up | 23° up in the west |
+| autumn, 15 October 20:00 | low in the north-north-west, right side up | 8° up in the west-north-west, setting |
 | winter, 15 January 20:00 | in the north-east, standing on its handle | 11° below the horizon |
 
-The hours are clock times, with summer time from April to October. They are
-late in summer, as Estonian summer nights are light.
+The hours are clock times, on winter time. They are late in summer, as
+Estonian summer nights are light.
 
 When a level goes from one season to the next, the sky does not jump: it
 turns round Põhjanael, slowly enough to follow the stars, about six and a
@@ -167,7 +172,7 @@ slider, so that the stars a task needs are always there:
 - Levels 4 and 5 are a dark sky, to magnitude 6.
 
 The slider sets the light of the Moon and of the lights round, and the
-twilight is added on top of it. So on a July midnight, even at the dark
+twilight is added on top of it. So on a July night at 23:00, even at the dark
 end, only the brighter stars show, and the slider can make the sky only
 brighter, not darker than the night really is. The game draws no Moon: the
 slider stands for it.
@@ -199,9 +204,9 @@ Each part has five levels, and a 🌟 in the menu marks the ones done.
    from, or taps the star straight away if they know it.
 
 In the Suur Vanker part, level 5 picks a dark night of the year at random:
-an hour from 20:00 to 03:00 (not midnight), with the Sun at least 15° below
-the horizon, so never in June or July. The caption names it, e.g.
-"Kevadöö, 17. märts kell 1". Põhjanael and Väike Vanker never set, so
+an hour from 20:00 to 03:00 on winter time (not midnight), with the Sun
+at least 15° below the horizon, so never in June or July. The caption
+names it, e.g. "Kevadöö, 17. märts kell 1". Põhjanael and Väike Vanker never set, so
 they are asked every night. Arktuurus and Põhjakroon are asked only when
 they are at least 10° up (Veega is left out, as among all the stars of a
 dark sky it is too hard to find alone). Half of the nights are picked so
@@ -229,7 +234,7 @@ the star positions. The drag is loose enough for all of them.
 ### Suur Vanker
 
 The game starts with the chain of level 1, on an autumn evening, 15
-October at 21:00. Suur Vanker is low in the north-north-west, right side up
+October at 20:00 (21:00 summer time). Suur Vanker is low in the north-north-west, right side up
 with the handle to the left, as children see it at this time of year
 before going to bed. All six stars to find are up: Väike Vanker and Lohe
 above it, and Veega (57° up), Põhjakroon (24°) and Arktuurus (8°) to the
@@ -310,24 +315,26 @@ player looks for Põhjanael, it zooms in to Suur Vanker and Põhjanael:
 1. autumn, 6 October at 21:00: find Põhjanael from the two wheels. Then
    Väike Vanker draws itself in from Põhjanael.
 2. the view zooms out a little, and the sky turns about a quarter of a
-   circle (105°) to 5 January at 21:00. Väike Vanker is
+   circle (90°) to 5 January at 21:00. Väike Vanker is
    taken away while the sky turns, the name of Põhjanael is hidden, and
    the player finds Põhjanael again; then Väike Vanker draws itself again,
    as one smooth line without sounds.
-3. about another quarter (99°), to 15 April at 22:00, as at 21:00 the sky
-   is still quite light then, and Põhjanael again
-4. July, at midnight on 15–16 July, and Põhjanael again. At 21:00 the July
+3. about another quarter (99°), to 15 April at 21:00, and Põhjanael again
+4. July, at 23:00 on 15 July, and Põhjanael again. At 21:00 the July
    sky would be light, so this turn is bigger, about 120°, and the sky is
    still in twilight, with only the brighter stars.
 5. two sliders, for the date over the year and the time from 18:00 to
    06:00 by the minute, to turn the sky at one's own pace. On light summer
    nights the sky is lighter and only the brighter stars show, and when
    the Sun is up there are no stars: only the lines of Suur Vanker and
-   Põhjanael stay, to show where they are.
+   Põhjanael stay, to show where they are, and the Sun is drawn where it
+   is, behind the trees when it is low. The view looks at the pole itself,
+   not at Põhjanael, which is 0.7° from it, so that the ground does not
+   rock as the sky turns.
 
-The turns are not exactly a quarter of a circle, as the clock time goes
-later with the light evenings of spring and summer, and the clocks change
-between summer and winter time. The sky always turns forwards, and at each
+The first three skies are at the same hour, 21:00, so that the sky turns
+only with the months; the July one is later, as the evenings are light.
+The sky always turns forwards, and at each
 time it is as light as it really is then.
 Veega, Arktuurus and Põhjakroon are left to level 3, and the slider of how
 bright the sky is to level 4.
@@ -344,8 +351,8 @@ night, when it comes back up by the morning. The positions are for Tõrva:
 | | Caption | Sun | Arktuurus | Veega |
 |---|---|---|---|---|
 | 1 | Kevadõhtu, 15. märts kell 21 | −21° | E, 16°, just risen | NNE, 9° |
-| 2 | Kevadöö, 15. mai kell 23.30 | −10° | S, 51°, as high as it gets | E, 41° |
-| 3 | Sügisõhtu, 15. september kell 21 | −11° | W, 23°, going down | SSW, 69° |
+| 2 | Kevadöö, 15. mai kell 22.30 | −10° | S, 51°, as high as it gets | E, 41° |
+| 3 | Sügisõhtu, 15. september kell 20 | −11° | W, 23°, going down | SSW, 69° |
 | 4 | Talveõhtu, 5. jaanuar kell 21 | −40° | −11°, below the horizon | NNW, 13° |
 | 5 | Talvehommik, 6. jaanuar kell 6 | −22° | SE, 48°, back up | ENE, 33° |
 
@@ -368,7 +375,7 @@ drawn in at the start, and Lohe is given wherever Veega is asked for:
        Suur Vanker, tiirleb ta ümber Põhjanaela." ("Vega is low in the
        north now, but it never sets: like the Big Dipper, it goes round the
        North Star.")
-2. 15 May at 23:30:
+2. 15 May at 22:30:
    - **Arktuurus**, along the arc again.
      - Fact: "Arktuurus on lõunas, nii kõrgel, kui ta Eestis üldse tõuseb:
        umbes 51 kraadi. Ta on oranž, sest ta on Päikesest jahedam."
@@ -386,7 +393,7 @@ drawn in at the start, and Lohe is given wherever Veega is asked for:
        too.")
      - 💡 draws the line and circles the whole Crown, and when the Crown
        is found, a circle closes in round all of it.
-3. 15 September at 21:00:
+3. 15 September at 20:00:
    - **Arktuurus**, along the arc.
      - Fact: "Sügisõhtul on Arktuurus läänes ja loojub iga nädalaga
        varem." ("On an autumn evening Arcturus is in the west and sets
@@ -415,10 +422,10 @@ drawn in at the start, and Lohe is given wherever Veega is asked for:
    - **Arktuurus:** "Leia Arktuurus."
      - Fact: "Talvel on Arktuurus hommikutaevas. Üheksa tunniga pöördus
        taevas sama palju kui neli ja pool kuud õhtuti: jaanuari hommikul
-       kell 6 on taevas nagu mai keskel kell 22." ("In winter Arcturus is in
+       kell 6 on taevas nagu mai keskel kell 21." ("In winter Arcturus is in
        the morning sky. In nine hours the sky turned as much as it does in
        four and a half months of evenings: at 6 on a January morning the sky
-       is as at 22:00 in the middle of May.")
+       is as at 21:00 in the middle of May.")
 The view cannot stay facing north as on level 2, because Arktuurus goes all
 round the sky. The view always looks at a height of 30° and turns only
 sideways, so that the ground stays level and the directions on the horizon
@@ -440,7 +447,7 @@ is what the level is about. Põhjanael always has its name, as Suur Vanker
 is always drawn, so that the north is always marked.
 
 Level 4 is about how bright the sky is. It starts on the autumn evening of
-level 1, 15 October at 21:00, with Suur Vanker upright, low in the north,
+level 1, 15 October at 20:00, with Suur Vanker upright, low in the north,
 below Põhjanael and Väike Vanker, close up on the two of them:
 
 1. **The slider**, starting at the bright end, with Põhjanael named. At
@@ -461,11 +468,11 @@ below Põhjanael and Väike Vanker, close up on the two of them:
    - Fact: "Lohe tähed on nõrgad: linnas teda peaaegu ei näe, aga pimedas
      taevas paistab ta tervenisti." ("The Dragon's stars are faint: in a
      city it can hardly be seen, but in a dark sky all of it shows.")
-3. The sky goes straight to midnight on 15–16 July, without turning
+3. The sky goes straight to 23:00 on 15 July, without turning
    through the months, when the Sun is only about 9° below the horizon.
    The twilight comes on smoothly, in about 1.5 s, and only then **the
    slider** shows, starting at the bright end again:
-   "Juuli keskööl. Vii liugur jälle pimeda taeva poole." ("At midnight in
+   "Juulis kell 23. Vii liugur jälle pimeda taeva poole." ("At 23:00 in
    July. Move the slider towards the dark sky again.") Even at the dark end
    the twilight keeps the sky light, and the faintest stars do not show.
    - Fact: "Suveööl ei lähe taevas Eestis päris pimedaks, sest Päike on
@@ -475,7 +482,7 @@ below Põhjanael and Väike Vanker, close up on the two of them:
      horizon. Even in the countryside, with no lights, only the brighter
      stars show then.")
    The view is wide, round Põhjanael, without zooming in.
-4. The sky turns on to 15 October at 21:00 again, and **the slider is to
+4. The sky turns on to 15 October at 20:00 again, and **the slider is to
    play with**, starting at the dark end, with Valmis beside it: "Liiguta
    liugurit ise ja vaata, kuidas tähed heledas taevas kaovad ja pimedas
    taevas tagasi tulevad." ("Move the slider yourself and watch the stars

@@ -10,6 +10,9 @@
   const DEG = Math.PI / 180;
   const LAT = 58.0 * DEG;   // Tõrva
   const LON = 25.93;        // degrees east
+  // the clock is on winter time all the year round, UT + 2 hours, so that
+  // the hours do not jump in spring and autumn
+  const TZ = 2;
 
   // The stars the tasks use, as RA and Dec (J2000, degrees), visual magnitude,
   // name and, if it is not white, colour. The figures are as in
@@ -124,8 +127,8 @@
   const DIPPER = ['dubhe', 'merak', 'phecda', 'megrez', 'alioth', 'mizar', 'alkaid'];
 
   // The levels. Each is a chain of tasks in one sky, at the date and hour
-  // `when` (UT), with its `caption`; a task with its own `when` (and `tz`, the
-  // hours from UT to the clock time) turns the sky on to it, always forwards.
+  // `when` (UT), with its `caption`; a task with its own `when` turns the sky
+  // on to it, always forwards.
   // `limit` is the faintest stars shown, besides those of the figures, and
   // `win` the texts of the win screen. The kinds of task:
   //   hop: a line from `from` through `via`, carried on, leads to `find`;
@@ -183,9 +186,9 @@
       limit: 4.5,
       part: 'bigdipper',
       icon: '🍂',
-      // 15 October 2026 at 21:00 summer time
+      // 15 October 2026 at 20:00
       when: Date.UTC(2026, 9, 15, 18, 0),
-      caption: { et: 'Sügisõhtu, 15. oktoober kell 21', en: 'An autumn evening, 15 October at 21:00' },
+      caption: { et: 'Sügisõhtu, 15. oktoober kell 20', en: 'An autumn evening, 15 October at 20:00' },
       win: {
         name: { et: 'Suur Vanker näitas teed', en: 'The Big Dipper showed the way' },
         fact: {
@@ -282,12 +285,12 @@
       part: 'bigdipper',
       icon: '🔄',
       // Only about how the sky turns: the sky turns round Põhjanael, always
-      // forwards, by about a quarter of a circle each time (105°, 99° and
-      // 120°): evenings in October and January at 21:00, in April at 22:00
-      // and in July at midnight, as the sky is light earlier then
+      // forwards, by about a quarter of a circle each time (90°, 99° and
+      // 120°): evenings in October, January and April at 21:00, and in July
+      // at 23:00, as the sky is light earlier then
       center: 'polaris',
-      // 6 October 2026 at 21:00 summer time
-      when: Date.UTC(2026, 9, 6, 18, 0),
+      // 6 October 2026 at 21:00
+      when: Date.UTC(2026, 9, 6, 19, 0),
       caption: { et: 'Sügisõhtu, 6. oktoober kell 21', en: 'An autumn evening, 6 October at 21:00' },
       win: {
         name: { et: 'Taevas pöörles', en: 'The sky turned' },
@@ -309,46 +312,46 @@
           }
         },
         {
-          // 5 January 2027 at 21:00 winter time: the sky turns about 105°
+          // 5 January 2027 at 21:00: the sky turns about 90°
           kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 45, center: null, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
-          when: Date.UTC(2027, 0, 5, 19, 0), tz: 2,
+          when: Date.UTC(2027, 0, 5, 19, 0),
           caption: { et: 'Talveõhtu, 5. jaanuar kell 21', en: 'A winter evening, 5 January at 21:00' },
           text: {
             et: 'Jaanuari alguses, jälle kell 21. Taevas on pöördunud. Leia Põhjanael uuesti.',
             en: 'At the start of January, again at 21:00. The sky has turned. Find the North Star again.'
           },
           fact: {
-            et: 'Taevas on pöördunud umbes veerandi ringi. Samal kellaajal vaadates pöörleb taevas iga kuuga Põhjanaela ümber edasi, põhja poole vaadates vastupäeva. Põhjanael ise jääb paigale.',
+            et: 'Taevas on pöördunud umbes veerand ringi. Samal kellaajal vaadates pöörleb taevas iga kuuga Põhjanaela ümber edasi, põhja poole vaadates vastupäeva. Põhjanael ise jääb paigale.',
             en: 'The sky has turned about a quarter of a circle. Watched at the same hour, the sky turns on round the North Star every month, anticlockwise when you face north. The North Star stays in place.'
           }
         },
         {
-          // 15 April 2027 at 22:00 summer time: the sky turns about 99°
+          // 15 April 2027 at 21:00: the sky turns about 99°
           kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 45, center: null, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
-          when: Date.UTC(2027, 3, 15, 19, 0), tz: 3,
-          caption: { et: 'Kevadõhtu, 15. aprill kell 22', en: 'A spring evening, 15 April at 22:00' },
+          when: Date.UTC(2027, 3, 15, 19, 0),
+          caption: { et: 'Kevadõhtu, 15. aprill kell 21', en: 'A spring evening, 15 April at 21:00' },
           text: {
-            et: 'Aprilli keskel on kell 21 veel üsna valge, seepärast vaatame kell 22. Leia Põhjanael uuesti.',
-            en: 'In the middle of April it is still quite light at 21:00, so we look at 22:00. Find the North Star again.'
+            et: 'Aprilli keskel, jälle kell 21. Leia Põhjanael uuesti.',
+            en: 'In the middle of April, again at 21:00. Find the North Star again.'
           },
           fact: {
-            et: 'Taevas pööras jälle umbes veerandi ringi. Suur Vanker on nüüd peaaegu pea kohal, tagurpidi.',
+            et: 'Taevas pööras jälle umbes veerand ringi. Suur Vanker on nüüd peaaegu pea kohal, tagurpidi.',
             en: 'The sky turned about a quarter of a circle again. The Big Dipper is now almost overhead, upside down.'
           }
         },
         {
-          // the night of 15 to 16 July 2027 at midnight, summer time: at 21:00
-          // the sky would still be light. The sky turns about 120° this time.
+          // 15 July 2027 at 23:00: at 21:00 the sky would still be light. The
+          // sky turns about 120° this time.
           kind: 'hop', from: 'merak', via: 'dubhe', find: 'polaris', span: 45, center: null, show: DIPPER, hideNames: true, autoDraw: 'littledipper',
-          when: Date.UTC(2027, 6, 15, 21, 0), tz: 3,
-          caption: { et: 'Suveöö, 15. juuli, kesköö', en: 'A summer night, 15 July at midnight' },
+          when: Date.UTC(2027, 6, 15, 21, 0),
+          caption: { et: 'Suveöö, 15. juuli kell 23', en: 'A summer night, 15 July at 23:00' },
           text: {
-            et: 'Juulis on kell 21 veel valge, seepärast vaatame keskööl. Leia Põhjanael uuesti.',
-            en: 'In July it is still light at 21:00, so we look at midnight. Find the North Star again.'
+            et: 'Juulis on kell 21 veel valge, seepärast vaatame kell 23. Leia Põhjanael uuesti.',
+            en: 'In July it is still light at 21:00, so we look at 23:00. Find the North Star again.'
           },
           fact: {
-            et: 'Seekord pööras taevas rohkem kui veerandi ringi, sest vaatame hiljem: keskööl, mitte kell 21. Taevas pöörleb ka iga tunniga edasi. Juuli keskööl on taevas hele, aga Suur Vanker ja Põhjanael paistavad.',
-            en: 'This time the sky turned more than a quarter of a circle, as we look later: at midnight, not at 21:00. The sky also turns on every hour. At midnight in July the sky is light, but the Big Dipper and the North Star show.'
+            et: 'Seekord pööras taevas rohkem kui veerand ringi, sest vaatame hiljem: kell 23, mitte kell 21. Taevas pöörleb ka iga tunniga edasi. Juulis kell 23 on taevas hele, aga Suur Vanker ja Põhjanael paistavad.',
+            en: 'This time the sky turned more than a quarter of a circle, as we look later: at 23:00, not at 21:00. The sky also turns on every hour. At 23:00 in July the sky is light, but the Big Dipper and the North Star show.'
           }
         },
         {
@@ -376,7 +379,7 @@
       look: 30,
       // Põhjanael always has its name, as Suur Vanker has
       names: ['polaris'],
-      // 15 March 2027 at 21:00 winter time
+      // 15 March 2027 at 21:00
       when: Date.UTC(2027, 2, 15, 19, 0),
       caption: { et: 'Kevadõhtu, 15. märts kell 21', en: 'A spring evening, 15 March at 21:00' },
       win: {
@@ -412,14 +415,14 @@
           }
         },
         {
-          // 15 May 2027 at 23:30 summer time, in twilight
+          // 15 May 2027 at 22:30, in twilight
           kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
           find: 'arcturus', figure: 'bootes', show: DIPPER,
-          when: Date.UTC(2027, 4, 15, 20, 30), tz: 3,
-          caption: { et: 'Kevadöö, 15. mai kell 23.30', en: 'A spring night, 15 May at 23:30' },
+          when: Date.UTC(2027, 4, 15, 20, 30),
+          caption: { et: 'Kevadöö, 15. mai kell 22.30', en: 'A spring night, 15 May at 22:30' },
           text: {
-            et: 'Mai keskel on kell 21 veel valge, seepärast vaatame kell 23.30. Leia Arktuurus uuesti.',
-            en: 'In the middle of May it is still light at 21:00, so we look at 23:30. Find Arcturus again.'
+            et: 'Mai keskel on kell 21 veel valge, seepärast vaatame kell 22.30. Leia Arktuurus uuesti.',
+            en: 'In the middle of May it is still light at 21:00, so we look at 22:30. Find Arcturus again.'
           },
           fact: {
             et: 'Arktuurus on lõunas, nii kõrgel, kui ta Eestis üldse tõuseb: umbes 51 kraadi. Ta on oranž, sest ta on Päikesest jahedam.',
@@ -439,14 +442,14 @@
           }
         },
         {
-          // 15 September 2027 at 21:00 summer time
+          // 15 September 2027 at 20:00
           kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
           find: 'arcturus', figure: 'bootes', show: DIPPER,
-          when: Date.UTC(2027, 8, 15, 18, 0), tz: 3,
-          caption: { et: 'Sügisõhtu, 15. september kell 21', en: 'An autumn evening, 15 September at 21:00' },
+          when: Date.UTC(2027, 8, 15, 18, 0),
+          caption: { et: 'Sügisõhtu, 15. september kell 20', en: 'An autumn evening, 15 September at 20:00' },
           text: {
-            et: 'Septembri keskel, jälle kell 21. Leia Arktuurus uuesti.',
-            en: 'In the middle of September, again at 21:00. Find Arcturus again.'
+            et: 'Septembri keskel, kell 20. Leia Arktuurus uuesti.',
+            en: 'In the middle of September, at 20:00. Find Arcturus again.'
           },
           fact: {
             et: 'Sügisõhtul on Arktuurus läänes ja loojub iga nädalaga varem.',
@@ -463,12 +466,12 @@
           }
         },
         {
-          // 5 January 2028 at 21:00 winter time: Arktuurus is below the
+          // 5 January 2028 at 21:00: Arktuurus is below the
           // horizon, which is only to read; the curve along the handle goes
           // on through the horizon to where it is
           kind: 'note', title: { et: 'Allpool silmapiiri', en: 'Below the horizon' }, show: [...DIPPER, 'arcturus'],
           below: { star: 'arcturus', curve: ['mizar', 'alkaid', 'arcturus'] },
-          when: Date.UTC(2028, 0, 5, 19, 0), tz: 2,
+          when: Date.UTC(2028, 0, 5, 19, 0),
           caption: { et: 'Talveõhtu, 5. jaanuar kell 21', en: 'A winter evening, 5 January at 21:00' },
           fact: {
             et: 'Kus on Arktuurus? Talveõhtul on ta allpool silmapiiri ega paista. Õhtuti on ta taevas kevadest sügiseni.',
@@ -488,15 +491,15 @@
           // the same night, at 06:00 in the morning: the sky turns 135°
           kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
           find: 'arcturus', figure: 'bootes', show: [...DIPPER, 'vega'], names: ['vega'],
-          when: Date.UTC(2028, 0, 6, 4, 0), tz: 2,
+          when: Date.UTC(2028, 0, 6, 4, 0),
           caption: { et: 'Talvehommik, 6. jaanuar kell 6', en: 'A winter morning, 6 January at 06:00' },
           text: {
             et: 'Sama öö hommikul kell 6. Leia Arktuurus.',
             en: 'The same night, at 6 in the morning. Find Arcturus.'
           },
           fact: {
-            et: 'Talvel on Arktuurus hommikutaevas. Üheksa tunniga pöördus taevas sama palju kui neli ja pool kuud õhtuti: jaanuari hommikul kell 6 on taevas nagu mai keskel kell 22.',
-            en: 'In winter Arcturus is in the morning sky. In nine hours the sky turned as much as it does in four and a half months of evenings: at 6 on a January morning the sky is as at 22:00 in the middle of May.'
+            et: 'Talvel on Arktuurus hommikutaevas. Üheksa tunniga pöördus taevas sama palju kui neli ja pool kuud õhtuti: jaanuari hommikul kell 6 on taevas nagu mai keskel kell 21.',
+            en: 'In winter Arcturus is in the morning sky. In nine hours the sky turned as much as it does in four and a half months of evenings: at 6 on a January morning the sky is as at 21:00 in the middle of May.'
           }
         }
       ]
@@ -505,16 +508,16 @@
       id: 'vanker4',
       // how bright the sky is: on the autumn evening of level 1, with Suur
       // Vanker upright below Põhjanael, the slider from a bright sky to a
-      // dark one; Lohe in the dark sky; and a July midnight, when the
+      // dark one; Lohe in the dark sky; and a July night at 23:00, when the
       // twilight keeps the sky bright even at the dark end
       limit: 6,
       part: 'bigdipper',
       icon: '🌗',
       center: 'polaris',
       steady: true,
-      // 15 October 2026 at 21:00 summer time
+      // 15 October 2026 at 20:00
       when: Date.UTC(2026, 9, 15, 18, 0),
-      caption: { et: 'Sügisõhtu, 15. oktoober kell 21', en: 'An autumn evening, 15 October at 21:00' },
+      caption: { et: 'Sügisõhtu, 15. oktoober kell 20', en: 'An autumn evening, 15 October at 20:00' },
       win: {
         name: { et: 'Hele ja pime taevas', en: 'Bright and dark skies' },
         fact: {
@@ -548,16 +551,15 @@
           }
         },
         {
-          // the night of 15 to 16 July 2027 at midnight, summer time: the Sun
-          // is only about 9° below the horizon
+          // 15 July 2027 at 23:00: the Sun is only about 9° below the horizon
           // (straight to it, without turning the sky for months)
           kind: 'slider', given: ['littledipper'], names: ['polaris'], wide: true, jump: true,
-          when: Date.UTC(2027, 6, 15, 21, 0), tz: 3,
-          caption: { et: 'Suveöö, 15. juuli, kesköö', en: 'A summer night, 15 July at midnight' },
+          when: Date.UTC(2027, 6, 15, 21, 0),
+          caption: { et: 'Suveöö, 15. juuli kell 23', en: 'A summer night, 15 July at 23:00' },
           title: { et: 'Hele suveöö', en: 'A light summer night' },
           text: {
-            et: 'Juuli keskööl. Vii liugur jälle pimeda taeva poole.',
-            en: 'At midnight in July. Move the slider towards the dark sky again.'
+            et: 'Juulis kell 23. Vii liugur jälle pimeda taeva poole.',
+            en: 'At 23:00 in July. Move the slider towards the dark sky again.'
           },
           fact: {
             et: 'Suveööl ei lähe taevas Eestis päris pimedaks, sest Päike on ainult natuke allpool silmapiiri. Ka maal, kus tulesid pole, paistavad siis ainult heledamad tähed.',
@@ -568,8 +570,8 @@
           // the player's own play with the slider, on a dark autumn evening,
           // until they press Valmis
           kind: 'slider', free: true, given: ['littledipper'], names: ['polaris'], wide: true,
-          when: Date.UTC(2027, 9, 15, 18, 0), tz: 3,
-          caption: { et: 'Sügisõhtu, 15. oktoober kell 21', en: 'An autumn evening, 15 October at 21:00' },
+          when: Date.UTC(2027, 9, 15, 18, 0),
+          caption: { et: 'Sügisõhtu, 15. oktoober kell 20', en: 'An autumn evening, 15 October at 20:00' },
           text: {
             et: 'Liiguta liugurit ise ja vaata, kuidas tähed heledas taevas kaovad ja pimedas taevas tagasi tulevad.',
             en: 'Move the slider yourself and watch the stars fade in a bright sky and come back in a dark one.'
@@ -650,10 +652,11 @@
       months: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
       date: (d, m) => `${d}. ${m}`,
       clock: (h) => `kell ${h}`,
-      dateTime: (d, m, h, mm) => `${d}. ${m}, kell ${h}${mm ? '.' + String(mm).padStart(2, '0') : ''}`,
+      dateTime: (d, m, h, mm) => `${d}. ${m}, kell ${h}.${String(mm).padStart(2, '0')}`,
+      summer: (h, mm) => ` (suveaja järgi ${!h && !mm ? 'kesköö' : `kell ${h}${mm === null ? '' : '.' + String(mm).padStart(2, '0')}`})`,
       midnight: (d, m) => `${d}. ${m}, kesköö`,
-      lightSky: 'Taevas on hele: Päike on horisondi lähedal, ja paistavad ainult heledamad tähed.',
-      daySky: 'Päike on üleval, ja tähti pole näha. Suur Vanker ja Põhjanael on ikka oma kohal.',
+      lightSky: 'Taevas on hele: Päike on horisondi lähedal ja paistavad ainult heledamad tähed.',
+      daySky: 'Päike on üleval ja tähti pole näha. Suur Vanker ja Põhjanael on ikka oma kohal.',
       day: 'Kuupäev',
       hour: 'Kellaaeg',
       skyLabel: 'Taeva heledus',
@@ -696,6 +699,7 @@
       date: (d, m) => `${d} ${m}`,
       clock: (h) => `${String(h).padStart(2, '0')}:00`,
       dateTime: (d, m, h, mm) => `${d} ${m}, ${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`,
+      summer: (h, mm) => ` (${!h && !mm ? 'midnight' : `${String(h).padStart(2, '0')}:${String(mm || 0).padStart(2, '0')}`} summer time)`,
       midnight: (d, m) => `${d} ${m}, midnight`,
       lightSky: 'The sky is light: the Sun is near the horizon, and only the brighter stars show.',
       daySky: 'The Sun is up, and no stars can be seen. The Big Dipper and the North Star are still in their places.',
@@ -765,7 +769,7 @@
     limit: 4.5,       // the faintest stars shown now, moving towards limitTo
     limitTo: 4.5,
     when: 0,          // the date and hour of the sky (ms, UT), and the hours to the clock time
-    tz: 3,
+    tz: TZ,
     turn: null,       // the sky turning on to the next task: { th0, th1, ms0, ms1, t0, dur }
     skyLimit: 2.5,    // the faintest stars the slider of how bright the sky is lets show
     skyStep: 0,
@@ -944,7 +948,7 @@
     // so that the ground stays level.
     const look = slide && level().look;
     if (center || (slide && !look)) {
-      const c = horizon(STARS[center || level().center]);
+      const c = aim(center || level().center);
       az = Math.atan2(c[0], c[1]) / DEG;
       alt = Math.asin(c[2]) / DEG;
     }
@@ -995,8 +999,15 @@
   // round Põhjanael, just enough for Suur Vanker in every position (Alkaid,
   // its farthest star, is 40.0° from Põhjanael), so that the zoom stays the
   // same however the sky turns.
+  // where a view with a centre looks: for Põhjanael, at the pole itself, as
+  // Põhjanael is 0.7° from it and goes round it in a small circle, which
+  // would rock the ground as the sky turns
+  function aim(key) {
+    return key === 'polaris' ? [0, Math.cos(LAT), Math.sin(LAT)] : horizon(STARS[key]);
+  }
+
   function ringView(key, R = 40.5, L = state.L) {
-    const c = horizon(STARS[key]);
+    const c = aim(key);
     // (a margin just for the size of the stars and their names)
     const w = L.W / 2 - 14;
     const h = (L.H - L.top - (L.bottom || 16)) / 2 - 10;
@@ -1250,6 +1261,7 @@
     if (state.day && !map) {
       g.fillStyle = 'rgba(95, 150, 225, 0.85)';
       g.fillRect(0, 0, W, H);
+      drawSun(g, L, V);
     }
 
     // the hops
@@ -1754,6 +1766,20 @@
   }
 
   // the ground below the horizon, with spruces along it and the directions
+  // the Sun, when it is up: much bigger than it looks, with a glow round
+  // it, and behind the trees when it is low
+  function drawSun(g, L, V) {
+    const q = toScreen(V, horizon(sun(state.when)));
+    if (!q) return;
+    const r = L.hitR * 0.55;
+    const glow = g.createRadialGradient(q[0], q[1], r * 0.8, q[0], q[1], r * 4);
+    glow.addColorStop(0, 'rgba(255, 245, 200, 0.7)');
+    glow.addColorStop(1, 'rgba(255, 245, 200, 0)');
+    g.fillStyle = glow;
+    g.fillRect(q[0] - r * 4, q[1] - r * 4, r * 8, r * 8);
+    dot(g, q[0], q[1], r, '#fff6c8');
+  }
+
   function drawGround(g, L, V) {
     const ink = '#03050f';
     // The horizon is a circle in this projection, with the sky inside it:
@@ -1882,11 +1908,32 @@
 
   // the date and hour of the sky; while it turns, the date or the hour it
   // has got to
+  // Summer time, from 01:00 UT on the last Sunday of March to 01:00 UT on
+  // the last Sunday of October, as in the European Union
+  function summerTime(ms) {
+    const y = new Date(ms).getUTCFullYear();
+    const lastSunday = (m) => {
+      const d = new Date(Date.UTC(y, m + 1, 0, 1));
+      return d.getTime() - d.getUTCDay() * 86400000;
+    };
+    return ms >= lastSunday(2) && ms < lastSunday(9);
+  }
+
+  // a caption on the clock of winter time, with the hour of summer time
+  // after it in brackets when summer time is on, as "kell 20 (suveaja
+  // järgi kell 21)"; with `minutes`, also on the full hour
+  function withSummer(text, ms, minutes = false) {
+    if (!summerTime(ms)) return text;
+    const d = new Date(ms + (TZ + 1) * 3600000);
+    const mm = d.getUTCMinutes();
+    return text + t('summer')(d.getUTCHours(), mm || minutes ? mm : null);
+  }
+
   function caption() {
     const T = state.turn;
     if (!T) {
       const k = task();
-      return ((k && k.caption) || state.caption)[Astro.lang];
+      return withSummer(((k && k.caption) || state.caption)[Astro.lang], state.when, k && k.kind === 'explore');
     }
     const e = clamp((performance.now() - T.t0) / T.dur, 0, 1);
     const ms = T.ms0 + (T.ms1 - T.ms0) * e;
@@ -1964,7 +2011,7 @@
     for (let j = i; j < ts.length && (j === i || !ts[j].when); j++) {
       state.ti = j;
       // (the caption of the sky the task is in)
-      $('when').textContent = (ts[i].caption || level().caption)[Astro.lang];
+      $('when').textContent = withSummer((ts[i].caption || level().caption)[Astro.lang], ts[i].when || level().when);
       if (ts[j].text) {
         box.classList.remove('fact');
         $('taskName').textContent = '';
@@ -2012,7 +2059,7 @@
     if (jump) {
       state.th = siderealTime(k.when);
       state.when = k.when;
-      state.tz = k.tz || 3;
+      state.tz = TZ;
       state.caption = k.caption;
       state.flash = null;
       state.skyTop = 0;
@@ -2077,7 +2124,7 @@
     // (slowly enough to follow the stars as they go round: about 6.5 s for a
     // quarter of a circle)
     const dur = 3500 + 6000 * (d / Math.PI);
-    state.turn = { th0: state.th, th1: state.th + d, ms0: state.when, ms1: k.when, tz: k.tz || 3, t0: performance.now(), dur };
+    state.turn = { th0: state.th, th1: state.th + d, ms0: state.when, ms1: k.when, tz: TZ, t0: performance.now(), dur };
     state.phase = 'turn';
     state.flash = null;
     // Väike Vanker is drawn again once Põhjanael is found
@@ -2135,9 +2182,7 @@
   function exploreTime() {
     const day = +$('dayRange').value;
     const h = 18 + (+$('hourRange').value) / 60;
-    // summer time from the end of March to the end of October
-    const tz = day >= 86 && day < 303 ? 3 : 2;
-    return { ms: Date.UTC(2027, 0, 1 + day) + (h - tz) * 3600000, tz };
+    return { ms: Date.UTC(2027, 0, 1 + day) + (h - TZ) * 3600000, tz: TZ };
   }
 
   function startExplore() {
@@ -2253,8 +2298,7 @@
       const day = Math.floor(Math.random() * 365);
       // (not midnight, which would read "kell 0")
       const hour = [20, 21, 22, 23, 25, 26, 27][Math.floor(Math.random() * 7)];
-      // summer time from the end of March to the end of October
-      const tz = day >= 86 && day < 303 ? 3 : 2;
+      const tz = TZ;
       const ms = Date.UTC(2027, 0, 1 + day, hour - tz);
       const th = siderealTime(ms);
       if (horizon(sun(ms), th)[2] > Math.sin(-15 * DEG) && tries < 500) continue;
