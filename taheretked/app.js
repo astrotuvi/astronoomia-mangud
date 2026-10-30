@@ -98,6 +98,20 @@
     navi: S(14.18, 60.72, 2.2, 'Navi'),
     ruchbah: S(21.45, 60.24, 2.7, 'Ruchbah'),
     segin: S(28.60, 63.67, 3.4, 'Segin'),
+    // the square of Pegasus, from the corner that is Andromeeda's head
+    alpheratz: S(2.10, 29.09, 2.1, 'Alpheratz'),
+    scheat: S(345.94, 28.08, 2.4, 'Scheat', '255, 206, 160'),
+    markab: S(346.19, 15.21, 2.5, 'Markab'),
+    algenib: S(3.31, 15.18, 2.8, 'Algenib'),
+    // Andromeeda, with the galaxy and its small neighbour, which is too
+    // faint for the sky of the level: it is never drawn, only marked
+    delAnd: S(9.83, 30.86, 3.3, 'δ And', '255, 214, 170'),
+    mirach: S(17.43, 35.62, 2.1, 'Mirach', '255, 198, 140'),
+    almach: S(30.97, 42.33, 2.1, 'Almach', '255, 214, 170'),
+    muAnd: S(14.19, 38.50, 3.9, 'μ And'),
+    nuAnd: S(12.45, 41.08, 4.5, 'ν And'),
+    m31: S(10.68, 41.27, 3.4, { et: 'Andromeeda galaktika', en: 'Andromeda Galaxy' }),
+    m33: S(23.46, 30.66, 5.7, { et: 'Kolmnurga galaktika', en: 'Triangulum Galaxy' }),
     // where the arc from the handle goes on to
     spica: S(201.30, -11.16, 1.0, { et: 'Spiika', en: 'Spica' }),
     // Orion: the four corners, the belt, the head and the sword. Only the
@@ -173,6 +187,10 @@
   };
   // the Orion Nebula is drawn as a fuzzy glow, not as a star
   STARS.m42.nebula = true;
+  // the Andromeda Galaxy as a faint oval, its long axis at that position
+  // angle (degrees from the north through the east)
+  STARS.m31.galaxy = 35;
+  STARS.m33.hidden = true;
 
   // the stars of Orion's figure, and of his belt, which a drag snaps onto as
   // one line, as its stars are too close together to tell apart
@@ -334,6 +352,24 @@
       name: { et: 'Talvekolmnurk', en: 'Winter Triangle' },
       lines: [['betelgeuse', 'sirius', 'procyon', 'betelgeuse']]
     },
+    // (back to the corner at the end, to close it)
+    square: {
+      asterism: true,
+      labelMid: true,
+      order: ['alpheratz', 'scheat', 'markab', 'algenib', 'alpheratz'],
+      where: { et: 'Pegasuse ruudus', en: 'the Great Square of Pegasus' },
+      name: { et: 'Pegasuse ruut', en: 'Square of Pegasus' },
+      lines: [['alpheratz', 'scheat', 'markab', 'algenib', 'alpheratz']]
+    },
+    // Andromeeda as in Tähtkujud: from her head, and from the middle star
+    // of the three bright ones, the chain towards Kassiopeia
+    andromeda: {
+      order: ['alpheratz', 'delAnd', 'mirach', 'almach', 'muAnd', 'nuAnd'],
+      join: { muAnd: 'mirach' },
+      where: { et: 'Andromeeda tähtkujus', en: 'Andromeda' },
+      name: { et: 'Andromeeda', en: 'Andromeda' },
+      lines: [['alpheratz', 'delAnd', 'mirach', 'almach'], ['mirach', 'muAnd', 'nuAnd']]
+    },
     hexagon: {
       asterism: true,
       // (back to Kapella at the end, to close it)
@@ -381,6 +417,27 @@
       // the left-hand star of the belt, and the star in the blue haze
       anchors: [[85.190, -1.943, 198, 553], [85.410, -2.259, 575, 760]]
     },
+    andromeda: {
+      name: { et: 'Andromeeda galaktika', en: 'The Andromeda Galaxy' },
+      file: '../pusle/images/andromeda.jpg',
+      astrobin: '4ocaul',
+      // the middle of the galaxy, and the small round galaxy beside it (M32)
+      anchors: [[10.685, 41.269, 590, 573], [10.674, 40.865, 423, 143]],
+      eye: {
+        et: 'Silmaga näed udust laiku. Kaamera kogub valgust kaua ja näeb tema tolmuseid spiraalharusid ning kahte väikest naabergalaktikat.',
+        en: 'With the eye you see a fuzzy patch. The camera collects light for a long time and sees its dusty spiral arms and two small neighbouring galaxies.'
+      }
+    },
+    triangulum: {
+      name: { et: 'Kolmnurga galaktika', en: 'The Triangulum Galaxy' },
+      // (its name on the map, as it is not drawn as a star)
+      short: { et: 'Kolmnurga galaktika', en: 'Triangulum Galaxy' },
+      file: '../pusle/images/triangulum.jpg',
+      astrobin: 'yvvd54',
+      // the middle of the galaxy, and the big red cloud of gas low on the
+      // left (NGC 604)
+      anchors: [[23.462, 30.660, 648, 597], [23.637, 30.783, 245, 835]]
+    },
     // the galaxies by Suur Vanker, only on the map of level 1: each at its
     // place `at` (RA and Dec), with its `short` name beside the frame, on its
     // left with `left`
@@ -427,7 +484,8 @@
   //   trace: join the numbered stars of `figure` in turn, as in Tähtkujud
   //   tap: tap `find`, near the stars `near`, or all the stars of `finds`,
   //     in any order; on a `dim` task the stars of the figures fade in a
-  //     light sky too
+  //     light sky too; a tap on a star of `soft`, on the way to it, is only
+  //     a soft sound
   //   arc: a curve along the stars `along`, carried on through the stars
   //     `curve`, leads to `find`; it stops a little past the first star after
   //     `along`. The curve is the circle on the sky through the last two
@@ -443,7 +501,8 @@
   //   note: only a text to read, its `title` and `fact`, with the button to
   //     go on; with `below`, a dashed curve through its three stars `curve`
   //     goes on through the horizon to the `star` below it, which a dashed circle
-  //     marks
+  //     marks; `beyond` is the same for a star too faint to see, above the
+  //     horizon, and with a `photo`, it fades in after `photoAfter` ms
   //   calendar: the calendar of the level's `evenings`, each two hours after
   //     sunset, to move until `goal` holds for the heights of Kassiopeia and
   //     Suur Vanker; with `snap`, it snaps to the evening nearby where the
@@ -474,7 +533,8 @@
   // closer view keeps the other figures out of the way. `show` adds stars
   // for the view to show, and with `keepLine` the line of the task before
   // stays bright, with its ticks. `arrow` points from a star towards
-  // another, part of the way, to show which way to look. The stars of a
+  // another, part of the way, to show which way to look (or a list of such
+  // arrows, one after another). The stars of a
   // level's `names` always have their names. A level's `center` is the star
   // its views look straight at, and a task's `center` (null for none)
   // overrides it; while the sky turns, the view is wide round the level's
@@ -1152,6 +1212,103 @@
       ]
     },
     {
+      // The Andromeda Galaxy. An autumn evening that does not turn, after
+      // summer time has ended: from Põhjanael and Kassiopeia through the
+      // square of Pegasus and Andromeeda to the galaxy. Kassiopeia is 65–77° up in the east-north-east, and the galaxy
+      // 63° in the east-south-east. The stars of Andromeeda and Pegasus have
+      // Arabic names, so the texts name them by their place.
+      id: 'andromeda',
+      // the faintest stars shown: a dark sky, where the galaxy shows
+      limit: 5.5,
+      icon: '🌌',
+      figs: ['cassiopeia'],
+      names: ['polaris'],
+      // 1 November 2027 at 20:00, with the Sun 28° below the horizon
+      when: Date.UTC(2027, 10, 1, 18, 0),
+      caption: { et: 'Sügisõhtu, 1. november kell 20', en: 'An autumn evening, 1 November at 20:00' },
+      win: {
+        name: { et: 'Andromeeda galaktika', en: 'The Andromeda Galaxy' },
+        fact: {
+          et: 'Nüüd oskad sügisõhtul leida Põhjanaelast läbi Kassiopeia Pegasuse ruudu, Andromeeda ja Andromeeda galaktika. Puuduta kaardil galaktikate raame.',
+          en: 'Now you can find the Square of Pegasus, Andromeda and the Andromeda Galaxy on an autumn evening, from the North Star through Cassiopeia. Tap the frames of the galaxies on the map.'
+        }
+      },
+      tasks: [
+        {
+          // From Põhjanael to Caph, the end of the W further from it, is
+          // 30.3°, to the other end 25.6°; the corner is exactly one gap
+          // beyond Caph, 0.3° off the line
+          kind: 'hop', from: 'polaris', via: 'caph', find: 'alpheratz', ticks: true, show: FIGURES.cassiopeia.order,
+          title: { et: 'Ruudu nurk!', en: 'A corner of the square!' },
+          text: {
+            et: 'Tõmba joon Põhjanaelast läbi Kassiopeia W selle otsa, mis on Põhjanaelast kaugemal, ja jätka seda sama kaugele.',
+            en: 'Draw a line from the North Star through the end of Cassiopeia’s W that is further from the North Star, and carry it on as far again.'
+          },
+          fact: {
+            et: 'See täht on Pegasuse suure ruudu nurk ja ühtlasi Andromeeda pea.',
+            en: 'This star is a corner of the Great Square of Pegasus, and Andromeda’s head too.'
+          }
+        },
+        {
+          // a side is about 14°, and the Moon is half a degree across
+          kind: 'trace', figure: 'square', span: 30, noLines: true,
+          text: {
+            et: 'Joonista Pegasuse ruut: puuduta tähti järjest 1, 2, 3 … või libista sõrme tähest täheni.',
+            en: 'Draw the Square of Pegasus: tap the stars in turn 1, 2, 3 … or slide your finger from star to star.'
+          },
+          fact: {
+            et: 'Pegasuse ruut on sügisõhtuti kõrgel. Ta on nii suur, et tema ühe külje kõrvale mahuks ritta peaaegu 30 täiskuud.',
+            en: 'The Square of Pegasus is high on autumn evenings. It is so big that almost 30 full Moons would fit in a row along one of its sides.'
+          }
+        },
+        {
+          kind: 'trace', figure: 'andromeda', span: 30, noLines: true,
+          text: {
+            et: 'Joonista Andromeeda: puuduta tähti järjest 1, 2, 3 … või libista sõrme tähest täheni.',
+            en: 'Draw Andromeda: tap the stars in turn 1, 2, 3 … or slide your finger from star to star.'
+          },
+          fact: {
+            et: 'Vanas loos oli Andromeeda printsess, Kassiopeia tütar. Taevas on nad teineteise lähedal.',
+            en: 'In the old story, Andromeda was a princess, Cassiopeia’s daughter. In the sky they are close together.'
+          }
+        },
+        {
+          // counting the stars from Mirach up the chain towards Kassiopeia,
+          // Mirach, μ And and ν And, the galaxy is 1.3° beside the third
+          kind: 'tap', find: 'm31', near: ['mirach', 'muAnd'], soft: ['mirach', 'muAnd', 'nuAnd'],
+          arrow: [['mirach', 'muAnd'], ['muAnd', 'm31']], span: 20, noLines: true,
+          photo: 'andromeda',
+          show: ['muAnd', 'nuAnd', 'almach', 'delAnd'],
+          text: {
+            et: 'Leia Andromeeda galaktika. Alusta Andromeeda kolmest heledast tähest keskmisest ja loe tähti Kassiopeia poole: 1, 2, 3. Kolmanda tähe kõrval on galaktika.',
+            en: 'Find the Andromeda Galaxy. Start from the middle one of Andromeda’s three bright stars and count the stars towards Cassiopeia: 1, 2, 3. The galaxy is next to the third star.'
+          },
+          fact: {
+            et: 'Andromeeda galaktika on 2,5 miljoni valgusaasta kaugusel. See on kõige kaugem asi, mida saab palja silmaga näha. Tema valgus hakkas meie poole tulema siis, kui Maal elasid esimesed inimeste esivanemad.',
+            en: 'The Andromeda Galaxy is 2.5 million light years away. It is the furthest thing that can be seen with the eye alone. Its light set out towards us when the first ancestors of humans lived on Earth.'
+          }
+        },
+        {
+          // only to look: from the galaxy through Mirach, the Triangulum
+          // Galaxy is 0.9 gaps beyond, 0.8° off. The line and a dashed circle
+          // grow first, as it is too faint for the sky of the level, and then
+          // its photo fades in.
+          kind: 'note', photo: 'triangulum', photoAfter: 3400, span: 24, center: null, noLines: true,
+          beyond: { star: 'm33', curve: ['m31', 'mirach', 'm33'] },
+          show: ['m31', 'mirach', 'muAnd', 'm33'],
+          title: { et: 'Kolmnurga galaktika', en: 'The Triangulum Galaxy' },
+          text: {
+            et: 'Vaata, kuhu viib joon galaktikast läbi selle heleda tähe, kust lugema hakkasid.',
+            en: 'See where a line from the galaxy through the bright star you started counting from leads.'
+          },
+          fact: {
+            et: 'Kolmnurga galaktika on Andromeeda galaktika väike naaber. Silmaga näeb teda ainult väga pimedas kohas, kui Kuud ei paista.',
+            en: 'The Triangulum Galaxy is a small neighbour of the Andromeda Galaxy. With the eye it can be seen only in a very dark place, when the Moon is not out.'
+          }
+        }
+      ]
+    },
+    {
       // Orion shows the way. A winter evening, at the same hour as level 1, with
       // Orion upright in the south: hops from the belt and the corners to the
       // bright stars round him, which make the Winter Hexagon. After Sõel and
@@ -1493,6 +1650,7 @@
         { name: 'Hele ja pime taevas', about: 'Linnatuled, Kuu ja suveöö' },
         { name: 'Suvekolmnurk', about: 'Valge suveöö ja pime sügisõhtu' },
         { name: 'Kassiopeia', about: 'Kassiopeia ja Suur Vanker sügisest kevadeni' },
+        { name: 'Andromeeda galaktika', about: 'Sügisõhtu: Kassiopeiast Andromeeda galaktikani' },
         { name: 'Orion näitab teed', about: 'Talveõhtu: Orionist heledate tähtedeni' },
         { name: 'Orion tõuseb ja loojub', about: 'Orion sügisest kevadeni' },
         { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' }
@@ -1559,6 +1717,7 @@
         { name: 'Bright and dark skies', about: 'City lights, the Moon and summer nights' },
         { name: 'The Summer Triangle', about: 'A light summer night and a dark autumn evening' },
         { name: 'Cassiopeia', about: 'Cassiopeia and the Big Dipper from autumn to spring' },
+        { name: 'The Andromeda Galaxy', about: 'An autumn evening: from Cassiopeia to the Andromeda Galaxy' },
         { name: 'Orion shows the way', about: 'A winter evening: from Orion to the bright stars' },
         { name: 'Orion rises and sets', about: 'Orion from autumn to spring' },
         { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' }
@@ -1762,7 +1921,7 @@
   // (in the slider task, on a `dim` task and while the sky darkens as it
   // turns, the stars of the figures too, so that a bright sky hides them)
   const plain = () => task().kind === 'slider' || task().dim || (state.turn && state.turn.light);
-  const shown = (s) => (state.day ? s.key === 'polaris'
+  const shown = (s) => !s.hidden && (state.day ? s.key === 'polaris'
     : (s.key && task() && !plain()) || s.mag <= state.limit + 0.7);
   // and the faintest ones dimmer rather than smaller
   const faint = (s) => (s.key && task() && !plain()
@@ -2383,6 +2542,29 @@
         g.fillRect(x - R, q.y - R, 2 * R, 2 * R);
         continue;
       }
+      // the Andromeda Galaxy, a faint oval about 2.6° long, tilted as on the
+      // sky: towards a point 1.3° along its long axis
+      if (s.galaxy) {
+        const pa = s.galaxy * DEG;
+        const e = toScreen(V, horizon(sphere(s.ra / DEG + (1.3 * Math.sin(pa)) / s.cd, s.dec + 1.3 * Math.cos(pa))));
+        if (!e) continue;
+        const R = Math.max(Math.hypot(e[0] - x, e[1] - q.y), 9);
+        g.save();
+        g.translate(x, q.y);
+        g.rotate(Math.atan2(e[1] - q.y, e[0] - x));
+        g.scale(1, 0.32);
+        const glow = g.createRadialGradient(0, 0, 0, 0, 0, R);
+        glow.addColorStop(0, `rgba(255, 246, 225, ${(0.85 * dim).toFixed(2)})`);
+        glow.addColorStop(0.2, `rgba(245, 235, 225, ${(0.5 * dim).toFixed(2)})`);
+        glow.addColorStop(0.6, `rgba(200, 205, 255, ${(0.18 * dim).toFixed(2)})`);
+        glow.addColorStop(1, 'rgba(200, 205, 255, 0)');
+        g.fillStyle = glow;
+        g.beginPath();
+        g.arc(0, 0, R, 0, Math.PI * 2);
+        g.fill();
+        g.restore();
+        continue;
+      }
       if (s.mag < 2.6) dot(g, x, q.y, r * 2.6, `rgba(${c}, ${(0.13 * dim).toFixed(2)})`);
       dot(g, x, q.y, r, `rgba(${c}, ${dim.toFixed(2)})`);
     }
@@ -2404,6 +2586,8 @@
       drawHorizon(g, L, V);
       if (task().below) drawBelow(g, L, V, now, task().below);
       if (task().height) drawHeight(g, L, V, now, task().height);
+    } else if (!map && task() && state.phase === 'fact' && task().beyond && !(state.photo && !state.photo.out)) {
+      drawBelow(g, L, V, now, task().beyond);
     } else if (!map && state.turn && state.keepHeight) {
       drawHorizon(g, L, V);
       state.keepHeight.forEach((key) => drawHeight(g, L, V, now, key, true));
@@ -2844,7 +3028,8 @@
       }
       if (state.sel) ring(state.sel, 'rgba(255, 211, 77, 0.95)', L.hitR * 0.5);
       state.got.forEach((key) => ring(key, 'rgba(255, 211, 77, 0.8)', L.hitR * 0.45));
-      if (task().arrow) drawArrow(g, V, task().arrow, pulse);
+      const ar = task().arrow;
+      if (ar) (Array.isArray(ar[0]) ? ar : [ar]).forEach((a) => drawArrow(g, V, a, pulse));
       if (task().curveArrow) drawCurveArrow(g, L, V, task(), pulse);
     }
     const f = state.flash;
@@ -3515,7 +3700,7 @@
       if (!k.photo) showFact();
       else {
         const ti = state.ti;
-        later(1400, () => {
+        later(k.photoAfter || 1400, () => {
           if (state.ti !== ti) return;
           showFact();
           relayoutTop();
@@ -4164,7 +4349,8 @@
       }
       return;
     }
-    if (state.named.has(s.key) || state.figs.has('bigdipper') && FIGURES.bigdipper.lines.flat().includes(s.key)) {
+    if (state.named.has(s.key) || state.figs.has('bigdipper') && FIGURES.bigdipper.lines.flat().includes(s.key) ||
+      (k.soft || []).includes(s.key)) {
       sfx.pick();
       return;
     }

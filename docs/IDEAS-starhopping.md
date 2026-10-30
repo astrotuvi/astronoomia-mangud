@@ -226,7 +226,7 @@ menu marks the ones done.
    high and a W when low.
 7. **Andromeeda galaktika (the Andromeda Galaxy):** an autumn evening that
    does not turn, from Põhjanael and Kassiopeia through the square of
-   Pegasus and Andromeeda to the galaxy, with ticks on the hops.
+   Pegasus and Andromeeda to the galaxy.
 8. **Orion näitab teed (Orion shows the way):** as level 1, on a winter
    evening that does not turn, from Orion to the bright stars round him.
 9. **Orion tõuseb ja loojub (Orion rises and sets):** the date and hour
@@ -778,8 +778,9 @@ Andromeeda's three bright stars.
    kaugemal, ja jätka seda sama kaugele." ("Draw a line from the North
    Star through the end of Cassiopeia's W that is further from the North
    Star, and carry it on as far again.") From Põhjanael to Caph is 30.3°,
-   the other end of the W 26.4°. The corner, Alpheratz, is exactly one
-   gap beyond Caph, 0.3° off the line.
+   the other end of the W 25.6°. The corner, Alpheratz, is exactly one
+   gap beyond Caph, 0.3° off the line. The title is "Ruudu nurk!" ("A
+   corner of the square!"), not the star's Arabic name.
    - Fact: "See täht on Pegasuse suure ruudu nurk ja ühtlasi Andromeeda
      pea." ("This star is a corner of the great square of Pegasus and
      Andromeda's head too.")
@@ -794,14 +795,21 @@ Andromeeda's three bright stars.
 3. **Andromeeda:** "Joonista Andromeeda." The figure of Tähtkujud, from the
    corner along her two chains of stars, which brings in Mirach and the
    star beside it towards Kassiopeia (μ And).
-4. **Andromeeda galaktika**, a hop with ticks: "Leia Andromeeda
-   galaktika. Tõmba joon Andromeeda kolmest heledast tähest keskmisest
-   läbi selle kõrval oleva nõrgema tähe, mis on Kassiopeia pool, ja jätka
-   seda sama kaugele." ("Find the Andromeda Galaxy. Draw a line from the
-   middle one of Andromeda's three bright stars through the fainter star
-   next to it, on Cassiopeia's side, and carry it on as far again.") From
-   Mirach through μ And, 3.9°, the galaxy is exactly one gap beyond, 0.0°
-   off. A tap on ν And, 1.3° from it, also counts.
+   - Fact, from Tähtkujud: "Vanas loos oli Andromeeda printsess,
+     Kassiopeia tütar. Taevas on nad teineteise lähedal." ("In the old
+     story, Andromeda was a princess, Cassiopeia's daughter. In the sky
+     they are close together.")
+4. **Andromeeda galaktika**, a tap: "Leia Andromeeda galaktika. Alusta
+   Andromeeda kolmest heledast tähest keskmisest ja loe tähti Kassiopeia
+   poole: 1, 2, 3. Kolmanda tähe kõrval on galaktika." ("Find the
+   Andromeda Galaxy. Start from the middle one of Andromeda's three bright
+   stars and count the stars towards Cassiopeia: 1, 2, 3. The galaxy is
+   next to the third star.") Mirach and μ And pulse, with a short arrow
+   from Mirach up towards μ And and another from μ And towards the
+   galaxy; Mirach, μ And and ν And, all drawn in the figure,
+   answer a tap only with a soft sound, and the galaxy is 1.3° beside
+   ν And. No line is needed: a hop from Mirach
+   through μ And would be only 3.9° long, with the galaxy one gap beyond.
    - Fact: "Andromeeda galaktika on 2,5 miljoni valgusaasta kaugusel. See
      on kõige kaugem asi, mida saab palja silmaga näha. Tema valgus hakkas
      meie poole tulema siis, kui Maal elasid esimesed inimeste esivanemad."
@@ -811,13 +819,14 @@ Andromeeda's three bright stars.
    - Then the photo, as for Sõel and the Orion Nebula, the square crop of
      Pusle, with the eye line of the Orion Nebula: "Silmaga näed udust
      laiku …".
-5. **Kolmnurga galaktika**, only to look at, as the Hobusepea udu: "Jätka
-   joont galaktikast tagasi läbi sama heleda tähe ja veel natuke edasi."
-   ("Carry the line from the galaxy back through the same bright star and
-   a little further on.") From the galaxy through Mirach, the Triangulum
-   Galaxy (M33, magnitude 5.7) is 0.9 gaps beyond, 0.8° off. A dashed
-   circle grows there, as it is too faint for the sky of the level, and
-   its photo fades in.
+5. **Kolmnurga galaktika**, only to look at, as the Hobusepea udu: "Vaata,
+   kuhu viib joon galaktikast läbi selle heleda tähe, kust lugema
+   hakkasid." ("See where a line from the galaxy through the bright star
+   you started counting from leads.") From the galaxy through Mirach, the Triangulum
+   Galaxy (M33, magnitude 5.7) is 0.9 gaps beyond, 0.8° off. As it is too
+   faint for the sky of the level, it is not drawn: a dashed line grows
+   from the galaxy through Mirach to a dashed circle with its name, and
+   then its photo fades in.
    - Fact: "Kolmnurga galaktika on Andromeeda galaktika väike naaber.
      Silmaga näeb teda ainult väga pimedas kohas, kui Kuud ei paista."
      ("The Triangulum Galaxy is a small neighbour of the Andromeda Galaxy.
@@ -825,8 +834,13 @@ Andromeeda's three bright stars.
      is not out.")
 
 The win map is the chain Põhjanael → Kassiopeia → Pegasuse ruut →
-Andromeeda → the galaxy, with the lines of the hops, and frames on the two
-galaxies, which show their photos on a tap.
+Andromeeda → the galaxy, with the line of the hop from Põhjanael, and
+frames on the two galaxies, which show their photos on a tap. The win
+text: "Nüüd oskad sügisõhtul leida Põhjanaelast läbi
+Kassiopeia Pegasuse ruudu, Andromeeda ja Andromeeda galaktika. Puuduta
+kaardil galaktikate raame." ("Now you can find the Square of Pegasus,
+Andromeda and the Andromeda Galaxy on an autumn evening, from the North
+Star through Cassiopeia. Tap the frames of the galaxies on the map.")
 
 ### Orion
 
