@@ -52,7 +52,7 @@
   left: 50%;
   top: 6px;
   translate: -50% 0;
-  width: min(600px, calc(100% - 16px));
+  width: min(860px, calc(100% - 16px));
   padding: 8px 16px 10px;
   border-radius: 22px;
   background: rgba(20, 28, 80, 0.82);

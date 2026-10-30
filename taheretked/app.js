@@ -382,8 +382,8 @@
   //     marks
   // `jump`: the sky goes to the task's `when` at once, without turning.
   // `height`: once the task is done, a dashed line from the horizon straight
-  // up to that star shows how high it is, in degrees; `holdHeight` are the
-  // stars whose heights show while the sky turns on to the next task, as
+  // up to that star shows how high it is, in degrees. A level's
+  // `turnHeights` are the stars whose heights show while its sky turns, as
   // they go, also below the horizon.
   // An arc without `find` is only to draw: it shows where a star is not, and
   // its `title` heads the fact. A `random` level asks all the tasks of its
@@ -619,6 +619,7 @@
       help: false,
       look: 30,
       trails: { arcturus: 'rgba(255, 190, 120, 0.6)', vega: 'rgba(190, 210, 255, 0.6)' },
+      turnHeights: ['vega', 'arcturus'],
       // Põhjanael always has its name, as Suur Vanker has
       names: ['polaris'],
       // 15 March 2027 at 21:00
@@ -657,8 +658,10 @@
           }
         },
         {
-          // 15 May 2027 at 22:30, in twilight
-          kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
+          // 15 May 2027 at 22:30, in twilight; the view of this sky is close
+          // round the stars, without the ground, and zooms out again as the
+          // sky turns on
+          kind: 'arc', noGround: true, along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
           find: 'arcturus', figure: 'bootes', show: DIPPER,
           when: Date.UTC(2027, 4, 15, 20, 30),
           caption: { et: 'Kevadöö, 15. mai kell 22.30', en: 'A spring night, 15 May at 22:30' },
@@ -701,7 +704,7 @@
         {
           kind: 'tap', find: 'vega', near: [], figure: 'lyra', given: ['draco'],
           show: ['eltanin', 'rastaban', 'kuma', 'grumium'],
-          height: 'vega', holdHeight: ['vega', 'arcturus'],
+          height: 'vega',
           text: { et: 'Leia Veega.', en: 'Find Vega.' },
           fact: {
             et: 'Veega on peaaegu pea kohal. Hilissuvel ja sügise alguses on ta õhtuti kõige kõrgemal.',
@@ -723,7 +726,7 @@
         },
         {
           kind: 'tap', find: 'vega', near: [], figure: 'lyra', given: ['draco'],
-          show: ['eltanin', 'rastaban', 'kuma', 'grumium'], height: 'vega', holdHeight: ['vega', 'arcturus'],
+          show: ['eltanin', 'rastaban', 'kuma', 'grumium'], height: 'vega',
           text: { et: 'Leia Veega.', en: 'Find Vega.' },
           fact: {
             et: 'Talveõhtul on Veega madalal põhjas, aga silmapiiri taha ta ei lähe.',
@@ -1202,6 +1205,7 @@
       again: 'Mängi uuesti',
       menu: 'Menüü',
       hint: 'Vihje',
+      back: 'Eelmine ülesanne',
       sound: 'Heli',
       credit: 'Tähed: Yale’i heledate tähtede kataloog (Hoffleit ja Warren, 1991). Fotod: Tõrva Astronoomiaklubi, litsents CC BY-NC-SA.',
       photo: 'Foto: Tõrva Astronoomiaklubi',
@@ -1259,6 +1263,7 @@
       again: 'Play again',
       menu: 'Menu',
       hint: 'Hint',
+      back: 'Previous task',
       sound: 'Sound',
       credit: 'Stars: the Yale Bright Star Catalogue (Hoffleit & Warren, 1991). Photos: Tõrva Astronoomiaklubi, licence CC BY-NC-SA.',
       photo: 'Photo: Tõrva Astronoomiaklubi',
@@ -1320,6 +1325,7 @@
     flash: null,      // a star just found: { key, t0 }
     photo: null,      // a photo over the sky: { id, at, out, fast }
     copies: [],       // Orion at each date and hour he was found at: { th, when }
+    snaps: [],        // the sky as each task started, to go back to
     lookAz: 180,      // where the view of the southern sky looks
     hintUntil: 0,
     lastAct: 0,
@@ -1560,9 +1566,13 @@
       alt = Math.asin(clamp(d[2], -1, 1)) / DEG;
     }
     if (look) {
-      // (with the ground below the stars, to show how high they are)
-      alt = look;
-      vs.push(dirOf(az, -3));
+      // (with the ground below the stars, to show how high they are, unless
+      // the task that turned the sky on to them says `noGround`: then the
+      // view looks at the middle of the stars)
+      if (!skyStart().noGround) {
+        alt = look;
+        vs.push(dirOf(az, -3));
+      }
       outline();
     }
     // (with a slider at the bottom, less room is kept round the stars, as
@@ -1656,6 +1666,14 @@
     if (k.show) keys.push(...k.show);
     if (k.autoDraw && fact) keys.push(...FIGURES[k.autoDraw].order);
     return keys;
+  }
+
+  // the task that turned the sky on to the current one
+  function skyStart() {
+    const ts = state.tasks;
+    let i = state.ti;
+    while (i > 0 && !ts[i].when) i--;
+    return ts[i];
   }
 
   // the stars of all the tasks in the sky of the current one, from the task
@@ -1898,8 +1916,9 @@
     g.lineJoin = 'round';
     for (const l of state.lines) {
       // the lines drawn before the sky turned would point somewhere else now,
-      // and none while the player turns the sky
-      if (!map && (l.when !== state.when || (task() && task().kind === 'explore'))) continue;
+      // and none while the player turns the sky, or while the sky turns on to
+      // a task with `trails`, which shows the paths of the stars instead
+      if (!map && (l.when !== state.when || (task() && task().kind === 'explore') || (state.turn && task().trails))) continue;
       const p = map ? 1 : clamp((now - l.t0) / l.dur, 0, 1);
       const age = (now - l.t0) / 1000;
       // the lines of the tasks done are fainter, except on the map
@@ -1911,7 +1930,7 @@
       if (a <= 0.01 || (map && (!l.keep || level().mapLines === false))) continue;
       g.strokeStyle = `rgba(255, 220, 120, ${a.toFixed(2)})`;
       g.lineWidth = clamp(u * 0.0035, 1.5, 2.2);
-      g.setLineDash(l.kind === 'part' ? [] : [6, 9]);
+      g.setLineDash([6, 9]);
       g.lineDashOffset = map ? 0 : -now / 40;
       const tip = skyPath(g, V, l.pts, p);
       g.setLineDash([]);
@@ -2876,6 +2895,7 @@
     const n = state.tasks.length;
     const k = state.ti + (state.phase === 'fact' || state.phase === 'wait' ? 1 : 0);
     $('fill').style.width = (100 * k) / n + '%';
+    $('backBtn').style.visibility = state.ti > 0 ? '' : 'hidden';
     $('count').textContent = `${k} / ${n}`;
   }
 
@@ -3001,6 +3021,7 @@
       turnTo(k);
       return;
     }
+    state.snaps[state.ti] = snapshot();
     state.skyLimit = k.free ? SKY_DARK : SKY_BRIGHT;
     state.skyStep = 0;
     state.phase = 'task';
@@ -3058,8 +3079,7 @@
   // while the caption counts the months or the hours; then the task starts.
   function turnTo(k) {
     // (the heights of stars to follow as the sky turns)
-    const prev = state.tasks[state.ti - 1];
-    state.keepHeight = prev && prev.holdHeight;
+    state.keepHeight = level().turnHeights;
     const th1 = siderealTime(k.when);
     const d = (((th1 - state.th) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
     // (slowly enough to follow the stars as they go round: about 6.5 s for a
@@ -3304,6 +3324,7 @@
     state.cam = null;
     state.pan = null;
     state.copies = [];
+    state.snaps = [];
     let when = level().when;
     state.caption = level().caption;
     state.tasks = level().tasks;
@@ -3412,6 +3433,33 @@
       const ti = state.ti;
       later(1300, () => { if (state.ti === ti && state.phase === 'fact' && !state.photo) showPhoto(k.photo); });
     }
+  }
+
+  // the sky as the task starts, and what has been found and drawn so far
+  function snapshot() {
+    return {
+      th: state.th, when: state.when, tz: state.tz, caption: state.caption,
+      figs: new Set(state.figs), named: new Set(state.named),
+      hideFig: state.hideFig && new Set(state.hideFig),
+      lines: state.lines.map((l) => ({ ...l })), copies: [...state.copies],
+      limit: state.limit, limitTo: state.limitTo, skyTop: state.skyTop, lookAz: state.lookAz
+    };
+  }
+
+  // Back to the task before, as it was when it started: the sky goes back
+  // to its date and hour at once, without turning.
+  function prevTask() {
+    const s = state.snaps[state.ti - 1];
+    if (!s) return;
+    sfx.pick();
+    state.gen++;
+    state.ti--;
+    Object.assign(state, s, {
+      figs: new Set(s.figs), named: new Set(s.named), hideFig: s.hideFig && new Set(s.hideFig),
+      lines: s.lines.map((l) => ({ ...l })), copies: [...s.copies],
+      turn: null, auto: null, flash: null, photo: null, sel: null, drag: null, wiggle: null, keepHeight: null
+    });
+    startTask();
   }
 
   function nextTask() {
@@ -3994,6 +4042,8 @@
   });
   $('exploreDone').addEventListener('click', nextTask);
   $('sliderDone').addEventListener('click', nextTask);
+
+  $('backBtn').addEventListener('click', prevTask);
 
   $('hintBtn').addEventListener('click', () => {
     if (state.phase !== 'task') return;
