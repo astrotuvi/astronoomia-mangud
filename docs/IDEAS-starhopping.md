@@ -178,7 +178,9 @@ slider, so that the stars a task needs are always there:
   level 8.
 - Level 7 is a sky to magnitude 5.5, as Andromeeda galaktika needs a
   darker sky than a small town.
-- Levels 4 and 10 are a dark sky, to magnitude 6.
+- Level 4 is a dark sky, to magnitude 6.
+- Level 10 is a sky to magnitude 5, between the two: the figures are
+  among more stars than on the other levels, but still stand out.
 
 The slider sets the light of the Moon and of the lights round, and the
 twilight is added on top of it. So on a July night at 23:00, even at the dark
@@ -199,7 +201,7 @@ from Suur Vanker and teach how the sky turns through the year. The next
 five go on from summer to winter: Suvekolmnurk, Kassiopeia and Andromeeda
 galaktika, which start from stars learnt on the first levels, Veega, Suur
 Vanker and Põhjanael, and then the two of Orion, the winter sky. The last,
-Ilma abita, asks about the stars of Suur Vanker and Orion. A 🌟 in the
+Ilma abita, asks about the stars of all the levels before it. A 🌟 in the
 menu marks the ones done.
 
 1. **Suur Vanker näitab teed (the Big Dipper shows the way):** one sky
@@ -232,8 +234,9 @@ menu marks the ones done.
 9. **Orion tõuseb ja loojub (Orion rises and sets):** the date and hour
    sliders from the start: the player sets them to three times, from
    autumn to spring, and finds Orion at each, further west every time.
-10. **Ilma abita (without help):** a dark sky, with the tasks of both Suur
-   Vanker and Orion, each on a night picked at random. The task names only
+10. **Ilma abita (without help):** a sky to magnitude 5, with the tasks of
+   all the levels before it, from Suur Vanker through the summer and autumn
+   sky to Orion, each on a night picked at random. The task names only
    the star to find. The player picks the stars to hop from, or taps the
    star straight away if they know it.
 
@@ -245,14 +248,21 @@ up (Siirius 5°). Each night is later than the one before, by up to 200
 days. The caption names it, e.g. "Kevadöö, 17. märts kell 1". The next
 task's night is shown at once, without the sky turning on to it.
 
-The tasks of Suur Vanker come first, in the north: Põhjanael, Väike
-Vanker, Arktuurus and Põhjakroon (Veega is left out, as among all the
-stars of a dark sky it is too hard to find alone). Põhjanael and Väike
-Vanker never set, so their nights can be any dark night, with Suur Vanker
-low in the north on an autumn evening, on its side in the east or the
-west, or high overhead. Arktuurus and Põhjakroon get nights from about
-February to October, when they are up. Arktuurus below the horizon is
-only on level 3.
+The tasks of Suur Vanker come first, in the north: Põhjanael,
+Kassiopeia, Arktuurus and Põhjakroon (Veega is left out, as among all the
+stars of a dark sky it is too hard to find alone, and so is Väike Vanker).
+Põhjanael and Kassiopeia never set, so their nights can be any dark night,
+with Suur Vanker low in the north on an autumn evening, on its side in the
+east or the west, or high overhead. Kassiopeia is found by the hop from
+the handle of Suur Vanker through Põhjanael, as on level 6, and any of her
+stars counts. Arktuurus and Põhjakroon get nights from about February to
+October, when they are up. Arktuurus below the horizon is only on level 3.
+
+Then come the summer and autumn sky: Suvekolmnurk, by tapping its three
+stars, which are still the brightest round them, with all three at least
+10° up, and Andromeeda galaktika, at least 20° up, which the player finds
+by the hops of level 7, on nights from about August to February. Unlike
+level 7, its photo does not show.
 
 Then the view turns along the horizon to the south, for the tasks of
 Orion: Aldebaran, Sõel, the Kaksikud, Kapella and Siirius, on nights with
@@ -266,12 +276,16 @@ is close round the stars of the task, but not in the middle of it: slid by
 up to a fifth of the view each way, at random, as far as the stars stay on
 the screen, so that it does not show where to look. The facts
 are new, e.g. that Põhjanael is always about 58° up in Estonia, as high as
-Estonia is north of the equator, that Sõel formed when dinosaurs lived, or
-that Siirius has a white dwarf beside it.
+Estonia is north of the equator, that Sõel formed when dinosaurs lived,
+that the Milky Way runs through Suvekolmnurk, that Andromeeda galaktika
+will run into the Milky Way in about five billion years, or that Siirius
+has a white dwarf beside it.
 
 The win screen shows the whole chain as a map: the sky turned to the hour
-when all the stars found are up at once, wide enough for all of them, with
-the lines of all the hops, the figures and the names of the stars found.
+when the most of the stars found are up at once, wide enough for all of
+those, with the lines of all the hops, the figures and the names of the
+stars found. Altair and Siirius are never up at once, so one of the
+figures is always left out.
 
 ## The hops
 
@@ -1030,8 +1044,8 @@ Orion's figure at his highest, due south, the arc of his belt across the
 sky dashed, and below it the lower arc of Siirius, grey, without the
 copies or the names of stars.
 
-Level 10, Ilma abita, with the tasks of both Suur Vanker and Orion, is
-under Levels above.
+Level 10, Ilma abita, with the tasks of all the levels, is under Levels
+above.
 
 ## Extras
 
@@ -1055,9 +1069,6 @@ Left out of the first version, but easy to add as more hops:
 - **Linnutee (the Milky Way):** on level 5, a faint band through the
   Summer Triangle in the dark September sky, with Luik flying along it,
   gone on the light midsummer night
-- **Kassiopeia and the Andromeda Galaxy in Ilma abita:** Kassiopeia by
-  the hop from Suur Vanker, and the galaxy by the hops of level 7, on
-  nights from about September to February
 
 ## What it needs
 

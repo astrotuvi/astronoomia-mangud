@@ -1537,11 +1537,13 @@
     },
     {
       id: 'nohelp',
-      // A dark sky, with a new night picked at random for each task, later
-      // than the one before, shown at once. The tasks name only the star to
-      // find, and no figures are drawn at the start. `up` is how high, in
-      // degrees, each of its stars is to be on the task's night.
-      limit: 6,
+      // A sky to magnitude 5, darker than a small town but not as dark as
+      // the countryside, with a new night picked at random for each task,
+      // later than the one before, shown at once. The tasks name only the
+      // star to find, and no figures are drawn at the start, and the view
+      // does not zoom in on photos. `up` is how high, in degrees, each of
+      // its stars is to be on the task's night.
+      limit: 5,
       icon: '🎯',
       random: true,
       help: false,
@@ -1563,9 +1565,13 @@
           }
         },
         {
-          kind: 'tap', find: 'kochab', near: [], figure: 'littledipper', up: {},
-          accept: ['yildun', 'epsUmi', 'zetUmi', 'pherkad', 'etaUmi'],
-          text: { et: 'Leia Väike Vanker.', en: 'Find the Little Dipper.' }
+          kind: 'hop', from: 'mizar', via: 'polaris', find: 'ruchbah', accept: ['caph', 'schedar', 'navi', 'segin'],
+          figure: 'cassiopeia', up: {},
+          text: { et: 'Leia Kassiopeia.', en: 'Find Cassiopeia.' },
+          fact: {
+            et: 'Vanas loos oli Kassiopeia uhke kuninganna. Karistuseks peab ta taevas ümber Põhjanaela tiire tegema, vahel pea alaspidi.',
+            en: 'In the old story, Cassiopeia was a proud queen. As a punishment she has to go round the North Star in the sky, sometimes upside down.'
+          }
         },
         {
           kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
@@ -1583,6 +1589,25 @@
           fact: {
             et: 'Vanad kreeklased nägid Põhjakroonis printsess Ariadne krooni.',
             en: 'The ancient Greeks saw the crown of the princess Ariadne in the Northern Crown.'
+          }
+        },
+        // the three brightest stars of the summer and autumn sky, in a dark
+        // sky among many others
+        {
+          kind: 'tap', finds: ['vega', 'deneb', 'altair'], near: [], figure: 'summer',
+          up: { vega: 10, deneb: 10, altair: 10 },
+          text: { et: 'Leia Suvekolmnurk.', en: 'Find the Summer Triangle.' },
+          fact: {
+            et: 'Läbi Suvekolmnurga jookseb Linnutee: pimedas taevas paistab see kahvatu valge vööna Deenebi ja Altairi vahel.',
+            en: 'The Milky Way runs through the Summer Triangle: in a dark sky it shows as a pale white band between Deneb and Altair.'
+          }
+        },
+        {
+          kind: 'tap', find: 'm31', near: [], figure: 'andromeda', up: { m31: 20 },
+          text: { et: 'Leia Andromeeda galaktika.', en: 'Find the Andromeda Galaxy.' },
+          fact: {
+            et: 'Andromeeda galaktika tuleb meile lähemale. Umbes viie miljardi aasta pärast põrkab ta kokku meie oma galaktikaga, Linnuteega.',
+            en: 'The Andromeda Galaxy is coming closer. In about five billion years it will run into our own galaxy, the Milky Way.'
           }
         },
         // the tasks of Orion, in the south, with his belt at least 15° up
@@ -4541,7 +4566,7 @@
       state.cam = sweepMap(L);
     } else if (level().random) {
       state.th = upTime(keys);
-      state.cam = framed(L, keys.map((k) => horizon(STARS[k])));
+      state.cam = framed(L, keys.map((k) => horizon(STARS[k])).filter((v) => v[2] > 0));
     } else if (level().mapRing) state.cam = ringView(level().center, level().mapRing, L);
     else state.cam = fitView(keys, L, 70, level().center, false);
     const V = view(L, state.cam);
@@ -4674,15 +4699,17 @@
     return Object.assign(cam, { s, ox: (x0 + x1) / 2, oy: (y0 + y1) / 2, y1 });
   }
 
-  // the sidereal time when the stars are all as high as they can be at once:
-  // for the map of a random level, with the stars of both Suur Vanker and
-  // Orion
+  // the sidereal time when the most of the stars are up at once, and the
+  // lowest of them as high as it can be: for the map of a random level, with
+  // the stars of both Suur Vanker and Orion (Altair and Siirius are never up
+  // at once)
   function upTime(keys) {
     let best = 0;
     let top = -Infinity;
     for (let i = 0; i < 96; i++) {
       const th = (i / 96) * 2 * Math.PI;
-      const low = Math.min(...keys.map((k) => horizon(STARS[k], th)[2]));
+      const zs = keys.map((k) => horizon(STARS[k], th)[2]).filter((z) => z > Math.sin(5 * DEG));
+      const low = zs.length + Math.min(...zs);
       if (low > top) {
         top = low;
         best = th;
