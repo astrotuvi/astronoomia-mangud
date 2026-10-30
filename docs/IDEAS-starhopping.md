@@ -609,6 +609,7 @@ part of the sky has about 227 stars.
 6. **Suvekolmnurk:** "Joonista Suvekolmnurk: Veegast Deenebini, Altairini
    ja tagasi." ("Draw the Summer Triangle: from Vega to Deneb, to Altair
    and back.") A trace, with Veega tapped again at the end, as star 4.
+   The line of the hop to Altair goes, so that it is not in the way.
    - Fact: "Valgel suveööl oli kolmnurka kerge näha, sest muid tähti
      peaaegu ei paistnud. Pimedas taevas on tähti palju, aga Suvekolmnurga
      tähed on ikka kõige heledamad." ("On the light summer night the
@@ -625,7 +626,9 @@ part of the sky has about 227 stars.
    triangle and the three figures drawn: "Vii liugur juuni poole ja vaata,
    kuidas tähed kaovad ja Suvekolmnurk jääb." ("Move the slider towards
    June and watch the stars go while the Summer Triangle stays.") The
-   triangle's lines stay all along; the figures of Lüüra, Luik and Kotkas
+   view does not move with the stars: it takes in the triangle on both
+   nights, looking a little closer to the south than their middle, and
+   can be dragged sideways. The triangle's lines stay all along; the figures of Lüüra, Luik and Kotkas
    fade with their stars, so that near the June end only the triangle is
    left. The task is done when the slider has stayed near the June end
    for a moment, as on level 4, and then the slider is to play with,
@@ -640,7 +643,7 @@ part of the sky has about 227 stars.
    nights lasting into July show without being said.
 
 The win map is the September sky with the triangle, Lüüra, Luik and Kotkas,
-and the line of the Altair hop.
+without the line of the Altair hop.
 
 ### Kassiopeia
 

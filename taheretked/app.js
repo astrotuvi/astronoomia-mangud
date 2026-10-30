@@ -73,6 +73,25 @@
     delCrb: S(237.40, 26.07, 4.6, 'δ CrB'),
     epsCrb: S(239.40, 26.88, 4.1, 'ε CrB'),
     iotCrb: S(240.36, 29.85, 5.0, 'ι CrB'),
+    // Luik, from the tail to the head, and its wings
+    deneb: S(310.36, 45.28, 1.3, { et: 'Deeneb', en: 'Deneb' }),
+    sadr: S(305.56, 40.26, 2.2, 'Sadr'),
+    etaCyg: S(299.08, 35.08, 3.9, 'η Cyg'),
+    albireo: S(292.68, 27.96, 3.1, 'Albireo', '255, 220, 170'),
+    gienah: S(311.55, 33.97, 2.5, 'Gienah'),
+    zetCyg: S(318.23, 30.23, 3.2, 'ζ Cyg'),
+    delCyg: S(296.24, 45.13, 2.9, 'δ Cyg'),
+    iotCyg: S(292.43, 51.73, 3.8, 'ι Cyg'),
+    kapCyg: S(289.28, 53.37, 3.8, 'κ Cyg'),
+    // Kotkas
+    altair: S(297.70, 8.87, 0.8, { et: 'Altair', en: 'Altair' }),
+    tarazed: S(296.56, 10.61, 2.7, 'Tarazed', '255, 210, 160'),
+    alshain: S(298.83, 6.41, 3.7, 'Alshain'),
+    delAql: S(291.37, 3.11, 3.4, 'δ Aql'),
+    etaAql: S(298.12, 1.01, 3.9, 'η Aql'),
+    theAql: S(302.83, -0.82, 3.2, 'θ Aql'),
+    zetAql: S(286.35, 13.86, 3.0, 'ζ Aql'),
+    lamAql: S(286.56, -4.88, 3.4, 'λ Aql'),
     // where the arc from the handle goes on to
     spica: S(201.30, -11.16, 1.0, { et: 'Spiika', en: 'Spica' }),
     // Orion: the four corners, the belt, the head and the sword. Only the
@@ -188,6 +207,23 @@
       name: { et: 'Lüüra', en: 'Lyra' },
       lines: [['vega', 'epsLyr', 'zetLyr', 'delLyr', 'sulafat', 'sheliak', 'zetLyr', 'vega']]
     },
+    // Luik as in Tähtkujud, from the tail to the head, and the wings from
+    // the middle star
+    cygnus: {
+      order: ['deneb', 'sadr', 'etaCyg', 'albireo', 'gienah', 'zetCyg', 'delCyg', 'iotCyg', 'kapCyg'],
+      join: { gienah: 'sadr', delCyg: 'sadr' },
+      where: { et: 'Luige tähtkujus', en: 'Cygnus, the Swan' },
+      name: { et: 'Luik', en: 'Cygnus' },
+      lines: [['deneb', 'sadr', 'etaCyg', 'albireo'], ['sadr', 'gienah', 'zetCyg'], ['sadr', 'delCyg', 'iotCyg', 'kapCyg']]
+    },
+    // Kotkas as in Tähtkujud, which draws itself once Altair is found
+    aquila: {
+      order: ['tarazed', 'altair', 'alshain', 'delAql', 'etaAql', 'theAql', 'zetAql', 'lamAql'],
+      join: { delAql: 'altair', zetAql: 'delAql', lamAql: 'delAql' },
+      where: { et: 'Kotka tähtkujus', en: 'Aquila, the Eagle' },
+      name: { et: 'Kotkas', en: 'Aquila' },
+      lines: [['tarazed', 'altair', 'alshain'], ['altair', 'delAql', 'etaAql', 'theAql'], ['delAql', 'zetAql'], ['delAql', 'lamAql']]
+    },
     bootes: {
       where: { et: 'Karjase tähtkujus', en: 'Boötes' },
       name: { et: 'Karjane', en: 'Boötes' },
@@ -270,6 +306,15 @@
         ['upsGem', 'wasat', 'mekbuda', 'alhena'], ['wasat', 'lamGem', 'xiGem']]
     },
     // the bright stars of several figures, drawn dashed
+    // (back to Veega at the end, to close it)
+    summer: {
+      asterism: true,
+      labelMid: true,
+      order: ['vega', 'deneb', 'altair', 'vega'],
+      where: { et: 'Suvekolmnurgas', en: 'the Summer Triangle' },
+      name: { et: 'Suvekolmnurk', en: 'Summer Triangle' },
+      lines: [['vega', 'deneb', 'altair', 'vega']]
+    },
     triangle: {
       asterism: true,
       labelMid: true,
@@ -354,6 +399,9 @@
 
   // the stars of Suur Vanker, for the views that show all of it
   const DIPPER = ['dubhe', 'merak', 'phecda', 'megrez', 'alioth', 'mizar', 'alkaid'];
+  // the stars of Lüüra, Luik and Kotkas, so that all the views of
+  // Suvekolmnurk are the same
+  const SUMMER = [...new Set(['lyra', 'cygnus', 'aquila'].flatMap((id) => FIGURES[id].lines.flat()))];
 
   // The levels. Each is a chain of tasks in one sky, at the date and hour
   // `when` (UT), with its `caption`; a task with its own `when` turns the sky
@@ -365,7 +413,9 @@
   //     without `find`, the task is only to draw the line, and the next
   //     task starts when it is drawn
   //   trace: join the numbered stars of `figure` in turn, as in Tähtkujud
-  //   tap: tap `find`, near the stars `near`
+  //   tap: tap `find`, near the stars `near`, or all the stars of `finds`,
+  //     in any order; on a `dim` task the stars of the figures fade in a
+  //     light sky too
   //   arc: a curve along the stars `along`, carried on through the stars
   //     `curve`, leads to `find`; it stops a little past the first star after
   //     `along`. The curve is the circle on the sky through the last two
@@ -375,12 +425,18 @@
   //   part: `find` is part of the way along a line from `from` to `via`,
   //     as the text says; any star of `accept` counts too
   //   slider: the sky starts bright, and the task is to move the slider
-  //     towards the dark sky, where the faint stars of Väike Vanker show
+  //     towards the dark sky, where the faint stars of Väike Vanker show;
+  //     with `nights`, it moves the date and the hour together between two
+  //     nights, from the second to the first, and is then to play with
   //   note: only a text to read, its `title` and `fact`, with the button to
   //     go on; with `below`, a dashed curve through its three stars `curve`
   //     goes on through the horizon to the `star` below it, which a dashed circle
   //     marks
   // `jump`: the sky goes to the task's `when` at once, without turning.
+  // A `noLines` task does not show the lines of the tasks before it.
+  // With `fade`, the sky darkens or lightens as it turns, rather than after,
+  // and with `clear` the names and figures go while it turns, to be found
+  // again. A level's `mapWhen` is the date and hour of its win map.
   // `height`: once the task is done, a dashed line from the horizon straight
   // up to that star shows how high it is, in degrees. A level's
   // `turnHeights` are the stars whose heights show while its sky turns, as
@@ -826,6 +882,124 @@
       ]
     },
     {
+      // The Summer Triangle. On midsummer night the Sun is only 7° below the
+      // horizon, and with the twilight only stars to about 2.35 show: the
+      // three stars of the triangle are almost the only ones. Then the sky
+      // turns on, darkening, to a September evening, where they are found
+      // again among many stars, by the figures round them, and a slider
+      // goes between the two nights.
+      id: 'suve',
+      limit: 4.5,
+      // (the win map has only the figures, not the line of the hop)
+      mapLines: false,
+      part: 'summer',
+      icon: '🌻',
+      figs: [],
+      // the win map is of the September evening, also when the player has
+      // left the slider in June
+      mapWhen: Date.UTC(2027, 8, 15, 19, 0),
+      // 23 June 2027 at 23:00
+      when: Date.UTC(2027, 5, 23, 21, 0),
+      caption: { et: 'Jaaniöö, 23. juuni kell 23', en: 'Midsummer Night, 23 June at 23:00' },
+      win: {
+        name: { et: 'Suvekolmnurk', en: 'The Summer Triangle' },
+        fact: {
+          et: 'Veega, Deeneb ja Altair on Suvekolmnurk. Valgel suveööl paistavad peaaegu ainult nemad, ja ka pimedas taevas on nad kõige heledamad. Nende abil leiad Lüüra, Luige ja Kotka.',
+          en: 'Vega, Deneb and Altair are the Summer Triangle. On a light summer night they are almost the only stars that show, and in a dark sky too they are the brightest. They help you find Lyra, the Swan and the Eagle.'
+        }
+      },
+      tasks: [
+        {
+          // (the stars of the figures fade in the twilight too, so that only
+          // the brightest show)
+          kind: 'tap', finds: ['vega', 'deneb', 'altair'], near: [], figure: 'summer', dim: true, show: SUMMER,
+          text: {
+            et: 'Suveööl on taevas hele ja tähti paistab vähe. Puuduta kolme kõige heledamat tähte.',
+            en: 'On a summer night the sky is light and few stars show. Tap the three brightest stars.'
+          },
+          fact: {
+            et: 'Need kolm tähte on Suvekolmnurk. Valgel suveööl on nad peaaegu ainsad tähed, mis paistavad.',
+            en: 'These three stars are the Summer Triangle. On a light summer night they are almost the only stars that show.'
+          }
+        },
+        {
+          // 15 September 2027 at 21:00: the sky turns about 53° and gets
+          // dark as it turns; the names and the triangle go, to be found
+          // again. This sky does not turn again, so the texts can say left
+          // and right.
+          kind: 'tap', find: 'vega', near: [], figure: 'lyra', show: SUMMER, fade: true, clear: true,
+          when: Date.UTC(2027, 8, 15, 19, 0),
+          caption: { et: 'Sügisõhtu, 15. september kell 21', en: 'An autumn evening, 15 September at 21:00' },
+          text: {
+            et: 'Septembris on taevas õhtul pime ja tähti palju. Leia Veega, kõige heledam täht kõrgel edelas.',
+            en: 'In September the sky is dark in the evening, with many stars. Find Vega, the brightest star high in the south-west.'
+          },
+          fact: {
+            et: 'Veega on Suvekolmnurga kõige heledam täht.',
+            en: 'Vega is the brightest star of the Summer Triangle.'
+          }
+        },
+        {
+          kind: 'tap', find: 'deneb', near: [], arrow: ['vega', 'deneb'], show: SUMMER, names: ['vega'],
+          text: {
+            et: 'Leia Deeneb. Ta on Veegast vasakul, veel kõrgemal, peaaegu pea kohal.',
+            en: 'Find Deneb. It is to the left of Vega, even higher, almost overhead.'
+          },
+          fact: {
+            et: 'Deeneb on Veegast umbes sada korda kaugemal, aga paistab ikka heledana. Ta on hiidtäht, umbes sada tuhat korda heledam kui Päike.',
+            en: 'Deneb is about a hundred times further away than Vega, but still looks bright. It is a giant star, about a hundred thousand times brighter than the Sun.'
+          }
+        },
+        {
+          kind: 'trace', figure: 'cygnus', show: SUMMER,
+          text: {
+            et: 'Deeneb on Luige saba. Joonista Luik: puuduta tähti järjest 1, 2, 3 …',
+            en: 'Deneb is the Swan’s tail. Draw the Swan: tap the stars in turn 1, 2, 3 …'
+          }
+        },
+        {
+          // the star of Lüüra furthest from Veega, 7.6° from it: Altair is
+          // three and a half gaps beyond it, 2.3° off the line
+          kind: 'hop', from: 'vega', via: 'sulafat', find: 'altair', autoDraw: 'aquila', show: SUMMER,
+          text: {
+            et: 'Leia Altair. Tõmba joon Veegast läbi Lüüra kõige kaugema tähe ja jätka seda.',
+            en: 'Find Altair. Draw a line from Vega through the furthest star of the Lyre and carry it on.'
+          },
+          fact: {
+            et: 'Altair on kolme tähe rea keskel. Ta pöörleb nii kiiresti, et on lapik nagu muna.',
+            en: 'Altair is in the middle of a row of three stars. It spins so fast that it is flattened like an egg.'
+          }
+        },
+        {
+          // (without the line of the hop to Altair, which would be in the way)
+          kind: 'trace', figure: 'summer', show: SUMMER, noLines: true,
+          text: {
+            et: 'Joonista Suvekolmnurk: Veegast Deenebini, Altairini ja tagasi.',
+            en: 'Draw the Summer Triangle: from Vega to Deneb, to Altair and back.'
+          },
+          fact: {
+            et: 'Valgel suveööl oli kolmnurka kerge näha, sest muid tähti peaaegu ei paistnud. Pimedas taevas on tähti palju, aga Suvekolmnurga tähed on ikka kõige heledamad.',
+            en: 'On the light summer night the triangle was easy to see, as hardly any other stars showed. In a dark sky there are many stars, but the stars of the Summer Triangle are still the brightest.'
+          }
+        },
+        {
+          // from 23 June at 23:00 to 15 September at 21:00, the date and the
+          // hour together; it starts at the September end, and once it has
+          // stayed near the June end for a moment, it is to play with
+          kind: 'slider', nights: [Date.UTC(2027, 5, 23, 21, 0), Date.UTC(2027, 8, 15, 19, 0)], show: SUMMER, noLines: true,
+          title: { et: 'Valged ööd', en: 'Light nights' },
+          text: {
+            et: 'Vii liugur juuni poole ja vaata, kuidas tähed kaovad ja Suvekolmnurk jääb.',
+            en: 'Move the slider towards June and watch the stars go while the Summer Triangle stays.'
+          },
+          fact: {
+            et: 'Eestis on suveööd valged kuni juuli lõpuni. Augustis läheb taevas õhtuti jälle pimedaks.',
+            en: 'In Estonia the summer nights are light until the end of July. In August the sky gets dark in the evening again.'
+          }
+        }
+      ]
+    },
+    {
       // Orion shows the way. A winter evening, at the same hour as level 1, with
       // Orion upright in the south: hops from the belt and the corners to the
       // bright stars round him, which make the Winter Hexagon. After Sõel and
@@ -1165,6 +1339,7 @@
         { name: 'Taevas pöörleb', about: 'Suur Vanker teeb tiire ümber Põhjanaela' },
         { name: 'Arktuurus ja Veega', about: 'Arktuurus tõuseb ja loojub, Veega ei looju' },
         { name: 'Hele ja pime taevas', about: 'Linnatuled, Kuu ja suveöö' },
+        { name: 'Suvekolmnurk', about: 'Valge suveöö ja pime sügisõhtu' },
         { name: 'Orion näitab teed', about: 'Talveõhtu: Orionist heledate tähtedeni' },
         { name: 'Orion tõuseb ja loojub', about: 'Orion sügisest kevadeni' },
         { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' }
@@ -1179,6 +1354,9 @@
       dateTime: (d, m, h, mm) => `${d}. ${m}, kell ${h}.${String(mm).padStart(2, '0')}`,
       summer: (h, mm) => ` (suveaja järgi ${!h && !mm ? 'kesköö' : `kell ${h}${mm === null ? '' : '.' + String(mm).padStart(2, '0')}`})`,
       midnight: (d, m) => `${d}. ${m}, kesköö`,
+      nightAt: (season, evening, date, clock) => `${season}${evening ? 'õhtu' : 'öö'}, ${date} ${clock}`,
+      june: 'Juuni',
+      september: 'September',
       lightSky: 'Taevas on hele: Päike on horisondi lähedal ja paistavad ainult heledamad tähed.',
       daySky: 'Päike on üleval ja tähti pole näha. Suur Vanker ja Põhjanael on ikka oma kohal.',
       daySkyOrion: 'Päike on üleval ja tähti pole näha. Orion on ikka oma kohal.',
@@ -1223,6 +1401,7 @@
         { name: 'The sky turns', about: 'The Big Dipper goes round the North Star' },
         { name: 'Arcturus and Vega', about: 'Arcturus rises and sets, Vega never sets' },
         { name: 'Bright and dark skies', about: 'City lights, the Moon and summer nights' },
+        { name: 'The Summer Triangle', about: 'A light summer night and a dark autumn evening' },
         { name: 'Orion shows the way', about: 'A winter evening: from Orion to the bright stars' },
         { name: 'Orion rises and sets', about: 'Orion from autumn to spring' },
         { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' }
@@ -1237,6 +1416,9 @@
       dateTime: (d, m, h, mm) => `${d} ${m}, ${String(h).padStart(2, '0')}:${String(mm).padStart(2, '0')}`,
       summer: (h, mm) => ` (${!h && !mm ? 'midnight' : `${String(h).padStart(2, '0')}:${String(mm || 0).padStart(2, '0')}`} summer time)`,
       midnight: (d, m) => `${d} ${m}, midnight`,
+      nightAt: (season, evening, date, clock) => `A ${season} ${evening ? 'evening' : 'night'}, ${date} at ${clock}`,
+      june: 'June',
+      september: 'September',
       lightSky: 'The sky is light: the Sun is near the horizon, and only the brighter stars show.',
       daySky: 'The Sun is up, and no stars can be seen. The Big Dipper and the North Star are still in their places.',
       daySkyOrion: 'The Sun is up, and no stars can be seen. Orion is still in his place.',
@@ -1290,8 +1472,12 @@
   const fingerEl = $('finger');
 
   const done = new Set(store.get('done', []));
+  // the level picked last, by its id (before, by its place in the list,
+  // which was then this one)
+  const OLD_ORDER = ['vanker1', 'vanker2', 'vanker3', 'vanker4', 'orion1', 'orion2', 'nohelp'];
+  const savedLevel = LEVELS.findIndex((lv) => lv.id === store.get('levelId', OLD_ORDER[store.get('level', 0)]));
   const state = {
-    level: clamp(store.get('level', 0), 0, LEVELS.length - 1),
+    level: Math.max(0, savedLevel),
     tasks: [],        // the tasks of the game being played
     ti: 0,            // the task being played
     phase: 'menu',    // 'task', 'fact' or 'win'
@@ -1320,6 +1506,7 @@
     skyTop: 0,        // on a level that looks at the horizon, the room for the cards of a sky
     skyTopW: 0,       // and the width it was measured at
     sel: null,        // a guide star tapped, to tap the second one after it
+    got: new Set(),   // the stars of a task with `finds` found so far
     drag: null,
     wiggle: null,     // a wrong star: { star, t0 }
     flash: null,      // a star just found: { key, t0 }
@@ -1411,11 +1598,13 @@
     img.src = P.file;
   });
   // the stars of the figures always show, the others to the level's limit
-  // (in the slider task the stars of the figures too, so that a bright sky hides them)
+  // (in the slider task, on a `dim` task and while the sky darkens as it
+  // turns, the stars of the figures too, so that a bright sky hides them)
+  const plain = () => task().kind === 'slider' || task().dim || (state.turn && state.turn.light);
   const shown = (s) => (state.day ? s.key === 'polaris'
-    : (s.key && task() && task().kind !== 'slider') || s.mag <= state.limit + 0.7);
+    : (s.key && task() && !plain()) || s.mag <= state.limit + 0.7);
   // and the faintest ones dimmer rather than smaller
-  const faint = (s) => (s.key && task() && task().kind !== 'slider'
+  const faint = (s) => (s.key && task() && !plain()
     ? clamp((state.limit + 0.7 - s.mag) / 1.4, 0.85, 1)
     : clamp((state.limit + 0.7 - s.mag) / 1.4, 0, 1));
 
@@ -1660,6 +1849,7 @@
     const keys = [];
     if (k.from) keys.push(k.from, k.via);
     if (k.find) keys.push(k.find);
+    if (k.finds) keys.push(...k.finds);
     if (k.near) keys.push(...k.near);
     if (k.along) keys.push(...k.along);
     if (k.figure) keys.push(...new Set(FIGURES[k.figure].lines.flat()));
@@ -1856,9 +2046,11 @@
 
   // no figures drawn in a slider task until it is done, except the one to
   // play with, which starts at the dark sky
-  const figsHidden = (map) => !map && task() && task().kind === 'slider' && !task().free && state.phase === 'task';
-  // and with the slider to play with, a figure only while all its stars show
-  const figHidden = (id, map) => !map && task() && task().free && !FIGURES[id].lines.flat().every((k) => shown(STARS[k]));
+  // (nor with the slider between two nights, which starts at the dark one)
+  const figsHidden = (map) => !map && task() && task().kind === 'slider' && !task().free && !task().nights && state.phase === 'task';
+  // and with the slider to play with, or between two nights, a figure only
+  // while all its stars show
+  const figHidden = (id, map) => !map && task() && (task().free || task().nights) && !FIGURES[id].lines.flat().every((k) => shown(STARS[k]));
 
   // a task with `onlyFigs` draws only those figures, and its own once done
   const onlyFigs = (id, map) => {
@@ -1924,7 +2116,7 @@
       const age = (now - l.t0) / 1000;
       // the lines of the tasks done are fainter, except on the map
       const old = !map && l.task < state.ti && !(task().keepLine && l.task === state.ti - 1);
-      if (old && level().clearLines) continue;
+      if (old && (level().clearLines || task().noLines)) continue;
       // a line that is not the task's fades out completely after a few
       // seconds, and is not on the map
       const a = l.keep ? (old ? 0.22 : 0.5) : 0.5 * (1 - clamp((age - 2.5) / 1.5, 0, 1));
@@ -2481,7 +2673,8 @@
       for (const key of guides()) ring(key, `rgba(95, 212, 255, ${(0.35 + 0.5 * pulse).toFixed(2)})`, starR(STARS[key].mag, L.u) + 6 + 4 * pulse);
       if (hint) {
         const k = task();
-        const key = k.find;
+        // (of `finds`, the first not found yet)
+        const key = k.find || (k.finds && k.finds.find((x) => !state.got.has(x)));
         // (when any star of the figure counts, round the whole figure)
         const fc = k.accept && figCircle(V, k.figure);
         const color = `rgba(255, 211, 77, ${(0.5 + 0.5 * pulse).toFixed(2)})`;
@@ -2489,6 +2682,7 @@
         else if (key) ring(key, color, L.hitR * (0.5 + 0.2 * pulse));
       }
       if (state.sel) ring(state.sel, 'rgba(255, 211, 77, 0.95)', L.hitR * 0.5);
+      state.got.forEach((key) => ring(key, 'rgba(255, 211, 77, 0.8)', L.hitR * 0.45));
       if (task().arrow) drawArrow(g, V, task().arrow, pulse);
       if (task().curveArrow) drawCurveArrow(g, L, V, task(), pulse);
     }
@@ -2799,7 +2993,8 @@
     const T = state.turn;
     if (!T) {
       const k = task();
-      return withSummer(((k && k.caption) || state.caption)[Astro.lang], state.when, k && (k.kind === 'explore' || k.kind === 'set'));
+      return withSummer(((k && k.caption) || state.caption)[Astro.lang], state.when,
+        k && (k.kind === 'explore' || k.kind === 'set' || (k.nights && state.capMin)));
     }
     const e = clamp((performance.now() - T.t0) / T.dur, 0, 1);
     const ms = T.ms0 + (T.ms1 - T.ms0) * e;
@@ -2967,10 +3162,29 @@
   // moving views
   function taskView() {
     if (level().sweep) return sweepView();
+    if (task() && task().nights) return nightsView();
     if (task() && (task().kind === 'explore' || task().wide) && level().center) return ringView(level().center);
     if (level().look) return lookView(fitView(skyKeys()));
     if (level().random) return offView(fitView(viewKeys()), task().off, viewKeys());
     return fitView(viewKeys());
+  }
+
+  // The view of the slider between two nights stays put while the sky turns:
+  // it takes in the stars of the task on both nights, looking a little
+  // closer to the south than their middle, and can be dragged sideways by
+  // `state.lookOff`, up to 60° either way, without zooming.
+  function nightsView(L = state.L) {
+    const vs = task().nights.flatMap((ms) => keysOf(task()).map((key) => horizon(STARS[key], siderealTime(ms))));
+    const m = vs.reduce((a, v) => [a[0] + v[0], a[1] + v[1], a[2] + v[2]], [0, 0, 0]);
+    let az = Math.atan2(m[0], m[1]) / DEG;
+    az += clamp(((180 - az + 540) % 360) - 180, -10, 10);
+    const alt = Math.asin(m[2] / Math.hypot(...m)) / DEG;
+    const V = Object.assign(basis({ az, alt }), { s: 1, cx: 0, cy: 0 });
+    const ps = vs.map((v) => toScreen(V, v)).filter(Boolean);
+    const w = L.W / 2 - 20;
+    const h = (L.H - L.top - (L.bottom || 16)) / 2 - 20;
+    const s = Math.min(w / Math.max(...ps.map((q) => Math.abs(q[0]))), h / Math.max(...ps.map((q) => Math.abs(q[1]))));
+    return { az: az + state.lookOff, alt, s };
   }
 
   // On a level that looks at the horizon, the view of a sky can be dragged
@@ -3033,7 +3247,8 @@
     $('slider').classList.toggle('hidden', k.kind !== 'slider');
     $('slider').classList.toggle('waiting', k.kind === 'slider' && (turning || turned));
     $('slider').classList.toggle('free', !!k.free);
-    $('skyRange').value = k.free ? 100 : 0;
+    $('slider').classList.toggle('nights', !!k.nights);
+    $('skyRange').value = k.free || k.nights ? 100 : 0;
     if (turning) {
       turnTo(k);
       return;
@@ -3061,6 +3276,9 @@
     }
     if (k.kind === 'explore' || k.kind === 'set') startExplore();
     state.sel = null;
+    state.got = new Set();
+    state.capMin = false;
+    if (k.nights) state.lookOff = 0;
     state.lit = 0;
     state.doneAt = 0;
     state.litAt = [];
@@ -3068,6 +3286,7 @@
     state.lastAct = performance.now();
     state.lastStep = performance.now();
     showTask();
+    if (k.nights) $('tip').textContent = t('dragSky');
     // (a text only to read: straight to it, with the button; with a photo,
     // its text while the view goes there, and its fact with the photo)
     if (k.kind === 'note') {
@@ -3112,9 +3331,15 @@
     }
     // on a level that looks at the horizon, the stars are found again in the
     // new sky: their names and figures go while it turns
-    if (level().look) {
+    if (level().look || k.clear) {
       state.figs = new Set(level().figs || ['bigdipper']);
       state.named = new Set();
+    }
+    // (with `fade`, the twilight changes as the sky turns, from how light it
+    // is now to how light it will be)
+    if (k.fade) {
+      const alt = Math.asin(horizon(sun(k.when), th1)[2]) / DEG;
+      state.turn.light = [state.light, clamp((alt + 18) / 18, 0, 1)];
     }
     // the view for the task, worked out for the sky as it will be
     const th = state.th;
@@ -3145,6 +3370,10 @@
     const p = clamp((now - T.t0) / T.dur, 0, 1);
     const e = p * p * (3 - 2 * p);
     state.th = T.th0 + (T.th1 - T.th0) * e;
+    if (T.light) {
+      state.light = T.light[0] + (T.light[1] - T.light[0]) * e;
+      limitFromLight();
+    }
     $('when').textContent = caption();
     if (p >= 1) {
       state.th = T.th1 % (2 * Math.PI);
@@ -3259,7 +3488,7 @@
     state.day = sunAlt > -0.8;
     // (the slider adds the light of the Moon and of the lights round, and
     // the twilight comes on top of it)
-    state.skyBase = task().kind === 'slider' ? state.skyLimit : task().limit || level().limit;
+    state.skyBase = task().kind === 'slider' && !task().nights ? state.skyLimit : task().limit || level().limit;
     state.ramp = slow && Math.abs(light - (state.light || 0)) > 0.01
       ? { from: state.light || 0, to: light, t0: performance.now(), dur: 1500 } : null;
     if (!state.ramp) {
@@ -3425,10 +3654,14 @@
     }
     // (the slider is done with, and leaves room for the view, or on a
     // steady level only goes out of sight)
-    $('slider').classList.add(level().steady ? 'waiting' : 'hidden');
+    // (the one between two nights stays, to play with, with the button to
+    // finish beside it)
+    if (k.nights) $('slider').classList.add('free');
+    else $('slider').classList.add(level().steady ? 'waiting' : 'hidden');
     sfx.snap();
     later(200, () => sfx.note(state.ti + 2));
     showFact();
+    if (k.nights) $('nextBtn').classList.add('hidden');
     relayoutTop();
     // (on a random level the figure shows at once, as the one found)
     if (k.autoDraw && level().random) {
@@ -3676,6 +3909,18 @@
       solve();
       return;
     }
+    // one of the stars of `finds`: it gets its name and a ring, and when all
+    // of them are found, the task is done
+    if (k.finds && k.finds.includes(s.key) && !state.got.has(s.key)) {
+      state.got.add(s.key);
+      if (known(s)) state.named.add(s.key);
+      if (state.got.size === k.finds.length) solve();
+      else {
+        sfx.snap();
+        sfx.note(state.got.size);
+      }
+      return;
+    }
     // a guide star, and then another one, draw the line between them (any
     // star of the belt, when the line is along it)
     const g = [k.from, k.via, ...(k.along || [])].filter(Boolean);
@@ -3706,7 +3951,8 @@
     }
     // on a level that looks at the horizon, a drag from the sky away from
     // the stars turns the view sideways, also while a fact shows
-    if (level().look && (state.phase === 'task' || state.phase === 'fact') && task().kind !== 'trace' && !pick(pointAt(e))) {
+    // (and with the slider between two nights, anywhere)
+    if ((state.phase === 'task' || state.phase === 'fact') && ((level().look && task().kind !== 'trace' && !pick(pointAt(e))) || task().nights)) {
       try { area.setPointerCapture(e.pointerId); } catch (err) { /* a pointer that is gone already */ }
       state.pan = null;
       const p = pointAt(e);
@@ -3739,6 +3985,11 @@
     if (d.mode === 'look') {
       if (Math.hypot(p.x - d.p0.x, p.y - d.p0.y) > 10) d.moved = true;
       if (!d.moved) return;
+      if (task().nights) {
+        state.lookOff = clamp(d.off0 - (p.x - d.x0) / (state.cam.s * DEG), -60, 60);
+        state.cam = taskView();
+        return;
+      }
       if (level().look) {
         const base = fitView(skyKeys());
         const [lo, hi] = lookLimits(base);
@@ -3796,7 +4047,7 @@
         '<span class="level-about"></span></span><span class="done-badge"></span>';
       b.addEventListener('click', () => {
         state.level = i;
-        store.set('level', i);
+        store.set('levelId', lv.id);
         sfx.pick();
         updateMenu();
       });
@@ -3850,6 +4101,7 @@
     const keep = { th: state.th, day: state.day, limit: state.limit, named: state.named };
     state.day = false;
     state.limit = level().limit;
+    if (level().mapWhen) state.th = siderealTime(level().mapWhen);
     // (with the figures shown only for a while, as the Winter Triangle)
     state.figs = new Set([...figs, ...state.tasks.flatMap((k) => [k.figure, k.autoDraw]).filter(Boolean)]);
     if (level().sweep) {
@@ -4035,7 +4287,7 @@
   $('againBtn').addEventListener('click', startGame);
   $('nextLevelBtn').addEventListener('click', () => {
     state.level = Math.min(state.level + 1, LEVELS.length - 1);
-    store.set('level', state.level);
+    store.set('levelId', level().id);
     startGame();
   });
 
@@ -4052,6 +4304,10 @@
   // the full Moon) to a dark one; done when the faint stars of Väike Vanker
   // show, and the slider has stayed there a moment.
   $('skyRange').addEventListener('input', () => {
+    if (task() && task().nights && (state.phase === 'task' || state.phase === 'fact')) {
+      slideNights();
+      return;
+    }
     if (state.phase !== 'task' || task().kind !== 'slider') return;
     const v = +$('skyRange').value / 100;
     state.skyLimit = SKY_BRIGHT + (SKY_DARK - SKY_BRIGHT) * v;
@@ -4065,6 +4321,46 @@
     }
     if (v >= 0.85 && !task().free) later(1200, () => { if (state.phase === 'task' && +$('skyRange').value >= 85) solve(); });
   });
+
+  // The slider between two nights: the date goes by whole days and the hour
+  // smoothly, so that the sky turns evenly and the twilight follows the real
+  // Sun. At either end the caption is that night's, and between them it
+  // names the season, with the minutes. Done when the slider has stayed
+  // near the first night a moment.
+  function slideNights() {
+    const k = task();
+    const v = +$('skyRange').value / 100;
+    const [ms0, ms1] = k.nights;
+    const days = Math.round((ms1 - ms0) / 86400000);
+    const rest = ms1 - ms0 - days * 86400000;
+    const ms = Math.round((ms0 + Math.round(v * days) * 86400000 + v * rest) / 60000) * 60000;
+    state.when = ms;
+    state.th = siderealTime(ms);
+    const ends = state.tasks.filter((x) => x.when);
+    const end = v <= 0 ? level() : v >= 1 ? ends[ends.length - 1] : null;
+    state.capMin = !end;
+    if (end) state.caption = end.caption;
+    else {
+      const d = new Date(ms + TZ * 3600000);
+      state.caption = {};
+      for (const lang of ['et', 'en']) {
+        const T = TEXT[lang];
+        const date = T.date(d.getUTCDate(), T.months[d.getUTCMonth()]);
+        // (an evening in September, and a night before it)
+        state.caption[lang] = T.nightAt(T.seasons[d.getUTCMonth()], d.getUTCMonth() >= 8, date, T.clockMin(d.getUTCHours(), d.getUTCMinutes()));
+      }
+    }
+    $('when').textContent = caption();
+    skyLight();
+    state.lastAct = performance.now();
+    const step = Math.min(4, Math.floor(v * 5));
+    if (step !== state.skyStep) {
+      state.skyStep = step;
+      sfx.note(4 - step);
+    }
+    if (v <= 0.1 && state.phase === 'task') later(1200, () => { if (state.phase === 'task' && +$('skyRange').value <= 10) solve(); });
+  }
+
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
   // On a phone the tap that finds the last star goes on as a click on the

@@ -108,6 +108,8 @@
 .sky-slider.free input, .sky-slider.free .sky-labels { grid-column: 1; }
 .sky-slider.free .btn { grid-column: 2; grid-row: 1 / span 2; font-size: 1.05rem; padding: 8px 16px; }
 .sky-labels { display: flex; justify-content: space-between; font-size: 0.95rem; font-weight: 700; line-height: 1.2; color: var(--muted); }
+/* (between two nights, the months at its ends instead) */
+.sky-slider:not(.nights) .nights-labels, .sky-slider.nights .sky-labels:not(.nights-labels) { display: none; }
 
 /* the date and the hour, on level 2, with the button to finish beside them */
 .sky-slider.explore {
