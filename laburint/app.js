@@ -314,7 +314,9 @@
   // `cells`: about this many cells along the longer side of the maze, each at
   // least `min` px, so that a finger can follow the paths. `match`: the task
   // shows the picture to find, otherwise its name. `decoys`: how many wrong
-  // pictures. `dark`: the maze is seen only where the rocket has been.
+  // pictures. `same`: the decoys are the same kind of thing as the picture to
+  // find. `dark`: the maze is seen only where the rocket has been, and with
+  // `lamp` only around the rocket, as the dark comes back behind it.
   // `count`: a picture found here, without first going to a wrong one or
   // asking for a hint, adds to how many times it has been found.
   const LEVELS = [
@@ -322,7 +324,8 @@
     { icon: '🌀', cells: 13, min: 34, match: true, decoys: 1 },
     { icon: '🔤', cells: 13, min: 34, match: false, decoys: 1, count: true },
     { icon: '🎯', cells: 17, min: 28, match: false, decoys: 2, count: true },
-    { icon: '🌑', cells: 17, min: 28, match: false, decoys: 2, dark: true, count: true }
+    { icon: '🌑', cells: 17, min: 28, match: false, decoys: 2, dark: true, count: true },
+    { icon: '🔦', cells: 17, min: 28, match: false, decoys: 2, same: true, dark: true, lamp: true, count: true }
   ];
 
   const SPEED = 9; // cells a second
@@ -339,11 +342,12 @@
         { name: 'Suurem labürint', about: 'Sama pilt, aga pikem tee' },
         { name: 'Pildi nimi', about: 'Üleval on pildi asemel selle nimi' },
         { name: 'Kolm pilti', about: 'Kaks pilti kolmest on valed ja labürint on veel suurem' },
-        { name: 'Pime labürint', about: 'Labürint paistab ainult seal, kus rakett on lennanud' }
+        { name: 'Pime labürint', about: 'Labürint paistab ainult seal, kus rakett on lennanud' },
+        { name: 'Sarnased pildid', about: 'Kõik kolm pilti on sama liiki ja labürint paistab ainult raketi ümber' }
       ],
       play: 'Mängi',
       foundTitle: 'Nime järgi leitud pildid',
-      foundAbout: 'Tasemetel 3–5 loeb pilt siis, kui rakett jõuab selleni enne ühtegi valet pilti ja ilma vihjeta.',
+      foundAbout: 'Tasemetel 3–6 loeb pilt siis, kui rakett jõuab selleni enne ühtegi valet pilti ja ilma vihjeta.',
       clear: '🗑️ Kustuta skoor',
       clearAsk: 'Kas kustutada kõigi piltide skoor?',
       flyMatch: 'Lenda raketiga selle pildini:',
@@ -371,11 +375,12 @@
         { name: 'Bigger maze', about: 'The same picture, but a longer way' },
         { name: 'The name', about: 'The name of the picture instead of the picture' },
         { name: 'Three pictures', about: 'Two of the three pictures are wrong, in an even bigger maze' },
-        { name: 'Dark maze', about: 'You see the maze only where the rocket has been' }
+        { name: 'Dark maze', about: 'You see the maze only where the rocket has been' },
+        { name: 'Look-alikes', about: 'All three pictures are the same kind of thing, and you see the maze only around the rocket' }
       ],
       play: 'Play',
       foundTitle: 'Pictures found by name',
-      foundAbout: 'On levels 3–5 a picture counts when the rocket gets to it before any wrong picture, and without a hint.',
+      foundAbout: 'On levels 3–6 a picture counts when the rocket gets to it before any wrong picture, and without a hint.',
       clear: '🗑️ Clear the counts',
       clearAsk: 'Clear the counts of all the pictures?',
       flyMatch: 'Fly the rocket to this picture:',
@@ -660,21 +665,29 @@
 
     if (level().dark) {
       // the dark over the maze, with the places the rocket has been cleared again
-      const f = fogCv.getContext('2d');
-      f.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const pad = m.c * 0.3;
-      f.fillStyle = '#0b1238';
-      f.beginPath();
-      f.roundRect(m.x - pad, m.y - pad, m.cols * m.c + 2 * pad, m.rows * m.c + 2 * pad, Math.min(22, m.c * 0.4));
-      f.fill();
-      state.seen.forEach((i) => reveal(...center(m, i)));
+      fillDark();
+      if (!level().lamp) state.seen.forEach((i) => reveal(...center(m, i)));
     }
+  }
+
+  // the dark over the whole maze
+  function fillDark() {
+    const m = state.m;
+    const f = fogCv.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    f.setTransform(dpr, 0, 0, dpr, 0, 0);
+    f.clearRect(0, 0, state.L.W, state.L.H);
+    const pad = m.c * 0.3;
+    f.fillStyle = '#0b1238';
+    f.beginPath();
+    f.roundRect(m.x - pad, m.y - pad, m.cols * m.c + 2 * pad, m.rows * m.c + 2 * pad, Math.min(22, m.c * 0.4));
+    f.fill();
   }
 
   // clear the dark around a point of the field
   function reveal(x, y) {
     const f = fogCv.getContext('2d');
-    const r = state.m.c * 1.7;
+    const r = state.m.c * (level().lamp ? 2.2 : 1.7);
     const g = f.createRadialGradient(x, y, r * 0.45, x, y, r);
     g.addColorStop(0, 'rgba(0, 0, 0, 1)');
     g.addColorStop(1, 'rgba(0, 0, 0, 0)');
@@ -758,7 +771,9 @@
     ctx.stroke();
 
     if (level().dark) {
-      if (!state.fly) reveal(rx, ry);
+      // with the lamp, only the rocket lights the maze, even as it flies into a picture
+      if (level().lamp) fillDark();
+      if (!state.fly || level().lamp) reveal(rx, ry);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.drawImage(fogCv, 0, 0);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -998,11 +1013,17 @@
   // ---------------------------------------------------------------------------
 
   // The picture to find, not one of the last few, and decoys of other kinds,
-  // and of different kinds from each other when there are enough.
+  // and of different kinds from each other when there are enough. Or, on the
+  // level of look-alikes, decoys of the same kind: so the picture to find is a
+  // nebula or a galaxy, the kinds with enough pictures.
   function makeSet() {
-    const target = shuffle(PHOTOS.filter((p) => !state.last.includes(p.file)))[0];
+    const same = level().same;
+    const ofKind = (k) => PHOTOS.filter((q) => q.kind === k);
+    const target = shuffle(PHOTOS.filter((p) => !state.last.includes(p.file)
+      && (!same || ofKind(p.kind).length > level().decoys)))[0];
     state.last = [target.file, ...state.last].slice(0, 10);
     const set = [target];
+    if (same) return set.concat(shuffle(ofKind(target.kind).filter((q) => q !== target)).slice(0, level().decoys));
     for (let d = 0; d < level().decoys; d++) {
       let pool = PHOTOS.filter((q) => !set.some((s) => s.kind === q.kind));
       if (!pool.length) pool = PHOTOS.filter((q) => q.kind !== target.kind && !set.includes(q));

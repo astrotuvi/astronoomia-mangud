@@ -125,16 +125,17 @@ The planets are drawn pixel by pixel in `shared/planets.js` rather than taken fr
   3. Pildi nimi: the task gives the photo's name instead, e.g. "Lenda raketiga pildini, millel on Orioni udu"
   4. Kolm pilti: two wrong photos, two of the three on one side, in a maze of about 17 cells across
   5. Pime labürint: as Kolm pilti, but the maze is seen only where the rocket has been
+  6. Sarnased pildid: as Pime labürint, but the three photos are all nebulae or all galaxies, and the maze is seen only around the rocket, as the dark comes back behind it
 - Drag a finger or the mouse along a path, or tap a cell a few steps away, and the rocket flies there. It cannot go through walls, and a tap too far away does nothing. On a computer the arrow keys move it too. A faint yellow trail shows the way from the start, without the dead ends flown back out of.
 - At a wrong photo, the photo shakes and dims, and a card says what it is, with its fact, and asks to try another one.
 - At the right photo, the rocket flies into it, and the win screen shows the photo large with its name, fact and credit. A 🌟 marks the levels done in the menu.
 - 💡 lights up the way to the right photo for a moment. If nothing happens at the start, a 👆 shows under the rocket.
 
-Every maze has one way between any two cells, with long winding paths: mazes with more side paths turned out easier, as the way through is shorter. The ways out are about equally far from the start, so the nearest photo does not give the answer, and the way to one never goes past another. The cells are at least 40 px wide on level 1, 34 px on levels 2–3 and 28 px on levels 4–5, so a finger can follow the paths on a phone.
+Every maze has one way between any two cells, with long winding paths: mazes with more side paths turned out easier, as the way through is shorter. The ways out are about equally far from the start, so the nearest photo does not give the answer, and the way to one never goes past another. The cells are at least 40 px wide on level 1, 34 px on levels 2–3 and 28 px on levels 4–6, so a finger can follow the paths on a phone.
 
-The wrong photos are always a different kind of object from the right one (a galaxy, a nebula, a comet, a planet …) and from each other where they can be. While the page is open, a photo to find does not come again in the next 10 games. The game uses the photos in `pusle/images/`; the list, with the kind of each, is at the top of `laburint/app.js`.
+The wrong photos are a different kind of object from the right one (a galaxy, a nebula, a comet, a planet …) and from each other where they can be, except on Sarnased pildid, where they are the same kind: so there the photo to find is a nebula or a galaxy, the only kinds with three photos or more. While the page is open, a photo to find does not come again in the next 10 games. The game uses the photos in `pusle/images/`; the list, with the kind of each, is at the top of `laburint/app.js`.
 
-On levels 3–5, where the task gives the photo's name, the browser keeps count of how many times each photo has been found, under `laburint.found` in its local storage, e.g. `{"orion": 2, "crab": 1}`. A photo counts only when the rocket gets to it before going to any wrong one, and without 💡. The menu shows every photo with its count, below the Mängi button, the most found first; the ones not found yet are dimmed. 🗑️ below them clears the counts, after the browser asks to be sure.
+On levels 3–6, where the task gives the photo's name, the browser keeps count of how many times each photo has been found, under `laburint.found` in its local storage, e.g. `{"orion": 2, "crab": 1}`. A photo counts only when the rocket gets to it before going to any wrong one, and without 💡. The menu shows every photo with its count, below the Mängi button, the most found first; the ones not found yet are dimmed. 🗑️ below them clears the counts, after the browser asks to be sure.
 
 ## Kuu faasid
 
