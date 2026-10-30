@@ -1145,8 +1145,8 @@
           kind: 'calendar', goal: (h) => h.cas >= 82, snap: (h) => Math.abs(h.ms - Date.UTC(2028, 0, 15, 16, 1)),
           title: { et: 'Pea kohal!', en: 'Overhead!' },
           text: {
-            et: 'Kalender näitab õhtuid alati kaks tundi pärast päikeseloojangut, kui taevas on just pimedaks läinud. Liiguta kalendrit, kuni Kassiopeia on pea kohal.',
-            en: 'The calendar shows the evenings always two hours after sunset, when the sky has just got dark. Move the calendar until Cassiopeia is overhead.'
+            et: 'Liuguriga saad valida õhtu septembrist maini. Taevas on alati kaks tundi pärast päikeseloojangut, kui on just pimedaks läinud. Liiguta liugurit, kuni Kassiopeia on pea kohal.',
+            en: 'With the slider you can choose an evening from September to May. The sky is always two hours after sunset, when it has just got dark. Move the slider until Cassiopeia is overhead.'
           },
           fact: {
             et: 'Talvel läheb pimedaks varem, nii et sügisel paistab õhtune taevas pikka aega peaaegu samasugune.',
@@ -1170,8 +1170,8 @@
           kind: 'calendar', goal: (h) => Math.abs(h.cas - h.uma) <= 6, snap: (h) => Math.abs(h.cas - h.uma),
           title: { et: 'Ühekõrgusel!', en: 'Equally high!' },
           text: {
-            et: 'Liiguta kalendrit, kuni Kassiopeia ja Suur Vanker on ühekõrgusel.',
-            en: 'Move the calendar until Cassiopeia and the Big Dipper are equally high.'
+            et: 'Liiguta liugurit, kuni Kassiopeia ja Suur Vanker on ühekõrgusel.',
+            en: 'Move the slider until Cassiopeia and the Big Dipper are equally high.'
           },
           fact: {
             et: 'Nüüd on nad Põhjanaelast eri pool ühekõrgusel. Kui üks läheb kõrgemale, läheb teine madalamale.',
@@ -1184,8 +1184,8 @@
           kind: 'calendar', goal: (h) => h.cas <= h.low + 1, snap: (h) => Math.abs(h.ms - Date.UTC(2028, 4, 15, 20, 36)),
           title: { et: 'Madalal!', en: 'Low down!' },
           text: {
-            et: 'Liiguta kalendrit, kuni Kassiopeia on madalal põhjas.',
-            en: 'Move the calendar until Cassiopeia is low in the north.'
+            et: 'Liiguta liugurit, kuni Kassiopeia on madalal põhjas.',
+            en: 'Move the slider until Cassiopeia is low in the north.'
           },
           fact: {
             et: 'Kassiopeia on nüüd peaaegu nii madalal, kui ta Eestis üldse käib.',
@@ -1205,8 +1205,8 @@
           // the calendar to play with, from where it is, until they press Valmis
           kind: 'calendar', free: true,
           text: {
-            et: 'Liiguta kalendrit ise. Kassiopeia ei looju Eestis kunagi: ka kõige madalamal on ta umbes 25 kraadi kõrgusel, puudest kõrgemal.',
-            en: 'Move the calendar yourself. Cassiopeia never sets in Estonia: even at her lowest she is about 25 degrees up, above the trees.'
+            et: 'Liiguta liugurit ise. Kassiopeia ei looju Eestis kunagi: ka kõige madalamal on ta umbes 25 kraadi kõrgusel, puudest kõrgemal.',
+            en: 'Move the slider yourself. Cassiopeia never sets in Estonia: even at her lowest she is about 25 degrees up, above the trees.'
           }
         }
       ]
@@ -1693,7 +1693,7 @@
       nightAt: (season, evening, date, clock) => `${season}${evening ? 'õhtu' : 'öö'}, ${date} ${clock}`,
       june: 'Juuni',
       september: 'September',
-      calLabel: 'Kalender',
+      calLabel: 'Kuupäev',
       calMonths: ['September', 'Jaanuar', 'Mai'],
       lookAgain: 'Vaata Kassiopeiat veel kord!',
       lightSky: 'Taevas on hele: Päike on horisondi lähedal ja paistavad ainult heledamad tähed.',
@@ -1760,7 +1760,7 @@
       nightAt: (season, evening, date, clock) => `A ${season} ${evening ? 'evening' : 'night'}, ${date} at ${clock}`,
       june: 'June',
       september: 'September',
-      calLabel: 'Calendar',
+      calLabel: 'Date',
       calMonths: ['September', 'January', 'May'],
       lookAgain: 'Look at Cassiopeia again!',
       lightSky: 'The sky is light: the Sun is near the horizon, and only the brighter stars show.',
@@ -3577,12 +3577,8 @@
     if (level().sweep) return sweepView();
     if (task() && task().nights) return nightsView();
     // (the calendar's view stays put round Põhjanael, wide enough for
-    // Kassiopeia overhead and Suur Vanker low; the one to play with can be
-    // turned sideways round the sky, by `state.lookOff`)
-    if (task() && task().kind === 'calendar') {
-      const cam = ringView(level().center);
-      return task().free ? Object.assign(cam, { az: cam.az + state.lookOff }) : cam;
-    }
+    // Kassiopeia overhead and Suur Vanker low)
+    if (task() && task().kind === 'calendar') return ringView(level().center);
     if (task() && (task().kind === 'explore' || task().wide) && level().center) return ringView(level().center);
     if (level().look) return lookView(fitView(skyKeys()));
     if (level().random) return offView(fitView(viewKeys()), task().off, viewKeys());
@@ -3712,7 +3708,7 @@
     state.sel = null;
     state.got = new Set();
     state.capMin = false;
-    if (k.nights || k.kind === 'calendar') state.lookOff = 0;
+    if (k.nights) state.lookOff = 0;
     state.lit = 0;
     state.doneAt = 0;
     state.litAt = [];
@@ -3720,7 +3716,7 @@
     state.lastAct = performance.now();
     state.lastStep = performance.now();
     showTask();
-    if (k.nights || (k.kind === 'calendar' && k.free)) $('tip').textContent = t('dragSky');
+    if (k.nights) $('tip').textContent = t('dragSky');
     // (a text only to read: straight to it, with the button; with a photo,
     // its text while the view goes there, and its fact with the photo)
     if (k.kind === 'note') {
@@ -4395,10 +4391,8 @@
     }
     // on a level that looks at the horizon, a drag from the sky away from
     // the stars turns the view sideways, also while a fact shows
-    // (and with the slider between two nights, or the calendar to play
-    // with, anywhere)
-    if ((state.phase === 'task' || state.phase === 'fact') && ((level().look && task().kind !== 'trace' && !pick(pointAt(e))) || task().nights ||
-        (task().kind === 'calendar' && task().free))) {
+    // (and with the slider between two nights, anywhere)
+    if ((state.phase === 'task' || state.phase === 'fact') && ((level().look && task().kind !== 'trace' && !pick(pointAt(e))) || task().nights)) {
       try { area.setPointerCapture(e.pointerId); } catch (err) { /* a pointer that is gone already */ }
       state.pan = null;
       const p = pointAt(e);
@@ -4435,12 +4429,6 @@
       if (!d.moved) return;
       if (task().nights) {
         state.lookOff = clamp(d.off0 - (p.x - d.x0) / (state.cam.s * DEG), -60, 60);
-        state.cam = taskView();
-        return;
-      }
-      // (the calendar to play with, all the way round)
-      if (task().kind === 'calendar') {
-        state.lookOff = ((d.off0 - (p.x - d.x0) / (state.cam.s * DEG)) % 360 + 540) % 360 - 180;
         state.cam = taskView();
         return;
       }

@@ -676,7 +676,7 @@ in the middle of May. In June two hours after sunset is after 23:00, with
 the Sun only 8° below the horizon, so the slider stops at May. The caption
 follows it, with the minutes, e.g. "Talveõhtu, 15. jaanuar kell 18.02",
 and the hour of summer time in brackets when it is on. The player does not
-set a date given in the text, as on level 9, but moves the calendar until
+set a date given in the text, as on level 9, but moves the slider until
 the sky looks as the task says, so that they watch the sky while they move
 it.
 
@@ -721,9 +721,10 @@ on, so a fact says why.
        ("Cassiopeia and the Big Dipper are on opposite sides of the North
        Star. Cassiopeia's five bright stars are like a big letter W or
        M.")
-2. **"Liiguta kalendrit, kuni Kassiopeia on pea kohal."** ("Move the
-   calendar until Cassiopeia is overhead.") The text first says that the
-   calendar shows the evenings always two hours after sunset. Done when
+2. **"Liiguta liugurit, kuni Kassiopeia on pea kohal."** ("Move the
+   slider until Cassiopeia is overhead.") The text first says that the
+   slider chooses an evening from September to May, always two hours
+   after sunset. Done when
    the slider has stayed for a moment where she is at least 82° up, from
    about 31 December to 20 January; there it snaps to 15 January, as she
    is clearly an M only from about 14 January. On the way, from September
@@ -734,13 +735,13 @@ on, so a fact says why.
      long time.")
    - **W või M:** "Kas Kassiopeia on praegu W või M?" ("Is Cassiopeia a W
      or an M now?") M, with two buttons in the card. The view zooms in on
-     her, still facing north, and the calendar stays, still. A wrong
+     her, still facing north, and the slider stays, still. A wrong
      answer shakes its button: "Vaata Kassiopeiat veel kord!" ("Look at
      Cassiopeia again!")
      - Fact: "Kui vaatad põhja poole, on pea kohal olev Kassiopeia nagu
        M." ("When you face north, Cassiopeia overhead looks like an M.")
-3. **"Liiguta kalendrit, kuni Kassiopeia ja Suur Vanker on
-   ühekõrgusel."** ("Move the calendar until Cassiopeia and the Big Dipper
+3. **"Liiguta liugurit, kuni Kassiopeia ja Suur Vanker on
+   ühekõrgusel."** ("Move the slider until Cassiopeia and the Big Dipper
    are equally high.") Done when the slider has stayed for a moment where
    they are within 6° of each other, from about 3 to 12 March; there it
    snaps to 8 March, when they are most alike, as on the slider the days
@@ -749,8 +750,8 @@ on, so a fact says why.
      kõrgemale, läheb teine madalamale." ("Now they are equally high, on
      either side of the North Star. When one goes higher, the other goes
      lower.")
-4. **"Liiguta kalendrit, kuni Kassiopeia on madalal põhjas."** ("Move the
-   calendar until Cassiopeia is low in the north.") Done when the slider
+4. **"Liiguta liugurit, kuni Kassiopeia on madalal põhjas."** ("Move the
+   slider until Cassiopeia is low in the north.") Done when the slider
    has stayed for a moment from about 23 April to 19 May, when she is
    within 1° of her lowest; there it snaps to 15 May, as she is clearly a
    W only from about 8 May.
@@ -762,13 +763,11 @@ on, so a fact says why.
        kohal. Talvel oli vastupidi." ("When Cassiopeia is low, the Big
        Dipper is almost overhead. In winter it was the other way round.")
 5. **The slider to play with**, from where it is, with Valmis beside it,
-   and in its text: "Liiguta kalendrit ise. Kassiopeia ei looju Eestis
+   and in its text: "Liiguta liugurit ise. Kassiopeia ei looju Eestis
    kunagi: ka kõige madalamal on ta umbes 25 kraadi kõrgusel, puudest
-   kõrgemal." ("Move the calendar yourself. Cassiopeia never sets in
+   kõrgemal." ("Move the slider yourself. Cassiopeia never sets in
    Estonia: even at her lowest she is about 25 degrees up, above the
-   trees.") The sky can be dragged sideways here, all the way round the
-   horizon, with the tip "Lohista taevast, et vaadata rohkem itta või
-   läände."
+   trees.")
 
 The win map is the sky of a May evening, with faint grey copies of
 Kassiopeia and Suur Vanker where they were on a January evening, so that
