@@ -656,7 +656,7 @@ low in the north to high up.
 The view looks north, at the pole, as in the free play of level 2, wide
 enough for Kassiopeia overhead and Suur Vanker low: about 100°. Suur
 Vanker is drawn at the start, and Põhjanael named. From the second task
-there is a date slider, from 1 September to 31 May; the hour follows it,
+there is a date slider, with September, Jaanuar and Mai along it, from 1 September to 31 May; the hour follows it,
 two hours after that day's sunset, from about 17:30 in December to 22:30
 in the middle of May. In June two hours after sunset is after 23:00, with
 the Sun only 8° below the horizon, so the slider stops at May. The caption
@@ -672,9 +672,9 @@ lighter, 12° on 1 May and 10° on 15 May.
 
 | Date | Hour | Kassiopeia | Suur Vanker |
 |---|---|---|---|
-| 15 September | 20:36 | 53° up, north-east, tilted | 36°, north-west |
+| 15 September | 20:37 | 53° up, north-east, tilted | 36°, north-west |
 | 15 November | 17:59 | 63°, north-east | 30° |
-| 15 January | 18:02 | 84°, almost overhead, an M, level | 25°, low in the north; the end of the handle 17° |
+| 15 January | 18:01 | 84°, almost overhead, an M, level | 25°, low in the north; the end of the handle 17° |
 | about 8 March | about 20:00 | about 48° | about 48° |
 | 1–15 May | 22:04–22:34 | 28–29°, low in the north, a W, as low as she goes, tilted 22° on 1 May and 11° on 15 May | 76–82°, almost overhead |
 
@@ -689,57 +689,75 @@ May she moves fast. That is how it is in the sky, but not the rule of
 level 2, where the same hour three months later is a quarter of a turn
 on, so a fact says why.
 
-1. **15 September, 20:36 (21:36 summer time):**
-   - **Kassiopeia**, a hop: "Leia Kassiopeia. Tõmba joon sealt, kus Suure
-     Vankri ais on kasti küljes, läbi Põhjanaela ja jätka seda umbes sama
-     kaugele." ("Find Cassiopeia. Draw a line from where the Big Dipper's
-     handle meets the bowl, through the North Star, and carry it on about
-     as far.") From Megrez, 33.6° to Põhjanael, and on 30° to the end of
-     the W, 1.5° off the line; any star of Kassiopeia counts. (From
-     Alioth, the handle star next to the bowl, the line hits the middle of
-     the W, 0.2° off, but that star is harder to name.)
-   - **Joonista Kassiopeia**, the figure of Tähtkujud.
-     - Fact: "Kassiopeia ja Suur Vanker on Põhjanaelast eri pool."
+1. **15 September, 20:37 (21:37 summer time):**
+   - **Kassiopeia**, a hop: "Leia Kassiopeia. Tõmba joon Suure Vankri aisa
+     keskmisest tähest läbi Põhjanaela ja jätka seda umbes sama kaugele."
+     ("Find Cassiopeia. Draw a line from the middle star of the Big
+     Dipper's handle through the North Star, and carry it on about as
+     far.") From Miitsar, 35.8° to Põhjanael, and on 29.1° to the fourth
+     star of the W, 0.1° off the line; any star of Kassiopeia counts.
+     Miitsar is bright and easy to name; from Megrez, where the handle
+     meets the bowl, the line hits the end of the W, 1.5° off, but Megrez
+     is the faintest star of Suur Vanker. In the wide view the guide stars
+     that pulse win a tap near them, so that a tap there is not taken for
+     a brighter star beside them.
+   - **Joonista Kassiopeia**, the figure of Tähtkujud, close up.
+     - Fact: "Kassiopeia ja Suur Vanker on Põhjanaelast eri pool.
+       Kassiopeia viis heledat tähte on nagu suur W- või M-täht."
        ("Cassiopeia and the Big Dipper are on opposite sides of the North
-       Star.")
+       Star. Cassiopeia's five bright stars are like a big letter W or
+       M.")
 2. **"Liiguta kalendrit, kuni Kassiopeia on pea kohal."** ("Move the
-   calendar until Cassiopeia is overhead.") Done when the slider has
-   stayed for a moment where she is at least 82° up, about the first
-   three weeks of January. On the way, from September to December, she
-   hardly moves.
+   calendar until Cassiopeia is overhead.") The text first says that the
+   calendar shows the evenings always two hours after sunset. Done when
+   the slider has stayed for a moment where she is at least 82° up, from
+   about 31 December to 20 January; there it snaps to 15 January, as she
+   is clearly an M only from about 14 January. On the way, from September
+   to December, she hardly moves.
    - Fact: "Talvel läheb pimedaks varem, nii et sügisel paistab õhtune
      taevas pikka aega peaaegu samasugune." ("In winter it gets dark
      earlier, so in autumn the evening sky looks almost the same for a
      long time.")
    - **W või M:** "Kas Kassiopeia on praegu W või M?" ("Is Cassiopeia a W
-     or an M now?") M.
+     or an M now?") M, with two buttons in the card. The view zooms in on
+     her, still facing north, and the calendar stays, still. A wrong
+     answer shakes its button: "Vaata Kassiopeiat veel kord!" ("Look at
+     Cassiopeia again!")
      - Fact: "Kui vaatad põhja poole, on pea kohal olev Kassiopeia nagu
        M." ("When you face north, Cassiopeia overhead looks like an M.")
 3. **"Liiguta kalendrit, kuni Kassiopeia ja Suur Vanker on
    ühekõrgusel."** ("Move the calendar until Cassiopeia and the Big Dipper
    are equally high.") Done when the slider has stayed for a moment where
-   they are within 3° of each other, about the first half of March.
+   they are within 6° of each other, from about 3 to 12 March; there it
+   snaps to 8 March, when they are most alike, as on the slider the days
+   are only a pixel or so apart.
    - Fact: "Nüüd on nad Põhjanaelast eri pool ühekõrgusel. Kui üks läheb
      kõrgemale, läheb teine madalamale." ("Now they are equally high, on
      either side of the North Star. When one goes higher, the other goes
      lower.")
 4. **"Liiguta kalendrit, kuni Kassiopeia on madalal põhjas."** ("Move the
    calendar until Cassiopeia is low in the north.") Done when the slider
-   has stayed for a moment from about 25 April on, when she is within 2°
-   of her lowest.
-   - **W või M:** "Kas Kassiopeia on nüüd W või M?" W.
+   has stayed for a moment from about 23 April to 19 May, when she is
+   within 1° of her lowest; there it snaps to 15 May, as she is clearly a
+   W only from about 8 May.
+   - Fact: "Kassiopeia on nüüd peaaegu nii madalal, kui ta Eestis üldse
+     käib." ("Cassiopeia is now almost as low as she ever goes in
+     Estonia.")
+   - **W või M:** "Kas Kassiopeia on nüüd W või M?" W, as before.
      - Fact: "Kui Kassiopeia on madalal, on Suur Vanker peaaegu pea
        kohal. Talvel oli vastupidi." ("When Cassiopeia is low, the Big
        Dipper is almost overhead. In winter it was the other way round.")
-5. **The slider to play with**, from where it is, with Valmis beside it.
-   - Fact: "Kassiopeia ei looju Eestis kunagi. Ka kõige madalamal on ta
-     umbes 25 kraadi kõrgusel, puudest kõrgemal." ("Cassiopeia never sets
-     in Estonia. Even at her lowest she is about 25 degrees up, above the
-     trees.")
+5. **The slider to play with**, from where it is, with Valmis beside it,
+   and in its text: "Liiguta kalendrit ise. Kassiopeia ei looju Eestis
+   kunagi: ka kõige madalamal on ta umbes 25 kraadi kõrgusel, puudest
+   kõrgemal." ("Move the calendar yourself. Cassiopeia never sets in
+   Estonia: even at her lowest she is about 25 degrees up, above the
+   trees.")
 
 The win map is the sky of a May evening, with faint grey copies of
 Kassiopeia and Suur Vanker where they were on a January evening, so that
-the two ends of their half turn are seen together across Põhjanael.
+the two ends of their half turn are seen together across Põhjanael. The
+dates, 15 May and 15 January, are above the two Kassiopeias.
 
 ### Andromeeda galaktika
 

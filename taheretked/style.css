@@ -111,6 +111,32 @@
 /* (between two nights, the months at its ends instead) */
 .sky-slider:not(.nights) .nights-labels, .sky-slider.nights .sky-labels:not(.nights-labels) { display: none; }
 
+/* the calendar of evenings, with its months where they are along it; still
+   while a question is asked about the sky it shows */
+.sky-slider.calendar { width: min(420px, calc(100% - 32px)); }
+.calendar input:disabled { opacity: 0.45; cursor: default; }
+.cal-labels { position: relative; height: 1.2em; }
+.cal-labels span { position: absolute; top: 0; translate: -50% 0; white-space: nowrap; }
+.cal-labels span:first-child { translate: 0 0; }
+.cal-labels span:last-child { translate: -100% 0; }
+.sky-slider.calendar:not(.free) #calDone { display: none; }
+.sky-slider.calendar.free {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 14px;
+  align-items: center;
+  width: min(520px, calc(100% - 16px));
+}
+.sky-slider.calendar.free input, .sky-slider.calendar.free .sky-labels { grid-column: 1; }
+.sky-slider.calendar.free .btn { grid-column: 2; grid-row: 1 / span 2; font-size: 1.05rem; padding: 8px 16px; }
+
+/* the answers to a question, in the card */
+.choices { display: flex; justify-content: center; gap: 14px; margin-top: 8px; }
+.choices .btn { margin: 0; min-width: 4.5em; font-size: 1.5rem; font-weight: 900; padding: 6px 22px; pointer-events: auto; }
+.choices .btn.oops { animation: oops 0.4s; }
+.choices .btn.right { background: var(--accent); color: #1b1b3a; box-shadow: 0 5px 0 var(--accent-dark); }
+@keyframes oops { 25% { translate: -6px 0; } 75% { translate: 6px 0; } }
+
 /* the date and the hour, on level 2, with the button to finish beside them */
 .sky-slider.explore {
   display: grid;

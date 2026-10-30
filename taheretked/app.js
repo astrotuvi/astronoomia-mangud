@@ -92,6 +92,12 @@
     theAql: S(302.83, -0.82, 3.2, 'θ Aql'),
     zetAql: S(286.35, 13.86, 3.0, 'ζ Aql'),
     lamAql: S(286.56, -4.88, 3.4, 'λ Aql'),
+    // Kassiopeia, the W from one end to the other
+    caph: S(2.29, 59.15, 2.3, 'Caph'),
+    schedar: S(10.13, 56.54, 2.2, 'Schedar', '255, 214, 170'),
+    navi: S(14.18, 60.72, 2.2, 'Navi'),
+    ruchbah: S(21.45, 60.24, 2.7, 'Ruchbah'),
+    segin: S(28.60, 63.67, 3.4, 'Segin'),
     // where the arc from the handle goes on to
     spica: S(201.30, -11.16, 1.0, { et: 'Spiika', en: 'Spica' }),
     // Orion: the four corners, the belt, the head and the sword. Only the
@@ -223,6 +229,12 @@
       where: { et: 'Kotka tähtkujus', en: 'Aquila, the Eagle' },
       name: { et: 'Kotkas', en: 'Aquila' },
       lines: [['tarazed', 'altair', 'alshain'], ['altair', 'delAql', 'etaAql', 'theAql'], ['delAql', 'zetAql'], ['delAql', 'lamAql']]
+    },
+    cassiopeia: {
+      order: ['caph', 'schedar', 'navi', 'ruchbah', 'segin'],
+      where: { et: 'Kassiopeia tähtkujus', en: 'Cassiopeia' },
+      name: { et: 'Kassiopeia', en: 'Cassiopeia' },
+      lines: [['caph', 'schedar', 'navi', 'ruchbah', 'segin']]
     },
     bootes: {
       where: { et: 'Karjase tähtkujus', en: 'Boötes' },
@@ -432,11 +444,21 @@
   //     go on; with `below`, a dashed curve through its three stars `curve`
   //     goes on through the horizon to the `star` below it, which a dashed circle
   //     marks
+  //   calendar: the calendar of the level's `evenings`, each two hours after
+  //     sunset, to move until `goal` holds for the heights of Kassiopeia and
+  //     Suur Vanker; with `snap`, it snaps to the evening nearby where the
+  //     goal holds and `snap` is least, and with `free`, it is to play with,
+  //     with Valmis beside it
+  //   choice: a question with the answers `choices` as buttons, `answer`
+  //     being right; the calendar stays, still, and the view is of the
+  //     stars `show`
   // `jump`: the sky goes to the task's `when` at once, without turning.
   // A `noLines` task does not show the lines of the tasks before it.
   // With `fade`, the sky darkens or lightens as it turns, rather than after,
   // and with `clear` the names and figures go while it turns, to be found
-  // again. A level's `mapWhen` is the date and hour of its win map.
+  // again. A level's `mapWhen` is the date and hour of its win map, with
+  // `mapRing` a view round its centre as wide as that, and `mapGhost` faint
+  // copies of the figures `figs` where they were at its `when`.
   // `height`: once the task is done, a dashed line from the horizon straight
   // up to that star shows how high it is, in degrees. A level's
   // `turnHeights` are the stars whose heights show while its sky turns, as
@@ -1000,6 +1022,136 @@
       ]
     },
     {
+      // Cassiopeia. The evening sky from autumn to spring, always two hours
+      // after sunset, when the sky has just got dark: Kassiopeia makes half a
+      // turn round Põhjanael, from the north-east up to almost overhead and
+      // down to low in the north, while Suur Vanker goes from low in the north
+      // to high up. From the third task the player moves the calendar until
+      // the sky looks as the task says.
+      id: 'kassiopeia',
+      limit: 4.5,
+      part: 'bigdipper',
+      icon: '👑',
+      center: 'polaris',
+      names: ['polaris'],
+      // the evenings of the calendar: from 1 September 2027, 274 of them,
+      // to 31 May 2028; in June two hours after sunset is after 23:00, with
+      // the Sun only 8° below the horizon
+      evenings: [Date.UTC(2027, 8, 1), 274],
+      // the win map is of a May evening, with faint copies of Kassiopeia and
+      // Suur Vanker where they were on a January evening, as wide as the
+      // view of the calendar
+      mapWhen: Date.UTC(2028, 4, 15, 20, 36),
+      mapGhost: { when: Date.UTC(2028, 0, 15, 16, 1), figs: ['cassiopeia', 'bigdipper'] },
+      mapRing: 40.5,
+      // 15 September 2027 at 20:37, two hours after sunset
+      when: Date.UTC(2027, 8, 15, 18, 37),
+      caption: { et: 'Sügisõhtu, 15. september kell 20.37', en: 'An autumn evening, 15 September at 20:37' },
+      win: {
+        name: { et: 'Kassiopeia', en: 'Cassiopeia' },
+        fact: {
+          et: 'Kassiopeia ja Suur Vanker teevad tiire ümber Põhjanaela, alati teineteise vastas. Talveõhtul on Kassiopeia pea kohal ja Suur Vanker madalal, kevadõhtul vastupidi.',
+          en: 'Cassiopeia and the Big Dipper go round the North Star, always opposite each other. On a winter evening Cassiopeia is overhead and the Big Dipper low, and on a spring evening the other way round.'
+        }
+      },
+      tasks: [
+        {
+          // from the middle star of the handle, 35.8° to Põhjanael, and on
+          // 29.1° to the fourth star of the W, 0.1° off the line; any star of
+          // Kassiopeia counts
+          kind: 'hop', from: 'mizar', via: 'polaris', find: 'ruchbah', accept: ['caph', 'schedar', 'navi', 'segin'],
+          figure: 'cassiopeia', figureOnce: true, center: null, show: DIPPER,
+          text: {
+            et: 'Leia Kassiopeia. Tõmba joon Suure Vankri aisa keskmisest tähest läbi Põhjanaela ja jätka seda umbes sama kaugele.',
+            en: 'Find Cassiopeia. Draw a line from the middle star of the Big Dipper’s handle through the North Star, and carry it on about as far.'
+          }
+        },
+        {
+          kind: 'trace', figure: 'cassiopeia', center: null, span: 30,
+          text: {
+            et: 'Joonista Kassiopeia: puuduta tähti järjest 1, 2, 3 … või libista sõrme tähest täheni.',
+            en: 'Draw Cassiopeia: tap the stars in turn 1, 2, 3 … or slide your finger from star to star.'
+          },
+          fact: {
+            et: 'Kassiopeia ja Suur Vanker on Põhjanaelast eri pool. Kassiopeia viis heledat tähte on nagu suur W- või M-täht.',
+            en: 'Cassiopeia and the Big Dipper are on opposite sides of the North Star. Cassiopeia’s five bright stars are like a big letter W or M.'
+          }
+        },
+        {
+          // from about 31 December to 20 January, and the calendar snaps to
+          // 15 January, when she is clearly an M; on the way, from September
+          // to December, she hardly moves, as the evenings get earlier about
+          // as fast as the sky turns
+          kind: 'calendar', goal: (h) => h.cas >= 82, snap: (h) => Math.abs(h.ms - Date.UTC(2028, 0, 15, 16, 1)),
+          title: { et: 'Pea kohal!', en: 'Overhead!' },
+          text: {
+            et: 'Kalender näitab õhtuid alati kaks tundi pärast päikeseloojangut, kui taevas on just pimedaks läinud. Liiguta kalendrit, kuni Kassiopeia on pea kohal.',
+            en: 'The calendar shows the evenings always two hours after sunset, when the sky has just got dark. Move the calendar until Cassiopeia is overhead.'
+          },
+          fact: {
+            et: 'Talvel läheb pimedaks varem, nii et sügisel paistab õhtune taevas pikka aega peaaegu samasugune.',
+            en: 'In winter it gets dark earlier, so in autumn the evening sky looks almost the same for a long time.'
+          }
+        },
+        {
+          // (close round her, as seen facing north)
+          kind: 'choice', choices: ['W', 'M'], answer: 'M', center: null, span: 24, show: FIGURES.cassiopeia.order,
+          title: { et: 'M!', en: 'An M!' },
+          text: { et: 'Kas Kassiopeia on praegu W või M?', en: 'Is Cassiopeia a W or an M now?' },
+          fact: {
+            et: 'Kui vaatad põhja poole, on pea kohal olev Kassiopeia nagu M.',
+            en: 'When you face north, Cassiopeia overhead looks like an M.'
+          }
+        },
+        {
+          // within 6° of each other from about 3 to 12 March, and the calendar
+          // snaps to the evening they are most alike, 8 March, as on the
+          // slider the days are only a pixel or so apart
+          kind: 'calendar', goal: (h) => Math.abs(h.cas - h.uma) <= 6, snap: (h) => Math.abs(h.cas - h.uma),
+          title: { et: 'Ühekõrgusel!', en: 'Equally high!' },
+          text: {
+            et: 'Liiguta kalendrit, kuni Kassiopeia ja Suur Vanker on ühekõrgusel.',
+            en: 'Move the calendar until Cassiopeia and the Big Dipper are equally high.'
+          },
+          fact: {
+            et: 'Nüüd on nad Põhjanaelast eri pool ühekõrgusel. Kui üks läheb kõrgemale, läheb teine madalamale.',
+            en: 'Now they are equally high, on either side of the North Star. When one goes higher, the other goes lower.'
+          }
+        },
+        {
+          // within 1° of her lowest, from about 23 April to 19 May, and the
+          // calendar snaps to 15 May, when she is clearly a W
+          kind: 'calendar', goal: (h) => h.cas <= h.low + 1, snap: (h) => Math.abs(h.ms - Date.UTC(2028, 4, 15, 20, 36)),
+          title: { et: 'Madalal!', en: 'Low down!' },
+          text: {
+            et: 'Liiguta kalendrit, kuni Kassiopeia on madalal põhjas.',
+            en: 'Move the calendar until Cassiopeia is low in the north.'
+          },
+          fact: {
+            et: 'Kassiopeia on nüüd peaaegu nii madalal, kui ta Eestis üldse käib.',
+            en: 'Cassiopeia is now almost as low as she ever goes in Estonia.'
+          }
+        },
+        {
+          kind: 'choice', choices: ['W', 'M'], answer: 'W', center: null, span: 24, show: FIGURES.cassiopeia.order,
+          title: { et: 'W!', en: 'A W!' },
+          text: { et: 'Kas Kassiopeia on nüüd W või M?', en: 'Is Cassiopeia a W or an M now?' },
+          fact: {
+            et: 'Kui Kassiopeia on madalal, on Suur Vanker peaaegu pea kohal. Talvel oli vastupidi.',
+            en: 'When Cassiopeia is low, the Big Dipper is almost overhead. In winter it was the other way round.'
+          }
+        },
+        {
+          // the calendar to play with, from where it is, until they press Valmis
+          kind: 'calendar', free: true,
+          text: {
+            et: 'Liiguta kalendrit ise. Kassiopeia ei looju Eestis kunagi: ka kõige madalamal on ta umbes 25 kraadi kõrgusel, puudest kõrgemal.',
+            en: 'Move the calendar yourself. Cassiopeia never sets in Estonia: even at her lowest she is about 25 degrees up, above the trees.'
+          }
+        }
+      ]
+    },
+    {
       // Orion shows the way. A winter evening, at the same hour as level 1, with
       // Orion upright in the south: hops from the belt and the corners to the
       // bright stars round him, which make the Winter Hexagon. After Sõel and
@@ -1340,6 +1492,7 @@
         { name: 'Arktuurus ja Veega', about: 'Arktuurus tõuseb ja loojub, Veega ei looju' },
         { name: 'Hele ja pime taevas', about: 'Linnatuled, Kuu ja suveöö' },
         { name: 'Suvekolmnurk', about: 'Valge suveöö ja pime sügisõhtu' },
+        { name: 'Kassiopeia', about: 'Kassiopeia ja Suur Vanker sügisest kevadeni' },
         { name: 'Orion näitab teed', about: 'Talveõhtu: Orionist heledate tähtedeni' },
         { name: 'Orion tõuseb ja loojub', about: 'Orion sügisest kevadeni' },
         { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' }
@@ -1357,6 +1510,9 @@
       nightAt: (season, evening, date, clock) => `${season}${evening ? 'õhtu' : 'öö'}, ${date} ${clock}`,
       june: 'Juuni',
       september: 'September',
+      calLabel: 'Kalender',
+      calMonths: ['September', 'Jaanuar', 'Mai'],
+      lookAgain: 'Vaata Kassiopeiat veel kord!',
       lightSky: 'Taevas on hele: Päike on horisondi lähedal ja paistavad ainult heledamad tähed.',
       daySky: 'Päike on üleval ja tähti pole näha. Suur Vanker ja Põhjanael on ikka oma kohal.',
       daySkyOrion: 'Päike on üleval ja tähti pole näha. Orion on ikka oma kohal.',
@@ -1402,6 +1558,7 @@
         { name: 'Arcturus and Vega', about: 'Arcturus rises and sets, Vega never sets' },
         { name: 'Bright and dark skies', about: 'City lights, the Moon and summer nights' },
         { name: 'The Summer Triangle', about: 'A light summer night and a dark autumn evening' },
+        { name: 'Cassiopeia', about: 'Cassiopeia and the Big Dipper from autumn to spring' },
         { name: 'Orion shows the way', about: 'A winter evening: from Orion to the bright stars' },
         { name: 'Orion rises and sets', about: 'Orion from autumn to spring' },
         { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' }
@@ -1419,6 +1576,9 @@
       nightAt: (season, evening, date, clock) => `A ${season} ${evening ? 'evening' : 'night'}, ${date} at ${clock}`,
       june: 'June',
       september: 'September',
+      calLabel: 'Calendar',
+      calMonths: ['September', 'January', 'May'],
+      lookAgain: 'Look at Cassiopeia again!',
       lightSky: 'The sky is light: the Sun is near the horizon, and only the brighter stars show.',
       daySky: 'The Sun is up, and no stars can be seen. The Big Dipper and the North Star are still in their places.',
       daySkyOrion: 'The Sun is up, and no stars can be seen. Orion is still in his place.',
@@ -1515,6 +1675,7 @@
     snaps: [],        // the sky as each task started, to go back to
     lookAz: 180,      // where the view of the southern sky looks
     lookOff: 0,       // how far the view of a sky that looks at the horizon is turned sideways, in degrees
+    cal: null,        // the evenings of the calendar: { ms, cas, uma, low }
     hintUntil: 0,
     lastAct: 0,
     gen: 0
@@ -2994,7 +3155,7 @@
     if (!T) {
       const k = task();
       return withSummer(((k && k.caption) || state.caption)[Astro.lang], state.when,
-        k && (k.kind === 'explore' || k.kind === 'set' || (k.nights && state.capMin)));
+        k && (k.kind === 'explore' || k.kind === 'set' || k.kind === 'calendar' || k.kind === 'choice' || (k.nights && state.capMin)));
     }
     const e = clamp((performance.now() - T.t0) / T.dur, 0, 1);
     const ms = T.ms0 + (T.ms1 - T.ms0) * e;
@@ -3018,7 +3179,44 @@
     $('photoCredit').classList.add('hidden');
     $('nextBtn').classList.add('hidden');
     $('sliderDone').textContent = t('finish');
+    $('calDone').textContent = t('finish');
+    fillChoices(k);
     updateBar();
+  }
+
+  // the answers to a question, as buttons in the card
+  function fillChoices(k) {
+    const box = $('choices');
+    box.textContent = '';
+    box.classList.toggle('hidden', !(k && k.kind === 'choice'));
+    if (!k || k.kind !== 'choice') return;
+    k.choices.forEach((c) => {
+      const b = document.createElement('button');
+      b.className = 'btn';
+      b.textContent = c;
+      b.addEventListener('click', () => answer(c, b));
+      box.appendChild(b);
+    });
+  }
+
+  // the right answer turns golden and then solves the task, and a wrong
+  // one shakes its button
+  function answer(c, b) {
+    if (state.phase !== 'task' || task().kind !== 'choice') return;
+    state.lastAct = performance.now();
+    if (c === task().answer) {
+      b.classList.add('right');
+      $('tip').textContent = '';
+      state.phase = 'wait';
+      sfx.pick();
+      later(600, solve);
+      return;
+    }
+    $('tip').textContent = t('lookAgain');
+    b.classList.remove('oops');
+    void b.offsetWidth;
+    b.classList.add('oops');
+    sfx.oops();
   }
 
   let nextArmed = false;
@@ -3032,6 +3230,7 @@
     // (a task without a fact shows only what was found)
     $('taskText').textContent = k.fact ? k.fact[Astro.lang] : '';
     $('tip').textContent = '';
+    $('choices').classList.add('hidden');
     const last = state.ti === state.tasks.length - 1;
     $('nextBtn').textContent = last ? t('finish') : t('next');
     $('nextBtn').classList.remove('hidden');
@@ -3116,6 +3315,7 @@
     const keep = ids.map((id) => [$(id).textContent, $(id).className]);
     const box = $('task');
     const fact = box.classList.contains('fact');
+    const choices = $('choices').classList.contains('hidden');
     const ti = state.ti;
     const ts = state.tasks;
     // (with the sliders, all the tasks, and their texts with a tip)
@@ -3134,6 +3334,7 @@
         $('taskText').textContent = ts[j].text[Astro.lang];
         if (all) $('tip').textContent = [t('setFirst'), t('dragSky')].sort((a, b) => b.length - a.length)[0];
         $('nextBtn').classList.add('hidden');
+        fillChoices(ts[j]);
         h = Math.max(h, box.offsetHeight);
       }
       if (ts[j].fact) {
@@ -3147,6 +3348,8 @@
       $(id).className = keep[n][1];
     });
     box.classList.toggle('fact', fact);
+    fillChoices(task());
+    $('choices').classList.toggle('hidden', choices);
     updateBar();
     state.skyTop = h + 12;
     state.skyTopW = area.clientWidth;
@@ -3154,7 +3357,7 @@
 
   // the sliders at the bottom are kept clear too
   function bottomRoom() {
-    const el = ['explore', 'slider'].map($).find((e) => !e.classList.contains('hidden'));
+    const el = ['explore', 'slider', 'calendar'].map($).find((e) => !e.classList.contains('hidden'));
     return el ? el.offsetHeight + 24 : 16;
   }
 
@@ -3163,6 +3366,9 @@
   function taskView() {
     if (level().sweep) return sweepView();
     if (task() && task().nights) return nightsView();
+    // (the calendar's view stays put round Põhjanael, wide enough for
+    // Kassiopeia overhead and Suur Vanker low)
+    if (task() && task().kind === 'calendar') return ringView(level().center);
     if (task() && (task().kind === 'explore' || task().wide) && level().center) return ringView(level().center);
     if (level().look) return lookView(fitView(skyKeys()));
     if (level().random) return offView(fitView(viewKeys()), task().off, viewKeys());
@@ -3268,6 +3474,20 @@
     state.auto = null;
     $('explore').classList.toggle('hidden', k.kind !== 'explore' && k.kind !== 'set');
     $('explore').classList.remove('waiting');
+    // the calendar, from the evening the sky is at, and still while a
+    // question is asked about it
+    const cal = k.kind === 'calendar' || k.kind === 'choice';
+    $('calendar').classList.toggle('hidden', !cal);
+    $('calendar').classList.toggle('free', !!k.free);
+    $('calRange').disabled = k.kind !== 'calendar';
+    if (cal) {
+      const C = state.cal;
+      const i = C.ms.reduce((b, ms, j) => (Math.abs(ms - state.when) < Math.abs(C.ms[b] - state.when) ? j : b), 0);
+      $('calRange').value = i;
+      setEvening(i);
+      state.skyStep = Math.min(4, Math.floor((i / (C.ms.length - 1)) * 5));
+      state.snapped = false;
+    }
     skyLight(turned);
     // (Orion to find again, at the next date and hour, without his names)
     if (k.kind === 'set') {
@@ -3573,6 +3793,11 @@
     state.copies = [];
     state.snaps = [];
     state.lookOff = 0;
+    state.cal = level().evenings ? calendarOf(level().evenings) : null;
+    if (state.cal) {
+      $('calRange').max = state.cal.ms.length - 1;
+      calLabels();
+    }
     let when = level().when;
     state.caption = level().caption;
     state.tasks = level().tasks;
@@ -3656,6 +3881,7 @@
     // steady level only goes out of sight)
     // (the one between two nights stays, to play with, with the button to
     // finish beside it)
+    if (k.kind === 'calendar') $('calRange').disabled = true;
     if (k.nights) $('slider').classList.add('free');
     else $('slider').classList.add(level().steady ? 'waiting' : 'hidden');
     sfx.snap();
@@ -3796,8 +4022,11 @@
 
   // The star a finger is on: the brightest near it, not the nearest, so that
   // a faint star beside the one aimed at does not get in the way.
+  // (the guide stars that pulse count as two magnitudes brighter, so that
+  // a faint one, as Megrez beside Alioth, can be picked in a wide view)
   function pick(p, R = state.L.hitR, but = null) {
     const V = view();
+    const gs = guides();
     let best = null;
     let score = Infinity;
     for (const s of ALL) {
@@ -3806,7 +4035,7 @@
       if (!q) continue;
       const d = Math.hypot(q.x - p.x, q.y - p.y);
       if (d > R) continue;
-      const sc = s.mag + (2 * d) / R;
+      const sc = s.mag + (2 * d) / R - (s.key && gs.includes(s.key) ? 2 : 0);
       if (sc < score) {
         score = sc;
         best = s;
@@ -3894,7 +4123,7 @@
     const s = pick(p);
     if (!s) return;
     const k = task();
-    if (k.kind === 'slider' || k.kind === 'explore') return;
+    if (['slider', 'explore', 'calendar', 'choice'].includes(k.kind)) return;
     if (k.kind === 'set' && !state.setOk) {
       $('tip').textContent = t('setFirst');
       sfx.pick();
@@ -3971,6 +4200,8 @@
       state.drag = { id: e.pointerId, mode: 'look', x0: p.x, p0: p, az0: state.cam.az, moved: false };
       return;
     }
+    // (with the calendar, or a question about the sky, no lines to draw)
+    if (k.kind === 'calendar' || k.kind === 'choice') return;
     const s = pick(p);
     try { area.setPointerCapture(e.pointerId); } catch (err) { /* a pointer that is gone already */ }
     const mode = k.kind === 'trace' ? 'trace' : 'hop';
@@ -4113,9 +4344,11 @@
     } else if (level().random) {
       state.th = upTime(keys);
       state.cam = framed(L, keys.map((k) => horizon(STARS[k])));
-    } else state.cam = fitView(keys, L, 70, level().center, false);
+    } else if (level().mapRing) state.cam = ringView(level().center, level().mapRing, L);
+    else state.cam = fitView(keys, L, 70, level().center, false);
     const V = view(L, state.cam);
     render(g, L, V, performance.now(), true);
+    if (level().mapGhost) drawGhost(g, V, level().mapGhost);
     // the path of a star round the pole, in a whole turn of the sky
     if (level().orbit) {
       const s = STARS[level().orbit];
@@ -4154,6 +4387,60 @@
     }
     state.cam = cam;
     return c.toDataURL('image/png');
+  }
+
+  // On the map, faint grey copies of the figures where they were at another
+  // date and hour, with that date above the first of them, and the date of
+  // the map above that figure itself, so that the two ends of their turn are
+  // seen together.
+  function drawGhost(g, V, G) {
+    const fs = 22;
+    const date = (ms) => {
+      const d = new Date(ms + TZ * 3600000);
+      return t('date')(d.getUTCDate(), t('months')[d.getUTCMonth()]);
+    };
+    const label = (th, txt, color) => {
+      const ps = FIGURES[G.figs[0]].lines.flat().map((k) => {
+        const v = horizon(STARS[k], th);
+        return v[2] > 0 ? toScreen(V, v) : null;
+      }).filter(Boolean);
+      if (!ps.length) return;
+      const x = (Math.min(...ps.map((q) => q[0])) + Math.max(...ps.map((q) => q[0]))) / 2;
+      const y = Math.min(...ps.map((q) => q[1])) - fs;
+      g.strokeStyle = 'rgba(4, 8, 32, 0.85)';
+      g.lineWidth = 4;
+      g.strokeText(txt, x, y);
+      g.fillStyle = color;
+      g.fillText(txt, x, y);
+    };
+    const th = siderealTime(G.when);
+    g.save();
+    g.lineCap = 'round';
+    g.lineJoin = 'round';
+    g.strokeStyle = 'rgba(200, 215, 255, 0.35)';
+    g.lineWidth = 2;
+    g.setLineDash([]);
+    for (const id of G.figs) {
+      for (const line of FIGURES[id].lines) {
+        g.beginPath();
+        line.forEach((k, i) => {
+          const v = horizon(STARS[k], th);
+          const q = v[2] > 0 ? toScreen(V, v) : null;
+          if (q) i ? g.lineTo(...q) : g.moveTo(...q);
+        });
+        g.stroke();
+      }
+      new Set(FIGURES[id].lines.flat()).forEach((k) => {
+        const v = horizon(STARS[k], th);
+        const q = v[2] > 0 ? toScreen(V, v) : null;
+        if (q) dot(g, q[0], q[1], 3, 'rgba(200, 215, 255, 0.5)');
+      });
+    }
+    g.font = `800 ${fs}px Nunito, sans-serif`;
+    g.textAlign = 'center';
+    label(th, date(G.when), 'rgba(200, 215, 255, 0.7)');
+    label(state.th, date(level().mapWhen), 'rgba(255, 233, 160, 0.9)');
+    g.restore();
   }
 
   // The map of Orion rising and setting: the sky from a little past the
@@ -4361,6 +4648,101 @@
     if (v <= 0.1 && state.phase === 'task') later(1200, () => { if (state.phase === 'task' && +$('skyRange').value <= 10) solve(); });
   }
 
+  // The evenings of the calendar, from the day `day0` (ms, UT), `n` of
+  // them: each two hours after sunset, to the minute, with how high
+  // Kassiopeia and Suur Vanker are then (the height of the middle of their
+  // stars), and how low Kassiopeia gets on any of them.
+  function calendarOf([day0, n]) {
+    const C = { ms: [], cas: [], uma: [] };
+    const height = (keys, th) => {
+      const m = keys.map((k) => horizon(STARS[k], th)).reduce((a, v) => [a[0] + v[0], a[1] + v[1], a[2] + v[2]], [0, 0, 0]);
+      return Math.asin(m[2] / Math.hypot(...m)) / DEG;
+    };
+    for (let i = 0; i < n; i++) {
+      // (the Sun sets between noon and midnight on the clock, when its top
+      // edge, 0.83° above its middle, goes behind the horizon)
+      let a = day0 + i * 86400000 + (12 - TZ) * 3600000;
+      let b = a + 12 * 3600000;
+      for (let k = 0; k < 30; k++) {
+        const m = (a + b) / 2;
+        if (horizon(sun(m), siderealTime(m))[2] > Math.sin(-0.83 * DEG)) a = m;
+        else b = m;
+      }
+      const ms = Math.round((a + 2 * 3600000) / 60000) * 60000;
+      const th = siderealTime(ms);
+      C.ms.push(ms);
+      C.cas.push(height(FIGURES.cassiopeia.order, th));
+      C.uma.push(height(DIPPER, th));
+    }
+    C.low = Math.min(...C.cas);
+    return C;
+  }
+
+  // the sky at an evening of the calendar, with its caption, as
+  // "Talveõhtu, 15. jaanuar kell 18.01"
+  function setEvening(i) {
+    const ms = state.cal.ms[i];
+    state.when = ms;
+    state.th = siderealTime(ms);
+    const d = new Date(ms + TZ * 3600000);
+    state.caption = {};
+    for (const lang of ['et', 'en']) {
+      const T = TEXT[lang];
+      state.caption[lang] = T.nightAt(T.seasons[d.getUTCMonth()], true, T.date(d.getUTCDate(), T.months[d.getUTCMonth()]),
+        T.clockMin(d.getUTCHours(), d.getUTCMinutes()));
+    }
+    $('when').textContent = caption();
+    skyLight();
+  }
+
+  // The calendar moved: the sky goes to that evening. Done when the slider
+  // has stayed a moment where the sky is as the task says; with `snap`, it
+  // snaps to the evening nearby where that shows best.
+  function slideCalendar() {
+    const k = task();
+    if (!k || k.kind !== 'calendar' || state.phase !== 'task') return;
+    const C = state.cal;
+    const at = (j) => ({ ms: C.ms[j], cas: C.cas[j], uma: C.uma[j], low: C.low });
+    let i = +$('calRange').value;
+    if (k.snap && k.goal(at(i))) {
+      let best = i;
+      for (let j = Math.max(0, i - 30); j <= Math.min(C.ms.length - 1, i + 30); j++) {
+        if (k.goal(at(j)) && k.snap(at(j)) < k.snap(at(best))) best = j;
+      }
+      i = best;
+      $('calRange').value = i;
+      if (!state.snapped) sfx.snap();
+      state.snapped = true;
+    } else state.snapped = false;
+    setEvening(i);
+    state.lastAct = performance.now();
+    // a note at every fifth of the way
+    const step = Math.min(4, Math.floor((i / (C.ms.length - 1)) * 5));
+    if (step !== state.skyStep) {
+      state.skyStep = step;
+      sfx.note(step);
+    }
+    if (k.goal && k.goal(at(i))) later(1200, () => { if (state.phase === 'task' && task() === k && k.goal(at(+$('calRange').value))) solve(); });
+  }
+
+  // the months along the calendar: September at its start, January where
+  // it begins, and May at its end
+  function calLabels() {
+    const C = state.cal;
+    const box = $('calLabels');
+    box.textContent = '';
+    const months = C.ms.map((ms) => new Date(ms + TZ * 3600000).getUTCMonth());
+    const names = t('calMonths');
+    // (January in the middle)
+    const mid = months.indexOf(0);
+    [[names[0], 0], [names[1], mid / (C.ms.length - 1)], [names[2], 1]].forEach(([txt, x]) => {
+      const sp = document.createElement('span');
+      sp.textContent = txt;
+      sp.style.left = (100 * x).toFixed(1) + '%';
+      box.appendChild(sp);
+    });
+  }
+
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
   // On a phone the tap that finds the last star goes on as a click on the
@@ -4373,6 +4755,8 @@
     nextTask();
   });
   $('exploreDone').addEventListener('click', nextTask);
+  $('calDone').addEventListener('click', nextTask);
+  $('calRange').addEventListener('input', slideCalendar);
   $('sliderDone').addEventListener('click', nextTask);
 
   $('backBtn').addEventListener('click', prevTask);
@@ -4404,6 +4788,7 @@
   updateMenu();
   Astro.setupLanguage(TEXT, () => {
     updateMenu();
+    if (state.cal) calLabels();
     if (state.phase === 'task') showTask();
     if (state.phase === 'fact') showFact();
     if (state.phase === 'win') {

@@ -75,6 +75,8 @@
         <p id="taskText"></p>
         <p id="tip" class="tip"></p>
         <a id="photoCredit" class="photo-credit hidden" target="_blank" rel="noopener"></a>
+        <!-- the answers to a question, as W or M -->
+        <div id="choices" class="choices hidden"></div>
         <button id="nextBtn" class="btn hidden"></button>
       </div>
       <span id="finger" class="finger hidden">👆</span>
@@ -92,6 +94,13 @@
         <!-- or between two nights, on Suvekolmnurk -->
         <div class="sky-labels nights-labels"><span data-t="june"></span><span data-t="september"></span></div>
         <button id="sliderDone" class="btn"></button>
+      </div>
+      <!-- the evenings from September to May, on Kassiopeia, each two hours
+           after sunset -->
+      <div id="calendar" class="sky-slider calendar hidden">
+        <input id="calRange" type="range" min="0" max="273" step="1" value="14" data-t-label="calLabel" aria-label="Kalender">
+        <div id="calLabels" class="sky-labels cal-labels"></div>
+        <button id="calDone" class="btn"></button>
       </div>
     </div>
   </div>
