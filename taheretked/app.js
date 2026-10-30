@@ -3552,8 +3552,12 @@
     if (level().sweep) return sweepView();
     if (task() && task().nights) return nightsView();
     // (the calendar's view stays put round Põhjanael, wide enough for
-    // Kassiopeia overhead and Suur Vanker low)
-    if (task() && task().kind === 'calendar') return ringView(level().center);
+    // Kassiopeia overhead and Suur Vanker low; the one to play with can be
+    // turned sideways round the sky, by `state.lookOff`)
+    if (task() && task().kind === 'calendar') {
+      const cam = ringView(level().center);
+      return task().free ? Object.assign(cam, { az: cam.az + state.lookOff }) : cam;
+    }
     if (task() && (task().kind === 'explore' || task().wide) && level().center) return ringView(level().center);
     if (level().look) return lookView(fitView(skyKeys()));
     if (level().random) return offView(fitView(viewKeys()), task().off, viewKeys());
@@ -3683,7 +3687,7 @@
     state.sel = null;
     state.got = new Set();
     state.capMin = false;
-    if (k.nights) state.lookOff = 0;
+    if (k.nights || k.kind === 'calendar') state.lookOff = 0;
     state.lit = 0;
     state.doneAt = 0;
     state.litAt = [];
@@ -3691,7 +3695,7 @@
     state.lastAct = performance.now();
     state.lastStep = performance.now();
     showTask();
-    if (k.nights) $('tip').textContent = t('dragSky');
+    if (k.nights || (k.kind === 'calendar' && k.free)) $('tip').textContent = t('dragSky');
     // (a text only to read: straight to it, with the button; with a photo,
     // its text while the view goes there, and its fact with the photo)
     if (k.kind === 'note') {
@@ -4366,8 +4370,10 @@
     }
     // on a level that looks at the horizon, a drag from the sky away from
     // the stars turns the view sideways, also while a fact shows
-    // (and with the slider between two nights, anywhere)
-    if ((state.phase === 'task' || state.phase === 'fact') && ((level().look && task().kind !== 'trace' && !pick(pointAt(e))) || task().nights)) {
+    // (and with the slider between two nights, or the calendar to play
+    // with, anywhere)
+    if ((state.phase === 'task' || state.phase === 'fact') && ((level().look && task().kind !== 'trace' && !pick(pointAt(e))) || task().nights ||
+        (task().kind === 'calendar' && task().free))) {
       try { area.setPointerCapture(e.pointerId); } catch (err) { /* a pointer that is gone already */ }
       state.pan = null;
       const p = pointAt(e);
@@ -4404,6 +4410,12 @@
       if (!d.moved) return;
       if (task().nights) {
         state.lookOff = clamp(d.off0 - (p.x - d.x0) / (state.cam.s * DEG), -60, 60);
+        state.cam = taskView();
+        return;
+      }
+      // (the calendar to play with, all the way round)
+      if (task().kind === 'calendar') {
+        state.lookOff = ((d.off0 - (p.x - d.x0) / (state.cam.s * DEG)) % 360 + 540) % 360 - 180;
         state.cam = taskView();
         return;
       }

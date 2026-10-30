@@ -752,7 +752,9 @@ on, so a fact says why.
    kunagi: ka kõige madalamal on ta umbes 25 kraadi kõrgusel, puudest
    kõrgemal." ("Move the calendar yourself. Cassiopeia never sets in
    Estonia: even at her lowest she is about 25 degrees up, above the
-   trees.")
+   trees.") The sky can be dragged sideways here, all the way round the
+   horizon, with the tip "Lohista taevast, et vaadata rohkem itta või
+   läände."
 
 The win map is the sky of a May evening, with faint grey copies of
 Kassiopeia and Suur Vanker where they were on a January evening, so that
