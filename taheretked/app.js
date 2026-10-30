@@ -1327,6 +1327,7 @@
     copies: [],       // Orion at each date and hour he was found at: { th, when }
     snaps: [],        // the sky as each task started, to go back to
     lookAz: 180,      // where the view of the southern sky looks
+    lookOff: 0,       // how far the view of a sky that looks at the horizon is turned sideways, in degrees
     hintUntil: 0,
     lastAct: 0,
     gen: 0
@@ -2967,9 +2968,25 @@
   function taskView() {
     if (level().sweep) return sweepView();
     if (task() && (task().kind === 'explore' || task().wide) && level().center) return ringView(level().center);
-    if (level().look) return fitView(skyKeys());
+    if (level().look) return lookView(fitView(skyKeys()));
     if (level().random) return offView(fitView(viewKeys()), task().off, viewKeys());
     return fitView(viewKeys());
+  }
+
+  // On a level that looks at the horizon, the view of a sky can be dragged
+  // sideways, by `state.lookOff`, as far as Veega one way and Arktuurus the
+  // other: until the one or the other is in the middle.
+  function lookView(cam) {
+    const [lo, hi] = lookLimits(cam);
+    return Object.assign({}, cam, { az: cam.az + clamp(state.lookOff, lo, hi) });
+  }
+
+  function lookLimits(cam) {
+    const ds = ['vega', 'arcturus'].map((k) => {
+      const v = horizon(STARS[k]);
+      return ((((Math.atan2(v[0], v[1]) / DEG - cam.az) % 360) + 540) % 360) - 180;
+    });
+    return [Math.min(0, ...ds), Math.max(0, ...ds)];
   }
 
   // On a random level the stars of the task are not in the middle of the
@@ -3108,6 +3125,7 @@
     // cards, so that the view stays put when the task starts)
     if (level().look || level().steady) {
       state.skyTop = 0;
+      state.lookOff = 0;
       relayoutTop();
     }
     const cam = level().center ? ringView(level().center) : taskView();
@@ -3325,6 +3343,7 @@
     state.pan = null;
     state.copies = [];
     state.snaps = [];
+    state.lookOff = 0;
     let when = level().when;
     state.caption = level().caption;
     state.tasks = level().tasks;
@@ -3442,7 +3461,8 @@
       figs: new Set(state.figs), named: new Set(state.named),
       hideFig: state.hideFig && new Set(state.hideFig),
       lines: state.lines.map((l) => ({ ...l })), copies: [...state.copies],
-      limit: state.limit, limitTo: state.limitTo, skyTop: state.skyTop, lookAz: state.lookAz
+      limit: state.limit, limitTo: state.limitTo, skyTop: state.skyTop, lookAz: state.lookAz,
+      lookOff: state.lookOff
     };
   }
 
@@ -3684,6 +3704,15 @@
       togglePhoto();
       return;
     }
+    // on a level that looks at the horizon, a drag from the sky away from
+    // the stars turns the view sideways, also while a fact shows
+    if (level().look && (state.phase === 'task' || state.phase === 'fact') && task().kind !== 'trace' && !pick(pointAt(e))) {
+      try { area.setPointerCapture(e.pointerId); } catch (err) { /* a pointer that is gone already */ }
+      state.pan = null;
+      const p = pointAt(e);
+      state.drag = { id: e.pointerId, mode: 'look', x0: p.x, p0: p, off0: state.lookOff, moved: false };
+      return;
+    }
     if (state.phase !== 'task') return;
     const p = pointAt(e);
     state.lastAct = performance.now();
@@ -3710,6 +3739,13 @@
     if (d.mode === 'look') {
       if (Math.hypot(p.x - d.p0.x, p.y - d.p0.y) > 10) d.moved = true;
       if (!d.moved) return;
+      if (level().look) {
+        const base = fitView(skyKeys());
+        const [lo, hi] = lookLimits(base);
+        state.lookOff = clamp(d.off0 - (p.x - d.x0) / (state.cam.s * DEG), lo, hi);
+        state.cam = lookView(base);
+        return;
+      }
       state.lookAz = d.az0 - (p.x - d.x0) / (state.cam.s * DEG);
       state.cam = taskView();
       state.lookAz = state.cam.az;
