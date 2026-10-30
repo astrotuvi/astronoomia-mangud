@@ -396,7 +396,7 @@ drawn in at the start, and Lohe is given wherever Veega is asked for:
    - **Veega:** "Leia Veega Lohe pea kõrval." ("Find Vega next to the
      Dragon's head.")
      - Fact: "Veega on praegu madalal põhjas, aga ta ei looju kunagi: nagu
-       Suur Vanker, tiirleb ta ümber Põhjanaela." ("Vega is low in the
+       Suur Vanker, teeb ta tiire ümber Põhjanaela." ("Vega is low in the
        north now, but it never sets: like the Big Dipper, it goes round the
        North Star.")
 2. 15 May at 22:30:

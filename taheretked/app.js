@@ -382,7 +382,9 @@
   //     marks
   // `jump`: the sky goes to the task's `when` at once, without turning.
   // `height`: once the task is done, a dashed line from the horizon straight
-  // up to that star shows how high it is, in degrees.
+  // up to that star shows how high it is, in degrees; `holdHeight` are the
+  // stars whose heights show while the sky turns on to the next task, as
+  // they go, also below the horizon.
   // An arc without `find` is only to draw: it shows where a star is not, and
   // its `title` heads the fact. A `random` level asks all the tasks of its
   // `pool`, each on a dark night picked at random with its stars `up`;
@@ -403,7 +405,9 @@
   // until Põhjanael is found again. A `wide` task keeps the wide view round
   // the level's centre, as while the sky turns. On a level that `look`s at
   // the horizon, the view stays at that height and turns only sideways, and
-  // the tasks in one sky share one view. On a `steady` level, too, the card
+  // the tasks in one sky share one view. While the sky turns on to a task
+  // with `trails`, the paths of the stars of the level's `trails` show
+  // dashed, in their colours, also below the horizon. On a `steady` level, too, the card
   // at the top keeps the room of the biggest text of its sky, and the slider
   // keeps its room once done, so that the view does not move when the text
   // changes. On a `sweep` level the date and hour sliders are there from the
@@ -467,7 +471,7 @@
             en: 'The tip of the Dragon’s tail is between the Big Dipper and the North Star. Draw the Dragon from its tail to its head: tap the stars in turn 1, 2, 3 …'
           },
           fact: {
-            et: 'Lohe looklev keha ümbritseb Väikest Vankrit. Tema pea on neli tähte, ja selle kõrval paistab hele Veega.',
+            et: 'Lohe looklev keha ümbritseb Väikest Vankrit. Tema pea on neli tähte ja selle kõrval paistab hele Veega.',
             en: 'The Dragon’s winding body wraps round the Little Dipper. Its head is four stars, and next to it shines bright Vega.'
           }
         },
@@ -532,7 +536,7 @@
       win: {
         name: { et: 'Taevas pöörles', en: 'The sky turned' },
         fact: {
-          et: 'Suur Vanker tiirleb ümber Põhjanaela: iga öö ja ka aasta jooksul. Kus ta parasjagu ka on, tema tagumised rattad näitavad Põhjanaela poole.',
+          et: 'Suur Vanker teeb tiire ümber Põhjanaela: iga öö ja ka aasta jooksul. Kus ta parasjagu ka on, tema tagumised rattad näitavad Põhjanaela poole.',
           en: 'The Big Dipper goes round the North Star, every night and also over the year. Wherever it is, the two stars at the end of its bowl point to the North Star.'
         }
       },
@@ -614,6 +618,7 @@
       icon: '🌅',
       help: false,
       look: 30,
+      trails: { arcturus: 'rgba(255, 190, 120, 0.6)', vega: 'rgba(190, 210, 255, 0.6)' },
       // Põhjanael always has its name, as Suur Vanker has
       names: ['polaris'],
       // 15 March 2027 at 21:00
@@ -647,7 +652,7 @@
             en: 'Find Vega next to the Dragon’s head.'
           },
           fact: {
-            et: 'Veega on praegu madalal põhjas, aga ta ei looju kunagi: nagu Suur Vanker, tiirleb ta ümber Põhjanaela.',
+            et: 'Veega on praegu madalal põhjas, aga ta ei looju kunagi: nagu Suur Vanker, teeb ta tiire ümber Põhjanaela.',
             en: 'Vega is low in the north now, but it never sets: like the Big Dipper, it goes round the North Star.'
           }
         },
@@ -696,6 +701,7 @@
         {
           kind: 'tap', find: 'vega', near: [], figure: 'lyra', given: ['draco'],
           show: ['eltanin', 'rastaban', 'kuma', 'grumium'],
+          height: 'vega', holdHeight: ['vega', 'arcturus'],
           text: { et: 'Leia Veega.', en: 'Find Vega.' },
           fact: {
             et: 'Veega on peaaegu pea kohal. Hilissuvel ja sügise alguses on ta õhtuti kõige kõrgemal.',
@@ -706,7 +712,7 @@
           // 5 January 2028 at 21:00: Arktuurus is below the
           // horizon, which is only to read; the curve along the handle goes
           // on through the horizon to where it is
-          kind: 'note', title: { et: 'Allpool silmapiiri', en: 'Below the horizon' }, show: [...DIPPER, 'arcturus'],
+          kind: 'note', title: { et: 'Allpool silmapiiri', en: 'Below the horizon' }, show: [...DIPPER, 'arcturus'], trails: true,
           below: { star: 'arcturus', curve: ['mizar', 'alkaid', 'arcturus'] },
           when: Date.UTC(2028, 0, 5, 19, 0),
           caption: { et: 'Talveõhtu, 5. jaanuar kell 21', en: 'A winter evening, 5 January at 21:00' },
@@ -717,7 +723,7 @@
         },
         {
           kind: 'tap', find: 'vega', near: [], figure: 'lyra', given: ['draco'],
-          show: ['eltanin', 'rastaban', 'kuma', 'grumium'], height: 'vega',
+          show: ['eltanin', 'rastaban', 'kuma', 'grumium'], height: 'vega', holdHeight: ['vega', 'arcturus'],
           text: { et: 'Leia Veega.', en: 'Find Vega.' },
           fact: {
             et: 'Talveõhtul on Veega madalal põhjas, aga silmapiiri taha ta ei lähe.',
@@ -727,7 +733,7 @@
         {
           // the same night, at 06:00 in the morning: the sky turns 135°
           kind: 'arc', along: ['mizar', 'alkaid'], curve: ['mizar', 'alkaid', 'arcturus', 'spica'],
-          find: 'arcturus', figure: 'bootes', show: [...DIPPER, 'vega'], names: ['vega'],
+          find: 'arcturus', figure: 'bootes', show: [...DIPPER, 'vega'], names: ['vega'], trails: true,
           when: Date.UTC(2028, 0, 6, 4, 0),
           caption: { et: 'Talvehommik, 6. jaanuar kell 6', en: 'A winter morning, 6 January at 06:00' },
           text: {
@@ -768,11 +774,11 @@
           kind: 'slider', given: ['littledipper'], names: ['polaris'], center: null, span: 40, show: [...DIPPER, ...FIGURES.littledipper.order],
           title: { et: 'Pime taevas', en: 'A dark sky' },
           text: {
-            et: 'Kui paistab täiskuu või oled linnas, on taevas hele, ja Väikesest Vankrist paistab ainult kolm tähte. Vii liugur pimeda taeva poole, et näha teda tervenisti.',
+            et: 'Kui paistab täiskuu või oled linnas, on taevas hele ja Väikesest Vankrist paistab ainult kolm tähte. Vii liugur pimeda taeva poole, et näha teda tervenisti.',
             en: 'When the full Moon is out, or you are in a city, the sky is bright, and only three stars of the Little Dipper show. Move the slider towards the dark sky to see all of it.'
           },
           fact: {
-            et: 'Pimedas taevas paistab Väike Vanker tervenisti. Linnatuled ja Kuu valgustavad taevast, ja siis nõrgemaid tähti ei paista.',
+            et: 'Pimedas taevas paistab Väike Vanker tervenisti. Linnatuled ja Kuu valgustavad taevast ja siis nõrgemaid tähti ei paista.',
             en: 'In a dark sky the whole Little Dipper shows. City lights and the Moon light up the sky, and then the fainter stars do not show.'
           }
         },
@@ -850,7 +856,7 @@
             en: 'Draw Orion: tap the stars in turn 1, 2, 3 … or slide your finger from star to star.'
           },
           fact: {
-            et: 'Orion on kütt vanadest kreeka lugudest, ühes käes nui ja teises kilp. Tema õlad on punakas Betelgeuse ja Bellatrix, tema jalg on sinakasvalge Riigel, ja keskel on kolm tähte reas: Orioni vöö.',
+            et: 'Orion on kütt vanadest kreeka lugudest, ühes käes nui ja teises kilp. Tema õlad on punakas Betelgeuse ja Bellatrix, tema jalg on sinakasvalge Riigel ja keskel on kolm tähte reas: Orioni vöö.',
             en: 'Orion is a hunter from the old Greek stories, with a club in one hand and a shield in the other. His shoulders are reddish Betelgeuse and Bellatrix, his foot is blue-white Rigel, and in the middle are three stars in a row: Orion’s belt.'
           }
         },
@@ -931,7 +937,7 @@
           // the sword's stars count too: the nebula is in the middle of them
           kind: 'tap', find: 'm42', near: [], accept: ['iotOri', 'c42Ori'], span: 30, show: ORION, photo: 'orion',
           text: {
-            et: 'Leia Orioni udu. Vöö all ripub mõõk, ja selle keskel on udune täht.',
+            et: 'Leia Orioni udu. Vöö all ripub mõõk ja selle keskel on udune täht.',
             en: 'Find the Orion Nebula. Below the belt hangs the sword, and in its middle is a fuzzy star.'
           },
           fact: {
@@ -958,8 +964,8 @@
           // that the numbers show.
           kind: 'trace', figure: 'hexagon', span: 30, onlyFigs: ['orion'], noLabels: true,
           text: {
-            et: 'Joonista Talvekuusnurk: Kapellast Aldebarani, Riigeli, Siiriuse, Prooküoni ja Polluksini ning tagasi.',
-            en: 'Draw the Winter Hexagon: from Capella to Aldebaran, Rigel, Sirius, Procyon and Pollux, and back.'
+            et: 'Ühenda Talvekuusnurga tähed: Kapella, Aldebaran, Riigel, Siirius, Prooküon, Polluks ning uuesti Kapella.',
+            en: 'Join the stars of the Winter Hexagon: Capella, Aldebaran, Rigel, Sirius, Procyon, Pollux and Capella again.'
           },
           fact: {
             et: 'Talvekuusnurk on kuus heledat tähte kuuest tähtkujust. Betelgeuse on peaaegu tema keskel.',
@@ -1029,7 +1035,7 @@
             en: 'Set the sliders to 1 April, 21:00. Then\u00a0find\u00a0Orion.'
           },
           fact: {
-            et: 'Aprilli alguses on Orion õhtul madalal edelas ja loojub enne keskööd. Suvel on ta taevas päeval, koos Päikesega, ja teda ei paista.',
+            et: 'Aprilli alguses on Orion õhtul madalal edelas ja loojub enne keskööd. Suvel on ta taevas koos Päikesega päeval ja teda ei paista.',
             en: 'At the start of April Orion is low in the south-west in the evening and sets before midnight. In summer he is in the sky by day, with the Sun, and cannot be seen.'
           }
         },
@@ -1153,8 +1159,8 @@
       chooseLevel: 'Vali teema',
       levels: [
         { name: 'Suur Vanker näitab teed', about: 'Sügisõhtu: Põhjanaelast Põhjakroonini' },
-        { name: 'Taevas pöörleb', about: 'Suur Vanker tiirleb ümber Põhjanaela' },
-        { name: 'Arktuurus ja Veega', about: 'Arktuurus tuleb ja läheb, Veega jääb' },
+        { name: 'Taevas pöörleb', about: 'Suur Vanker teeb tiire ümber Põhjanaela' },
+        { name: 'Arktuurus ja Veega', about: 'Arktuurus tõuseb ja loojub, Veega ei looju' },
         { name: 'Hele ja pime taevas', about: 'Linnatuled, Kuu ja suveöö' },
         { name: 'Orion näitab teed', about: 'Talveõhtu: Orionist heledate tähtedeni' },
         { name: 'Orion tõuseb ja loojub', about: 'Orion sügisest kevadeni' },
@@ -1211,7 +1217,7 @@
       levels: [
         { name: 'The Big Dipper shows the way', about: 'An autumn evening: from the North Star to the Northern Crown' },
         { name: 'The sky turns', about: 'The Big Dipper goes round the North Star' },
-        { name: 'Arcturus and Vega', about: 'Arcturus comes and goes, Vega stays' },
+        { name: 'Arcturus and Vega', about: 'Arcturus rises and sets, Vega never sets' },
         { name: 'Bright and dark skies', about: 'City lights, the Moon and summer nights' },
         { name: 'Orion shows the way', about: 'A winter evening: from Orion to the bright stars' },
         { name: 'Orion rises and sets', about: 'Orion from autumn to spring' },
@@ -1941,6 +1947,7 @@
       drawPath(g, V, 'sirius', 'rgba(200, 215, 255, 0.45)');
       drawPath(g, V, 'alnilam', 'rgba(255, 220, 120, 0.6)');
     }
+    if (!map) drawTrails(g, V, now, false);
     // the figures (not while the slider of how bright the sky is waits for
     // the dark sky: the player is to find them only as the stars come out)
     for (const id of figsHidden(map) ? [] : state.figs) {
@@ -2019,10 +2026,14 @@
     if (!map) drawMarks(g, L, V, now);
     drawLabels(g, L, V, map);
     drawGround(g, L, V);
+    if (!map) drawTrails(g, V, now, true);
     if (!map && task() && state.phase === 'fact' && (task().below || task().height)) {
       drawHorizon(g, L, V);
       if (task().below) drawBelow(g, L, V, now, task().below);
       if (task().height) drawHeight(g, L, V, now, task().height);
+    } else if (!map && state.turn && state.keepHeight) {
+      drawHorizon(g, L, V);
+      state.keepHeight.forEach((key) => drawHeight(g, L, V, now, key, true));
     }
   }
 
@@ -2074,15 +2085,17 @@
 
   // a dashed line from the horizon straight up to a star, growing, and how
   // high the star is, in degrees, beside it
-  function drawHeight(g, L, V, now, key) {
+  function drawHeight(g, L, V, now, key, full = false) {
     const v = horizon(STARS[key]);
     const alt = Math.asin(v[2]) / DEG;
     const az = Math.atan2(v[0], v[1]) / DEG;
-    const p = clamp((now - state.factAt - 600) / 1200, 0, 1);
+    const p = full ? 1 : clamp((now - state.factAt - 600) / 1200, 0, 1);
     // (up to the ring round the star found)
     const star = toScreen(V, v);
     const pts = [];
-    for (let a = 0; a <= alt * p; a += 0.25) pts.push(toScreen(V, dirOf(az, a)));
+    // (down to a star below the horizon)
+    const dir = alt < 0 ? -1 : 1;
+    for (let a = 0; a <= Math.abs(alt) * p; a += 0.25) pts.push(toScreen(V, dirOf(az, dir * a)));
     const ok = pts.filter((q) => q && star && Math.hypot(q[0] - star[0], q[1] - star[1]) > L.hitR * 0.45 + 3);
     if (ok.length < 2) return;
     g.save();
@@ -2101,7 +2114,7 @@
       g.strokeStyle = 'rgba(4, 8, 32, 0.85)';
       g.lineWidth = 4;
       g.setLineDash([]);
-      const txt = `${Math.round(alt)}°`;
+      const txt = `${Math.round(alt)}°`.replace('-', '−');
       g.strokeText(txt, m[0] + 8, m[1] + fs * 0.35);
       g.fillStyle = 'rgba(255, 233, 160, 0.9)';
       g.fillText(txt, m[0] + 8, m[1] + fs * 0.35);
@@ -2209,7 +2222,20 @@
 
   // the path of a star across the sky, dashed, on the map: of Orion's belt,
   // and of Siirius, grey
-  function drawPath(g, V, key, color) {
+  // the paths of the stars while the sky turns, fading in and out, with
+  // the dashes going the way the stars go; `below`, the parts below the
+  // horizon, fainter, over the ground
+  function drawTrails(g, V, now, below) {
+    const T = state.turn;
+    if (!T || !level().trails || !task().trails) return;
+    g.save();
+    g.globalAlpha = clamp((now - T.t0) / 600, 0, 1) * clamp((T.t0 + T.dur - now) / 600, 0, 1) * (below ? 0.6 : 1);
+    g.lineDashOffset = -now / 40;
+    for (const [key, color] of Object.entries(level().trails)) drawPath(g, V, key, color, below);
+    g.restore();
+  }
+
+  function drawPath(g, V, key, color, below = false) {
     g.save();
     g.strokeStyle = color;
     g.lineWidth = 2.5;
@@ -2218,7 +2244,7 @@
     let pen = false;
     for (let x = 0; x <= 360; x += 0.5) {
       const v = horizon(STARS[key], x * DEG);
-      const q = v[2] > -0.03 ? toScreen(V, v) : null;
+      const q = (below ? v[2] < 0.03 : v[2] > -0.03) ? toScreen(V, v) : null;
       if (!q) { pen = false; continue; }
       if (pen) g.lineTo(...q);
       else g.moveTo(...q);
@@ -3031,6 +3057,9 @@
   // The sky turns forwards round Põhjanael to the task's date and hour,
   // while the caption counts the months or the hours; then the task starts.
   function turnTo(k) {
+    // (the heights of stars to follow as the sky turns)
+    const prev = state.tasks[state.ti - 1];
+    state.keepHeight = prev && prev.holdHeight;
     const th1 = siderealTime(k.when);
     const d = (((th1 - state.th) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
     // (slowly enough to follow the stars as they go round: about 6.5 s for a
