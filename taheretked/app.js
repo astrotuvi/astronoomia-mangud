@@ -190,6 +190,9 @@
   // the Andromeda Galaxy as a faint oval, its long axis at that position
   // angle (degrees from the north through the east)
   STARS.m31.galaxy = 35;
+  // and its light, spread over a large patch, shows in a sky only as dark as
+  // a star of magnitude 5 needs, not 3.4
+  STARS.m31.seen = 5;
   STARS.m33.hidden = true;
 
   // the stars of Orion's figure, and of his belt, which a drag snaps onto as
@@ -495,9 +498,11 @@
   //   part: `find` is part of the way along a line from `from` to `via`,
   //     as the text says; any star of `accept` counts too
   //   slider: the sky starts bright, and the task is to move the slider
-  //     towards the dark sky, where the faint stars of Väike Vanker show;
+  //     towards the dark sky, where the faint stars of Väike Vanker, or the
+  //     Andromeda Galaxy, show;
   //     with `nights`, it moves the date and the hour together between two
-  //     nights, from the second to the first, and is then to play with
+  //     nights, from the second to the first, and is then to play with, or
+  //     with `free`, it is to play with from the start
   //   note: only a text to read, its `title` and `fact`, with the button to
   //     go on; with `below`, a dashed curve through its three stars `curve`
   //     goes on through the horizon to the `star` below it, which a dashed circle
@@ -515,7 +520,8 @@
   // A `noLines` task does not show the lines of the tasks before it.
   // With `fade`, the sky darkens or lightens as it turns, rather than after,
   // and with `clear` the names and figures go while it turns, to be found
-  // again. A level's `mapWhen` is the date and hour of its win map, with
+  // again. A level's `mapWhen` is the date and hour of its win map, which
+  // takes in the figures of the tasks and of its `mapFigs`, with
   // `mapRing` a view round its centre as wide as that, and `mapGhost` faint
   // copies of the figures `figs` where they were at its `when`.
   // `height`: once the task is done, a dashed line from the horizon straight
@@ -889,81 +895,6 @@
       ]
     },
     {
-      id: 'vanker4',
-      // how bright the sky is: on the autumn evening of level 1, with Suur
-      // Vanker upright below Põhjanael, the slider from a bright sky to a
-      // dark one; Lohe in the dark sky; and a July night at 23:00, when the
-      // twilight keeps the sky bright even at the dark end
-      limit: 6,
-      part: 'bigdipper',
-      icon: '🌗',
-      center: 'polaris',
-      steady: true,
-      // 15 October 2026 at 20:00
-      when: Date.UTC(2026, 9, 15, 18, 0),
-      caption: { et: 'Sügisõhtu, 15. oktoober kell 20', en: 'An autumn evening, 15 October at 20:00' },
-      win: {
-        name: { et: 'Hele ja pime taevas', en: 'Bright and dark skies' },
-        fact: {
-          et: 'Mida pimedam on taevas, seda rohkem tähti paistab. Linnatuled, Kuu ja suvine videvik teevad taeva heledaks.',
-          en: 'The darker the sky, the more stars show. City lights, the Moon and the summer twilight make the sky bright.'
-        }
-      },
-      tasks: [
-        {
-          // the lines of Väike Vanker join up as its stars show
-          kind: 'slider', given: ['littledipper'], names: ['polaris'], center: null, span: 40, show: [...DIPPER, ...FIGURES.littledipper.order],
-          title: { et: 'Pime taevas', en: 'A dark sky' },
-          text: {
-            et: 'Kui paistab täiskuu või oled linnas, on taevas hele ja Väikesest Vankrist paistab ainult kolm tähte. Vii liugur pimeda taeva poole, et näha teda tervenisti.',
-            en: 'When the full Moon is out, or you are in a city, the sky is bright, and only three stars of the Little Dipper show. Move the slider towards the dark sky to see all of it.'
-          },
-          fact: {
-            et: 'Pimedas taevas paistab Väike Vanker tervenisti. Linnatuled ja Kuu valgustavad taevast ja siis nõrgemaid tähti ei paista.',
-            en: 'In a dark sky the whole Little Dipper shows. City lights and the Moon light up the sky, and then the fainter stars do not show.'
-          }
-        },
-        {
-          kind: 'trace', figure: 'draco', span: 55,
-          text: {
-            et: 'Pimedas taevas on tähti nii palju, et tuttavaid kujusid on nende vahel raskem näha. Joonista Lohe sabast peani.',
-            en: 'In a dark sky there are so many stars that the figures you know are harder to see among them. Draw the Dragon from its tail to its head.'
-          },
-          fact: {
-            et: 'Lohe tähed on nõrgad: linnas teda peaaegu ei näe, aga pimedas taevas paistab ta tervenisti.',
-            en: 'The Dragon’s stars are faint: in a city it can hardly be seen, but in a dark sky all of it shows.'
-          }
-        },
-        {
-          // 15 July 2027 at 23:00: the Sun is only about 9° below the horizon
-          // (straight to it, without turning the sky for months)
-          kind: 'slider', given: ['littledipper'], names: ['polaris'], wide: true, jump: true,
-          when: Date.UTC(2027, 6, 15, 21, 0),
-          caption: { et: 'Suveöö, 15. juuli kell 23', en: 'A summer night, 15 July at 23:00' },
-          title: { et: 'Hele suveöö', en: 'A light summer night' },
-          text: {
-            et: 'Juulis kell 23. Vii liugur jälle pimeda taeva poole.',
-            en: 'At 23:00 in July. Move the slider towards the dark sky again.'
-          },
-          fact: {
-            et: 'Suveööl ei lähe taevas Eestis päris pimedaks, sest Päike on ainult natuke allpool silmapiiri. Ka maal, kus tulesid pole, paistavad siis ainult heledamad tähed.',
-            en: 'On a summer night the sky in Estonia never gets quite dark, as the Sun is only a little below the horizon. Even in the countryside, with no lights, only the brighter stars show then.'
-          }
-        },
-        {
-          // the player's own play with the slider, on a dark autumn evening,
-          // until they press Valmis
-          kind: 'slider', free: true, given: ['littledipper'], names: ['polaris'], wide: true,
-          when: Date.UTC(2027, 9, 15, 18, 0),
-          caption: { et: 'Sügisõhtu, 15. oktoober kell 20', en: 'An autumn evening, 15 October at 20:00' },
-          text: {
-            et: 'Liiguta liugurit ise ja vaata, kuidas tähed heledas taevas kaovad ja pimedas taevas tagasi tulevad.',
-            en: 'Move the slider yourself and watch the stars fade in a bright sky and come back in a dark one.'
-          }
-        }
-      ]
-    },
-    {
       // The Summer Triangle. On midsummer night the Sun is only 7° below the
       // horizon, and with the twilight only stars to about 2.35 show: the
       // three stars of the triangle are almost the only ones. Then the sky
@@ -1056,8 +987,8 @@
           // (without the line of the hop to Altair, which would be in the way)
           kind: 'trace', figure: 'summer', show: SUMMER, noLines: true,
           text: {
-            et: 'Joonista Suvekolmnurk: Veegast Deenebini, Altairini ja tagasi.',
-            en: 'Draw the Summer Triangle: from Vega to Deneb, to Altair and back.'
+            et: 'Ühenda Suvekolmnurga tähed: Veega, Deeneb, Altair ja jälle Veega.',
+            en: 'Join the stars of the Summer Triangle: Vega, Deneb, Altair and Vega again.'
           },
           fact: {
             et: 'Valgel suveööl oli kolmnurka kerge näha, sest muid tähti peaaegu ei paistnud. Pimedas taevas on tähti palju, aga Suvekolmnurga tähed on ikka kõige heledamad.',
@@ -1066,17 +997,12 @@
         },
         {
           // from 23 June at 23:00 to 15 September at 21:00, the date and the
-          // hour together; it starts at the September end, and once it has
-          // stayed near the June end for a moment, it is to play with
-          kind: 'slider', nights: [Date.UTC(2027, 5, 23, 21, 0), Date.UTC(2027, 8, 15, 19, 0)], show: SUMMER, noLines: true,
-          title: { et: 'Valged ööd', en: 'Light nights' },
+          // hour together, to play with from the September end until they
+          // press Valmis
+          kind: 'slider', free: true, nights: [Date.UTC(2027, 5, 23, 21, 0), Date.UTC(2027, 8, 15, 19, 0)], show: SUMMER, noLines: true,
           text: {
-            et: 'Vii liugur juuni poole ja vaata, kuidas tähed kaovad ja Suvekolmnurk jääb.',
-            en: 'Move the slider towards June and watch the stars go while the Summer Triangle stays.'
-          },
-          fact: {
-            et: 'Eestis on suveööd valged kuni juuli lõpuni. Augustis läheb taevas õhtuti jälle pimedaks.',
-            en: 'In Estonia the summer nights are light until the end of July. In August the sky gets dark in the evening again.'
+            et: 'Liiguta liugurit ise ja vaata, kuidas juuni poole tähed kaovad ja Suvekolmnurk jääb. Eestis on suveööd valged kuni juuli lõpuni.',
+            en: 'Move the slider yourself and watch the stars go towards June while the Summer Triangle stays. In Estonia the summer nights are light until the end of July.'
           }
         }
       ]
@@ -1303,6 +1229,73 @@
           fact: {
             et: 'Kolmnurga galaktika on Andromeeda galaktika väike naaber. Silmaga näeb teda ainult väga pimedas kohas, kui Kuud ei paista.',
             en: 'The Triangulum Galaxy is a small neighbour of the Andromeda Galaxy. With the eye it can be seen only in a very dark place, when the Moon is not out.'
+          }
+        }
+      ]
+    },
+    {
+      // How dark the sky is, on the evening of level 6, which does not turn:
+      // the slider from a bright sky to a dark one, first on Väike Vanker in
+      // the north and then on the Andromeda Galaxy, which shows only near the
+      // dark end, and the slider to play with at the end, with both. (The id
+      // is that of the level when it was the fourth, so that it stays done.)
+      id: 'vanker4',
+      limit: 6,
+      part: 'bigdipper',
+      icon: '🌗',
+      steady: true,
+      figs: ['bigdipper', 'cassiopeia'],
+      // the galaxy has its name whenever it shows
+      names: ['polaris', 'm31'],
+      mapPhotos: ['andromeda'],
+      // (the win map takes in Pegasuse ruut too, given with Andromeeda)
+      mapFigs: ['square'],
+      // 1 November 2027 at 20:00, with the Sun 28° below the horizon
+      when: Date.UTC(2027, 10, 1, 18, 0),
+      caption: { et: 'Sügisõhtu, 1. november kell 20', en: 'An autumn evening, 1 November at 20:00' },
+      win: {
+        name: { et: 'Pime ja hele taevas', en: 'Dark and bright skies' },
+        fact: {
+          et: 'Mida pimedam on taevas, seda rohkem tähti paistab. Linnatuled ja Kuu teevad taeva heledaks ja peidavad kauged galaktikad.',
+          en: 'The darker the sky, the more stars show. City lights and the Moon make the sky bright and hide the distant galaxies.'
+        }
+      },
+      tasks: [
+        {
+          // the lines of Väike Vanker join up as its stars show
+          kind: 'slider', given: ['littledipper'], figure: 'littledipper', span: 40, show: [...DIPPER, ...FIGURES.littledipper.order],
+          title: { et: 'Pime taevas', en: 'A dark sky' },
+          text: {
+            et: 'Kui paistab täiskuu või oled linnas, on taevas hele ja Väikesest Vankrist paistab ainult kolm tähte. Vii liugur pimeda taeva poole, et näha teda tervenisti.',
+            en: 'When the full Moon is out, or you are in a city, the sky is bright, and only three stars of the Little Dipper show. Move the slider towards the dark sky to see all of it.'
+          },
+          fact: {
+            et: 'Pimedas taevas paistab Väike Vanker tervenisti. Kui linnatuled ja Kuu valgustavad taevast, siis nõrgemaid tähti ei paista.',
+            en: 'In a dark sky the whole Little Dipper shows. When city lights and the Moon light up the sky, the fainter stars do not show.'
+          }
+        },
+        {
+          // the bright stars of Andromeeda and Pegasuse ruut show early, and
+          // the galaxy only from about half way, as a star of magnitude 5
+          // would; the two figures are drawn once it shows
+          kind: 'slider', given: ['andromeda', 'square'], figure: 'andromeda', span: 30, show: [...FIGURES.square.order, 'm31'],
+          title: { et: 'Udune laik', en: 'A fuzzy patch' },
+          text: {
+            et: 'Vii liugur jälle pimeda taeva poole, kuni paistab Andromeeda galaktika.',
+            en: 'Move the slider towards the dark sky again, until the Andromeda Galaxy shows.'
+          },
+          fact: {
+            et: 'Galaktika valgus on laiali suurel alal. Heledas taevas kaob ta enne kui sama heledad tähed, sellepärast näeb teda ainult pimedas kohas.',
+            en: 'The galaxy’s light is spread over a large patch. In a bright sky it fades before stars that are just as bright, so it can be seen only in a dark place.'
+          }
+        },
+        {
+          // the player's own play with the slider, until they press Valmis
+          kind: 'slider', free: true, given: ['littledipper', 'andromeda', 'square'],
+          show: [...FIGURES.littledipper.order, ...FIGURES.cassiopeia.order, ...FIGURES.andromeda.order, ...FIGURES.square.order, 'm31'],
+          text: {
+            et: 'Liiguta liugurit ise ja vaata, kuidas tähed heledas taevas kaovad ja pimedas taevas tagasi tulevad.',
+            en: 'Move the slider yourself and watch the stars fade in a bright sky and come back in a dark one.'
           }
         }
       ]
@@ -1671,10 +1664,10 @@
         { name: 'Suur Vanker näitab teed', about: 'Sügisõhtu: Põhjanaelast Põhjakroonini' },
         { name: 'Taevas pöörleb', about: 'Suur Vanker teeb tiire ümber Põhjanaela' },
         { name: 'Arktuurus ja Veega', about: 'Arktuurus tõuseb ja loojub, Veega ei looju' },
-        { name: 'Hele ja pime taevas', about: 'Linnatuled, Kuu ja suveöö' },
         { name: 'Suvekolmnurk', about: 'Valge suveöö ja pime sügisõhtu' },
         { name: 'Kassiopeia', about: 'Kassiopeia ja Suur Vanker sügisest kevadeni' },
         { name: 'Andromeeda galaktika', about: 'Sügisõhtu: Kassiopeiast Andromeeda galaktikani' },
+        { name: 'Pime ja hele taevas', about: 'Linnatuled ja Kuu peidavad tähti' },
         { name: 'Orion näitab teed', about: 'Talveõhtu: Orionist heledate tähtedeni' },
         { name: 'Orion tõuseb ja loojub', about: 'Orion sügisest kevadeni' },
         { name: 'Ilma abita', about: 'Pime taevas juhuslikul ööl: leia ise tähed' }
@@ -1738,10 +1731,10 @@
         { name: 'The Big Dipper shows the way', about: 'An autumn evening: from the North Star to the Northern Crown' },
         { name: 'The sky turns', about: 'The Big Dipper goes round the North Star' },
         { name: 'Arcturus and Vega', about: 'Arcturus rises and sets, Vega never sets' },
-        { name: 'Bright and dark skies', about: 'City lights, the Moon and summer nights' },
         { name: 'The Summer Triangle', about: 'A light summer night and a dark autumn evening' },
         { name: 'Cassiopeia', about: 'Cassiopeia and the Big Dipper from autumn to spring' },
         { name: 'The Andromeda Galaxy', about: 'An autumn evening: from Cassiopeia to the Andromeda Galaxy' },
+        { name: 'Dark and bright skies', about: 'City lights and the Moon hide the stars' },
         { name: 'Orion shows the way', about: 'A winter evening: from Orion to the bright stars' },
         { name: 'Orion rises and sets', about: 'Orion from autumn to spring' },
         { name: 'Without help', about: 'A dark sky on a night picked at random: find the stars yourself' }
@@ -1946,11 +1939,11 @@
   // turns, the stars of the figures too, so that a bright sky hides them)
   const plain = () => task().kind === 'slider' || task().dim || (state.turn && state.turn.light);
   const shown = (s) => !s.hidden && (state.day ? s.key === 'polaris'
-    : (s.key && task() && !plain()) || s.mag <= state.limit + 0.7);
+    : (s.key && task() && !plain()) || (s.seen || s.mag) <= state.limit + 0.7);
   // and the faintest ones dimmer rather than smaller
   const faint = (s) => (s.key && task() && !plain()
-    ? clamp((state.limit + 0.7 - s.mag) / 1.4, 0.85, 1)
-    : clamp((state.limit + 0.7 - s.mag) / 1.4, 0, 1));
+    ? clamp((state.limit + 0.7 - (s.seen || s.mag)) / 1.4, 0.85, 1)
+    : clamp((state.limit + 0.7 - (s.seen || s.mag)) / 1.4, 0, 1));
 
   // unit vectors on the sky (x to RA 0, z to the north pole), and back
   const vec = (s) => [s.cd * Math.cos(s.ra), s.cd * Math.sin(s.ra), s.sd];
@@ -4535,6 +4528,7 @@
     const keys = state.tasks.flatMap((k) => [k.from, k.via, k.find, ...(k.along || []),
       ...[k.figure, k.autoDraw].filter(Boolean).flatMap((id) => FIGURES[id].lines.flat())]).filter(Boolean);
     if (level().part === 'bigdipper') keys.push(...FIGURES.bigdipper.lines.flat());
+    (level().mapFigs || []).forEach((id) => keys.push(...FIGURES[id].lines.flat()));
     const cam = state.cam;
     const figs = state.figs;
     // (the night sky of the level, also when the player has played with the
@@ -4800,8 +4794,8 @@
   $('hourRange').addEventListener('input', slid);
 
   // The slider of how bright the sky is, smoothly from a bright sky (a city,
-  // the full Moon) to a dark one; done when the faint stars of Väike Vanker
-  // show, and the slider has stayed there a moment.
+  // the full Moon) to a dark one; done when the faint stars of Väike Vanker,
+  // or the Andromeda Galaxy, show, and the slider has stayed there a moment.
   $('skyRange').addEventListener('input', () => {
     if (task() && task().nights && (state.phase === 'task' || state.phase === 'fact')) {
       slideNights();
@@ -4825,7 +4819,7 @@
   // smoothly, so that the sky turns evenly and the twilight follows the real
   // Sun. At either end the caption is that night's, and between them it
   // names the season, with the minutes. Done when the slider has stayed
-  // near the first night a moment.
+  // near the first night a moment, unless it is to play with.
   function slideNights() {
     const k = task();
     const v = +$('skyRange').value / 100;
@@ -4857,7 +4851,7 @@
       state.skyStep = step;
       sfx.note(4 - step);
     }
-    if (v <= 0.1 && state.phase === 'task') later(1200, () => { if (state.phase === 'task' && +$('skyRange').value <= 10) solve(); });
+    if (v <= 0.1 && state.phase === 'task' && !k.free) later(1200, () => { if (state.phase === 'task' && +$('skyRange').value <= 10) solve(); });
   }
 
   // The evenings of the calendar, from the day `day0` (ms, UT), `n` of

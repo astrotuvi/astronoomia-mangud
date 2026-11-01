@@ -53,7 +53,7 @@ the sliders, the minutes are always shown, also on the full hour, as "kell
   find, so that it does not give the answer away. A drag from other stars
   also makes an arrow; it is no mistake, it just leads somewhere else, and
   it fades out after a few seconds. On
-  levels 1, 7 and 8 the arrow has a tick at every gap between the two stars,
+  levels 1, 6 and 8 the arrow has a tick at every gap between the two stars,
   so that "five times as far" can be counted.
 - **Osa teest (part of the way):** drag from one star to another, and the
   line is drawn between them, without a mark on it; the text says how far
@@ -80,15 +80,15 @@ the sliders, the minutes are always shown, also on the full hour, as "kell
   near the finger, not the nearest one, so that a child aiming at Thuban
   in a sky full of faint stars gets Thuban. The right star lights up, gets
   its name and a short fact, and its figure is drawn in. A wrong star only
-  wiggles, and on levels 1, 2 and 5 to 9 says its name if it has one used
+  wiggles, and on levels 1, 2, 4 to 6, 8 and 9 says its name if it has one used
   in Estonia, e.g. "See on Veega", or else its figure, e.g. "See täht on Lohe
   tähtkujus". The Arabic names of the stars, such as Merak and Dubhe, are
   not used in Estonia, so the game does not show them: the tasks name the
   stars by where they are, e.g. Suure Vankri tagumised rattad.
-  On level 5 one task has three stars to tap, in any order, each lighting
+  On level 4 one task has three stars to tap, in any order, each lighting
   up as it is found.
 - **Vali (choose):** two big buttons under the task, e.g. W and M, on
-  level 6. The right one turns golden; the wrong one wiggles, and the
+  level 5. The right one turns golden; the wrong one wiggles, and the
   player tries again.
 
 Each star found becomes a start for the next task, so the tasks of a level
@@ -156,37 +156,38 @@ other, without stops. Some points along it:
 | Sky | Faintest star | What is seen |
 |---|---|---|
 | hele: a city, the full Moon, a light summer night | about 3 | Suur Vanker, with Megrez (3.3) barely there. Of Väike Vanker only Põhjanael, Kochab and Pherkad, so it does not look like a dipper. Of Lohe a few stars, without Thuban (3.7). Of Põhjakroon only Alphecca (2.2). Of Orion the belt and the four corners |
-| a small town, a half Moon | about 4.5 | all the figures, with few other stars round them |
+| a small town, a half Moon | about 4.5 | all the figures, with few other stars round them; Andromeeda galaktika only faintly |
 | pime: the countryside on a dark night without the Moon | about 6 | hundreds of stars, among which the figures are hard to see; the sword of Orion with the Orion Nebula |
 
 A darker sky makes the figures harder to find, not easier, which children
 do not expect. The level sets how dark the sky is, rather than a free
 slider, so that the stars a task needs are always there:
 
-- Levels 1 to 3, 5, 6, 8 and 9 are a sky to magnitude 4.5, as in a small town.
+- Levels 1 to 5, 8 and 9 are a sky to magnitude 4.5, as in a small town.
   The stars of the figures always show, also the fainter ones, such as η UMi (5.0)
   in Väike Vanker, and they are drawn a little bigger.
 - The twilight of the date and the hour is added to it, as on level 2: on
   a light May or July night only the brighter stars show.
-- Level 4 is about the slider: "Kui
+- Level 7 is about the slider: "Kui
   paistab täiskuu või oled linnas, on taevas hele, ja Väikesest Vankrist
   paistab ainult kolm tähte. Vii liugur pimeda taeva poole, et näha teda
   tervenisti." ("When the full Moon is out, or you are in a city, the sky
   is bright, and only three stars of the Little Dipper show. Move the
-  slider towards the dark sky to see all of it.") The Orion levels have
+  slider towards the dark sky to see all of it.") Then the slider is
+  moved again until Andromeeda galaktika shows. The Orion levels have
   no slider; his sword with the Orion Nebula (4.0) shows in the sky of
   level 8.
-- Level 7 is a sky to magnitude 5.5, as Andromeeda galaktika needs a
+- Level 6 is a sky to magnitude 5.5, as Andromeeda galaktika needs a
   darker sky than a small town.
-- Level 4 is a dark sky, to magnitude 6.
+- Level 7 is a dark sky, to magnitude 6.
 - Level 10 is a sky to magnitude 5, between the two: the figures are
   among more stars than on the other levels, but still stand out.
 
 The slider sets the light of the Moon and of the lights round, and the
-twilight is added on top of it. So on a July night at 23:00, even at the dark
-end, only the brighter stars show, and the slider can make the sky only
-brighter, not darker than the night really is. The game draws no Moon: the
-slider stands for it.
+twilight is added on top of it, so that the slider can make the sky only
+brighter, not darker than the night really is. Level 7 is on a dark autumn
+evening, without twilight; the light summer nights are on level 4. The game
+draws no Moon: the slider stands for it.
 
 When the slider moves, the stars fade in and out smoothly, with no steps.
 Stars near the horizon are dimmer, as in Püüa langev täht. Faint stars are
@@ -196,11 +197,13 @@ phone.
 ## Levels
 
 The game has ten levels, in one list under one heading in the menu, "Vali
-teema" ("Pick a topic"), not split by constellation. The first four start
+teema" ("Pick a topic"), not split by constellation. The first three start
 from Suur Vanker and teach how the sky turns through the year. The next
-five go on from summer to winter: Suvekolmnurk, Kassiopeia and Andromeeda
+three go on from summer to autumn: Suvekolmnurk, Kassiopeia and Andromeeda
 galaktika, which start from stars learnt on the first levels, Veega, Suur
-Vanker and Põhjanael, and then the two of Orion, the winter sky. The last,
+Vanker and Põhjanael. Pime ja hele taevas, on the evening of Andromeeda
+galaktika, shows how a bright sky hides the stars and the galaxy, and then
+come the two of Orion, the winter sky. The last,
 Ilma abita, asks about the stars of all the levels before it. A 🌟 in the
 menu marks the ones done.
 
@@ -214,21 +217,21 @@ menu marks the ones done.
    sets, while Veega does not, through a year of evenings and one winter
    night. The task still names the stars to start from, but they do not
    pulse.
-4. **Hele ja pime taevas (bright and dark skies):** the slider of how
-   bright the sky is, a figure in a dark sky full of stars, a light summer
-   night, and the slider to play with at the end.
-5. **Suvekolmnurk (the Summer Triangle):** a light midsummer night, when
+4. **Suvekolmnurk (the Summer Triangle):** a light midsummer night, when
    the three stars of the triangle are almost the only ones in the sky;
    then the sky turns on to a dark September evening, where they are found
    again among many stars, and a slider goes between the two nights.
-6. **Kassiopeia (Cassiopeia):** the evening sky from autumn to spring,
+5. **Kassiopeia (Cassiopeia):** the evening sky from autumn to spring,
    always two hours after sunset, with a date slider, which the player
    moves until Kassiopeia is where the task says: she and
    Suur Vanker are on opposite sides of Põhjanael, and she is an M when
    high and a W when low.
-7. **Andromeeda galaktika (the Andromeda Galaxy):** an autumn evening that
+6. **Andromeeda galaktika (the Andromeda Galaxy):** an autumn evening that
    does not turn, from Põhjanael and Kassiopeia through the square of
    Pegasus and Andromeeda to the galaxy.
+7. **Pime ja hele taevas (dark and bright skies):** the same evening, with
+   the slider of how bright the sky is, first on Väike Vanker and then on
+   Andromeeda galaktika, and the slider to play with at the end.
 8. **Orion näitab teed (Orion shows the way):** as level 1, on a winter
    evening that does not turn, from Orion to the bright stars round him.
 9. **Orion tõuseb ja loojub (Orion rises and sets):** the date and hour
@@ -254,15 +257,15 @@ stars of a dark sky it is too hard to find alone, and so is Väike Vanker).
 Põhjanael and Kassiopeia never set, so their nights can be any dark night,
 with Suur Vanker low in the north on an autumn evening, on its side in the
 east or the west, or high overhead. Kassiopeia is found by the hop from
-the handle of Suur Vanker through Põhjanael, as on level 6, and any of her
+the handle of Suur Vanker through Põhjanael, as on level 5, and any of her
 stars counts. Arktuurus and Põhjakroon get nights from about February to
 October, when they are up. Arktuurus below the horizon is only on level 3.
 
 Then come the summer and autumn sky: Suvekolmnurk, by tapping its three
 stars, which are still the brightest round them, with all three at least
 10° up, and Andromeeda galaktika, at least 20° up, which the player finds
-by the hops of level 7, on nights from about August to February. Unlike
-level 7, its photo does not show.
+by the hops of level 6, on nights from about August to February. Unlike
+level 6, its photo does not show.
 
 Then the view turns along the horizon to the south, for the tasks of
 Orion: Aldebaran, Sõel, the Kaksikud, Kapella and Siirius, on nights with
@@ -398,7 +401,7 @@ only with the months; the July one is later, as the evenings are light.
 The sky always turns forwards, and at each
 time it is as light as it really is then.
 Veega, Arktuurus and Põhjakroon are left to level 3, and the slider of how
-bright the sky is to level 4.
+bright the sky is to level 7.
 
 Level 3 is about the stars that rise and set. Arktuurus is far from
 Põhjanael, so it goes up and down: over the year it moves across the
@@ -507,63 +510,9 @@ the stars, not left or right, but the facts name the directions, as that
 is what the level is about. Põhjanael always has its name, as Suur Vanker
 is always drawn, so that the north is always marked.
 
-Level 4 is about how bright the sky is. It starts on the autumn evening of
-level 1, 15 October at 20:00, with Suur Vanker upright, low in the north,
-below Põhjanael and Väike Vanker, close up on the two of them:
-
-1. **The slider**, starting at the bright end, with Põhjanael named. At
-   the bright end only Põhjanael and the two stars at the end of Väike
-   Vanker's bowl show. As the slider moves towards the dark sky, its other
-   stars show. No figure lines are drawn until the slider has stayed near
-   the dark end for a moment: then the task is done, and Suur Vanker and
-   Väike Vanker are drawn in.
-   - Fact: "Pimedas taevas paistab Väike Vanker tervenisti. Linnatuled ja
-     Kuu valgustavad taevast, ja siis nõrgemaid tähti ei paista." ("In a
-     dark sky the whole Little Dipper shows. City lights and the Moon light
-     up the sky, and then the fainter stars do not show.")
-2. **Lohe** in the dark sky: "Pimedas taevas on tähti nii palju, et
-   tuttavaid kujusid on nende vahel raskem näha. Joonista Lohe sabast
-   peani." ("In a dark sky there are so many stars that the figures you
-   know are harder to see among them. Draw the Dragon from its tail to its
-   head.")
-   - Fact: "Lohe tähed on nõrgad: linnas teda peaaegu ei näe, aga pimedas
-     taevas paistab ta tervenisti." ("The Dragon's stars are faint: in a
-     city it can hardly be seen, but in a dark sky all of it shows.")
-3. The sky goes straight to 23:00 on 15 July, without turning
-   through the months, when the Sun is only about 9° below the horizon.
-   The twilight comes on smoothly, in about 1.5 s, and only then **the
-   slider** shows, starting at the bright end again:
-   "Juulis kell 23. Vii liugur jälle pimeda taeva poole." ("At 23:00 in
-   July. Move the slider towards the dark sky again.") Even at the dark end
-   the twilight keeps the sky light, and the faintest stars do not show.
-   - Fact: "Suveööl ei lähe taevas Eestis päris pimedaks, sest Päike on
-     ainult natuke allpool silmapiiri. Ka maal, kus tulesid pole,
-     paistavad siis ainult heledamad tähed." ("On a summer night the sky in
-     Estonia never gets quite dark, as the Sun is only a little below the
-     horizon. Even in the countryside, with no lights, only the brighter
-     stars show then.")
-   The view is wide, round Põhjanael, without zooming in.
-4. The sky turns on to 15 October at 20:00 again, and **the slider is to
-   play with**, starting at the dark end, with Valmis beside it: "Liiguta
-   liugurit ise ja vaata, kuidas tähed heledas taevas kaovad ja pimedas
-   taevas tagasi tulevad." ("Move the slider yourself and watch the stars
-   fade in a bright sky and come back in a dark one.")
-
-The first slider task shows Suur Vanker and Väike Vanker close up, sliding the
-picture as on level 2. Even at the bright end, Põhjanael and the brightest
-stars stay, so that the sky is never empty. The names of stars and figures
-that do not show are left out. In the two slider tasks with a task to do,
-the figures are drawn only once it is done; the slider to play with at the
-end starts at the dark sky, with the figures drawn.
-
-As on level 3, the view does not move when the text changes: the card at
-the top keeps the room of the biggest text of the tasks in that sky, and
-once a slider task is done, the slider goes out of sight but keeps its
-room. The view moves only, smoothly, to the next task's view.
-
 ### Suvekolmnurk
 
-**Level 5, Suvekolmnurk.** The level shows that on a light summer night
+**Level 4, Suvekolmnurk.** The level shows that on a light summer night
 the three stars of the triangle are almost the only stars in the sky. It
 starts on midsummer night, when Estonian children are up late: "Jaaniöö,
 23. juuni kell 23 (suveaja järgi kesköö)". When the hour of summer time
@@ -620,9 +569,9 @@ part of the sky has about 227 stars.
    - Fact: "Altair on kolme tähe rea keskel. Ta pöörleb nii kiiresti, et
      on lapik nagu muna." ("Altair is in the middle of a row of three
      stars. It spins so fast that it is flattened like an egg.")
-6. **Suvekolmnurk:** "Joonista Suvekolmnurk: Veegast Deenebini, Altairini
-   ja tagasi." ("Draw the Summer Triangle: from Vega to Deneb, to Altair
-   and back.") A trace, with Veega tapped again at the end, as star 4.
+6. **Suvekolmnurk:** "Ühenda Suvekolmnurga tähed: Veega, Deeneb, Altair
+   ja jälle Veega." ("Join the stars of the Summer Triangle: Vega, Deneb,
+   Altair and Vega again.") A trace, with Veega tapped again at the end, as star 4.
    The line of the hop to Altair goes, so that it is not in the way.
    - Fact: "Valgel suveööl oli kolmnurka kerge näha, sest muid tähti
      peaaegu ei paistnud. Pimedas taevas on tähti palju, aga Suvekolmnurga
@@ -636,21 +585,17 @@ part of the sky has about 227 stars.
    the sky turns and the twilight follows the real Sun. The caption
    follows it, with the minutes, e.g. "Suveöö, 4. august kell 22.00
    (suveaja järgi kell 23.00)", and at the June end it is the jaaniöö
-   caption again. The slider starts at the September end, with the
-   triangle and the three figures drawn: "Vii liugur juuni poole ja vaata,
-   kuidas tähed kaovad ja Suvekolmnurk jääb." ("Move the slider towards
-   June and watch the stars go while the Summer Triangle stays.") The
-   view does not move with the stars: it takes in the triangle on both
-   nights, looking a little closer to the south than their middle, and
-   can be dragged sideways. The triangle's lines stay all along; the figures of Lüüra, Luik and Kotkas
-   fade with their stars, so that near the June end only the triangle is
-   left. The task is done when the slider has stayed near the June end
-   for a moment, as on level 4, and then the slider is to play with,
-   with Valmis beside it.
-   - Fact: "Eestis on suveööd valged kuni juuli lõpuni. Augustis läheb
-     taevas õhtuti jälle pimedaks." ("In Estonia the summer nights are
-     light until the end of July. In August the sky gets dark in the
-     evening again.")
+   caption again. The slider is to play with, with Valmis beside it, and
+   starts at the September end, with the triangle and the three figures
+   drawn: "Liiguta liugurit ise ja vaata, kuidas juuni poole tähed kaovad
+   ja Suvekolmnurk jääb. Eestis on suveööd valged kuni juuli lõpuni."
+   ("Move the slider yourself and watch the stars go towards June while
+   the Summer Triangle stays. In Estonia the summer nights are light until
+   the end of July.") The view does not move with the stars: it takes in
+   the triangle on both nights, looking a little closer to the south than
+   their middle, and can be dragged sideways. The triangle's lines stay
+   all along; the figures of Lüüra, Luik and Kotkas fade with their
+   stars, so that near the June end only the triangle is left.
 
    Along the slider the faintest star stays about 2.3 until the middle of
    July, then goes steadily to 4.5 at the September end, so the light
@@ -661,7 +606,7 @@ without the line of the Altair hop.
 
 ### Kassiopeia
 
-**Level 6, Kassiopeia.** The evening sky from autumn to spring, always two
+**Level 5, Kassiopeia.** The evening sky from autumn to spring, always two
 hours after sunset, when the sky has just got dark. Over those months
 Kassiopeia makes half a turn round Põhjanael, from the north-east up to
 almost overhead and down to low in the north, while Suur Vanker goes from
@@ -776,13 +721,13 @@ dates, 15 May and 15 January, are above the two Kassiopeias.
 
 ### Andromeeda galaktika
 
-**Level 7, Andromeeda galaktika.** An autumn evening, "Sügisõhtu, 1.
+**Level 6, Andromeeda galaktika.** An autumn evening, "Sügisõhtu, 1.
 november kell 20", after summer time has ended, when the Sun is 28° below
 the horizon. Kassiopeia is 71–77° up in the east-north-east, and the
 galaxy 63° in the east-south-east. The sky does not turn. It is a sky to
 magnitude 5.5, and the galaxy is drawn as a faint tilted oval, as the
 `galaxy` decoration of Tähtkujud, tapped as one target, like Sõel.
-Kassiopeia is drawn at the start, from level 6, and Põhjanael named.
+Kassiopeia is drawn at the start, from level 5, and Põhjanael named.
 
 The stars of Andromeeda and Pegasus have Arabic names, so the texts name
 them by their place: the corner of the square, the middle one of
@@ -855,6 +800,60 @@ Kassiopeia Pegasuse ruudu, Andromeeda ja Andromeeda galaktika. Puuduta
 kaardil galaktikate raame." ("Now you can find the Square of Pegasus,
 Andromeda and the Andromeda Galaxy on an autumn evening, from the North
 Star through Cassiopeia. Tap the frames of the galaxies on the map.")
+
+### Pime ja hele taevas
+
+**Level 7, Pime ja hele taevas.** How bright the sky is, on the evening of
+level 6, "Sügisõhtu, 1. november kell 20", which does not turn. Suur
+Vanker and Kassiopeia are drawn at the start, and Põhjanael and Andromeeda
+galaktika are named whenever they show. The level was the fourth before
+Suvekolmnurk, which shows the light summer nights better, came after
+level 3; it keeps its old id, so that it stays done.
+
+1. **The slider**, starting at the bright end, on Väike Vanker and Suur
+   Vanker in the north. At the bright end only Põhjanael and the two stars
+   at the end of Väike Vanker's bowl show. As the slider moves towards the
+   dark sky, its other stars show, and its lines join up between the
+   stars that show. The task is done when the slider has stayed near the
+   dark end for a moment.
+   - Fact: "Pimedas taevas paistab Väike Vanker tervenisti. Kui
+     linnatuled ja Kuu valgustavad taevast, siis nõrgemaid tähti ei
+     paista." ("In a dark sky the whole Little Dipper shows. When city
+     lights and the Moon light up the sky, the fainter stars do not
+     show.")
+2. The view moves to Andromeeda and Pegasuse ruut, and **the slider**
+   starts at the bright end again: "Vii liugur jälle pimeda taeva poole,
+   kuni paistab Andromeeda galaktika." ("Move the slider towards the dark
+   sky again, until the Andromeda Galaxy shows.") The bright stars of
+   Andromeeda and the square show early, but the galaxy, though of
+   magnitude 3.4, shows only as a star of magnitude 5 would, from about
+   half way, as its light is spread out. Both figures are drawn once it
+   shows.
+   - Fact: "Galaktika valgus on laiali suurel alal. Heledas taevas kaob ta
+     enne kui sama heledad tähed, sellepärast näeb teda ainult pimedas
+     kohas." ("The galaxy's light is spread over a large patch. In a
+     bright sky it fades before stars that are just as bright, so it can
+     be seen only in a dark place.")
+3. **The slider is to play with**, starting at the dark end, with Valmis
+   beside it, in a view wide enough for Väike Vanker, Kassiopeia,
+   Andromeeda and Pegasuse ruut: "Liiguta liugurit ise ja vaata, kuidas tähed heledas
+   taevas kaovad ja pimedas taevas tagasi tulevad." ("Move the slider
+   yourself and watch the stars fade in a bright sky and come back in a
+   dark one.")
+
+Even at the bright end, Põhjanael and the brightest stars stay, so that
+the sky is never empty. The names of stars and figures that do not show
+are left out, and the figures' lines are drawn only between stars that
+show. As on level 3, the view does not move when the text changes: the
+card at the top keeps the room of the biggest text, and once a slider task
+is done, the slider goes out of sight but keeps its room.
+
+The win map has Väike Vanker, Andromeeda, Pegasuse ruut and the galaxy,
+with a frame on it, which shows its photo on a tap. The win text: "Mida pimedam on taevas,
+seda rohkem tähti paistab. Linnatuled ja Kuu teevad taeva heledaks ja
+peidavad kauged galaktikad." ("The darker the sky, the more stars show.
+City lights and the Moon make the sky bright and hide the distant
+galaxies.")
 
 ### Orion
 
@@ -1064,7 +1063,7 @@ Left out of the first version, but easy to add as more hops:
 - **Vaata taevast (look at the sky):** a button on the win screen of level
   10 that opens the same sky without tasks, with the slider and the date
   and hour sliders, to play with
-- **Linnutee (the Milky Way):** on level 5, a faint band through the
+- **Linnutee (the Milky Way):** on level 4, a faint band through the
   Summer Triangle in the dark September sky, with Luik flying along it,
   gone on the light midsummer night
 
