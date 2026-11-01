@@ -1235,14 +1235,13 @@
       },
       tasks: [
         {
-          // From Põhjanael to Caph, the end of the W further from it, is
-          // 30.3°, to the other end 25.6°; the corner is exactly one gap
-          // beyond Caph, 0.3° off the line
+          // Caph, magnitude 2.3, is the brighter end of the W, the other end
+          // 3.4; the corner is exactly one gap beyond Caph, 0.3° off the line
           kind: 'hop', from: 'polaris', via: 'caph', find: 'alpheratz', ticks: true, show: FIGURES.cassiopeia.order,
           title: { et: 'Ruudu nurk!', en: 'A corner of the square!' },
           text: {
-            et: 'Tõmba joon Põhjanaelast läbi Kassiopeia W selle otsa, mis on Põhjanaelast kaugemal, ja jätka seda sama kaugele.',
-            en: 'Draw a line from the North Star through the end of Cassiopeia’s W that is further from the North Star, and carry it on as far again.'
+            et: 'Tõmba joon Põhjanaelast läbi Kassiopeia W heledama otsa ja jätka seda sama kaugele.',
+            en: 'Draw a line from the North Star through the brighter end of Cassiopeia’s W, and carry it on as far again.'
           },
           fact: {
             et: 'See täht on Pegasuse suure ruudu nurk ja ühtlasi Andromeeda pea.',

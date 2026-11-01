@@ -789,11 +789,10 @@ them by their place: the corner of the square, the middle one of
 Andromeeda's three bright stars.
 
 1. **The corner of the square**, a hop with ticks: "Tõmba joon
-   Põhjanaelast läbi Kassiopeia W selle otsa, mis on Põhjanaelast
-   kaugemal, ja jätka seda sama kaugele." ("Draw a line from the North
-   Star through the end of Cassiopeia's W that is further from the North
-   Star, and carry it on as far again.") From Põhjanael to Caph is 30.3°,
-   the other end of the W 25.6°. The corner, Alpheratz, is exactly one
+   Põhjanaelast läbi Kassiopeia W heledama otsa ja jätka seda sama
+   kaugele." ("Draw a line from the North Star through the brighter end of
+   Cassiopeia's W, and carry it on as far again.") Caph, magnitude 2.3, is
+   clearly brighter than the other end of the W, Segin, 3.4. The corner, Alpheratz, is exactly one
    gap beyond Caph, 0.3° off the line. The title is "Ruudu nurk!" ("A
    corner of the square!"), not the star's Arabic name.
    - Fact: "See täht on Pegasuse suure ruudu nurk ja ühtlasi Andromeeda
