@@ -195,8 +195,8 @@
   overflow: hidden;
   box-shadow: 0 0 24px rgba(220, 230, 255, 0.45);
 }
-/* the photo's Moon fills 89% of it */
-.win-moon img { display: block; width: 113%; margin: -6.5%; }
+/* the photo's Moon fills 89% of it; turned so that north is up */
+.win-moon img { display: block; width: 113%; margin: -6.5%; transform: rotate(19deg); }
 @media (max-height: 600px) {
   #win .win-card h2 { font-size: 2rem; }
   #win .win-name { font-size: 1.1rem; }

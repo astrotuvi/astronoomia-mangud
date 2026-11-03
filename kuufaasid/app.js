@@ -265,7 +265,8 @@
     const id = 'mv' + uid++;
     const R = 80;
     const S = (R * 1200) / 535;   // the photo, scaled so that its Moon has radius R
-    const img = `<image href="../pusle/images/moon.jpg" x="${-S / 2}" y="${-S / 2}" width="${S}" height="${S}"`;
+    // and turned 19 degrees clockwise, so that north is up
+    const img = `<image href="../pusle/images/moon.jpg" x="${-S / 2}" y="${-S / 2}" width="${S}" height="${S}" transform="rotate(19)"`;
     svg.innerHTML = `
       <defs>
         <clipPath id="${id}c"><circle r="${R}"/></clipPath>
