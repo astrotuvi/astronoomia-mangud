@@ -6,6 +6,7 @@
   <!-- the pages are dark already: keeps phone browsers from recolouring them in dark mode -->
   <meta name="color-scheme" content="dark">
   <title>Astronoomia mängud</title>
+  <link rel="icon" href="shared/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
@@ -90,6 +91,16 @@
       display: block;
     }
     .share a { color: var(--muted); font-weight: 800; text-decoration: none; }
+    /* the logo before the title, the Pleiades and a meteor, drawn twice as
+       big and scaled down: phones in dark mode turn small dark pictures white */
+    .app-logo { width: 1.15em; height: 1.15em; vertical-align: -0.2em; }
+    .app-logo img {
+      display: block;
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+      transform-origin: 0 0;
+    }
     .share a:hover { text-decoration: underline; }
   </style>
 </head>
@@ -99,7 +110,7 @@
   <main class="screen menu">
     <div class="menu-inner">
       <header class="menu-head">
-        <h1><span class="logo">🔭</span> <span data-t="title"></span></h1>
+        <h1><span class="logo app-logo"><img src="shared/logo.svg" alt=""></span> <span data-t="title"></span></h1>
         <div class="lang">
           <button data-lang="et">EST</button>
           <button data-lang="en">ENG</button>

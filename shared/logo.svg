@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- the logo of Astronoomia mängud: the Pleiades and a meteor -->
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0" stop-color="#1b2766"/>
+      <stop offset="1" stop-color="#0a0f30"/>
+    </radialGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#bfe6ff" stop-opacity="0.9"/>
+      <stop offset="0.35" stop-color="#5fd4ff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#5fd4ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="haze" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+    <linearGradient id="trail" gradientUnits="userSpaceOnUse" x1="78" y1="52" x2="262" y2="150">
+      <stop offset="0" stop-color="#f5faff" stop-opacity="0.05"/>
+      <stop offset="0.4" stop-color="#f5faff" stop-opacity="0.45"/>
+      <stop offset="0.85" stop-color="#f5faff"/>
+      <stop offset="1" stop-color="#f5faff"/>
+    </linearGradient>
+    <linearGradient id="trailGlow" gradientUnits="userSpaceOnUse" x1="78" y1="52" x2="262" y2="150">
+      <stop offset="0" stop-color="#96beff" stop-opacity="0.05"/>
+      <stop offset="0.4" stop-color="#96beff" stop-opacity="0.4"/>
+      <stop offset="0.85" stop-color="#96beff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#96beff" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="trailBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="13"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- the blue reflection nebula around the brightest stars -->
+  <g filter="url(#haze)" fill="#3f7fe0" opacity="0.55">
+    <ellipse cx="300" cy="340" rx="80" ry="45"/>
+    <ellipse cx="230" cy="300" rx="70" ry="50"/>
+    <ellipse cx="350" cy="230" rx="50" ry="40"/>
+  </g>
+
+  <!-- faint background stars -->
+  <g fill="#fff" opacity="0.7">
+    <circle cx="70" cy="110" r="2.5"/>
+    <circle cx="190" cy="80" r="2"/>
+    <circle cx="460" cy="110" r="2.5"/>
+    <circle cx="150" cy="200" r="1.8"/>
+    <circle cx="80" cy="430" r="2"/>
+    <circle cx="250" cy="450" r="2.5"/>
+    <circle cx="440" cy="430" r="2"/>
+    <circle cx="170" cy="380" r="1.6"/>
+  </g>
+
+  <!-- a meteor, drawn as the trails in Uuri meteoore: a thin streak, faint
+       where it began, widest and brightest just before its head, where it
+       narrows quickly to a point, with a bluish glow -->
+  <polygon points="77.5,52.9 131.5,84.7 212.3,132.5 242.3,151.5 254.8,154.6 260.5,152.8 263.5,147.2 261.8,141.5 252.2,132.8 219.7,118.5 134.9,78.1 78.5,51.1" fill="url(#trailGlow)" filter="url(#trailBlur)"/>
+  <polygon points="77.7,52.6 132.1,83.4 213.7,129.9 244.2,148.0 256.1,152.1 261.1,151.7 262.9,148.3 260.5,144.0 250.4,136.3 218.3,121.1 134.3,79.4 78.3,51.4" fill="url(#trail)"/>
+
+  <!-- the Pleiades, at their real places with north up and east left;
+       the bigger the star, the brighter it is -->
+  <!-- Alcyone -->
+  <g transform="translate(219 310)">
+    <circle r="37.6" fill="url(#halo)"/>
+    <path d="M0 -44 Q3.8 -3.8 44 0 Q3.8 3.8 0 44 Q-3.8 3.8 -44 0 Q-3.8 -3.8 0 -44Z" fill="#e6f3ff"/>
+    <circle r="9.4" fill="#fff"/>
+  </g>
+  <!-- Atlas -->
+  <g transform="translate(93 327)">
+    <circle r="30.8" fill="url(#halo)"/>
+    <path d="M0 -36 Q3.1 -3.1 36 0 Q3.1 3.1 0 36 Q-3.1 3.1 -36 0 Q-3.1 -3.1 0 -36Z" fill="#e6f3ff"/>
+    <circle r="7.7" fill="#fff"/>
+  </g>
+  <!-- Electra -->
+  <g transform="translate(416 308)">
+    <circle r="30.1" fill="url(#halo)"/>
+    <path d="M0 -36 Q3.0 -3.0 36 0 Q3.0 3.0 0 36 Q-3.0 3.0 -36 0 Q-3.0 -3.0 0 -36Z" fill="#e6f3ff"/>
+    <circle r="7.5" fill="#fff"/>
+  </g>
+  <!-- Maia -->
+  <g transform="translate(344 224)">
+    <circle r="28.4" fill="url(#halo)"/>
+    <path d="M0 -34 Q2.8 -2.8 34 0 Q2.8 2.8 0 34 Q-2.8 2.8 -34 0 Q-2.8 -2.8 0 -34Z" fill="#e6f3ff"/>
+    <circle r="7.1" fill="#fff"/>
+  </g>
+  <!-- Merope -->
+  <g transform="translate(306 362)">
+    <circle r="25.5" fill="url(#halo)"/>
+    <path d="M0 -30 Q2.6 -2.6 30 0 Q2.6 2.6 0 30 Q-2.6 2.6 -30 0 Q-2.6 -2.6 0 -30Z" fill="#e6f3ff"/>
+    <circle r="6.4" fill="#fff"/>
+  </g>
+  <!-- Taygeta -->
+  <g transform="translate(391 191)">
+    <circle r="24.4" fill="url(#halo)"/>
+    <path d="M0 -29 Q2.4 -2.4 29 0 Q2.4 2.4 0 29 Q-2.4 2.4 -29 0 Q-2.4 -2.4 0 -29Z" fill="#e6f3ff"/>
+    <circle r="6.1" fill="#fff"/>
+  </g>
+  <!-- Pleione -->
+  <g transform="translate(91 300)">
+    <circle r="17.6" fill="url(#halo)"/>
+    <circle r="4.4" fill="#fff"/>
+  </g>
+  <!-- Celaeno -->
+  <g transform="translate(421 249)">
+    <circle r="13.9" fill="url(#halo)"/>
+    <circle r="3.5" fill="#fff"/>
+  </g>
+  <!-- Asterope -->
+  <g transform="translate(338 162)">
+    <circle r="11.0" fill="url(#halo)"/>
+    <circle r="2.8" fill="#fff"/>
+  </g>
+</svg>
