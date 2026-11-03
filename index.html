@@ -280,7 +280,8 @@
           <span data-t="orderText"></span>
         </a>
         <a class="game-card" href="kuufaasid/index.html">
-          <!-- a waxing crescent from the Moon photo, the rest faintly lit by the Earth -->
+          <!-- a waxing crescent from the Moon photo, turned 19 degrees so that north
+               is up, the rest faintly lit by the Earth -->
           <svg viewBox="0 0 100 100" aria-hidden="true" data-ink>
             <defs>
               <clipPath id="moonDisc"><circle cx="50" cy="50" r="36" /></clipPath>
@@ -289,8 +290,8 @@
               <mask id="moonLit"><path d="M50 14A36 36 0 0 1 50 86A18 36 0 0 0 50 14Z" fill="#fff" filter="url(#moonEdge)" /></mask>
             </defs>
             <g clip-path="url(#moonDisc)" filter="url(#moonGrey)">
-              <image href="pusle/images/moon.jpg" x="9.6" y="9.6" width="80.8" height="80.8" opacity="0.14" />
-              <image href="pusle/images/moon.jpg" x="9.6" y="9.6" width="80.8" height="80.8" mask="url(#moonLit)" />
+              <image href="pusle/images/moon.jpg" x="9.6" y="9.6" width="80.8" height="80.8" transform="rotate(19 50 50)" opacity="0.14" />
+              <g mask="url(#moonLit)"><image href="pusle/images/moon.jpg" x="9.6" y="9.6" width="80.8" height="80.8" transform="rotate(19 50 50)" /></g>
             </g>
             <g fill="#fff">
               <circle cx="12" cy="18" r="0.7" opacity="0.7" /><circle cx="88" cy="12" r="0.6" opacity="0.5" />

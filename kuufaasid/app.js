@@ -265,7 +265,8 @@
     const id = 'mv' + uid++;
     const R = 80;
     const S = (R * 1200) / 535;   // the photo, scaled so that its Moon has radius R
-    // and turned 19 degrees clockwise, so that north is up
+    // and turned 19 degrees clockwise, so that north is up. The mask of the
+    // lit part sits on a group around it, so that it is not turned with it.
     const img = `<image href="../pusle/images/moon.jpg" x="${-S / 2}" y="${-S / 2}" width="${S}" height="${S}" transform="rotate(19)"`;
     svg.innerHTML = `
       <defs>
@@ -281,7 +282,7 @@
       <circle r="${R}" fill="#06070f" data-ink/>
       <g clip-path="url(#${id}c)">
         ${img} class="earthshine" filter="url(#${id}g)"/>
-        ${img} mask="url(#${id}m)" filter="url(#${id}g)"/>
+        <g mask="url(#${id}m)">${img} filter="url(#${id}g)"/></g>
         ${sky ? `<circle class="umbra" r="${R * 2.6}" fill="#a8441e" filter="url(#${id}u)" style="mix-blend-mode:multiply"/>` : ''}
       </g>`;
     const lit = svg.querySelector('.lit');
