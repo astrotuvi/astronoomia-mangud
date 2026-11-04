@@ -20,6 +20,7 @@
     { id: 'planeedid', emoji: '🪐', name: { et: 'Planeetide rivi', en: 'Line Up the Planets' }, href: '../planeedid/index.html' },
     { id: 'meteoor', emoji: '🌠', name: { et: 'Püüa langev täht', en: 'Catch a Shooting Star' }, href: '../meteoor/index.html' },
     { id: 'radiant', emoji: '🔍', name: { et: 'Uuri meteoore', en: 'Meteor Detective' }, href: '../radiant/index.html' },
+    { id: 'kulgur', emoji: '📡', name: { et: 'Marsikulgur', en: 'Mars Rover' }, href: '../kulgur/index.html' },
     { id: 'tahtkujud', emoji: '✨', name: { et: 'Tähtkujud', en: 'Constellations' }, href: '../tahtkujud/index.html' },
     { id: 'eksoplaneet', emoji: '🔭', name: { et: 'Avasta eksoplaneet', en: 'Discover an Exoplanet' }, href: '../eksoplaneet/index.html' },
     { id: 'asteroid', emoji: '🪨', name: { et: 'Leia asteroid', en: 'Find the Asteroid' }, href: '../asteroid/index.html' },

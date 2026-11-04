@@ -1,0 +1,251 @@
+/* Marsikulgur: the levels, the map, the plan and the signal.
+   The rest is in shared/common.css. */
+
+.logo-rover { display: block; width: 1.3em; height: 0.9em; }
+
+.intro {
+  margin: 10px 0 0;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* levels, by stage */
+.pictures { margin-bottom: 6px; }
+.pic .number { font-weight: 900; color: var(--sky); }
+.pic.selected .number { color: var(--accent); }
+.pic i { font-style: normal; }
+/* on the corner of the card, so that it adds no line and hides no target on the map */
+.pic .done-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 1.5rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(255, 211, 77, 0.8));
+}
+
+.pic .best { font-size: 0.9rem; line-height: 1.15; text-align: center; color: var(--accent); }
+
+.reset-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+
+/* ---------- The playing area ---------- */
+
+.area { display: flex; flex-direction: column; }
+.map-box { position: relative; flex: 1 1 0; min-height: 0; min-width: 0; }
+.map {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 14px;
+}
+#ground { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.rover, .target { position: absolute; left: 0; top: 0; pointer-events: none; }
+.rover svg, .target svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.rover { will-change: transform; }
+.rover.ghost { opacity: 0.45; }
+.rover.drilling svg { animation: drill 0.12s linear infinite; }
+@keyframes drill { from { transform: translateX(-1.5%); } to { transform: translateX(1.5%); } }
+.rover.shake svg { animation: drill 0.09s linear 4; }
+.target .ring { transform-origin: 50px 50px; transform-box: view-box; animation: ring 1.6s ease-in-out infinite; }
+@keyframes ring { 0%, 100% { transform: scale(0.94); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.55; } }
+
+.night {
+  position: absolute;
+  inset: 0;
+  background: #050820;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+.night.on { opacity: 0.8; }
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.flash.on { animation: flash 0.4s ease-out; }
+@keyframes flash { from { opacity: 0.8; } to { opacity: 0; } }
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: max-content;
+  max-width: calc(100% - 20px);
+  padding: 8px 16px;
+  transform: translateX(-50%);
+  border-radius: 18px;
+  background: rgba(20, 28, 80, 0.94);
+  border: 2px solid var(--sky);
+  font-size: 1.02rem;
+  line-height: 1.25;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+/* the signal on its way from the Earth to Mars */
+.signal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(5, 8, 32, 0.9);
+}
+.signal svg { flex: 0 1 auto; min-height: 0; width: min(100%, 320px); aspect-ratio: 1; }
+.signal p { flex: none; margin: 0; font-size: 1.15rem; text-align: center; color: var(--accent); }
+
+/* ---------- The plan ---------- */
+
+.plan {
+  flex: none;
+  height: min(50%, 340px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 10px 10px;
+}
+.plan-head { flex: none; }
+.task { margin: 0; font-size: 0.98rem; font-weight: 600; line-height: 1.2; }
+.task b { font-weight: 900; color: var(--accent); }
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 12px;
+  margin-top: 2px;
+  font-size: 0.9rem;
+  color: var(--sky);
+}
+.status span:empty { display: none; }
+.battery {
+  width: 74px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+.battery i { display: block; height: 100%; border-radius: 999px; background: var(--go); transition: width 0.2s; }
+.limit-over { color: var(--accent); }
+
+.chips {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  touch-action: pan-y;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 6px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+}
+.chips .empty { font-size: 0.95rem; font-weight: 600; color: var(--muted); padding: 4px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 38px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--card-hover);
+  font-size: 0.95rem;
+}
+.chip svg, .step-btn svg { width: 1.2em; height: 1.2em; display: block; }
+.chip.now { background: var(--accent); color: var(--ink); }
+.chip.bad { animation: chipShake 0.45s; outline: 2px solid var(--accent); }
+@keyframes chipShake {
+  0%, 100% { transform: none; }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+.block {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border: 2px solid var(--sky);
+  border-radius: 20px;
+}
+.block.open { border-style: dashed; border-color: var(--accent); }
+.block .times { background: var(--sky); color: var(--ink); }
+.block .drop { width: 38px; padding: 0; justify-content: center; }
+.block .hole { padding: 0 6px; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+
+.steps { flex: none; display: flex; gap: 5px; }
+.step-btn {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 52px;
+  padding: 3px 1px;
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 3px 0 rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  font-size: 0.72rem;
+  line-height: 1.1;
+}
+.step-btn .ic { font-size: 1.25rem; line-height: 1.1; color: var(--sky); }
+.step-btn:hover { background: var(--card-hover); }
+.step-btn:active { transform: translateY(3px); box-shadow: none; }
+.step-btn.open { background: rgba(255, 211, 77, 0.2); }
+
+.plan.running .steps, .plan.running .chips .drop { opacity: 0.45; }
+
+.send-row { flex: none; display: flex; align-items: center; gap: 8px; }
+.send-row .clear-best { flex: none; min-height: 44px; max-width: 34%; line-height: 1.1; }
+.send { flex: 1; min-height: 52px; padding: 6px 12px; font-size: 1.2rem; }
+.send.dim { opacity: 0.55; }
+.send.stop { background: #d93a55; box-shadow: 0 5px 0 #8f2036; }
+
+/* the next thing to tap */
+.pulse { animation: pulse 0.9s ease-in-out infinite; outline: 3px solid var(--accent); outline-offset: 1px; }
+.pulse.finger::after {
+  content: '👆';
+  position: absolute;
+  bottom: -10px;
+  right: 2px;
+  font-size: 1.5rem;
+  pointer-events: none;
+}
+.send.pulse, .chip.pulse { position: relative; }
+@keyframes pulse { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
+
+.win-name { font-weight: 900; }
+.win-pic img { border-radius: 18px; }
+
+@media (min-aspect-ratio: 1/1) {
+  .area { flex-direction: row; }
+  .plan { height: auto; width: clamp(250px, 36vw, 420px); }
+  .steps { flex-wrap: wrap; }
+  .step-btn { flex: 1 1 28%; font-size: 0.82rem; }
+}
+/* a phone on its side: the buttons in one row with no words, to leave room for the plan */
+@media (min-aspect-ratio: 1/1) and (max-height: 430px) {
+  .plan { width: 46vw; padding-top: 2px; gap: 4px; }
+  .task { font-size: 0.86rem; }
+  .status { font-size: 0.82rem; margin-top: 0; }
+  .steps { flex-wrap: nowrap; }
+  .step-btn { flex: 1 1 0; }
+  .step-btn span:last-child { display: none; }
+  .send-row .clear-best { min-height: 40px; font-size: 0.8rem; }
+}
+@media (min-width: 700px) and (min-height: 431px) {
+  .step-btn { font-size: 0.9rem; }
+  .step-btn .ic { font-size: 1.5rem; }
+  .task { font-size: 1.1rem; }
+  .status { font-size: 1rem; }
+}

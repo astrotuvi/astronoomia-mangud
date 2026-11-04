@@ -144,6 +144,32 @@ window.Astro = (() => {
       src.connect(f).connect(g).connect(a.destination);
       src.start(t0);
     },
+    // a signal leaving the Earth: a beep that rises, and a shorter one after it
+    signal() {
+      tone(880, 0, 0.16, 'sine', 0.1, 1320);
+      tone(1320, 0.2, 0.2, 'sine', 0.08, 1760);
+    },
+    // wheels rolling softly on gravel, for as long as a move takes (s)
+    roll(dur) {
+      if (!soundOn) return;
+      const a = audio();
+      if (!a) return;
+      const buf = a.createBuffer(1, Math.ceil(a.sampleRate * dur), a.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+      const src = a.createBufferSource();
+      src.buffer = buf;
+      const f = a.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.value = 520;
+      const g = a.createGain();
+      const t0 = a.currentTime;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.1, t0 + dur * 0.3);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      src.connect(f).connect(g).connect(a.destination);
+      src.start(t0);
+    },
     win() {
       [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.13, 0.4, 'triangle', 0.2));
       tone(1568, 0.55, 0.7, 'sine', 0.12);

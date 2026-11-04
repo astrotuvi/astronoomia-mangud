@@ -909,6 +909,81 @@ window.QUIZ = [
     ]
   },
   {
+    game: 'kulgur',
+    questions: [
+      {
+        q: { et: 'Miks ei saa Maalt Marsi kulgurit roolida nagu mängu-autot?', en: 'Why can\'t a Mars rover be steered from the Earth like a toy car?' },
+        answers: [
+          { et: 'Signaal on minuteid teel', en: 'A signal takes minutes to get there' },
+          { et: 'Kulguril pole rattaid', en: 'The rover has no wheels' },
+          { et: 'Marsil pole õhku', en: 'There is no air on Mars' },
+          { et: 'Kulgur sõidab liiga kiiresti', en: 'The rover drives too fast' }
+        ],
+        why: { et: 'Signaal on Maalt Marsile teel 3 kuni 22 minutit, seepärast saab kulgur oma käsud korraga.', en: 'A signal takes 3 to 22 minutes from the Earth to Mars, so a rover gets its orders all at once.' }
+      },
+      {
+        q: { et: 'Kui kaua on signaal Maalt Marsile teel?', en: 'How long does a signal take from the Earth to Mars?' },
+        pic: { world: 'mars' },
+        answers: [
+          { et: '3 kuni 22 minutit', en: '3 to 22 minutes' },
+          { et: 'Alla sekundi', en: 'Less than a second' },
+          { et: '3 kuni 22 tundi', en: '3 to 22 hours' },
+          { et: 'Üks nädal', en: 'A week' }
+        ],
+        why: { et: 'Aeg oleneb sellest, kui kaugel Marss parajasti Maast on. Mõlemad tiirlevad ümber Päikese.', en: 'It depends on how far Mars is from the Earth just then, as both go round the Sun.' }
+      },
+      {
+        q: { et: 'Mis on Sol?', en: 'What is a Sol?' },
+        answers: [
+          { et: 'Marsi ööpäev', en: 'A day on Mars' },
+          { et: 'Marsi aasta', en: 'A year on Mars' },
+          { et: 'Kulguri aku', en: 'A rover\'s battery' },
+          { et: 'Marsi kuu', en: 'A moon of Mars' }
+        ],
+        why: { et: 'Sol kestab 24 tundi ja 39 minutit, nii et see on peaaegu sama pikk kui meie ööpäev.', en: 'A Sol lasts 24 hours and 39 minutes, so it is almost as long as our day.' }
+      },
+      {
+        q: { et: 'Miks on Marss punane?', en: 'Why is Mars red?' },
+        pic: { world: 'mars' },
+        answers: [
+          { et: 'Pinnases on roostes rauda', en: 'There is rusty iron in its soil' },
+          { et: 'See on väga kuum', en: 'It is very hot' },
+          { et: 'Seal on palju laavat', en: 'It has a lot of lava' },
+          { et: 'Päike paistab sinna punaselt', en: 'The Sun shines red on it' }
+        ],
+        why: { et: 'Marsi pinnases ja tolmus on raud roostetanud, nagu vana nael Maal.', en: 'The iron in the soil and dust of Mars has rusted, like an old nail on the Earth.' }
+      },
+      {
+        q: { et: 'Kulgur sõidab sinu poole. Kuhu ta keerab, kui saadad käsu "Vasakule"?', en: 'The rover is driving towards you. Which way does it turn if you send the order "Left"?' },
+        answers: [
+          { et: 'Sinu paremale', en: 'To your right' },
+          { et: 'Sinu vasakule', en: 'To your left' },
+          { et: 'Sinust eemale', en: 'Away from you' },
+          { et: 'Ta ei keera', en: 'It doesn\'t turn' }
+        ],
+        why: { et: 'Vasak on kulguri enda vasak. Kui ta sõidab sinu poole, on see sinu parem.', en: 'Left is the rover\'s own left. When it is coming towards you, that is your right.' }
+      },
+      {
+        q: { et: 'Sinu kulgur näeb oma teel suurt kivi. Mida teeb ta plaani täites?', en: 'Your rover sees a big rock in its way. What does it do while carrying out its plan?' },
+        answers: [
+          { et: 'Peatub ise', en: 'It stops by itself' },
+          { et: 'Sõidab kivist üle', en: 'It drives over the rock' },
+          { et: 'Ootab, kuni Maalt roolitakse', en: 'It waits to be steered from the Earth' },
+          { et: 'Puurib kivi läbi', en: 'It drills through the rock' }
+        ],
+        why: { et: 'Kulgur vaatab kaameratega ette ja oskab ohtliku kivi ees ise peatuda.', en: 'A rover looks ahead with its cameras and can stop by itself in front of a dangerous rock.' }
+      },
+      {
+        q: { et: 'Kumb on lühem plaan sama tee jaoks?', en: 'Which is the shorter plan for the same way?' },
+        answers: [
+          { et: 'Korda 3×: edasi, vasakule', en: 'Repeat 3×: forward, left' },
+          { et: 'Edasi, vasakule, edasi, vasakule, edasi, vasakule', en: 'Forward, left, forward, left, forward, left' }
+        ],
+        why: { et: 'Korda teeb sama asja mitu korda, nii et plaan jääb lühem. Nii tehakse ka päris programmides.', en: 'Repeat does the same thing several times, so the plan is shorter. Real programs do this too.' }
+      }
+    ]
+  },
+  {
     game: 'tahtkujud',
     questions: [
       {

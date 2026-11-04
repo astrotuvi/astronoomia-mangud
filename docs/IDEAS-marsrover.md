@@ -1,7 +1,8 @@
 # Marsikulgur (Mars rover)
 
-A game idea for ages 8–10, idea 13 in [IDEAS.md](IDEAS.md), not made yet.
-For how a new game should look and work, see [DESIGN.md](DESIGN.md).
+A game idea for ages 8–10, idea 13 in [IDEAS.md](IDEAS.md), which is now the
+game in `kulgur/`, described in the [README](../README.md#marsikulgur). For how
+a new game should look and work, see [DESIGN.md](DESIGN.md).
 
 The player is the rover's driver on Earth. A signal takes 3–22 minutes to
 reach Mars, so a rover can't be steered live: it is given a plan and carries
@@ -54,7 +55,7 @@ buttons are not.
 
 1. **The signal:** after 📡 Saada, a dot flies from the Earth to Mars in about
    3 seconds, on a small diagram with the Sun and the two orbits. A label says
-   "Signal on teel: 12 minutit" ("The signal is on its way: 12 minutes"). A
+   "Signaal on teel: 12 minutit" ("The signal is on its way: 12 minutes"). A
    tap skips this after the first send of a level.
 2. **The drive:** the rover carries out the plan, and each step lights up as
    it runs. There is no steering now.
@@ -150,18 +151,20 @@ fewer Sols the better, but a level can always be finished.
    - Fact: "Marsi ööpäev on Sol. See on 24 tundi ja 39 minutit, nii et peaaegu
      sama pikk kui meie ööpäev." ("A day on Mars is called a Sol. It is 24 hours
      and 39 minutes, so almost as long as ours.")
-7. **Pikk teekond (a long way):** a straight but long way or a short way past
-   many turns, so that the player compares them. Delay 14 minutes.
-   - Fact: "Opportunity pidi töötama 90 Soli, aga töötas umbes 15 aastat, kuni
+7. **Pikk teekond (a long way):** a straight but longer way (2 Sols) or a
+   shorter way past many turns (3 Sols), so that the player compares them.
+   Delay 14 minutes.
+   - Fact: "Opportunity pidi töötama 90 Soli, aga töötas üle 14 aasta, kuni
      tolmutorm 2018. aastal Päikese varjas ja aku tühjaks jäi." ("Opportunity
-     was meant to work for 90 Sols, but it worked for about 15 years, until a
+     was meant to work for 90 Sols, but it worked for over 14 years, until a
      dust storm in 2018 hid the Sun and its battery ran out.")
 
 ### Targad plaanid (smart plans)
 
 8. **Korda (repeat):** a staircase of boulders, and a limit on the plan: "Sõnumisse
-   mahub 4 käsku" ("The message holds 4 orders"). A plan over the limit can't be
-   sent, and 🔁 is pointed out. A block counts as one order. Delay 18 minutes.
+   mahub 5 käsku" ("The message holds 5 orders"). A plan over the limit can't be
+   sent, and 🔁 is pointed out. A block and each order in it count as one, so
+   that a whole route in one block does not fit. Delay 18 minutes.
    - Fact: "Kulgur saadab pildid enamasti Marsi ümber tiirleva satelliidi kaudu.
      Nii jõuab Maale palju rohkem andmeid." ("A rover mostly sends its pictures
      through a satellite going round Mars. That gets far more data to the
@@ -199,12 +202,12 @@ around the Sun as it sets.
 Kept with `Astro.makeStore('kulgur.')`, for each level:
 
 - done, for the 🌟
-- the shortest plan, counting all steps sent, with a block as one step and each
-  repeat send counting again
+- the shortest plan, counting all orders sent, where "Edasi 3" is one order, a
+  block and each order in it count as one, and each repeat send counts again
 - on levels 6, 7 and 10, the fewest Sols
 
-The menu shows them as "🏆 Parim: 6 käsku" or "🏆 Parim: 2 Soli" under the
-level. Alusta otsast clears the count of the current try, not the record.
+Each level's card in the menu shows its record as "🏆 Parim: 6 käsku" or
+"🏆 Parim: 2 Soli". Buttons below Mängi clear the stars and the records. Alusta otsast clears the count of the current try, not the record.
 
 ## Pictures
 
@@ -223,7 +226,7 @@ level. Alusta otsast clears the count of the current try, not the record.
 
 `sfx.pick()` for adding a step, `snap()` for a step done, `oops()` for a stop,
 `win()` with `Astro.startConfetti()` on the win screen. Made for this game: a
-rising beep for the signal leaving and a soft whirr while driving.
+rising beep for the signal leaving and wheels rolling softly while driving.
 
 ## Data
 
@@ -261,8 +264,7 @@ Building it follows "Adding a game" in [DESIGN.md](DESIGN.md), so it also needs:
 - a folder `kulgur/`, and a card and texts on the start page
 - a row in the README's table and a section there, with the ages at the top of
   the README and of `DESIGN.md` updated
-- this idea taken off the list in [IDEAS.md](IDEAS.md), and this file changed to
-  say that it is now the game
+- this file changed to say that it is now the game
 - a few questions in `viktoriin/questions.js`, about the delay, the Sol and why
   Mars is red
 - a check on a 360 px phone in portrait, a tablet in landscape and in dark mode

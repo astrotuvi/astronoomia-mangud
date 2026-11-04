@@ -1,6 +1,6 @@
 # Astronoomia mängud / Astronomy games
 
-Simple astronomy games for children aged 5–6, Kosmoselabürint for ages 5–10 (its first two levels need no reading), Kuu faasid, Kuidas tekivad aastaajad?, Uuri meteoore and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
+Simple astronomy games for children aged 5–6, Kosmoselabürint for ages 5–10 (its first two levels need no reading), Kuu faasid, Kuidas tekivad aastaajad?, Uuri meteoore, Marsikulgur and Kosmoseviktoriin for ages 8–10, and Avasta eksoplaneet and Leia asteroid for ages 11–12, in Estonian (default) or English.
 They work with mouse and touch screens (tablets), in landscape and portrait.
 
 | Game | Folder | What to do |
@@ -17,6 +17,7 @@ They work with mouse and touch screens (tablets), in landscape and portrait.
 | Kuidas tekivad aastaajad? / What Causes the Seasons? | [`aastaajad/`](aastaajad/) | Move the Earth round the Sun and see how high the Sun climbs in Estonia and how long the day is |
 | Püüa langev täht / Catch a Shooting Star | [`meteoor/`](meteoor/) | Tap shooting stars to catch them in a jar during one night |
 | Uuri meteoore / Meteor Detective | [`radiant/`](radiant/) | Draw lines back along shooting-star trails to the radiant they fly out of, and name the meteor shower after the constellation it is in |
+| Marsikulgur / Mars Rover | [`kulgur/`](kulgur/) | Write a plan for a rover on Mars and send it off, as a signal takes too long to steer it live |
 | Avasta eksoplaneet / Discover an Exoplanet | [`eksoplaneet/`](eksoplaneet/) | Find the dips in a star's light and work out the planet's year, size and whether it could have water |
 | Leia asteroid / Find the Asteroid | [`asteroid/`](asteroid/) | Flip between pictures of the same patch of sky, find the asteroid that moves, and work out how far away it goes round the Sun |
 | Kosmoseviktoriin / Space Quiz | [`viktoriin/`](viktoriin/) | Answer questions about what the other games teach, alone or two players on one phone |
@@ -213,6 +214,24 @@ The levels, the meteor storm, the wind and the overcast at the start, and the ot
 - The win screen shows the whole sky with the radiants found and their names, and a fact about meteor showers.
 
 The levels and their showers are in the `LEVELS` list at the top of `radiant/app.js`, and the constellations in `FIGURES`, from `tahtkujud/app.js`. The radiants are real (from the International Meteor Organization's list), and the trails fly along great circles out of them. The sky is drawn with the gnomonic projection, in which every great circle is a straight line, so the lines drawn back along the trails meet exactly at the radiant. It is drawn as a sky chart with north up and east to the left, except on Kaks voolu, where the picture is turned so that both radiants lie along the longer side of the screen. Trails nearer the radiant are shorter, as they are seen more end on: the farthest are about three times as long as the nearest, which are just long enough to tap. None is under the instructions at the top.
+
+## Marsikulgur
+
+For ages 8–10. The player drives a rover on Mars from the Earth. A signal takes 3–22 minutes to get there, so the rover can't be steered live: the player writes a plan and sends it. It is also a first taste of coding.
+
+- Pick one of 10 levels, in 4 stages: Esimesed sõidud, Teadustöö, Päikese jõul and Targad plaanid. Each level's card shows its map as it starts, without the hidden rocks. All are open from the start, and a 🌟 marks the ones done. The card also shows the level's record. Below **Mängi**, **Eemalda kõik 🌟** clears the stars and **🗑️ Kustuta parimad tulemused** clears the records, each after asking and each leaving the other as it is.
+- Tap the buttons to build the plan: Edasi (forward), Vasakule (left), Paremale (right), and on later levels Pildista (take a picture), Puuri (drill) and Korda (repeat). Forward steps in a row merge into "Edasi 3". Tapping a step in the plan takes it off.
+- **Korda** opens a block, and the steps tapped next go into it until **Valmis**. Tapping its number changes the repeats (2×, 3×, 4×), and ✕ removes the block.
+- **📡 Saada** sends the plan. A dot flies from the Earth to Mars on a small picture of their orbits, in about 3 seconds, while the words give the true delay of the level, from 5 to 20 minutes. From the second send of a level on, a tap skips this. Then the rover carries out the plan. **🛑 Stopp** only says how many minutes the order would take to arrive.
+- Nothing can break. In front of a boulder or at the edge of the map the rover stops by itself and says why, the steps done leave the plan, and the player carries on from there. After two stops, the next right step pulses. **Alusta otsast** puts the rover back at the start of the level.
+- 💡 runs the plan on a faint test rover, as real teams try hard drives on a twin rover on the Earth. It costs nothing, and as it knows only what is on the map, it drives through hidden rocks. With an empty plan 💡 shows the next step.
+- **Päikese jõul:** each step uses one unit of the battery. When it is empty the Sun sets, a new Sol begins with a full battery, and the steps not done wait to be sent again. On Pikk teekond the straight way takes 2 Sols and the winding one 3, as turns use the battery too.
+- **Targad plaanid:** on Korda a message holds only 5 orders, where a block and each order in it count as one, so the stairs need a repeat. On Peidus kivid and Jää some rocks are not on the map until the rover is next to them.
+- The win screen shows a postcard from the rover, drawn in code, and a short fact. The record of a level is the fewest orders sent, or the fewest Sols on levels that have a battery.
+
+The levels are in the `LEVELS` list at the top of `kulgur/app.js`, with their maps as rows of characters. The comment there explains them.
+
+What is made up: the rover is not a copy of a real one. It has solar panels like Opportunity, while Curiosity and Perseverance run on nuclear power. No rover has dug up ice yet, so level 10 is made up, but the Phoenix lander did find ice under the surface. The squares of the map are not to scale.
 
 ## Avasta eksoplaneet
 

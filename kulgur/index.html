@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- the pages are dark already: keeps phone browsers from recolouring them in dark mode -->
+  <meta name="color-scheme" content="dark">
+  <title>Marsikulgur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/common.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <!-- Menu: pick a level -->
+  <main id="menu" class="screen menu">
+    <div class="menu-inner">
+      <header class="menu-head">
+        <a class="icon" href="../index.html" data-t-label="allGames" aria-label="Kõik mängud">🏠</a>
+        <h1>
+          <span class="logo">
+            <svg class="logo-rover" viewBox="0 0 64 44" aria-hidden="true" data-ink>
+              <rect x="36.5" y="8" width="3" height="14" fill="#e8e2d8" />
+              <rect x="33" y="3" width="11" height="7" rx="2" fill="#e8e2d8" />
+              <rect x="6" y="16" width="52" height="5" rx="2" fill="#5fa8e8" />
+              <rect x="12" y="21" width="40" height="10" rx="3" fill="#e8e2d8" />
+              <circle cx="14" cy="36" r="6.5" fill="#3a3a48" />
+              <circle cx="32" cy="36" r="6.5" fill="#3a3a48" />
+              <circle cx="50" cy="36" r="6.5" fill="#3a3a48" />
+            </svg>
+          </span>
+          <span data-t="title"></span>
+        </h1>
+        <div class="lang">
+          <button data-lang="et">EST</button>
+          <button data-lang="en">ENG</button>
+        </div>
+      </header>
+
+      <p class="intro" data-t="intro"></p>
+
+      <div id="levels"></div>
+
+      <div class="play-row">
+        <button id="playBtn" class="play">▶ <span data-t="play"></span></button>
+      </div>
+
+      <div class="reset-row">
+        <button id="resetBtn" class="clear-best hidden" data-t="reset"></button>
+        <button id="clearBest" class="clear-best hidden" data-t="clearBest"></button>
+      </div>
+
+      <footer class="credit">
+        <div data-t="author"></div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Game -->
+  <div id="game" class="screen game hidden">
+    <div class="bar">
+      <button id="homeBtn" class="icon" data-t-label="menu" aria-label="Menüü">⬅️</button>
+      <div class="progress">
+        <div class="track"><div id="progressFill" class="fill"></div></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <button id="hintBtn" class="icon" data-t-label="hint" aria-label="Vihje">💡</button>
+      <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
+    </div>
+    <div id="area" class="area">
+      <!-- the map from orbit, with the target and the rovers over it -->
+      <div id="mapBox" class="map-box">
+        <div id="map" class="map">
+          <canvas id="ground"></canvas>
+          <div id="target" class="target" aria-hidden="true"></div>
+          <div id="ghost" class="rover ghost hidden" aria-hidden="true"></div>
+          <div id="rover" class="rover" aria-hidden="true"></div>
+          <div id="night" class="night"></div>
+          <div id="flash" class="flash"></div>
+        </div>
+        <div id="signal" class="signal hidden">
+          <svg id="signalPic" viewBox="-100 -100 200 200" aria-hidden="true" data-ink></svg>
+          <p id="signalText"></p>
+        </div>
+        <div id="toast" class="toast" role="status"></div>
+      </div>
+
+      <div class="plan">
+        <div class="plan-head">
+          <p class="task"><b id="levelName"></b> <span id="taskText"></span></p>
+          <div class="status">
+            <span id="delayText"></span>
+            <span id="solText"></span>
+            <span id="battery" class="battery"><i id="batteryFill"></i></span>
+            <span id="limitText"></span>
+          </div>
+        </div>
+        <div id="chips" class="chips"></div>
+        <div id="steps" class="steps"></div>
+        <div class="send-row">
+          <button id="restartBtn" class="clear-best" data-t="restart"></button>
+          <button id="sendBtn" class="btn send">📡 <span data-t="send"></span></button>
+          <button id="stopBtn" class="btn send stop hidden">🛑 <span data-t="stop"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Win overlay -->
+  <div id="win" class="overlay hidden">
+    <canvas id="confetti"></canvas>
+    <div id="winPic" class="win-pic"></div>
+    <div class="win-card">
+      <h2><span data-t="wellDone"></span> 🎉</h2>
+      <p id="winName" class="win-name"></p>
+      <p id="winFact" class="win-fact"></p>
+      <div class="win-buttons">
+        <button id="nextBtn" class="btn">▶ <span data-t="next"></span></button>
+        <button id="againBtn" class="btn alt">🔁 <span data-t="again"></span></button>
+        <button id="menuBtn" class="btn alt">⬅️ <span data-t="menu"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../shared/common.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

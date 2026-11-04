@@ -8,8 +8,8 @@ ones.
 ## Who the games are for
 
 - Most games are for children aged 5–6, who may not read yet. Kuu faasid,
-  Kuidas tekivad aastaajad?, Uuri meteoore and Kosmoseviktoriin are for ages
-  8–10, and Avasta eksoplaneet and Leia asteroid for 11–12. Say in the README
+  Kuidas tekivad aastaajad?, Uuri meteoore, Marsikulgur and Kosmoseviktoriin
+  are for ages 8–10, and Avasta eksoplaneet and Leia asteroid for 11–12. Say in the README
   which age a new game is for.
 - Estonian is the default language and English the second.
 - The games work with a finger on a tablet or phone as well as with a mouse,
@@ -189,7 +189,9 @@ What the recolouring does:
      the browser recolours it. A shape with both a fill and a stroke is
      split in two, and a blur filter on it is kept. `opacity` still works,
      and shapes added later are handled too, but a colour the game changes
-     later is not followed, so don't use it on those.
+     later is not followed, so don't use it on those. A path or line that is
+     exactly upright or level disappears, as its filter has no area to paint
+     in, so draw a mast or a pole as a `rect`.
    - Show a picture such as the QR code as a PNG, not as an SVG file.
 3. SVG gradients may be used freely. `shared/common.js` swaps each one for a
    `<pattern>` of the same id holding a PNG picture of it, so shapes that use
