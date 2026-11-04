@@ -42,7 +42,7 @@ buttons are not.
 | 🔁 | Korda (repeat) | level 8 |
 
 - Tapping a button adds a step to the end of the plan. Forward steps in a row
-  merge into one chip, "Edasi 3".
+  merge into one chip, "⬆️ 3×" (the plan shows icons only).
 - Tapping a chip takes one step off it, or removes it.
 - Tapping 🔁 opens a block, and the steps tapped next go into it until
   "Valmis" (Done). Tapping its number changes it: 2×, 3×, 4×. Blocks don't go
@@ -109,7 +109,8 @@ level 9 it drives straight through the hidden rocks.
 The levels are all open from the start, and a 🌟 marks the ones done. Each ends
 with one short fact. The facts should be checked against a source before use.
 Added later: a bonus level with a random landscape and task, which opens when
-all 10 are done.
+all 10 are done. The groups below are only for planning: the menu shows the
+cards in one row without headings.
 
 ### Esimesed sõidud (first drives)
 
@@ -207,7 +208,7 @@ around the Sun as it sets.
 Kept with `Astro.makeStore('kulgur.')`, for each level:
 
 - done, for the 🌟
-- the shortest plan, counting all orders sent, where "Edasi 3" is one order, a
+- the shortest plan, counting all orders sent, where "⬆️ 3×" is one order, a
   block and each order in it count as one, and each repeat send counts again
 - on levels 6, 7 and 10, the fewest Sols
 

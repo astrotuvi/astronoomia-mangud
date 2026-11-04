@@ -10,8 +10,8 @@
   color: var(--muted);
 }
 
-/* levels, by stage */
-.pictures { margin-bottom: 6px; }
+/* levels */
+#levels { margin-top: 16px; }
 .pic .number { font-weight: 900; color: var(--sky); }
 .pic.selected .number { color: var(--accent); }
 .pic i { font-style: normal; }

@@ -42,7 +42,7 @@
   // for less than about 4.4 or more than about 21 minutes.
   const LEVELS = [
     {
-      id: 'otse', stage: 0, face: 'N', steps: ['forward'], delay: 5, goal: 'flag', card: 'tracks',
+      id: 'otse', face: 'N', steps: ['forward'], delay: 5, goal: 'flag', card: 'tracks',
       map: [
         '.....',
         '..F..',
@@ -59,7 +59,7 @@
       }
     },
     {
-      id: 'poore', stage: 0, face: 'N', steps: BASIC, delay: 8, goal: 'flag', card: 'tracks',
+      id: 'poore', face: 'N', steps: BASIC, delay: 8, goal: 'flag', card: 'tracks',
       map: [
         '......',
         '.F....',
@@ -76,7 +76,7 @@
       }
     },
     {
-      id: 'kivid', stage: 0, face: 'S', steps: BASIC, delay: 12, goal: 'flag', card: 'rocks',
+      id: 'kivid', face: 'S', steps: BASIC, delay: 12, goal: 'flag', card: 'rocks',
       map: [
         '.......',
         '..R....',
@@ -97,7 +97,7 @@
       }
     },
     {
-      id: 'pildista', stage: 1, face: 'N', steps: [...BASIC, 'photo'], delay: 15, goal: 'rock', tasks: ['photo'], card: 'rock',
+      id: 'pildista', face: 'N', steps: [...BASIC, 'photo'], delay: 15, goal: 'rock', tasks: ['photo'], card: 'rock',
       map: [
         '......',
         '....F.',
@@ -114,7 +114,7 @@
       }
     },
     {
-      id: 'puuri', stage: 1, face: 'N', steps: [...BASIC, 'photo', 'drill'], delay: 20, goal: 'rock', tasks: ['photo', 'drill'], card: 'hole',
+      id: 'puuri', face: 'N', steps: [...BASIC, 'photo', 'drill'], delay: 20, goal: 'rock', tasks: ['photo', 'drill'], card: 'hole',
       map: [
         '.......',
         '.#...#.',
@@ -131,7 +131,7 @@
       }
     },
     {
-      id: 'aku', stage: 2, face: 'N', steps: BASIC, delay: 10, battery: 8, goal: 'flag', card: 'sun',
+      id: 'aku', face: 'N', steps: BASIC, delay: 10, battery: 8, goal: 'flag', card: 'sun',
       map: [
         '........',
         '.....F..',
@@ -153,7 +153,7 @@
       }
     },
     {
-      id: 'teekond', stage: 2, face: 'N', steps: BASIC, delay: 14, battery: 8, goal: 'flag', card: 'sun',
+      id: 'teekond', face: 'N', steps: BASIC, delay: 14, battery: 8, goal: 'flag', card: 'sun',
       map: [
         '.F#.....',
         '...#....',
@@ -175,7 +175,7 @@
       }
     },
     {
-      id: 'korda', stage: 3, face: 'N', steps: [...BASIC, 'repeat'], delay: 18, limit: 5, repeatHint: true, goal: 'flag', card: 'rim',
+      id: 'korda', face: 'N', steps: [...BASIC, 'repeat'], delay: 18, limit: 5, repeatHint: true, goal: 'flag', card: 'rim',
       map: [
         '.......',
         '....##.',
@@ -196,7 +196,7 @@
       }
     },
     {
-      id: 'peidus', stage: 3, face: 'N', steps: [...BASIC, 'repeat'], delay: 16, goal: 'flag', card: 'rim',
+      id: 'peidus', face: 'N', steps: [...BASIC, 'repeat'], delay: 16, goal: 'flag', card: 'rim',
       map: [
         '.......',
         '.F.....',
@@ -217,7 +217,7 @@
       }
     },
     {
-      id: 'jaa', stage: 3, face: 'E', steps: [...BASIC, 'photo', 'drill', 'repeat'], delay: 20, battery: 10, goal: 'ice', tasks: ['photo', 'drill'], card: 'sunset',
+      id: 'jaa', face: 'E', steps: [...BASIC, 'photo', 'drill', 'repeat'], delay: 20, battery: 10, goal: 'ice', tasks: ['photo', 'drill'], card: 'sunset',
       map: [
         '........',
         '.#...r.F',
@@ -240,15 +240,7 @@
     },
     // The bonus level, open when the others are done. The rest of it comes from
     // randomTrek, anew each time it is started.
-    { id: 'retk', stage: 4, random: true, name: { et: 'Juhuslik retk', en: 'Random Trek' } }
-  ];
-
-  const STAGES = [
-    { et: 'Esimesed sõidud', en: 'First Drives' },
-    { et: 'Teadustöö', en: 'Science' },
-    { et: 'Päikese jõul', en: 'On Solar Power' },
-    { et: 'Targad plaanid', en: 'Smart Plans' },
-    { et: 'Boonustase', en: 'Bonus Level' }
+    { id: 'retk', random: true, name: { et: 'Juhuslik retk', en: 'Random Trek' } }
   ];
 
   const TEXT = {
@@ -880,8 +872,9 @@
   function makeChip(list, n) {
     const b = document.createElement('button');
     b.className = 'chip';
-    const name = t('step')[n.type] + (n.type === 'forward' && n.n > 1 ? ` ${n.n}` : '');
-    b.innerHTML = `${ICONS[n.type]}<span>${name}</span>`;
+    const many = n.type === 'forward' && n.n > 1;
+    b.innerHTML = ICONS[n.type] + (many ? `<span>${n.n}×</span>` : '');
+    b.setAttribute('aria-label', t('step')[n.type] + (many ? ` ${n.n}×` : ''));
     b.addEventListener('click', () => dropStep(list, n));
     n.el = b;
     return b;
@@ -1458,49 +1451,40 @@
   function buildMenu() {
     const box = $('levels');
     box.innerHTML = '';
-    STAGES.forEach((name, s) => {
-      const sec = document.createElement('section');
-      const h = document.createElement('h2');
-      h.innerHTML = `<span class="step">${s + 1}</span><span></span>`;
-      h.lastChild.textContent = name[Astro.lang];
-      sec.appendChild(h);
-      const row = document.createElement('div');
-      row.className = 'pictures';
-      LEVELS.forEach((lv, i) => {
-        if (lv.stage !== s) return;
-        const b = document.createElement('button');
-        const locked = lv.random && !bonusOpen();
-        b.className = 'pic' + (i === state.level ? ' selected' : '') + (locked ? ' locked' : '');
-        b.innerHTML = '<img alt=""><span><b class="number"></b> <i></i></span>';
-        b.querySelector('img').src = levelPicture(i);
-        b.querySelector('.number').textContent = `${i + 1}.`;
-        b.querySelector('i').textContent = lv.name[Astro.lang];
-        if (done.includes(lv.id)) b.insertAdjacentHTML('beforeend', '<b class="done-badge">🌟</b>');
+    const row = document.createElement('div');
+    row.className = 'pictures';
+    LEVELS.forEach((lv, i) => {
+      const b = document.createElement('button');
+      const locked = lv.random && !bonusOpen();
+      b.className = 'pic' + (i === state.level ? ' selected' : '') + (locked ? ' locked' : '');
+      b.innerHTML = '<img alt=""><span><b class="number"></b> <i></i></span>';
+      b.querySelector('img').src = levelPicture(i);
+      b.querySelector('.number').textContent = `${i + 1}.`;
+      b.querySelector('i').textContent = lv.name[Astro.lang];
+      if (done.includes(lv.id)) b.insertAdjacentHTML('beforeend', '<b class="done-badge">🌟</b>');
+      if (locked) {
+        const note = document.createElement('div');
+        note.className = 'best';
+        note.textContent = t('locked')(BONUS);
+        b.appendChild(note);
+      } else if (best[lv.id]) {
+        const score = document.createElement('div');
+        score.className = 'best';
+        score.textContent = lv.random ? t('treks')(best[lv.id]) : t('best')(scoreText(lv, best[lv.id]));
+        b.appendChild(score);
+      }
+      b.addEventListener('click', () => {
         if (locked) {
-          const note = document.createElement('div');
-          note.className = 'best';
-          note.textContent = t('locked')(BONUS);
-          b.appendChild(note);
-        } else if (best[lv.id]) {
-          const score = document.createElement('div');
-          score.className = 'best';
-          score.textContent = lv.random ? t('treks')(best[lv.id]) : t('best')(scoreText(lv, best[lv.id]));
-          b.appendChild(score);
+          sfx.oops();
+          return;
         }
-        b.addEventListener('click', () => {
-          if (locked) {
-            sfx.oops();
-            return;
-          }
-          state.level = i;
-          sfx.pick();
-          buildMenu();
-        });
-        row.appendChild(b);
+        state.level = i;
+        sfx.pick();
+        buildMenu();
       });
-      sec.appendChild(row);
-      box.appendChild(sec);
+      row.appendChild(b);
     });
+    box.appendChild(row);
     $('resetBtn').classList.toggle('hidden', !done.length);
     $('clearBest').classList.toggle('hidden', !Object.keys(best).length);
   }
