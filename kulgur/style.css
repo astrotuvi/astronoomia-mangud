@@ -25,6 +25,9 @@
   filter: drop-shadow(0 0 6px rgba(255, 211, 77, 0.8));
 }
 
+.pic.locked img { filter: grayscale(0.85) brightness(0.6); }
+.pic.locked { cursor: default; }
+.pic.locked .best { color: inherit; opacity: 0.8; }
 .pic .best { font-size: 0.9rem; line-height: 1.15; text-align: center; color: var(--accent); }
 
 .reset-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
@@ -211,17 +214,8 @@
 .send.dim { opacity: 0.55; }
 .send.stop { background: #d93a55; box-shadow: 0 5px 0 #8f2036; }
 
-/* the next thing to tap */
+/* the Korda button on the level that teaches it */
 .pulse { animation: pulse 0.9s ease-in-out infinite; outline: 3px solid var(--accent); outline-offset: 1px; }
-.pulse.finger::after {
-  content: '👆';
-  position: absolute;
-  bottom: -10px;
-  right: 2px;
-  font-size: 1.5rem;
-  pointer-events: none;
-}
-.send.pulse, .chip.pulse { position: relative; }
 @keyframes pulse { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
 
 .win-name { font-weight: 900; }

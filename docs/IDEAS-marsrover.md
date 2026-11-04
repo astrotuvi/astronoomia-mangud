@@ -88,8 +88,11 @@ The rover never breaks, and there are no lives.
   "Siin pole midagi uurida." ("There is nothing to study here.")
 - **Stopping short of the target:** "Sihtmärgini on veel maad." ("The target is
   still some way off.")
-- **After two stops** in the same level, the next right step pulses in the
-  buttons. If nothing happens for a few seconds, a 👆 shows what to do.
+
+The game doesn't show the next right step. The one exception is level 8, which
+teaches the repeat: while the plan has no block, the Korda button pulses after a
+few idle seconds, after two stops, on 💡 with an empty plan, or when the plan is
+too long.
 
 ## The hint
 
@@ -105,6 +108,8 @@ level 9 it drives straight through the hidden rocks.
 
 The levels are all open from the start, and a 🌟 marks the ones done. Each ends
 with one short fact. The facts should be checked against a source before use.
+Added later: a bonus level with a random landscape and task, which opens when
+all 10 are done.
 
 ### Esimesed sõidud (first drives)
 

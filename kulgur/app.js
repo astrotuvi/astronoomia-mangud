@@ -37,8 +37,8 @@
   // delay the minutes a signal takes one way, battery the steps for one Sol,
   // limit the longest plan, and tasks what has to be done on the target (none:
   // just get there). goal is how the target looks, and card the postcard on
-  // the win screen. period is how many steps the repeat of a level has, for
-  // the hints. Keep delay within 5–20: a planet on a round orbit can't be drawn
+  // the win screen. repeatHint makes the Korda button pulse until the plan has a
+  // block, on the level that teaches it. Keep delay within 5–20: a planet on a round orbit can't be drawn
   // for less than about 4.4 or more than about 21 minutes.
   const LEVELS = [
     {
@@ -175,7 +175,7 @@
       }
     },
     {
-      id: 'korda', stage: 3, face: 'N', steps: [...BASIC, 'repeat'], delay: 18, limit: 5, period: 4, goal: 'flag', card: 'rim',
+      id: 'korda', stage: 3, face: 'N', steps: [...BASIC, 'repeat'], delay: 18, limit: 5, repeatHint: true, goal: 'flag', card: 'rim',
       map: [
         '.......',
         '....##.',
@@ -237,14 +237,18 @@
         et: 'Marsi pinna all on jääd. Maandur Phoenix kaevas selle 2008. aastal välja.',
         en: 'There is ice under the surface of Mars. The Phoenix lander dug it up in 2008.'
       }
-    }
+    },
+    // The bonus level, open when the others are done. The rest of it comes from
+    // randomTrek, anew each time it is started.
+    { id: 'retk', stage: 4, random: true, name: { et: 'Juhuslik retk', en: 'Random Trek' } }
   ];
 
   const STAGES = [
     { et: 'Esimesed sõidud', en: 'First Drives' },
     { et: 'Teadustöö', en: 'Science' },
     { et: 'Päikese jõul', en: 'On Solar Power' },
-    { et: 'Targad plaanid', en: 'Smart Plans' }
+    { et: 'Targad plaanid', en: 'Smart Plans' },
+    { et: 'Boonustase', en: 'Bonus Level' }
   ];
 
   const TEXT = {
@@ -254,6 +258,9 @@
       play: 'Mängi',
       wellDone: 'Tubli!',
       next: 'Järgmine',
+      newTrek: 'Uus retk',
+      bonus: 'Boonustase',
+      locked: (n) => `🔒 Avaneb, kui kõik ${n} ülesannet on tehtud`,
       again: 'Uuesti',
       menu: 'Menüü',
       allGames: 'Kõik mängud',
@@ -292,6 +299,7 @@
       orders: (n) => (n === 1 ? '1 käsk' : `${n} käsku`),
       sols: (n) => (n === 1 ? '1 Sol' : `${n} Soli`),
       best: (s) => `🏆 Parim: ${s}`,
+      treks: (n) => `🏆 Retki: ${n}`,
       result: (s) => `Kulus ${s}.`,
       clearBest: '🗑️ Kustuta parimad tulemused',
       clearAsk: 'Kas kustutada kõigi ülesannete parimad tulemused?',
@@ -304,6 +312,9 @@
       play: 'Play',
       wellDone: 'Well done!',
       next: 'Next',
+      newTrek: 'New trek',
+      bonus: 'Bonus level',
+      locked: (n) => `🔒 Opens when all ${n} levels are done`,
       again: 'Again',
       menu: 'Menu',
       allGames: 'All games',
@@ -342,6 +353,7 @@
       orders: (n) => (n === 1 ? '1 order' : `${n} orders`),
       sols: (n) => (n === 1 ? '1 Sol' : `${n} Sols`),
       best: (s) => `🏆 Best: ${s}`,
+      treks: (n) => `🏆 Treks: ${n}`,
       result: (s) => `It took ${s}.`,
       clearBest: '🗑️ Clear best scores',
       clearAsk: 'Clear the best scores of all levels?',
@@ -389,6 +401,8 @@
   const store = Astro.makeStore('kulgur.');
   const done = store.get('done', []);
   const best = store.get('best', {});
+  const BONUS = LEVELS.findIndex((l) => l.random);
+  const bonusOpen = () => LEVELS.every((l) => l.random || done.includes(l.id));
   const state = {
     level: Math.max(0, LEVELS.findIndex((l) => !done.includes(l.id))),
     lv: null,
@@ -412,6 +426,7 @@
     sent: 0,          // orders sent in this try
     sends: 0,
     stops: 0,
+    opened: false,    // this win opened the bonus level
     tested: store.get('tested', false)
   };
 
@@ -531,52 +546,120 @@
     else if (type === 'photo' || type === 'drill') w.k++;
   }
 
-  // The first step of a shortest way to the target from w, over the rocks on
-  // the map. Used for the hints, as the plan may be anything.
-  function firstStep(w, rocks) {
-    const allowed = state.lv.steps.filter((s) => s !== 'repeat');
-    const seen = new Set();
-    const queue = [{ x: w.x, y: w.y, f: w.f, a: 0, k: w.k, first: null }];
-    while (queue.length) {
-      const c = queue.shift();
-      if (reached(c)) return c.first;
-      for (const type of allowed) {
-        if (blockedBy(c, type, rocks)) continue;
-        const n = { ...c };
-        apply(n, type);
-        const id = `${n.x},${n.y},${n.f},${n.k}`;
-        if (seen.has(id)) continue;
-        seen.add(id);
-        n.first = c.first || type;
-        queue.push(n);
-      }
+  // ---------------------------------------------------------------------------
+  // The random level
+  // ---------------------------------------------------------------------------
+
+  const JOBS = {
+    flag: { goal: 'flag', tasks: [], et: 'Sõida lipuni.', en: 'Drive to the flag.' },
+    photo: {
+      goal: 'rock', tasks: ['photo'], card: 'rock',
+      et: 'Sõida rõngaga kivi juurde ja pildista seda.',
+      en: 'Drive to the ringed rock and take its picture.'
+    },
+    drill: {
+      goal: 'rock', tasks: ['photo', 'drill'], card: 'hole',
+      et: 'Sõida rõngaga kivi juurde. Kõigepealt pildista, siis puuri.',
+      en: 'Drive to the ringed rock. First take a picture, then drill.'
+    },
+    ice: {
+      goal: 'ice', tasks: ['photo', 'drill'], card: 'sunset',
+      et: 'Heledas laigus võib olla jääd. Sõida sinna, pildista ja puuri.',
+      en: 'There may be ice in the pale patch. Drive there, take a picture and drill.'
     }
-    return null;
+  };
+  const HIDDEN_TEXT = { et: 'Kõik kivid ei paista kaardil.', en: 'Not all rocks show on the map.' };
+  const BATTERY_TEXT = {
+    et: 'Iga samm kulutab akut. Kui aku saab tühjaks, jätkab kulgur järgmisel Solil.',
+    en: 'Every step uses the battery. When it runs out, the rover carries on the next Sol.'
+  };
+
+  // A landscape with the rover at one side and the target at the other: a field
+  // of boulders, a ridge with one gap, or the target in a crater with one gap.
+  function randomMap(rnd) {
+    const int = (n) => Math.floor(rnd() * n);
+    const cols = 6 + int(3);
+    const rows = 6 + int(3);
+    let map = Array.from({ length: rows }, () => Array(cols).fill('.'));
+    const sx = int(cols);
+    const sy = rows - 1 - int(2);
+    const gx = int(cols);
+    const gy = int(2);
+    const kind = int(3);
+    map.forEach((row) => row.forEach((_, x) => { if (rnd() < (kind === 0 ? 0.24 : 0.09)) row[x] = '#'; }));
+    if (kind === 1) {
+      const y = gy + 1 + int(sy - gy - 1);
+      map[y].fill('#');
+      map[y][int(cols)] = '.';
+    } else if (kind === 2) {
+      const ring = [];
+      map.forEach((row, y) => row.forEach((_, x) => {
+        if (Math.round(Math.hypot(x - gx, y - gy)) === 2) ring.push([x, y]);
+      }));
+      ring.forEach(([x, y]) => { map[y][x] = '#'; });
+      const [x, y] = ring[int(ring.length)];
+      map[y][x] = '.';
+    }
+    map[sy][sx] = 'R';
+    map[gy][gx] = 'F';
+    if (rnd() < 0.5) map.reverse();
+    if (rnd() < 0.5) map.forEach((row) => row.reverse());
+    if (rnd() < 0.5) map = map[0].map((_, x) => map.map((row) => row[x]));
+    return map.map((row) => row.join(''));
   }
 
-  // What to do next, for the hints: a step, 'send', 'done' (close the block),
-  // 'times' (repeat more), or { fix: node }, a step of the plan that can't work.
-  function nextHint() {
-    const lv = state.lv;
-    const w = { ...state.w };
-    const open = state.open;
-    const nodes = state.plan.map((n) => (n === open ? { type: 'repeat', times: 1, steps: n.steps } : n));
-    for (const a of atoms(nodes)) {
-      if (reached(w)) break;
-      const why = blockedBy(w, a.type, state.shown);
-      if (why) return { fix: a.node };
-      apply(w, a.type);
+  // How many steps the shortest way to the target takes, or 0 if there is none.
+  function stepsNeeded(map, f) {
+    const y0 = map.findIndex((row) => row.includes('R'));
+    const queue = [{ x: map[y0].indexOf('R'), y: y0, f, n: 0 }];
+    const seen = new Set();
+    while (queue.length) {
+      const c = queue.shift();
+      if (map[c.y][c.x] === 'F') return c.n;
+      const x = c.x + DX[c.f];
+      const y = c.y + DY[c.f];
+      const open = map[y] && map[y][x] && !'#r'.includes(map[y][x]);
+      for (const n of [{ ...c, f: (c.f + 3) % 4 }, { ...c, f: (c.f + 1) % 4 }, open ? { ...c, x, y } : null]) {
+        if (!n || seen.has(`${n.x},${n.y},${n.f}`)) continue;
+        seen.add(`${n.x},${n.y},${n.f}`);
+        queue.push({ ...n, n: c.n + 1 });
+      }
     }
-    const ok = reached(w);
-    if (lv.period) {
-      const block = state.plan.find((n) => n.type === 'repeat');
-      if (!block) return ok ? 'send' : 'repeat';
-      if (open && open.steps.length >= lv.period) return 'done';
-      if (!open && !ok) return 'times';
-    }
-    if (ok) return open ? 'done' : 'send';
-    return firstStep(w, state.shown);
+    return 0;
   }
+
+  // Makes the level anew. Only a map with a way through is kept, counting the
+  // hidden rocks, and the way has to be long enough to need some planning.
+  function randomTrek(lv, rnd) {
+    const pick = (list) => list[Math.floor(rnd() * list.length)];
+    const f = pick([0, 1, 2, 3]);
+    const hidden = rnd() < 0.5;
+    let map;
+    let n;
+    do {
+      map = randomMap(rnd);
+      if (hidden) map = map.map((row) => row.replace(/#/g, (c) => (rnd() < 0.3 ? 'r' : c)));
+      n = stepsNeeded(map, f);
+    } while (n < 8 || n > 24);
+    const job = JOBS[pick(['flag', 'flag', 'photo', 'drill', 'ice'])];
+    const battery = rnd() < 0.4 ? pick([8, 9, 10]) : undefined;
+    const text = (lang) => [job[lang], hidden && HIDDEN_TEXT[lang], battery && BATTERY_TEXT[lang]].filter(Boolean).join(' ');
+    Object.assign(lv, {
+      map,
+      face: 'NESW'[f],
+      steps: [...BASIC, ...job.tasks, 'repeat'],
+      delay: 5 + Math.floor(rnd() * 16),
+      battery,
+      goal: job.goal,
+      tasks: job.tasks,
+      card: job.card || (battery ? 'sun' : pick(['tracks', 'rocks', 'rim'])),
+      ground: 1 + Math.floor(rnd() * 999),
+      task: { et: text('et'), en: text('en') },
+      fact: pick(LEVELS.filter((l) => !l.random)).fact
+    });
+  }
+  // A fixed one to begin with, for the picture on its card.
+  randomTrek(LEVELS[LEVELS.length - 1], seeded(4242));
 
   // ---------------------------------------------------------------------------
   // Drawing the map
@@ -642,7 +725,8 @@
     cv.height = h;
     const g = cv.getContext('2d');
     const img = g.createImageData(w, h);
-    const off = level * 13.7;
+    const look = LEVELS[level].ground || level;
+    const off = look * 13.7;
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         const big = fbm((x * zoom) / 90 + off, (y * zoom) / 90);
@@ -657,7 +741,7 @@
       }
     }
     g.putImageData(img, 0, 0);
-    const rnd = seeded(level * 991 + 17);
+    const rnd = seeded(look * 991 + 17);
     for (let i = 0; i < cols * rows * 0.22; i++) {
       const x = rnd() * w;
       const y = rnd() * h;
@@ -852,8 +936,8 @@
 
   function updateStatus() {
     const lv = state.lv;
-    $('progressFill').style.width = `${((state.level + 1) / LEVELS.length) * 100}%`;
-    $('progressText').textContent = `${state.level + 1} / ${LEVELS.length}`;
+    $('progressFill').style.width = `${(Math.min(state.level + 1, BONUS) / BONUS) * 100}%`;
+    $('progressText').textContent = lv.random ? t('bonus') : `${state.level + 1} / ${BONUS}`;
     $('levelName').textContent = lv.name[Astro.lang];
     $('taskText').textContent = lv.task[Astro.lang];
     $('delayText').textContent = t('delay')(lv.delay);
@@ -876,34 +960,23 @@
     toastTimer = setTimeout(() => el.classList.remove('show'), ms || 3400);
   }
 
-  // Shows what to do next: at once when asked, or by itself after a while.
+  // On the level that teaches the repeat, points at the Korda button: when asked,
+  // or by itself after a while. No other level shows what to do next.
   let idleTimer = 0;
   function clearPulse() {
-    document.querySelectorAll('.pulse').forEach((el) => el.classList.remove('pulse', 'finger'));
+    document.querySelectorAll('.pulse').forEach((el) => el.classList.remove('pulse'));
     document.querySelectorAll('.chip.bad').forEach((el) => el.classList.remove('bad'));
   }
-  function pulseNext(finger) {
-    clearPulse();
-    const next = nextHint();
-    let el = null;
-    if (next && next.fix) {
-      if (next.fix.el) next.fix.el.classList.add('bad');
-      return;
-    }
-    if (next === 'send') el = $('sendBtn');
-    else if (next === 'times') {
-      const block = state.plan.find((n) => n.type === 'repeat');
-      el = block && block.el;
-    } else if (next) el = document.querySelector(`.step-btn[data-step="${next}"]`);
-    if (!el) return;
-    el.classList.add('pulse');
-    if (finger) el.classList.add('finger');
+  function pulseRepeat() {
+    if (!state.lv.repeatHint || state.plan.some((n) => n.type === 'repeat')) return;
+    $('steps').querySelector('[data-step="repeat"]').classList.add('pulse');
   }
   function touched() {
     clearPulse();
     clearTimeout(idleTimer);
+    if (!state.lv.repeatHint) return;
     idleTimer = setTimeout(() => {
-      if (!state.busy && !$('game').classList.contains('hidden') && $('win').classList.contains('hidden')) pulseNext(true);
+      if (!state.busy && !$('game').classList.contains('hidden') && $('win').classList.contains('hidden')) pulseRepeat();
     }, 9000);
   }
 
@@ -985,7 +1058,7 @@
     if (state.lv.limit && n > state.lv.limit) {
       sfx.oops();
       toast(t('tooLong')(state.lv.limit));
-      if (!state.plan.some((m) => m.type === 'repeat')) pulseNext(false);
+      pulseRepeat();
       return;
     }
     clearTimeout(idleTimer);
@@ -1080,7 +1153,7 @@
       finish();
       state.stops++;
       if (state.plan[0] && state.plan[0].el) state.plan[0].el.classList.add('bad');
-      if (state.stops >= 2) pulseNext(false);
+      if (state.stops >= 2) pulseRepeat();
     };
 
     const next = () => {
@@ -1095,7 +1168,7 @@
         toast(t(atGoal(w) ? 'notDone' : 'short'));
         state.stops++;
         finish();
-        if (state.stops >= 2) pulseNext(false);
+        if (state.stops >= 2) pulseRepeat();
         return;
       }
       const a = list[i];
@@ -1159,8 +1232,7 @@
     });
   }
 
-  // 💡 runs the plan on the test rover, which knows only what is on the map, or
-  // with an empty plan shows the next step.
+  // 💡 runs the plan on the test rover, which knows only what is on the map.
   function test() {
     if (state.busy) return;
     touched();
@@ -1174,7 +1246,8 @@
       toast(t('testFirst'), 5200);
     }
     if (!state.plan.length) {
-      pulseNext(false);
+      toast(t('noPlan'));
+      pulseRepeat();
       return;
     }
     const g = { ...state.w };
@@ -1215,10 +1288,12 @@
   // Levels
   // ---------------------------------------------------------------------------
 
-  function startLevel(i) {
+  // keep: the random level stays as it was, to try it again.
+  function startLevel(i, keep) {
     state.run++;
     state.level = i;
     const lv = LEVELS[i];
+    if (lv.random && !keep) randomTrek(lv, Math.random);
     state.lv = lv;
     state.rows = lv.map.length;
     state.cols = lv.map[0].length;
@@ -1360,6 +1435,19 @@
     g.lineTo(36, 16);
     g.fill();
 
+    if (lv.random) {
+      const size = n * c;
+      g.setTransform(1, 0, 0, 1, 0, 0);
+      g.font = `900 ${size * 0.6}px Nunito, sans-serif`;
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.lineWidth = size * 0.035;
+      g.strokeStyle = 'rgba(30, 14, 10, 0.75)';
+      g.strokeText('?', size / 2, size / 2);
+      g.fillStyle = '#ffd34d';
+      g.fillText('?', size / 2, size / 2);
+    }
+
     pictures[i] = ground.toDataURL('image/png');
     return pictures[i];
   }
@@ -1381,19 +1469,29 @@
       LEVELS.forEach((lv, i) => {
         if (lv.stage !== s) return;
         const b = document.createElement('button');
-        b.className = 'pic' + (i === state.level ? ' selected' : '');
+        const locked = lv.random && !bonusOpen();
+        b.className = 'pic' + (i === state.level ? ' selected' : '') + (locked ? ' locked' : '');
         b.innerHTML = '<img alt=""><span><b class="number"></b> <i></i></span>';
         b.querySelector('img').src = levelPicture(i);
         b.querySelector('.number').textContent = `${i + 1}.`;
         b.querySelector('i').textContent = lv.name[Astro.lang];
         if (done.includes(lv.id)) b.insertAdjacentHTML('beforeend', '<b class="done-badge">🌟</b>');
-        if (best[lv.id]) {
+        if (locked) {
+          const note = document.createElement('div');
+          note.className = 'best';
+          note.textContent = t('locked')(BONUS);
+          b.appendChild(note);
+        } else if (best[lv.id]) {
           const score = document.createElement('div');
           score.className = 'best';
-          score.textContent = t('best')(scoreText(lv, best[lv.id]));
+          score.textContent = lv.random ? t('treks')(best[lv.id]) : t('best')(scoreText(lv, best[lv.id]));
           b.appendChild(score);
         }
         b.addEventListener('click', () => {
+          if (locked) {
+            sfx.oops();
+            return;
+          }
           state.level = i;
           sfx.pick();
           buildMenu();
@@ -1413,15 +1511,17 @@
 
   function won() {
     const lv = state.lv;
+    const wasOpen = bonusOpen();
     if (!done.includes(lv.id)) {
       done.push(lv.id);
       store.set('done', done);
     }
+    state.opened = !wasOpen && bonusOpen();
     const score = usesSols(lv) ? state.sol : state.sent;
-    if (!best[lv.id] || score < best[lv.id]) {
-      best[lv.id] = score;
-      store.set('best', best);
-    }
+    // Maps of the random level can't be compared, so it counts the treks.
+    if (lv.random) best[lv.id] = (best[lv.id] || 0) + 1;
+    else if (!best[lv.id] || score < best[lv.id]) best[lv.id] = score;
+    store.set('best', best);
     sfx.snap();
     wait(1000, () => {
       sfx.win();
@@ -1430,6 +1530,10 @@
       Astro.startConfetti($('confetti'));
     });
   }
+
+  // The level the next button goes to: the bonus level at once when it has just
+  // opened, and a new trek on the bonus level itself.
+  const nextLevel = () => (state.opened ? BONUS : Math.min(state.level + 1, BONUS));
 
   function showWin() {
     const lv = state.lv;
@@ -1444,7 +1548,9 @@
       $('winPic').appendChild(img);
       $('winPic').dataset.card = lv.card;
     }
-    $('nextBtn').classList.toggle('hidden', state.level >= LEVELS.length - 1);
+    const to = nextLevel();
+    $('nextBtn').classList.toggle('hidden', to === BONUS && !bonusOpen());
+    $('nextBtn').querySelector('span').textContent = t(lv.random ? 'newTrek' : to === BONUS ? 'bonus' : 'next');
   }
 
   // What the rover sees: rusty ground under a butterscotch sky. By day the sky
@@ -1585,8 +1691,8 @@
   }).observe($('mapBox'));
 
   $('playBtn').addEventListener('click', () => startLevel(state.level));
-  $('againBtn').addEventListener('click', () => startLevel(state.level));
-  $('nextBtn').addEventListener('click', () => startLevel(Math.min(state.level + 1, LEVELS.length - 1)));
+  $('againBtn').addEventListener('click', () => startLevel(state.level, true));
+  $('nextBtn').addEventListener('click', () => startLevel(nextLevel()));
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
   $('sendBtn').addEventListener('click', send);
@@ -1596,7 +1702,7 @@
   });
   $('restartBtn').addEventListener('click', () => {
     sfx.pick();
-    startLevel(state.level);
+    startLevel(state.level, true);
   });
   $('hintBtn').addEventListener('click', test);
   $('signal').addEventListener('click', () => { if (skipSignal) skipSignal(); });
@@ -1610,6 +1716,7 @@
     if (!window.confirm(t('resetAsk'))) return;
     done.length = 0;
     store.set('done', done);
+    if (state.level === BONUS) state.level = 0;
     buildMenu();
   });
   $('clearBest').addEventListener('click', () => {
