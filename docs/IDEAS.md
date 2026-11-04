@@ -53,7 +53,8 @@ aastaajad?
 13. **Marsikulgur (Mars rover):** plan a route of moves ("forward 3, turn
    left, forward 2") on a grid to reach rocks or ice, then press go.
    Signals take minutes to reach Mars, so the rover can't be steered live.
-   It's a first taste of coding.
+   It's a first taste of coding. See [IDEAS-marsrover.md](IDEAS-marsrover.md)
+   for the plan, the levels and what the game needs.
 14. **Tähest täheni (star hopping):** find stars by following lines from
     ones you know, such as from Suur Vanker to Põhjanael, or along Orion's
     belt to Sirius, in a sky that turns with the seasons and the hours.
