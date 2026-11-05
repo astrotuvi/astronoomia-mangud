@@ -12,7 +12,7 @@ and finding and fixing a mistake.
 
 ## The screen
 
-The usual top bar, with the levels as the progress, then 💡 and 🔊. Below it
+The usual top bar, with the levels as the progress, then 🔊. Below it
 two parts, side by side on a wide screen (map at the left) and one above the
 other on a tall one (map on top):
 
@@ -22,10 +22,10 @@ other on a tall one (map on top):
   - the target, a glowing ring with a flag
   - boulders, which the rover can't drive over
   - sand and small craters, for looks only
-- **The plan:** the list of steps, the buttons that add steps, and the big
-  green **📡 Saada** (Send). The steps are small chips that wrap on to new
-  rows, because on a 360 px phone in portrait there is only about 200 px of
-  height under the map.
+- **The plan:** the list of steps, the buttons that add steps, **🧪 Proovi**
+  (Try) and the big green **📡 Saada** (Send). The steps are small chips that
+  wrap on to new rows, because on a 360 px phone in portrait there is only
+  about 200 px of height under the map.
 
 The map itself is not tapped, so its squares may be smaller than 52 px. The
 buttons are not.
@@ -91,18 +91,20 @@ The rover never breaks, and there are no lives.
 
 The game doesn't show the next right step. The one exception is level 8, which
 teaches the repeat: while the plan has no block, the Korda button pulses after a
-few idle seconds, after two stops, on 💡 with an empty plan, or when the plan is
-too long.
+few idle seconds, after two stops, on Proovi with an empty plan, or when Proovi
+or Saada finds the plan too long.
 
-## The hint
+## Trying the plan
 
-💡 runs the plan on a faint test rover. It takes no time, needs no signal and
-uses no Sol, and the real rover stays where it is. Real teams try risky moves
-on a twin rover on Earth in the same way, and a line on the first use says so.
+The Proovi button, before Saada, runs the plan on a faint test rover. It takes
+no time, needs no signal and uses no Sol, and the real rover stays where it
+is. Real teams try risky moves on a twin rover on Earth in the same way, and a
+line on the first use says so. If the plan works but is too long for the
+message, the test says that instead of saying that it works.
 
-It is always allowed and doesn't count against the record, because testing is
-part of a driver's job. The test rover knows only what is on the map, so on
-level 9 it drives straight through the hidden rocks.
+It is always allowed, because testing is part of a driver's job. The test rover
+knows only what is on the map, so on level 9 it drives straight through the
+hidden rocks.
 
 ## Levels
 
@@ -110,7 +112,7 @@ The levels are all open from the start, and a 🌟 marks the ones done. Each end
 with one short fact. The facts should be checked against a source before use.
 Added later: a bonus level with a random landscape and task, which opens when
 all 10 are done. The groups below are only for planning: the menu shows the
-cards in one row without headings.
+cards in one row under "Vali tase", without stage headings.
 
 ### Esimesed sõidud (first drives)
 
@@ -203,17 +205,10 @@ around the Sun as it sets.
   Earth
 - Smart plans: the plain with a distant crater rim, then the sunset
 
-## Records
+## Progress
 
-Kept with `Astro.makeStore('kulgur.')`, for each level:
-
-- done, for the 🌟
-- the shortest plan, counting all orders sent, where "⬆️ 3×" is one order, a
-  block and each order in it count as one, and each repeat send counts again
-- on levels 6, 7 and 10, the fewest Sols
-
-Each level's card in the menu shows its record as "🏆 Parim: 6 käsku" or
-"🏆 Parim: 2 Soli". Buttons below Mängi clear the stars and the records. Alusta otsast clears the count of the current try, not the record.
+Kept with `Astro.makeStore('kulgur.')`: which levels are done, for the 🌟. A
+button below Mängi clears the stars. There are no records or scores.
 
 ## Pictures
 

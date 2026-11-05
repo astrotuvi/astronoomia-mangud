@@ -247,6 +247,7 @@
     et: {
       title: 'Marsikulgur',
       intro: 'Sina juhid kulgurit Marsil. Signaal on sinna minuteid teel, nii et roolida ei saa. Kirjuta plaan ja saada see teele!',
+      chooseLevel: 'Vali tase',
       play: 'Mängi',
       wellDone: 'Tubli!',
       next: 'Järgmine',
@@ -256,10 +257,10 @@
       again: 'Uuesti',
       menu: 'Menüü',
       allGames: 'Kõik mängud',
-      hint: 'Vihje',
       sound: 'Heli',
       earth: 'Maa',
       mars: 'Marss',
+      try: 'Proovi',
       send: 'Saada',
       stop: 'Stopp',
       restart: 'Alusta otsast',
@@ -288,19 +289,14 @@
       testFirst: 'Päris meeskonnad proovivad keerulisi sõite Maal kulguri kaksikuga. Sina proovid test-kulguriga.',
       test: (s) => `Test: ${s}`,
       testOk: 'Test: plaan toimib!',
-      orders: (n) => (n === 1 ? '1 käsk' : `${n} käsku`),
-      sols: (n) => (n === 1 ? '1 Sol' : `${n} Soli`),
-      best: (s) => `🏆 Parim: ${s}`,
-      treks: (n) => `🏆 Retki: ${n}`,
-      result: (s) => `Kulus ${s}.`,
-      clearBest: '🗑️ Kustuta parimad tulemused',
-      clearAsk: 'Kas kustutada kõigi ülesannete parimad tulemused?',
+      testLong: (max) => `Test: plaan toimib, aga sõnumisse mahub ainult ${max} käsku.`,
       reset: 'Eemalda kõik 🌟',
       resetAsk: 'Kas eemaldada 🌟 kõigilt tehtud ülesannetelt?'
     },
     en: {
       title: 'Mars Rover',
       intro: 'You drive a rover on Mars. A signal takes minutes to get there, so it can\'t be steered live. Write a plan and send it!',
+      chooseLevel: 'Pick a level',
       play: 'Play',
       wellDone: 'Well done!',
       next: 'Next',
@@ -310,10 +306,10 @@
       again: 'Again',
       menu: 'Menu',
       allGames: 'All games',
-      hint: 'Hint',
       sound: 'Sound',
       earth: 'Earth',
       mars: 'Mars',
+      try: 'Try',
       send: 'Send',
       stop: 'Stop',
       restart: 'Start over',
@@ -342,13 +338,7 @@
       testFirst: 'Real teams try hard drives on the rover\'s twin on the Earth. You try them on a test rover.',
       test: (s) => `Test: ${s}`,
       testOk: 'Test: the plan works!',
-      orders: (n) => (n === 1 ? '1 order' : `${n} orders`),
-      sols: (n) => (n === 1 ? '1 Sol' : `${n} Sols`),
-      best: (s) => `🏆 Best: ${s}`,
-      treks: (n) => `🏆 Treks: ${n}`,
-      result: (s) => `It took ${s}.`,
-      clearBest: '🗑️ Clear best scores',
-      clearAsk: 'Clear the best scores of all levels?',
+      testLong: (max) => `Test: the plan works, but a message holds only ${max} orders.`,
       reset: 'Clear all 🌟',
       resetAsk: 'Remove the 🌟 from all completed levels?'
     }
@@ -392,7 +382,6 @@
 
   const store = Astro.makeStore('kulgur.');
   const done = store.get('done', []);
-  const best = store.get('best', {});
   const BONUS = LEVELS.findIndex((l) => l.random);
   const bonusOpen = () => LEVELS.every((l) => l.random || done.includes(l.id));
   const state = {
@@ -415,7 +404,6 @@
     run: 0,           // changes when a level starts or is left, to end what was running
     sol: 1,
     charge: 0,
-    sent: 0,          // orders sent in this try
     sends: 0,
     stops: 0,
     opened: false,    // this win opened the bonus level
@@ -941,7 +929,9 @@
     const lim = $('limitText');
     lim.textContent = lv.limit ? t('limit')(n, lv.limit) : '';
     lim.classList.toggle('limit-over', !!lv.limit && n > lv.limit);
-    $('sendBtn').classList.toggle('dim', !state.plan.length);
+    const ready = state.plan.length && !state.g;
+    $('tryBtn').classList.toggle('dim', !ready);
+    $('sendBtn').classList.toggle('dim', !ready);
   }
 
   let toastTimer = 0;
@@ -1029,10 +1019,12 @@
   // Sending a plan
   // ---------------------------------------------------------------------------
 
-  function setBusy(on) {
+  function setBusy(on, trying) {
     state.busy = on;
-    $('sendBtn').classList.toggle('hidden', on);
-    $('stopBtn').classList.toggle('hidden', !on);
+    const driving = on && !trying;
+    $('tryBtn').classList.toggle('hidden', driving);
+    $('sendBtn').classList.toggle('hidden', driving);
+    $('stopBtn').classList.toggle('hidden', !driving);
     document.querySelector('.plan').classList.toggle('running', on);
   }
 
@@ -1055,7 +1047,6 @@
       return;
     }
     clearTimeout(idleTimer);
-    state.sent += n;
     state.sends++;
     setBusy(true);
     showSignal(() => drive());
@@ -1225,34 +1216,37 @@
     });
   }
 
-  // 💡 runs the plan on the test rover, which knows only what is on the map.
+  // Proovi runs the plan on the test rover, which knows only what is on the map.
   function test() {
     if (state.busy) return;
     touched();
     closeBlock();
     renderSteps();
     renderPlan();
+    if (!state.plan.length) {
+      sfx.oops();
+      toast(t('noPlan'));
+      pulseRepeat();
+      return;
+    }
     const first = !state.tested;
     if (first) {
       state.tested = true;
       store.set('tested', true);
       toast(t('testFirst'), 5200);
     }
-    if (!state.plan.length) {
-      toast(t('noPlan'));
-      pulseRepeat();
-      return;
-    }
     const g = { ...state.w };
     state.g = g;
     state.gtrack = [];
-    setBusy(true);
+    setBusy(true, true);
+    updateStatus();
     const el = $('ghost');
     el.classList.remove('hidden');
     place(el, g);
     draw();
     const list = atoms(state.plan);
     let i = 0;
+    let tooLong = false;
     const end = (text) => {
       if (text) toast(text);
       wait(900, () => {
@@ -1260,11 +1254,20 @@
         el.classList.add('hidden');
         draw();
         setBusy(false);
+        updateStatus();
         touched();
+        if (tooLong) pulseRepeat();
       });
     };
     const next = () => {
-      if (reached(g)) { sfx.note(4); end(t('testOk')); return; }
+      if (reached(g)) {
+        const limit = state.lv.limit;
+        tooLong = !!limit && countOrders(state.plan) > limit;
+        if (tooLong) sfx.oops();
+        else sfx.note(4);
+        end(tooLong ? t('testLong')(limit) : t('testOk'));
+        return;
+      }
       if (i >= list.length) { end(t('test')(atGoal(g) ? t('notDone') : t('short'))); return; }
       const a = list[i++];
       const why = blockedBy(g, a.type, state.shown);
@@ -1309,7 +1312,6 @@
     state.open = null;
     state.sol = 1;
     state.charge = lv.battery || 0;
-    state.sent = 0;
     state.sends = 0;
     state.stops = 0;
     skipSignal = null;
@@ -1445,8 +1447,6 @@
     return pictures[i];
   }
 
-  const usesSols = (lv) => !!lv.battery;
-  const scoreText = (lv, n) => (usesSols(lv) ? t('sols')(n) : t('orders')(n));
 
   function buildMenu() {
     const box = $('levels');
@@ -1464,14 +1464,9 @@
       if (done.includes(lv.id)) b.insertAdjacentHTML('beforeend', '<b class="done-badge">🌟</b>');
       if (locked) {
         const note = document.createElement('div');
-        note.className = 'best';
+        note.className = 'lock-note';
         note.textContent = t('locked')(BONUS);
         b.appendChild(note);
-      } else if (best[lv.id]) {
-        const score = document.createElement('div');
-        score.className = 'best';
-        score.textContent = lv.random ? t('treks')(best[lv.id]) : t('best')(scoreText(lv, best[lv.id]));
-        b.appendChild(score);
       }
       b.addEventListener('click', () => {
         if (locked) {
@@ -1486,7 +1481,6 @@
     });
     box.appendChild(row);
     $('resetBtn').classList.toggle('hidden', !done.length);
-    $('clearBest').classList.toggle('hidden', !Object.keys(best).length);
   }
 
   // ---------------------------------------------------------------------------
@@ -1501,11 +1495,6 @@
       store.set('done', done);
     }
     state.opened = !wasOpen && bonusOpen();
-    const score = usesSols(lv) ? state.sol : state.sent;
-    // Maps of the random level can't be compared, so it counts the treks.
-    if (lv.random) best[lv.id] = (best[lv.id] || 0) + 1;
-    else if (!best[lv.id] || score < best[lv.id]) best[lv.id] = score;
-    store.set('best', best);
     sfx.snap();
     wait(1000, () => {
       sfx.win();
@@ -1521,8 +1510,7 @@
 
   function showWin() {
     const lv = state.lv;
-    const score = usesSols(lv) ? state.sol : state.sent;
-    $('winName').textContent = `${lv.name[Astro.lang]} · ${t('result')(scoreText(lv, score))}`;
+    $('winName').textContent = lv.name[Astro.lang];
     $('winFact').textContent = lv.fact[Astro.lang];
     if (!$('winPic').firstChild || $('winPic').dataset.card !== lv.card) {
       const img = new Image();
@@ -1688,7 +1676,7 @@
     sfx.pick();
     startLevel(state.level, true);
   });
-  $('hintBtn').addEventListener('click', test);
+  $('tryBtn').addEventListener('click', test);
   $('signal').addEventListener('click', () => { if (skipSignal) skipSignal(); });
   $('soundBtn').classList.toggle('off', !sfx.on);
   $('soundBtn').addEventListener('click', () => {
@@ -1701,12 +1689,6 @@
     done.length = 0;
     store.set('done', done);
     if (state.level === BONUS) state.level = 0;
-    buildMenu();
-  });
-  $('clearBest').addEventListener('click', () => {
-    if (!window.confirm(t('clearAsk'))) return;
-    for (const id of Object.keys(best)) delete best[id];
-    store.set('best', best);
     buildMenu();
   });
 

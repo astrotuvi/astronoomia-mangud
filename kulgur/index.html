@@ -42,6 +42,7 @@
 
       <p class="intro" data-t="intro"></p>
 
+      <h2 data-t="chooseLevel"></h2>
       <div id="levels"></div>
 
       <div class="play-row">
@@ -50,7 +51,6 @@
 
       <div class="reset-row">
         <button id="resetBtn" class="clear-best hidden" data-t="reset"></button>
-        <button id="clearBest" class="clear-best hidden" data-t="clearBest"></button>
       </div>
 
       <footer class="credit">
@@ -67,7 +67,6 @@
         <div class="track"><div id="progressFill" class="fill"></div></div>
         <div id="progressText" class="progress-text"></div>
       </div>
-      <button id="hintBtn" class="icon" data-t-label="hint" aria-label="Vihje">💡</button>
       <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
     </div>
     <div id="area" class="area">
@@ -102,6 +101,7 @@
         <div id="steps" class="steps"></div>
         <div class="send-row">
           <button id="restartBtn" class="clear-best" data-t="restart"></button>
+          <button id="tryBtn" class="btn alt send">🧪 <span data-t="try"></span></button>
           <button id="sendBtn" class="btn send">📡 <span data-t="send"></span></button>
           <button id="stopBtn" class="btn send stop hidden">🛑 <span data-t="stop"></span></button>
         </div>
