@@ -37,7 +37,11 @@
   // delay the minutes a signal takes one way, battery the steps for one Sol,
   // limit the longest plan, and tasks what has to be done on the target (none:
   // just get there). goal is how the target looks, and card the postcard on
-  // the win screen. repeatHint makes the Korda button pulse until the plan has a
+  // the win screen. A level bigger than the screen has view, the squares of the
+  // window seen each way, and stops, the places to reach one by one, at the
+  // characters 1, 2 and F of its map. There, W is a boulder that also shows from
+  // orbit, and # one that shows only when it is in the window. Each Saada is one
+  // Sol's drive. repeatHint makes the Korda button pulse until the plan has a
   // block, on the level that teaches it. Keep delay within 5–20: a planet on a round orbit can't be drawn
   // for less than about 4.4 or more than about 21 minutes.
   const LEVELS = [
@@ -240,7 +244,76 @@
     },
     // The bonus level, open when the others are done. The rest of it comes from
     // randomTrek, anew each time it is started.
-    { id: 'retk', random: true, name: { et: 'Juhuslik retk', en: 'Random Trek' } }
+    { id: 'retk', random: true, bonus: true, name: { et: 'Juhuslik retk', en: 'Random Trek' } },
+    // The other bonus level, one journey over a big map. The least Sols are 8,
+    // by the narrow gap or by the long way round.
+    {
+      id: 'uurimine', bonus: true, face: 'N', steps: [...BASIC, 'photo', 'drill', 'repeat'], delay: 14, battery: 10, view: 11, goal: 'ice', card: 'trail',
+      map: [
+        '..#.........#.....W.....',
+        '........#.........W.....',
+        '.....#............W.....',
+        '..........WWWWW...W.F.#.',
+        '...#.....WW...WW..W.....',
+        '.........W.....W..W..#..',
+        '.#.......W.....W........',
+        '.........W....2.........',
+        '.....#...W.....W..W.....',
+        '.........WW...WW..W.#...',
+        '...#......WWWWW...W.....',
+        '.#.......#.....#..W.#...',
+        '......#....#.#..........',
+        'WWWWWWWWWWWW.WWWWWWWW...',
+        '...#.......#.#......W...',
+        '.#.....#......#..#......',
+        '....#.......#...........',
+        '.........#.......#..#...',
+        '..#..........1......#...',
+        '.......#........#.......',
+        '....#......#.........#..',
+        '.R.......#......#.......',
+        '......#..............#..',
+        '...#..........#.........'
+      ],
+      name: { et: 'Marsi uurimine', en: 'Exploring Mars' },
+      stops: [
+        {
+          at: '1', goal: 'rock', tasks: ['photo'], card: 'rock',
+          name: { et: 'Esimene peatus', en: 'First Stop' },
+          task: {
+            et: 'Igal Solil saadad ühe sõidu, ja öösel liigub vaade kulguri juurde. Esimene peatus: pildista rõngaga kivi.',
+            en: 'Each Sol you send one drive, and at night the view moves to the rover. First stop: take a picture of the ringed rock.'
+          },
+          fact: {
+            et: 'Kulguri meeskond vaatab igal Solil uusi pilte ja kirjutab nende järgi järgmise sõidu plaani.',
+            en: 'Each Sol, the rover\'s team looks at the new pictures and writes the plan for the next drive from them.'
+          }
+        },
+        {
+          at: '2', goal: 'rock', tasks: ['photo', 'drill'], card: 'rim',
+          name: { et: 'Kraatris', en: 'In the Crater' },
+          task: {
+            et: 'Teine peatus on kraatri sees. Sõida rõngaga kivi juurde, pildista ja puuri.',
+            en: 'The second stop is inside the crater. Drive to the ringed rock, take a picture and drill.'
+          },
+          fact: {
+            et: 'Opportunity sõitis aastaid mööda suure Endeavouri kraatri serva ja uuris seal kive.',
+            en: 'Opportunity spent years driving along the rim of the big Endeavour crater, studying its rocks.'
+          }
+        },
+        {
+          at: 'F', goal: 'ice', tasks: ['photo', 'drill'],
+          task: {
+            et: 'Viimane peatus: heledas laigus võib olla jääd. Sõida sinna, pildista ja puuri.',
+            en: 'Last stop: there may be ice in the pale patch. Drive there, take a picture and drill.'
+          }
+        }
+      ],
+      fact: {
+        et: 'Opportunity läbis Marsil maratoni pikkuse maa, üle 42 kilomeetri. Selleks kulus tal üle 11 aasta.',
+        en: 'Opportunity drove the length of a marathon on Mars, over 42 kilometres. It took more than 11 years.'
+      }
+    }
   ];
 
   const TEXT = {
@@ -252,6 +325,16 @@
       wellDone: 'Tubli!',
       next: 'Järgmine',
       newTrek: 'Uus retk',
+      goOn: 'Jätka',
+      orbit: 'Vaade orbiidilt',
+      orbitText: 'Vaade orbiidilt. Suured kivid paistavad kohe, väikesed alles siis, kui kulguri kaamerad on neid näinud.',
+      stopOf: (n, max) => `Peatus ${n} / ${max}`,
+      batterySteps: (n, max) => `🔋 ${n} / ${max} sammu`,
+      cameras: 'Kaugemale kaamerad ei näinud.',
+      dusk: (n) => `Päike loojus. Algab Sol ${n}.`,
+      testBattery: (n) => `Test: ${n} sammu järel saab aku tühjaks ja kulgur jääb siia.`,
+      trekEnd: (n) => `Kohale jõudmiseks kulus ${n} Soli.`,
+      restartAsk: 'Kas alustada teekonda otsast? Seni läbitud tee kaob.',
       bonus: 'Boonustase',
       locked: (n) => `🔒 Avaneb, kui kõik ${n} ülesannet on tehtud`,
       again: 'Uuesti',
@@ -301,6 +384,16 @@
       wellDone: 'Well done!',
       next: 'Next',
       newTrek: 'New trek',
+      goOn: 'Carry on',
+      orbit: 'View from orbit',
+      orbitText: 'The view from orbit. Big rocks show at once, small ones only when the rover\'s cameras have seen them.',
+      stopOf: (n, max) => `Stop ${n} / ${max}`,
+      batterySteps: (n, max) => `🔋 ${n} / ${max} steps`,
+      cameras: 'The cameras couldn\'t see any further.',
+      dusk: (n) => `The Sun set. Sol ${n} begins.`,
+      testBattery: (n) => `Test: after ${n} steps the battery runs out, and the rover stops here.`,
+      trekEnd: (n) => `It took ${n} Sols to get there.`,
+      restartAsk: 'Start the journey over? The way covered so far will be lost.',
       bonus: 'Bonus level',
       locked: (n) => `🔒 Opens when all ${n} levels are done`,
       again: 'Again',
@@ -382,8 +475,8 @@
 
   const store = Astro.makeStore('kulgur.');
   const done = store.get('done', []);
-  const BONUS = LEVELS.findIndex((l) => l.random);
-  const bonusOpen = () => LEVELS.every((l) => l.random || done.includes(l.id));
+  const BONUS = LEVELS.findIndex((l) => l.bonus);
+  const bonusOpen = () => LEVELS.every((l) => l.bonus || done.includes(l.id));
   const state = {
     level: Math.max(0, LEVELS.findIndex((l) => !done.includes(l.id))),
     lv: null,
@@ -394,6 +487,10 @@
     goal: null,       // the target square: x, y
     rocks: new Set(), // all rocks, as 'x,y'
     shown: new Set(), // the rocks on the map
+    vw: null,         // the squares in the window: x, y, w, h
+    stop: 0,          // the stop the rover is on the way to, on a level with stops
+    atStop: false,    // the win screen is for a stop on the way
+    nights: [],       // where the rover stood each morning, on a level with stops
     w: null,          // the rover: x, y, f (way it faces), a (angle), k (tasks done)
     g: null,          // the test rover, while it runs
     track: [],
@@ -501,7 +598,8 @@
   // ---------------------------------------------------------------------------
 
   const atGoal = (w) => w.x === state.goal.x && w.y === state.goal.y;
-  const tasksOf = () => state.lv.tasks || [];
+  const stopNow = () => (state.lv.stops ? state.lv.stops[state.stop] : null);
+  const tasksOf = () => (stopNow() || state.lv).tasks || [];
   const reached = (w) => atGoal(w) && w.k >= tasksOf().length;
 
   // Why a step can't be done, or null if it can.
@@ -510,6 +608,8 @@
       const x = w.x + DX[w.f];
       const y = w.y + DY[w.f];
       if (x < 0 || y < 0 || x >= state.cols || y >= state.rows) return 'edge';
+      const v = state.vw;
+      if (x < v.x || y < v.y || x >= v.x + v.w || y >= v.y + v.h) return 'cameras';
       return rocks.has(key(x, y)) ? 'rock' : null;
     }
     if (type === 'photo' || type === 'drill') {
@@ -635,11 +735,11 @@
       card: job.card || (battery ? 'sun' : pick(['tracks', 'rocks', 'rim'])),
       ground: 1 + Math.floor(rnd() * 999),
       task: { et: text('et'), en: text('en') },
-      fact: pick(LEVELS.filter((l) => !l.random)).fact
+      fact: pick(LEVELS.filter((l) => !l.bonus)).fact
     });
   }
   // A fixed one to begin with, for the picture on its card.
-  randomTrek(LEVELS[LEVELS.length - 1], seeded(4242));
+  randomTrek(LEVELS[BONUS], seeded(4242));
 
   // ---------------------------------------------------------------------------
   // Drawing the map
@@ -754,8 +854,7 @@
     blob(g, cx - c * 0.07, cy - c * 0.08, c * 0.23, c * 0.18, rnd, '#7a5e52');
   }
 
-  function drawTrack(g, pts, cur, colour, dash) {
-    const c = state.cell;
+  function drawTrack(g, pts, cur, colour, dash, c = state.cell) {
     g.save();
     g.strokeStyle = colour;
     g.lineCap = 'round';
@@ -773,14 +872,42 @@
     g.restore();
   }
 
+  // On a level with stops: a dot for each night, and a small flag on each stop
+  // done.
+  function drawJourney(g, c) {
+    for (const [x, y] of state.nights.slice(1)) {
+      g.fillStyle = '#f4f6ff';
+      g.strokeStyle = 'rgba(30, 14, 10, 0.7)';
+      g.lineWidth = Math.max(1, c * 0.04);
+      g.beginPath();
+      g.arc((x + 0.5) * c, (y + 0.5) * c, c * 0.13, 0, Math.PI * 2);
+      g.fill();
+      g.stroke();
+    }
+    for (const { pos } of state.lv.stops.slice(0, state.stop)) {
+      const x = pos.x * c;
+      const y = pos.y * c;
+      g.fillStyle = '#f4f6ff';
+      g.fillRect(x + c * 0.39, y + c * 0.18, c * 0.06, c * 0.64);
+      g.fillStyle = '#ffd34d';
+      g.beginPath();
+      g.moveTo(x + c * 0.45, y + c * 0.2);
+      g.lineTo(x + c * 0.74, y + c * 0.32);
+      g.lineTo(x + c * 0.45, y + c * 0.44);
+      g.fill();
+    }
+  }
+
   function draw() {
     const cv = $('ground');
     const dpr = window.devicePixelRatio || 1;
     const c = state.cell;
+    const v = state.vw;
     const g = cv.getContext('2d');
-    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.setTransform(dpr, 0, 0, dpr, -v.x * c * dpr, -v.y * c * dpr);
     g.imageSmoothingQuality = 'high';
-    g.drawImage(terrain, 0, 0, state.cols * c, state.rows * c);
+    const S = terrain.width / state.cols;
+    g.drawImage(terrain, v.x * S, v.y * S, v.w * S, v.h * S, v.x * c, v.y * c, v.w * c, v.h * c);
     g.strokeStyle = 'rgba(255, 240, 225, 0.16)';
     g.lineWidth = 1;
     g.beginPath();
@@ -791,8 +918,9 @@
     if (state.g) drawTrack(g, state.gtrack, state.g, 'rgba(95, 212, 255, 0.85)', true);
     for (const k of state.shown) {
       const [x, y] = k.split(',').map(Number);
-      drawRock(g, x, y, c);
+      if (x > v.x - 1 && y > v.y - 1 && x < v.x + v.w && y < v.y + v.h) drawRock(g, x, y, c);
     }
+    if (state.lv.stops) drawJourney(g, c);
     if (state.w.k >= 1 && tasksOf()[state.w.k - 1] === 'drill') {
       g.fillStyle = '#1c100c';
       g.beginPath();
@@ -803,7 +931,33 @@
 
   function place(el, w) {
     const c = state.cell;
-    el.style.transform = `translate(${w.x * c}px, ${w.y * c}px) rotate(${w.a}deg)`;
+    el.style.transform = `translate(${(w.x - state.vw.x) * c}px, ${(w.y - state.vw.y) * c}px) rotate(${w.a}deg)`;
+  }
+
+  // An arrow at the side of the window, pointing to a target outside it.
+  function placePointer() {
+    const el = $('pointer');
+    const v = state.vw;
+    const { x, y } = state.goal;
+    const off = x < v.x || y < v.y || x >= v.x + v.w || y >= v.y + v.h;
+    el.classList.toggle('hidden', !off);
+    if (!off) return;
+    const c = state.cell;
+    const dx = x + 0.5 - (v.x + v.w / 2);
+    const dy = y + 0.5 - (v.y + v.h / 2);
+    const k = Math.min((v.w / 2 - 0.6) / (Math.abs(dx) || 0.01), (v.h / 2 - 0.6) / (Math.abs(dy) || 0.01));
+    const px = (v.w / 2 + dx * k - 0.5) * c;
+    const py = (v.h / 2 + dy * k - 0.5) * c;
+    el.style.transform = `translate(${px}px, ${py}px) rotate(${(Math.atan2(dy, dx) * 180) / Math.PI + 90}deg)`;
+  }
+
+  // Everything over the map, for where the window is now.
+  function placeAll() {
+    const c = state.cell;
+    $('target').style.transform = `translate(${(state.goal.x - state.vw.x) * c}px, ${(state.goal.y - state.vw.y) * c}px)`;
+    place($('rover'), state.w);
+    if (state.g) place($('ghost'), state.g);
+    placePointer();
   }
 
   function layout() {
@@ -811,10 +965,10 @@
     const box = $('mapBox').getBoundingClientRect();
     if (!box.width || !box.height) return;
     const gap = 6;
-    const c = Math.max(10, Math.floor(Math.min((box.width - gap * 2) / state.cols, (box.height - gap * 2) / state.rows)));
+    const c = Math.max(10, Math.floor(Math.min((box.width - gap * 2) / state.vw.w, (box.height - gap * 2) / state.vw.h)));
     state.cell = c;
-    const w = state.cols * c;
-    const h = state.rows * c;
+    const w = state.vw.w * c;
+    const h = state.vw.h * c;
     const map = $('map');
     map.style.width = `${w}px`;
     map.style.height = `${h}px`;
@@ -824,13 +978,11 @@
     const cv = $('ground');
     cv.width = Math.round(w * dpr);
     cv.height = Math.round(h * dpr);
-    for (const id of ['rover', 'ghost', 'target']) {
+    for (const id of ['rover', 'ghost', 'target', 'pointer']) {
       $(id).style.width = `${c}px`;
       $(id).style.height = `${c}px`;
     }
-    $('target').style.transform = `translate(${state.goal.x * c}px, ${state.goal.y * c}px)`;
-    place($('rover'), state.w);
-    if (state.g) place($('ghost'), state.g);
+    placeAll();
     draw();
   }
 
@@ -917,18 +1069,26 @@
 
   function updateStatus() {
     const lv = state.lv;
-    $('progressFill').style.width = `${(Math.min(state.level + 1, BONUS) / BONUS) * 100}%`;
-    $('progressText').textContent = lv.random ? t('bonus') : `${state.level + 1} / ${BONUS}`;
+    const stops = lv.stops;
+    $('progressFill').style.width = `${(stops ? (state.stop + 1) / stops.length : Math.min(state.level + 1, BONUS) / BONUS) * 100}%`;
+    $('progressText').textContent = stops ? t('stopOf')(state.stop + 1, stops.length) : lv.bonus ? t('bonus') : `${state.level + 1} / ${BONUS}`;
     $('levelName').textContent = lv.name[Astro.lang];
-    $('taskText').textContent = lv.task[Astro.lang];
+    $('taskText').textContent = (stopNow() || lv).task[Astro.lang];
     $('delayText').textContent = t('delay')(lv.delay);
     $('solText').textContent = lv.battery ? t('sol')(state.sol) : '';
     $('battery').classList.toggle('hidden', !lv.battery);
-    if (lv.battery) $('batteryFill').style.width = `${(state.charge / lv.battery) * 100}%`;
+    // On a level with a window, the bar also shows what the plan would use.
+    const planning = lv.view && !state.busy;
+    const need = state.plan.reduce((s, m) => s + sizeOf(m), 0);
+    if (lv.battery) {
+      const use = planning ? Math.min(need, state.charge) : 0;
+      $('batteryFill').style.width = `${((state.charge - use) / lv.battery) * 100}%`;
+      $('batteryPlan').style.width = `${(use / lv.battery) * 100}%`;
+    }
     const n = countOrders(state.plan);
     const lim = $('limitText');
-    lim.textContent = lv.limit ? t('limit')(n, lv.limit) : '';
-    lim.classList.toggle('limit-over', !!lv.limit && n > lv.limit);
+    lim.textContent = lv.limit ? t('limit')(n, lv.limit) : planning ? t('batterySteps')(need, lv.battery) : '';
+    lim.classList.toggle('limit-over', lv.limit ? n > lv.limit : !!planning && need > lv.battery);
     const ready = state.plan.length && !state.g;
     $('tryBtn').classList.toggle('dim', !ready);
     $('sendBtn').classList.toggle('dim', !ready);
@@ -1049,6 +1209,7 @@
     clearTimeout(idleTimer);
     state.sends++;
     setBusy(true);
+    updateStatus();
     showSignal(() => drive());
   }
 
@@ -1100,6 +1261,7 @@
   }
 
   function reveal() {
+    if (state.lv.view) return;
     for (let f = 0; f < 4; f++) {
       const k = key(state.w.x + DX[f], state.w.y + DY[f]);
       if (state.rocks.has(k)) state.shown.add(k);
@@ -1124,9 +1286,10 @@
     const finish = () => {
       light(null);
       state.plan = rest(state.plan, i);
-      renderPlan();
       setBusy(false);
+      renderPlan();
       touched();
+      if (state.lv.stops) saveTrek();
     };
     const stopped = (why) => {
       sfx.oops();
@@ -1134,21 +1297,33 @@
       rover.classList.add('shake');
       setTimeout(() => rover.classList.remove('shake'), 400);
       toast(t(why));
-      finish();
-      state.stops++;
-      if (state.plan[0] && state.plan[0].el) state.plan[0].el.classList.add('bad');
-      if (state.stops >= 2) pulseRepeat();
+      const after = () => {
+        finish();
+        state.stops++;
+        if (state.plan[0] && state.plan[0].el) state.plan[0].el.classList.add('bad');
+        if (state.stops >= 2) pulseRepeat();
+      };
+      if (state.lv.stops) wait(1600, () => night(after));
+      else after();
     };
 
     const next = () => {
       if (reached(w)) {
         light(null);
         draw();
-        won();
+        if (state.lv.stops && state.stop < state.lv.stops.length - 1) stopDone(finish);
+        else won();
         return;
       }
       if (i >= list.length) {
         light(null);
+        if (state.lv.stops) {
+          if (atGoal(w)) {
+            toast(t('notDone'));
+            wait(1600, () => night(finish));
+          } else night(finish);
+          return;
+        }
         toast(t(atGoal(w) ? 'notDone' : 'short'));
         state.stops++;
         finish();
@@ -1207,13 +1382,144 @@
     state.sol++;
     $('night').classList.add('on');
     sfx.land();
-    toast(t('night')(state.sol), 3000);
+    toast(t(state.lv.view && state.charge > 0 ? 'dusk' : 'night')(state.sol), 3000);
     wait(1500, () => {
       state.charge = state.lv.battery;
-      $('night').classList.remove('on');
-      updateStatus();
-      wait(450, then);
+      slideView(() => {
+        $('night').classList.remove('on');
+        updateStatus();
+        wait(450, then);
+      });
     });
+  }
+
+  // ---------------------------------------------------------------------------
+  // The window on a level with stops
+  // ---------------------------------------------------------------------------
+
+  // The window with the rover in the middle, as far as the map goes.
+  function viewAt(x, y) {
+    const n = state.lv.view;
+    return { x: clamp(x - (n >> 1), 0, state.cols - n), y: clamp(y - (n >> 1), 0, state.rows - n), w: n, h: n };
+  }
+
+  function see(v) {
+    for (const k of state.rocks) {
+      const [x, y] = k.split(',').map(Number);
+      if (x >= v.x && y >= v.y && x < v.x + v.w && y < v.y + v.h) state.shown.add(k);
+    }
+  }
+
+  // At night the window slides to where the rover stopped.
+  function slideView(then) {
+    if (!state.lv.view) { then(); return; }
+    const w = state.w;
+    state.nights.push([w.x, w.y]);
+    const v = state.vw;
+    const to = viewAt(w.x, w.y);
+    const x0 = v.x;
+    const y0 = v.y;
+    see(to);
+    tween(800, (k) => {
+      v.x = x0 + (to.x - x0) * k;
+      v.y = y0 + (to.y - y0) * k;
+      placeAll();
+      draw();
+    }, () => {
+      state.vw = to;
+      placeAll();
+      draw();
+      then();
+    });
+  }
+
+  function setStop() {
+    const stop = stopNow();
+    state.goal = stop.pos;
+    $('target').innerHTML = TARGETS[stop.goal];
+  }
+
+  // A stop is done: its card, and the night comes when the player carries on.
+  let afterStop = null;
+  function stopDone(then) {
+    afterStop = then;
+    state.atStop = true;
+    sfx.snap();
+    wait(1000, () => {
+      sfx.win();
+      showWin();
+      $('win').classList.remove('hidden');
+    });
+  }
+  function leaveStop() {
+    state.atStop = false;
+    $('win').classList.add('hidden');
+    sfx.pick();
+    state.stop++;
+    state.w.k = 0;
+    state.plan = [];
+    setStop();
+    renderPlan();
+    placeAll();
+    draw();
+    night(afterStop);
+  }
+
+  // The journey is kept each morning, so that it can go on later.
+  function saveTrek() {
+    const { x, y, f } = state.w;
+    store.set('trek', {
+      stop: state.stop, x, y, f, sol: state.sol, track: state.track, nights: state.nights, plan: state.plan.map(copy)
+    });
+  }
+
+  // The whole map from above: the big rocks, the ones seen so far and the way
+  // the rover has come. live adds the window, the next stop and the rover's way.
+  function trailPicture(live) {
+    const c = Math.floor(640 / state.rows);
+    const cv = document.createElement('canvas');
+    cv.width = state.cols * c;
+    cv.height = state.rows * c;
+    const g = cv.getContext('2d');
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(terrain, 0, 0, cv.width, cv.height);
+    for (const k of state.shown) {
+      const [x, y] = k.split(',').map(Number);
+      drawRock(g, x, y, c);
+    }
+    drawTrack(g, state.track, state.w, 'rgba(255, 240, 225, 0.85)', false, c);
+    drawJourney(g, c);
+    if (live) {
+      g.strokeStyle = '#5fd4ff';
+      g.lineWidth = 3;
+      g.strokeRect(state.vw.x * c, state.vw.y * c, state.vw.w * c, state.vw.h * c);
+      g.strokeStyle = '#ffd34d';
+      g.lineWidth = 4;
+      g.beginPath();
+      g.arc((state.goal.x + 0.5) * c, (state.goal.y + 0.5) * c, c * 0.6, 0, Math.PI * 2);
+      g.stroke();
+    }
+    g.translate((state.w.x + 0.5) * c, (state.w.y + 0.5) * c);
+    g.rotate((state.w.f * Math.PI) / 2);
+    g.fillStyle = '#ffd34d';
+    g.beginPath();
+    g.moveTo(0, -c * 0.62);
+    g.lineTo(c * 0.26, -c * 0.2);
+    g.lineTo(-c * 0.26, -c * 0.2);
+    g.fill();
+    g.fillStyle = '#27509e';
+    g.strokeStyle = '#f4f6ff';
+    g.lineWidth = 2;
+    g.beginPath();
+    g.arc(0, 0, c * 0.32, 0, Math.PI * 2);
+    g.fill();
+    g.stroke();
+    return cv.toDataURL('image/png');
+  }
+
+  function showOrbit(on) {
+    if (on) $('orbitPic').src = trailPicture(true);
+    $('orbit').classList.toggle('hidden', !on);
   }
 
   // Proovi runs the plan on the test rover, which knows only what is on the map.
@@ -1268,7 +1574,16 @@
         end(tooLong ? t('testLong')(limit) : t('testOk'));
         return;
       }
-      if (i >= list.length) { end(t('test')(atGoal(g) ? t('notDone') : t('short'))); return; }
+      if (i >= list.length) {
+        if (atGoal(g)) end(t('test')(t('notDone')));
+        else end(state.lv.stops ? t('testOk') : t('test')(t('short')));
+        return;
+      }
+      if (state.lv.stops && i >= state.charge) {
+        sfx.oops();
+        end(t('testBattery')(state.charge));
+        return;
+      }
       const a = list[i++];
       const why = blockedBy(g, a.type, state.shown);
       if (why) { end(t('test')(t(why))); return; }
@@ -1297,20 +1612,30 @@
     state.shown = new Set();
     lv.map.forEach((row, y) => {
       [...row].forEach((c, x) => {
-        if (c === '#' || c === 'r') state.rocks.add(key(x, y));
-        if (c === '#') state.shown.add(key(x, y));
+        if (c === '#' || c === 'r' || c === 'W') state.rocks.add(key(x, y));
+        if ((c === '#' && !lv.view) || c === 'W') state.shown.add(key(x, y));
         if (c === 'F') state.goal = { x, y };
         if (c === 'R') state.start = { x, y };
+        const stop = lv.stops && lv.stops.find((s) => s.at === c);
+        if (stop) stop.pos = { x, y };
       });
     });
-    const f = DIRS[lv.face];
-    state.w = { x: state.start.x, y: state.start.y, f, a: f * 90, k: 0 };
+    const saved = lv.stops && store.get('trek', null);
+    const f = saved ? saved.f : DIRS[lv.face];
+    state.w = { x: saved ? saved.x : state.start.x, y: saved ? saved.y : state.start.y, f, a: f * 90, k: 0 };
     state.g = null;
-    state.track = [];
+    state.track = saved ? saved.track : [];
     state.gtrack = [];
-    state.plan = [];
+    state.plan = saved ? saved.plan : [];
     state.open = null;
-    state.sol = 1;
+    state.sol = saved ? saved.sol : 1;
+    state.stop = saved ? saved.stop : 0;
+    state.atStop = false;
+    state.nights = saved ? saved.nights : [[state.w.x, state.w.y]];
+    if (lv.view) {
+      state.nights.forEach(([x, y]) => see(viewAt(x, y)));
+      state.vw = viewAt(state.w.x, state.w.y);
+    } else state.vw = { x: 0, y: 0, w: state.cols, h: state.rows };
     state.charge = lv.battery || 0;
     state.sends = 0;
     state.stops = 0;
@@ -1329,7 +1654,11 @@
     Astro.stopConfetti($('confetti'));
     $('menu').classList.add('hidden');
     $('game').classList.remove('hidden');
-    terrain = makeTerrain(i, state.cols, state.rows, 56, state.goal);
+    $('orbit').classList.add('hidden');
+    $('orbitBtn').classList.toggle('hidden', !lv.stops);
+    // A big map has fewer pixels for a square, so that it is ready at once.
+    terrain = makeTerrain(i, state.cols, state.rows, lv.view ? 32 : 56, state.goal);
+    if (lv.stops) setStop();
     renderSteps();
     renderPlan();
     layout();
@@ -1378,7 +1707,7 @@
     g.stroke();
 
     lv.map.forEach((row, y) => {
-      [...row].forEach((ch, x) => { if (ch === '#') drawRock(g, x, y, c); });
+      [...row].forEach((ch, x) => { if (ch === '#' || ch === 'W') drawRock(g, x, y, c); });
     });
 
     // the target, as in TARGETS
@@ -1453,9 +1782,10 @@
     box.innerHTML = '';
     const row = document.createElement('div');
     row.className = 'pictures';
+    const trek = store.get('trek', null);
     LEVELS.forEach((lv, i) => {
       const b = document.createElement('button');
-      const locked = lv.random && !bonusOpen();
+      const locked = lv.bonus && !bonusOpen();
       b.className = 'pic' + (i === state.level ? ' selected' : '') + (locked ? ' locked' : '');
       b.innerHTML = '<img alt=""><span><b class="number"></b> <i></i></span>';
       b.querySelector('img').src = levelPicture(i);
@@ -1466,6 +1796,11 @@
         const note = document.createElement('div');
         note.className = 'lock-note';
         note.textContent = t('locked')(BONUS);
+        b.appendChild(note);
+      } else if (lv.stops && trek) {
+        const note = document.createElement('div');
+        note.className = 'lock-note';
+        note.textContent = t('sol')(trek.sol);
         b.appendChild(note);
       }
       b.addEventListener('click', () => {
@@ -1481,6 +1816,7 @@
     });
     box.appendChild(row);
     $('resetBtn').classList.toggle('hidden', !done.length);
+    $('playBtn').querySelector('span').textContent = t(LEVELS[state.level].stops && trek ? 'goOn' : 'play');
   }
 
   // ---------------------------------------------------------------------------
@@ -1495,6 +1831,7 @@
       store.set('done', done);
     }
     state.opened = !wasOpen && bonusOpen();
+    if (lv.stops) store.set('trek', null);
     sfx.snap();
     wait(1000, () => {
       sfx.win();
@@ -1510,19 +1847,24 @@
 
   function showWin() {
     const lv = state.lv;
-    $('winName').textContent = lv.name[Astro.lang];
-    $('winFact').textContent = lv.fact[Astro.lang];
-    if (!$('winPic').firstChild || $('winPic').dataset.card !== lv.card) {
+    const stop = state.atStop ? stopNow() : null;
+    const from = stop || lv;
+    const name = from.name[Astro.lang];
+    $('winName').textContent = lv.stops && !stop ? `${name}. ${t('trekEnd')(state.sol)}` : name;
+    $('winFact').textContent = from.fact[Astro.lang];
+    if (from.card === 'trail' || !$('winPic').firstChild || $('winPic').dataset.card !== from.card) {
       const img = new Image();
       img.alt = '';
-      img.src = postcard(lv.card);
+      img.src = from.card === 'trail' ? trailPicture(false) : postcard(from.card);
       $('winPic').innerHTML = '';
       $('winPic').appendChild(img);
-      $('winPic').dataset.card = lv.card;
+      $('winPic').dataset.card = from.card;
     }
     const to = nextLevel();
-    $('nextBtn').classList.toggle('hidden', to === BONUS && !bonusOpen());
-    $('nextBtn').querySelector('span').textContent = t(lv.random ? 'newTrek' : to === BONUS ? 'bonus' : 'next');
+    $('nextBtn').classList.toggle('hidden', !stop && (!!lv.stops || (to === BONUS && !bonusOpen())));
+    $('nextBtn').querySelector('span').textContent = t(stop ? 'goOn' : lv.random ? 'newTrek' : to === BONUS ? 'bonus' : 'next');
+    $('againBtn').classList.toggle('hidden', !!stop);
+    $('menuBtn').classList.toggle('hidden', !!stop);
   }
 
   // What the rover sees: rusty ground under a butterscotch sky. By day the sky
@@ -1664,7 +2006,10 @@
 
   $('playBtn').addEventListener('click', () => startLevel(state.level));
   $('againBtn').addEventListener('click', () => startLevel(state.level, true));
-  $('nextBtn').addEventListener('click', () => startLevel(nextLevel()));
+  $('nextBtn').addEventListener('click', () => {
+    if (state.atStop) leaveStop();
+    else startLevel(nextLevel());
+  });
   $('menuBtn').addEventListener('click', showMenu);
   $('homeBtn').addEventListener('click', showMenu);
   $('sendBtn').addEventListener('click', send);
@@ -1673,10 +2018,20 @@
     toast(t('tooLate')(state.lv.delay));
   });
   $('restartBtn').addEventListener('click', () => {
+    if (state.lv.stops) {
+      if (store.get('trek', null) && !window.confirm(t('restartAsk'))) return;
+      store.set('trek', null);
+    }
     sfx.pick();
     startLevel(state.level, true);
   });
   $('tryBtn').addEventListener('click', test);
+  $('orbitBtn').addEventListener('click', () => {
+    if (state.busy) return;
+    sfx.pick();
+    showOrbit($('orbit').classList.contains('hidden'));
+  });
+  $('orbit').addEventListener('click', () => showOrbit(false));
   $('signal').addEventListener('click', () => { if (skipSignal) skipSignal(); });
   $('soundBtn').classList.toggle('off', !sfx.on);
   $('soundBtn').addEventListener('click', () => {
@@ -1688,7 +2043,8 @@
     if (!window.confirm(t('resetAsk'))) return;
     done.length = 0;
     store.set('done', done);
-    if (state.level === BONUS) state.level = 0;
+    store.set('trek', null);
+    if (state.level >= BONUS) state.level = 0;
     buildMenu();
   });
 

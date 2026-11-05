@@ -110,8 +110,8 @@ hidden rocks.
 
 The levels are all open from the start, and a 🌟 marks the ones done. Each ends
 with one short fact. The facts should be checked against a source before use.
-Added later: a bonus level with a random landscape and task, which opens when
-all 10 are done. The groups below are only for planning: the menu shows the
+Added later: two bonus levels, which open when all 10 are done: Juhuslik retk,
+with a random landscape and task, and Marsi uurimine, described below. The groups below are only for planning: the menu shows the
 cards in one row under "Vali tase", without stage headings.
 
 ### Esimesed sõidud (first drives)
@@ -191,6 +191,32 @@ fewer Sols the better, but a level can always be finished.
 
 Finding ice with a rover is made up for the game. Say so in the README, as no
 rover has dug up ice yet.
+
+### Marsi uurimine (exploring Mars, level 12)
+
+One journey over a map of 24×24 squares. It teaches planning at two scales, as
+real teams do: the general route from orbit, the exact steps from the rover's
+pictures.
+
+- **A window:** 11×11 squares with the rover in the middle, as far as the map
+  goes. It is what the cameras saw last evening, so the rover can't drive out of
+  it: "Kaugemale kaamerad ei näinud" ("The cameras couldn't see any further"). An
+  arrow at its side points to a stop outside it.
+- **One Saada is one Sol:** the rover drives until the plan ends, a rock stops it
+  or the 10 steps of the battery are gone. The Sun then always sets, and the
+  window slides to the rover. Steps not done stay in the plan.
+- **Proovi** says if the battery won't last. The battery bar shows what the plan
+  would use.
+- **Three stops**, one shown at a time: a rock (📷), a rock in a crater (📷🔩) and
+  the ice (📷🔩). A finished stop has a postcard and a fact, and ends that Sol.
+- **🗺️, the view from orbit:** the ridges of the map (W) always show, the single
+  boulders (#) once they have been in the window, along with the track, a dot for
+  each night and the next stop.
+- **No hidden rocks**, so that a plan that passes Proovi drives the same way.
+- **A choice of route:** a narrow gap with more turns, 45 squares in all, or the
+  long way round, 51 squares. Both take at least 8 Sols, as turns use the battery.
+- **Kept each morning,** under `trek`, so that it can go on later. It shows on the
+  card as the Sol. The Sol count at the end is not stored.
 
 ## Postcards
 

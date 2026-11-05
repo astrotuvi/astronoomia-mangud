@@ -67,6 +67,7 @@
         <div class="track"><div id="progressFill" class="fill"></div></div>
         <div id="progressText" class="progress-text"></div>
       </div>
+      <button id="orbitBtn" class="icon hidden" data-t-label="orbit" aria-label="Vaade orbiidilt">🗺️</button>
       <button id="soundBtn" class="icon toggle" data-t-label="sound" aria-label="Heli">🔊</button>
     </div>
     <div id="area" class="area">
@@ -75,6 +76,9 @@
         <div id="map" class="map">
           <canvas id="ground"></canvas>
           <div id="target" class="target" aria-hidden="true"></div>
+          <div id="pointer" class="pointer hidden" aria-hidden="true">
+            <svg viewBox="0 0 100 100" data-ink><path d="M50 8L84 80L50 62L16 80Z" fill="#ffd34d" stroke="#3a2418" stroke-width="6" stroke-linejoin="round" /></svg>
+          </div>
           <div id="ghost" class="rover ghost hidden" aria-hidden="true"></div>
           <div id="rover" class="rover" aria-hidden="true"></div>
           <div id="night" class="night"></div>
@@ -83,6 +87,10 @@
         <div id="signal" class="signal hidden">
           <svg id="signalPic" viewBox="-100 -100 200 200" aria-hidden="true" data-ink></svg>
           <p id="signalText"></p>
+        </div>
+        <div id="orbit" class="signal hidden">
+          <img id="orbitPic" alt="">
+          <p data-t="orbitText"></p>
         </div>
         <div id="toast" class="toast" role="status"></div>
       </div>
@@ -93,7 +101,7 @@
           <div class="status">
             <span id="delayText"></span>
             <span id="solText"></span>
-            <span id="battery" class="battery"><i id="batteryFill"></i></span>
+            <span id="battery" class="battery"><i id="batteryFill"></i><i id="batteryPlan"></i></span>
             <span id="limitText"></span>
           </div>
         </div>
